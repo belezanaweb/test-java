@@ -23,7 +23,7 @@ Com a seguinte representação de produto:
         "warehouses": [
             {
                 "locality": "SP",
-                "quantity": 12,
+                "quantity": 12,
                 "type": "ECOMMERCE"
             },
             {
