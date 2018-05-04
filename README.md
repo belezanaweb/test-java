@@ -22,10 +22,12 @@ Com a seguinte representação de produto:
         "quantity": 15,
         "warehouses": [
             {
-                "quantity": 12,
+                "locality": "SP",
+                "quantity": 12,
                 "type": "ECOMMERCE"
             },
             {
+                "locality": "MOEMA",
                 "quantity": 3,
                 "type": "PHYSICAL_STORE"
             }
