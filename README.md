@@ -4,11 +4,11 @@ Esta é uma avaliação básica de código.
 
 O objetivo é conhecer um pouco do seu conhecimento/prática de RESTful, Spring e Java.
 
-Recomendamos que você não gaste mais do que algumas horas nesse teste.
+Recomendamos que você não gaste mais do que 4 - 6 horas.
 
 Faça um fork deste repositório que contém o bootstrap de uma aplicação SpringBoot 1.5.12. 
 
-Ao finalizar o teste, submeta um pull request para o repositório.
+Ao finalizar o teste, submeta um pull request para o repositório que nosso time será notificado.
 
 ### Tarefas
 
@@ -62,7 +62,13 @@ Crie endpoints para as seguintes ações:
         
         Dois produtos são considerados iguais se os seus skus forem iguais
         
+
+- [ ] Ao atualizar um produto, o antigo deve ser sobrescrito com o que esta sendo enviado na requisição
+
+        A requisição deve receber o sku e atualizar com o produto que tbm esta vindo na requisição
+        
 ### Dicas
 
 - Os produtos podem ficar em memória, não é necessário persistir os dados
-- Testes são sempre bem-vindos :simple_smile:
+- Sinta-se a vontade para fazer o código em ```groovy``` se preferir, utilizamos bastante aqui
+- Testes são sempre bem-vindos :smiley:
