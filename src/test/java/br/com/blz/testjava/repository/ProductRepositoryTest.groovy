@@ -11,6 +11,10 @@ class ProductRepositoryTest extends Specification {
         repository = new ProductRepository()
     }
 
+    void cleanup() {
+        repository.cleanUp()
+    }
+
     void 'Given a product saved then find by id' () {
         given:
             Product product = new Product(sku: 123)
@@ -31,7 +35,7 @@ class ProductRepositoryTest extends Specification {
         when:
             repository.save(product)
             product.setName(newName)
-            repository.update(product)
+            repository.update(123, product)
 
         then:
             repository.findBySku(product.sku).get().name == newName
@@ -46,6 +50,6 @@ class ProductRepositoryTest extends Specification {
 
         then:
             assert repository.findBySku(product.sku).isPresent()
-            assert repository.remove(product)
+            assert repository.remove(product.sku)
     }
 }

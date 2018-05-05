@@ -34,8 +34,8 @@ public class ProductController {
     }
 
     @ResponseStatus(OK)
-    @PatchMapping("/{sku}")
-    public void updateProduct(@PathVariable Integer sku, Product product) {
-        service.updateProduct(product);
+    @PutMapping("/{sku}")
+    public void updateProduct(@PathVariable Integer sku, @RequestBody Product product) {
+        service.updateProduct(sku, product);
     }
 }

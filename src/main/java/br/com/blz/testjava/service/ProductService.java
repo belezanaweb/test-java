@@ -39,9 +39,9 @@ public class ProductService {
 
     }
 
-    public void updateProduct(Product product) {
+    public void updateProduct(Integer sku, Product product) {
         try {
-            repository.update(product);
+            repository.update(sku, product);
         } catch (DataIntegrityViolationException dive) {
             throw new BadRequestException("Product with sku=" + product.getSku() + " doesn't exists");
         }

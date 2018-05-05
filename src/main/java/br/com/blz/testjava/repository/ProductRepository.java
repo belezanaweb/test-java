@@ -30,11 +30,13 @@ public class ProductRepository {
         return PRODUCTS.stream().filter(product -> product.getSku() == sku).findFirst();
     }
 
-    public void update(Product product) {
+    public void update(Integer sku, Product product) {
 
         if (!PRODUCTS.contains(product)) {
             throw new DataIntegrityViolationException("Product with sku=" + product.getSku() + " doesn't exists");
         }
+
+        this.remove(sku);
 
         PRODUCTS.add(product);
     }
