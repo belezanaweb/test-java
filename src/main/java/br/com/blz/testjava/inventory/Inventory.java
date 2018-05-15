@@ -1,10 +1,8 @@
 package br.com.blz.testjava.inventory;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 public class Inventory implements Serializable {
@@ -15,8 +13,8 @@ public class Inventory implements Serializable {
     private Long sku;
     @Column
     private String name;
-    /*@Column
-    private List<Warehouse> warehouses;*/
+    @Transient
+    private List<Warehouse> warehouses;
 
     public Long getId() {
         return id;
