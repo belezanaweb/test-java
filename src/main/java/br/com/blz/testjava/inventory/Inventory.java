@@ -17,6 +17,8 @@ public class Inventory implements Serializable {
     private Long sku;
     @Column
     private String name;
+    @Column
+    private Integer quantity;
     @Transient
     private List<Warehouse> warehouses;
 
@@ -54,5 +56,15 @@ public class Inventory implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getQuantity() {
+        return this.warehouses.stream()
+                .map(q -> q.getQuantity())
+                .reduce(0, Integer::sum);
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 }

@@ -1,6 +1,7 @@
 package br.com.blz.testjava.inventory;
 
 import org.hamcrest.Matchers;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,5 +46,11 @@ public class InventoryServiceTest {
         assertThat(inventory, Matchers.notNullValue());
         assertThat(inventory.getName(),
                 Matchers.equalTo("L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g"));
+    }
+
+    @Test
+    public void findProductBySku_shouldReturnSumOfQuantityInventory() {
+        Inventory inventory = service.findByProduct(2L);
+        Assert.assertThat(inventory.getQuantity(), Matchers.equalTo(15));
     }
 }
