@@ -2,18 +2,25 @@ package br.com.blz.testjava.inventory;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
 
 @Entity
 public class Inventory implements Serializable {
 
-    @Id
+    @Id @GeneratedValue
+    private Long id;
+    @Column
     private Long sku;
     @Column
     private String name;
     /*@Column
     private List<Warehouse> warehouses;*/
+
+    public Long getId() {
+        return id;
+    }
 
     public Long getSku() {
         return sku;
