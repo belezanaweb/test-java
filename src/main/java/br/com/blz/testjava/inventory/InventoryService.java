@@ -22,4 +22,8 @@ public class InventoryService {
     public Inventory save(Inventory inventory) {
         return repository.save(inventory);
     }
+
+    public Inventory alterInventory(Inventory inventory) {
+        return repository.save(inventory);
+    }
 }
