@@ -24,6 +24,13 @@ public class InventoryResource {
     @PutMapping("{sku}")
     @ResponseStatus(HttpStatus.CREATED)
     public Inventory alterInventory(@Valid @PathVariable Integer sku, @RequestBody Inventory inventory) {
+        service.findByProduct(Long.valueOf(sku));
         return service.alterInventory(inventory);
+    }
+
+    @DeleteMapping("{sku}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteInventory(@Valid @PathVariable Integer sku) {
+        service.deleteInventory(Long.valueOf(sku));
     }
 }

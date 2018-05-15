@@ -26,4 +26,8 @@ public class InventoryService {
     public Inventory alterInventory(Inventory inventory) {
         return repository.save(inventory);
     }
+
+    public void deleteInventory(Long sku) {
+        repository.delete(sku);
+    }
 }
