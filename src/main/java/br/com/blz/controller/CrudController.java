@@ -1,5 +1,7 @@
 package br.com.blz.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +21,13 @@ public abstract class CrudController<T> {
 	
 	@RequestMapping(value="/create",method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(code=HttpStatus.OK)
-	public void create(@RequestBody T object) throws CrudException {
+	public void create(@RequestBody @Valid T object) throws CrudException {
 		this.abstractService().create(object);
 	}
 	
 	@RequestMapping(value="/update",method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(code=HttpStatus.OK)
-	public void update(@RequestBody T object) {
+	public void update(@RequestBody @Valid T object) {
 		this.abstractService().update(object);
 	}
 	
