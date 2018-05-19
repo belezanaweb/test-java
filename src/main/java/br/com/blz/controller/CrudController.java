@@ -25,7 +25,7 @@ public abstract class CrudController<T> {
 	
 	@RequestMapping(value="/update",method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(code=HttpStatus.OK)
-	public void update(T object) {
+	public void update(@RequestBody T object) {
 		this.abstractService().update(object);
 	}
 	
