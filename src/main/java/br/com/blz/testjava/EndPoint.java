@@ -22,7 +22,7 @@ public class EndPoint {
 	private List<Product> produtosCadastrados = new ArrayList<Product>();
 
 	@RequestMapping(value = "/{sku}", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> deleteProduct(@PathVariable("sku") int sku) {
+	public ResponseEntity<?> findProduct(@PathVariable("sku") int sku) {
 		Product findedProduct = new Product();
 		findedProduct.setSku(sku);
 		findedProduct = findProduct(findedProduct);
