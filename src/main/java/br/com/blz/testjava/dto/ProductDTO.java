@@ -2,9 +2,9 @@ package br.com.blz.testjava.dto;
 
 import java.io.Serializable;
 
-import br.com.blz.testjava.dominio.Sku;
+import br.com.blz.testjava.dominio.Product;
 
-public class SkuDTO implements Serializable{
+public class ProductDTO implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -12,11 +12,11 @@ public class SkuDTO implements Serializable{
 	private String name;
 	private InventoryDTO inventoryDTO;
 	
-	public SkuDTO() {
+	public ProductDTO() {
 		
 	}
 	
-	public SkuDTO(Sku obj) {
+	public ProductDTO(Product obj) {
 		super();
 		this.sku = obj.getSku();
 		this.name = obj.getName();

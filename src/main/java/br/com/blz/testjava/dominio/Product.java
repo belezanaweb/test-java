@@ -2,7 +2,7 @@ package br.com.blz.testjava.dominio;
 
 import java.io.Serializable;
 
-public class Sku implements Serializable{
+public class Product implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -10,11 +10,11 @@ public class Sku implements Serializable{
 	private String name;
 	private Inventory inventory;
 	
-	public Sku() {
+	public Product() {
 		
 	}
 	
-	public Sku(Long sku, String name, Inventory inventory) {
+	public Product(Long sku, String name, Inventory inventory) {
 		super();
 		this.sku = sku;
 		this.name = name;
@@ -61,7 +61,7 @@ public class Sku implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Sku other = (Sku) obj;
+		Product other = (Product) obj;
 		if (sku == null) {
 			if (other.sku != null)
 				return false;
