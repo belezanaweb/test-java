@@ -1,3 +1,12 @@
+Segue informação para configuração do Banco de Dados utilizado:
+<=> Banco de Dados
+	MySQL (versão: mysql-connector-java-5.1.46-bin)
+	Database: belezanaweb
+	Usuário: root
+	Senha: "definida na instalação no mysql" -> informar no arquivo "application.properties"
+
+
+
 ### Backend Test
 
 Esta é uma avaliação básica de código.
