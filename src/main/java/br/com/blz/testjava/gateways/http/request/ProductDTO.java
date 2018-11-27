@@ -2,10 +2,14 @@ package br.com.blz.testjava.gateways.http.request;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotEmpty;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Data
 public class ProductDTO {

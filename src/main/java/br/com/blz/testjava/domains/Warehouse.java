@@ -26,6 +26,6 @@ public class Warehouse {
     private String locality;
     private Integer quantity;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
     private WarehouseTypeEntity warehouseType;
 }

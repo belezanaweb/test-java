@@ -6,6 +6,7 @@ import br.com.blz.testjava.exception.ProductNotFoundException;
 import br.com.blz.testjava.gateways.repository.ProductRepository;
 import br.com.blz.testjava.gateways.repository.WarehouseTypeRepository;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -35,10 +36,13 @@ public class ProductGatewayImpl implements ProductGateway {
         .forEach(
             warehouse -> {
               final WarehouseTypeEntity warehouseTypeEntity = warehouse.getWarehouseType();
-              warehouse.setWarehouseType(
-                  warehouseTypeRepository
-                      .findByDescription(warehouse.getWarehouseType().getDescription())
-                      .orElse(warehouseTypeEntity));
+                Optional<WarehouseTypeEntity> warehouseTypeEntityOptional = warehouseTypeRepository
+                    .findByDescription(warehouse.getWarehouseType().getDescription());
+              if(warehouseTypeEntityOptional.isPresent()) {
+                  warehouse.setWarehouseType(warehouseTypeEntityOptional.get());
+              } else {
+                  warehouseTypeRepository.save(warehouseTypeEntity);
+              }
             });
 
     productRepository.save(product);
