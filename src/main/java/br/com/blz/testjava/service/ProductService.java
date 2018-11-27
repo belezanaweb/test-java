@@ -31,8 +31,14 @@ public class ProductService {
 
 	}
 
-	public void deleteProductBy(int sku) {
-		repository.deleteProductBy(sku);
+	public ResponseEntity<Object> deleteProductBy(int sku) {
+		boolean removed = repository.deleteProductBy(sku);
+		
+		if (removed)
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		
 	}
 
 	public ResponseEntity<Product> updateProductBy(int sku, Product product) {

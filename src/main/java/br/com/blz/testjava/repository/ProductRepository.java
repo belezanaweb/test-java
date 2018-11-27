@@ -37,8 +37,8 @@ public class ProductRepository {
 		return product;
 	}
 
-	public void deleteProductBy(int sku) {
-		products.removeIf(p -> p.getSku() == sku);		
+	public boolean deleteProductBy(int sku) {
+		return products.removeIf(p -> p.getSku() == sku);		
 	}
 
 	public Product updateProduct(int sku, Product product) {

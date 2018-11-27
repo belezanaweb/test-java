@@ -32,8 +32,8 @@ public class ProductController {
 	}
 	
 	@DeleteMapping("/products/{sku}")
-	public void deleteProductBy(@PathVariable("sku") int sku){
-		service.deleteProductBy(sku);
+	public ResponseEntity<Object> deleteProductBy(@PathVariable("sku") int sku){
+		return service.deleteProductBy(sku);
 	}
 	
 	@PostMapping("/products")
