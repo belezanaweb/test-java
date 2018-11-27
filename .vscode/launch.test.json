@@ -1,0 +1,30 @@
+{
+    "run": {
+        "default": "",
+        "items": [
+            {
+                "name": "test-java",
+                "projectName": "test-java",
+                "workingDirectory": "c:\\Users\\1513 MXTI\\Documents\\GIT\\Vagas\\BelezaWeb-TesteJava",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    },
+    "debug": {
+        "default": "",
+        "items": [
+            {
+                "name": "test-java",
+                "projectName": "test-java",
+                "workingDirectory": "c:\\Users\\1513 MXTI\\Documents\\GIT\\Vagas\\BelezaWeb-TesteJava",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    }
+}

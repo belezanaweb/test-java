@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.12.RELEASE</version>
+		<version>2.0.2.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
@@ -25,24 +25,140 @@
 	</properties>
 
 	<dependencies>
+	
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-validation</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.hibernate.validator</groupId>
+          <artifactId>hibernate-validator</artifactId>
+        </exclusion>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+        </exclusion>
+      </exclusions>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-undertow</artifactId>
+    </dependency>
+		
+		
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.0</version>
+      <scope>provided</scope>
+    </dependency>
+		
+    <!--  =========================  Logs   =====================================  -->
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-core</artifactId>
+      <version>1.2.3</version>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.2.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.25</version>
+    </dependency>
+		
+		
+    <!--  =========================  Database ORM  ==============================  -->
+    <dependency>
+      <groupId>io.ebean</groupId>
+      <artifactId>ebean</artifactId>
+      <version>11.10.1</version>
+    </dependency>
+    <dependency>
+      <groupId>io.ebean</groupId>
+      <artifactId>ebean-querybean</artifactId>
+      <version>11.2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>io.ebean</groupId>
+      <artifactId>querybean-generator</artifactId>
+      <version>11.1.1</version>
+      <scope>provided</scope>
+    </dependency>
+		
+    <!--  =========================  Testes   =====================================  -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+    
+		<dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>1.4.196</version>
+      <!-- <scope>test</scope> -->
+    </dependency>
+		
 	</dependencies>
 
 	<build>
+		<finalName>blz-api</finalName>
+		
 		<plugins>
+		
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <!-- 
+            O "repackage" do Spring Boot irá adicionar no JAR final as libs
+            marcadas como "provided" no maven ("pom.xml").
+            Para evitar isso, precisamos adicinar a configuração abaixo no plugin dele.
+          -->
+          <excludes>
+            <exclude>
+              <groupId>io.ebean</groupId>
+              <artifactId>querybean-generator</artifactId>
+            </exclude>
+            <exclude>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+            </exclude>
+          </excludes>
+        </configuration>
 			</plugin>
+      
+      <plugin>
+        <groupId>io.ebean</groupId>
+        <artifactId>ebean-maven-plugin</artifactId>
+        <version>11.11.1</version>
+        <executions>
+          <!-- enhance main classes -->
+          <execution>
+            <id>main</id>
+            <!-- <phase>process-classes</phase> -->
+            <!-- <phase>compile</phase> -->
+            <phase>process-classes</phase>
+            <configuration>
+              <transformArgs>debug=1</transformArgs>
+            </configuration>
+            <goals>
+              <goal>enhance</goal>
+            </goals>
+          </execution>
+
+        </executions>
+      </plugin>
+      
+			
 		</plugins>
 	</build>
 
