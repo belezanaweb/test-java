@@ -1,13 +1,17 @@
 package br.com.blz.testjava.entity;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
-@JsonInclude(Include.NON_NULL)
 public class Product {
 
+	@NotNull
 	private int sku;
+	
+	@NotNull
 	private String name;
+	
+	@Valid
 	private Inventory inventory;
 	
 	private Boolean isMarketable;
@@ -22,7 +26,6 @@ public class Product {
 		this.sku = sku;
 		this.name = name;
 		this.inventory = inventory;
-		addMarketable();
 	}
 
 	public int getSku() {
@@ -46,10 +49,7 @@ public class Product {
 	}
 
 	public Boolean getIsMarketable() {
-		return isMarketable;
+		return this.getInventory().getQuantity() > 0;
 	}
 
-	public void addMarketable() {
-		this.isMarketable = this.getInventory().getQuantity() > 0;
-	}
 }

@@ -1,11 +1,18 @@
 package br.com.blz.testjava.entity;
 
+import javax.validation.constraints.NotNull;
+
 import br.com.blz.testjava.enums.WarehouseType;
 
 public class Warehouse {
 
+	@NotNull
 	private String locality;
+	
+	@NotNull
 	private Integer quantity;
+	
+	@NotNull
 	private WarehouseType type;
 
 	public Warehouse() {}

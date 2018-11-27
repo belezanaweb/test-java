@@ -35,8 +35,8 @@ public class ProductService {
 		repository.deleteProductBy(sku);
 	}
 
-	public Product updateProductBy(int sku, Product product) {
-		return repository.updateProduct(sku, product);
+	public ResponseEntity<Product> updateProductBy(int sku, Product product) {
+		return ResponseEntity.status(HttpStatus.OK).body(repository.updateProduct(sku, product));
 	}
 	
 	private ErrorResponse getErrorMessage(String message) {

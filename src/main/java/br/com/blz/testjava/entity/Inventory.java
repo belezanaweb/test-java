@@ -1,22 +1,21 @@
 package br.com.blz.testjava.entity;
 
 import java.util.List;
-import java.util.Optional;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import javax.validation.Valid;
 
-@JsonInclude(Include.NON_NULL)
 public class Inventory {
 
 	private Integer quantity;
-	List<Warehouse> warehouses;
+	
+	@Valid
+	private List<Warehouse> warehouses;
 
-	public Inventory() {}
+	public Inventory() {
+	}
 
 	public Inventory(List<Warehouse> warehouses) {
 		this.warehouses = warehouses;
-		addQuantity();
 	}
 
 	public static Inventory valueOf(List<Warehouse> warehouses) {
@@ -28,17 +27,10 @@ public class Inventory {
 	}
 
 	public Integer getQuantity() {
-		return quantity;
+		return this.getWarehouses().stream()
+						.map(Warehouse::getQuantity)
+						.reduce(Integer::sum)
+						.get();
 	}
-
-	public void addQuantity() {
-		Optional<Integer> quantity = this.getWarehouses().stream()
-				.map(Warehouse::getQuantity)
-				.reduce(Integer::sum);
-		
-		this.quantity = quantity.get();
-
-	}
-	
 
 }

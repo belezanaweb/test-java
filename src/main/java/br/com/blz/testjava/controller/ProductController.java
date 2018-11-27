@@ -1,5 +1,7 @@
 package br.com.blz.testjava.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,7 +27,7 @@ public class ProductController {
 	}
 	
 	@PutMapping("/products/{sku}")
-	public Product updateProductBy(@PathVariable("sku") int sku, @RequestBody Product product){
+	public ResponseEntity<Product> updateProductBy(@PathVariable("sku") int sku, @RequestBody @Valid Product product){
 		return service.updateProductBy(sku, product);
 	}
 	
@@ -35,7 +37,7 @@ public class ProductController {
 	}
 	
 	@PostMapping("/products")
-	public ResponseEntity<Object> addProductBy(@RequestBody Product product){
+	public ResponseEntity<Object> addProductBy(@RequestBody @Valid Product product){
 		return service.addProduct(product);
 	}
 }

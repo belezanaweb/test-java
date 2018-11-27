@@ -20,15 +20,10 @@ public class ProductRepository {
 
 	public Product findBy(int sku) {
 		
-		Product product = products.stream()
+		return products.stream()
 				.filter(p -> p.getSku() == sku)
 				.findAny()
-				.orElse(null);
-		
-		product.getInventory().addQuantity();
-		product.addMarketable();
-		
-		return product;
+				.orElse(null);		
 	}
 
 	public Product addProduct(Product product) {
@@ -48,10 +43,9 @@ public class ProductRepository {
 
 	public Product updateProduct(int sku, Product product) {
 		Product toUpdate = findBy(sku);
-		toUpdate.setName(product.getName() != null ? product.getName() : toUpdate.getName());
-		toUpdate.setInventory(product.getInventory() != null ? product.getInventory() : toUpdate.getInventory());
+		toUpdate.setName(product.getName());
+		toUpdate.setInventory(product.getInventory());
 		return toUpdate;
-		
 	}
 
 	@PostConstruct
