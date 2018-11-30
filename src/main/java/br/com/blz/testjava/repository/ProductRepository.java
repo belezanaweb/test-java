@@ -12,6 +12,8 @@ import br.com.blz.testjava.entity.Inventory;
 import br.com.blz.testjava.entity.Product;
 import br.com.blz.testjava.entity.Warehouse;
 import br.com.blz.testjava.enums.WarehouseType;
+import br.com.blz.testjava.exception.ProductDuplicatedException;
+import br.com.blz.testjava.exception.ProductNotFoundException;
 
 @Repository
 public class ProductRepository {
@@ -32,13 +34,18 @@ public class ProductRepository {
 		if(!anyMatch)				
 			products.add(product);
 		else
-			throw new IllegalArgumentException("Can't add duplicated sku");
+			throw new ProductDuplicatedException("Can't add duplicated sku");
 		
 		return product;
 	}
 
 	public boolean deleteProductBy(int sku) {
-		return products.removeIf(p -> p.getSku() == sku);		
+		boolean removed = products.removeIf(p -> p.getSku() == sku);
+		
+		if (!removed)
+			throw new ProductNotFoundException("Can't remove product with sku: " + sku);
+		
+		return removed;
 	}
 
 	public Product updateProduct(int sku, Product product) {
