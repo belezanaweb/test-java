@@ -25,19 +25,25 @@ public class ProductController {
 	private ProductService service;
 	
 	@GetMapping("/{sku}")
-	public ResponseEntity<Product> findProductBy(@PathVariable("sku") int sku){
+	public ResponseEntity<Product> findProductBy(@PathVariable("sku") Long sku){
 		Product found = service.findProductBy(sku);
 		return ResponseEntity.status(HttpStatus.OK).body(found);
 	}
 	
+	@GetMapping
+	public ResponseEntity<Iterable<Product>> findAll(){
+		Iterable<Product> found = service.findAll();
+		return ResponseEntity.status(HttpStatus.OK).body(found);
+	}
+	
 	@PutMapping("/{sku}")
-	public ResponseEntity<Product> updateProductBy(@PathVariable("sku") int sku, @RequestBody @Valid Product product){
+	public ResponseEntity<Product> updateProductBy(@PathVariable("sku") Long sku, @RequestBody @Valid Product product){
 		Product updated = service.updateProductBy(sku, product);
 		return ResponseEntity.status(HttpStatus.OK).body(updated);
 	}
 	
 	@DeleteMapping("/{sku}")
-	public ResponseEntity<Object> deleteProductBy(@PathVariable("sku") int sku){
+	public ResponseEntity<Object> deleteProductBy(@PathVariable("sku") Long sku){
 		service.deleteProductBy(sku);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}

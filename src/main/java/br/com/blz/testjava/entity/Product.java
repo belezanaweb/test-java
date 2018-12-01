@@ -1,34 +1,31 @@
 package br.com.blz.testjava.entity;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+@Entity
 public class Product {
 
-	@NotNull
-	private int sku;
-	
-	@NotNull
+	@Id
+	@NotNull(message = "sku is required")
+	private Long sku;
+
+	@NotNull(message = "name is required")
 	private String name;
-	
+
 	@Valid
+	@OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "inventory")
 	private Inventory inventory;
-	
+
 	private Boolean isMarketable;
 
-	public static Product valueOf(int sku, String name, Inventory inventory) {
-		return new Product(sku, name, inventory);
-	}
-
-	public Product() {}
-
-	public Product(int sku, String name, Inventory inventory) {
-		this.sku = sku;
-		this.name = name;
-		this.inventory = inventory;
-	}
-
-	public int getSku() {
+	public Long getSku() {
 		return sku;
 	}
 
@@ -39,7 +36,7 @@ public class Product {
 	public Inventory getInventory() {
 		return inventory;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
