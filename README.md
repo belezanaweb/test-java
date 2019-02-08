@@ -1,3 +1,154 @@
+# Test-Java
+
+Implementação do Teste Java
+
+Tabela de Conteúdos
+=================
+* [Pré-Requisitos](#prerequisitos)
+* [Compilar Aplicação](#compilar-aplicacao)
+* [Rodar os testes automatizados](#rodar-testes-automatizados)
+* [Rodar aplicação](#rodar-aplicacao)
+* [Postman Collection](#postman-collection)
+* [Exemplo das operações](#exemplo-operacoes)
+
+
+## Pré-Requisitos
+
+Para rodar o projeto você precisará ter o maven 3 e java 8 instalados na sua máquina.
+
+A aplicação e testes irão rodar no endpoint http://localhost:8080
+
+## Compilar Aplicação
+
+Para compilar a aplicação execute o cli
+
+```
+mvn clean install  
+```
+
+## Rodar os testes automatizados
+
+
+```
+mvn test
+```
+
+## Rodar aplicação
+
+```
+mvn spring-boot:run
+```
+
+## Postman Collection
+
+O arquivo [a link](https://github.com/fioritti/test-java/BLZ-WEB.postman_collection.json) tem as operações CRUDS implementadas
+
+
+
+
+## Exemplo das operações
+
+É possível também executar as operações via curl:
+
+1 - Criar Produto
+
+```
+curl -X POST \
+  http://localhost:8080/products \
+  -H 'Content-Type: application/json' \
+  -H 'cache-control: no-cache' \
+  -d ' {
+        "sku": 43264,
+        "name": "L'\''Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g",
+        "inventory": {
+            "quantity": 15,
+            "warehouses": [
+                {
+                    "locality": "MOEMA",
+                    "quantity": 3,
+                    "type": "PHYSICAL_STORE"
+                },
+                {
+                    "locality": "SP",
+                    "quantity": 12,
+                    "type": "ECOMMERCE"
+                }
+            ]
+        },
+        "marketable": true
+    }'
+```
+
+2 - Criar Produto que já existe com a mesma sku
+
+```
+curl -X POST \
+  http://localhost:8080/products \
+  -H 'Content-Type: application/json' \
+  -H 'cache-control: no-cache' \
+  -d ' {
+        "sku": 43264,
+        "name": "L'\''Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g",
+        "inventory": {
+            "quantity": 15,
+            "warehouses": [
+                {
+                    "locality": "MOEMA",
+                    "quantity": 3,
+                    "type": "PHYSICAL_STORE"
+                },
+                {
+                    "locality": "SP",
+                    "quantity": 12,
+                    "type": "ECOMMERCE"
+                }
+            ]
+        },
+        "marketable": true
+    }'
+```
+
+3 - Obter todos produtos
+
+```
+curl -X GET \
+  http://localhost:8080/products/ \
+  -H 'cache-control: no-cache'
+```
+4 - Obter produto por sku
+
+```
+curl -X GET \
+  http://localhost:8080/products/34 \
+  -H 'cache-control: no-cache'
+```
+5 - Deletar Produto
+
+```
+curl -X DELETE \
+  http://localhost:8080/products/34 \
+  -H 'cache-control: no-cache'
+```
+6 - Atualizar Produto
+
+```
+curl -X PUT \
+  http://localhost:8080/products/45 \
+  -H 'Content-Type: application/json' \
+  -H 'cache-control: no-cache' \
+  -d '{
+    "sku": 43264,
+    "name": "Dove",
+    "inventory": {
+        "quantity": 2
+       
+    },
+    "marketable": true
+}'
+```
+
+
+
 ### Backend Test
 
 Esta é uma avaliação básica de código.
