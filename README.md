@@ -4,21 +4,21 @@ Implementação do Teste Java
 
 Tabela de Conteúdos
 =================
-* [Pré-Requisitos](#prerequisitos)
-* [Compilar Aplicação](#compilar-aplicacao)
-* [Rodar os testes automatizados](#rodar-testes-automatizados)
-* [Rodar aplicação](#rodar-aplicacao)
+* [Pre-Requisitos](#pre-requisitos)
+* [Compilar Aplicacao](#compilar-aplicacao)
+* [Rodar os testes automatizados](#rodar-os-testes-automatizados)
+* [Rodar aplicacao](#rodar-aplicacao)
 * [Postman Collection](#postman-collection)
-* [Exemplo das operações](#exemplo-operacoes)
+* [Exemplo das operacoes](#exemplo-das-operacoes)
 
 
-## Pré-Requisitos
+## Pre-Requisitos
 
 Para rodar o projeto você precisará ter o maven 3 e java 8 instalados na sua máquina.
 
 A aplicação e testes irão rodar no endpoint http://localhost:8080
 
-## Compilar Aplicação
+## Compilar Aplicacao
 
 Para compilar a aplicação execute o cli
 
@@ -33,7 +33,7 @@ mvn clean install
 mvn test
 ```
 
-## Rodar aplicação
+## Rodar aplicacao
 
 ```
 mvn spring-boot:run
@@ -41,12 +41,10 @@ mvn spring-boot:run
 
 ## Postman Collection
 
-O arquivo [a link](https://github.com/fioritti/test-java/BLZ-WEB.postman_collection.json) tem as operações CRUDS implementadas
+O arquivo [BLZ-WEB.postman_collection.json(https://github.com/fioritti/test-java/blob/master/BLZ-WEB.postman_collection.json) tem as operações CRUDS implementadas
 
 
-
-
-## Exemplo das operações
+## Exemplo das operacoes
 
 É possível também executar as operações via curl:
 
@@ -223,3 +221,4 @@ Crie endpoints para as seguintes ações:
 - Os produtos podem ficar em memória, não é necessário persistir os dados
 - Sinta-se a vontade para fazer o código em ```groovy``` se preferir, utilizamos bastante aqui
 - Testes são sempre bem-vindos :smiley:
+
