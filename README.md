@@ -41,7 +41,7 @@ mvn spring-boot:run
 
 ## Postman Collection
 
-O arquivo [BLZ-WEB.postman_collection.json(https://github.com/fioritti/test-java/blob/master/BLZ-WEB.postman_collection.json) tem as operações CRUDS implementadas
+O arquivo https://github.com/fioritti/test-java/blob/master/BLZ-WEB.postman_collection.json tem as operações CRUDS implementadas
 
 
 ## Exemplo das operacoes
