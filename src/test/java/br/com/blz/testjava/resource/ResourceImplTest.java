@@ -2,16 +2,25 @@ package br.com.blz.testjava.resource;
 
 import br.com.blz.testjava.entity.Inventory;
 import br.com.blz.testjava.entity.Produto;
+import br.com.blz.testjava.entity.Warehouses;
+import br.com.blz.testjava.repository.ProdutoRepository;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.BlockJUnit4ClassRunner;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-
+@RunWith(value = BlockJUnit4ClassRunner.class)
 public class ResourceImplTest {
 
+    @InjectMocks
+    private ResourceImpl resourceImpl;
 
     @Mock
-    private ResourceImpl resource;
+    private ProdutoRepository produtoRepository;
 
     @Mock
     private Inventory inventory;
@@ -19,25 +28,53 @@ public class ResourceImplTest {
     @Before
     public void init(){
         MockitoAnnotations.initMocks(this);
+        Mockito.mock(Warehouses.class);
 
-        Produto segundoProduto = new Produto();
-        segundoProduto.setId(2l);
-        segundoProduto.setName("Maria teste");
-        segundoProduto.setSku(43264l);
-        segundoProduto.setInventory(inventory);
-        resource.salvar(segundoProduto);
     }
 
     @Test(expected=Exception.class)
-    public void CriarProdutoExistente(){
+    public void criarProdutoExistente(){
+        Produto produto = new Produto();
+        produto.setName("Maria teste");
+        produto.setSku(43264l);
+        produto.setInventory(inventory);
+        Mockito.when(produtoRepository.exists(produto.getSku())).thenReturn(true);
 
-            Produto primeiroProduto = new Produto();
-            primeiroProduto.setId(1l);
-            primeiroProduto.setName("Joao teste");
-            primeiroProduto.setSku(43264l);
-            primeiroProduto.setInventory(inventory);
-     resource.salvar(primeiroProduto);
+     resourceImpl.salvar(produto);
+    }
+    @Test
+    public void criarProdutoComSucesso(){
+        Produto produto = new Produto();
+        produto.setName("Maria teste");
+        produto.setSku(43264l);
+        produto.setInventory(inventory);
+        produto.setMarketable(true);
+        Mockito.when(produtoRepository.exists(produto.getSku())).thenReturn(false);
 
+        resourceImpl.salvar(produto);
+    }
+    @Test
+    public void editarProdutoComSucesso(){
 
+        Produto produto = new Produto();
+        produto.setName("Maria teste");
+        produto.setSku(43264l);
+        produto.setInventory(inventory);
+        produto.setMarketable(true);
+
+        resourceImpl.editar(produto);
+
+    }
+    @Test
+    public void recuperarProduto(){
+        Produto produto = new Produto();
+        produto.setName("Maria teste");
+        produto.setSku(43264l);
+        produto.setInventory(inventory);
+        produto.setMarketable(false);
+
+        final Produto recuperarProduto = resourceImpl.recuperar(produto.getSku());
+
+        Assert.assertTrue(recuperarProduto.isMarketable());
     }
 }

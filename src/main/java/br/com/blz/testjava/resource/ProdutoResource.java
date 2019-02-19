@@ -27,7 +27,13 @@ public class ProdutoResource {
     }
 
     @DeleteMapping("/deletar-produto")
-    public void deletar(@RequestBody @Valid Produto produto){
-         resourceImpl.deletar(produto);
+    public void deletar(@RequestBody @Valid Long skul){
+         resourceImpl.deletar(skul);
+    }
+
+    @PatchMapping("/recuperar-Produto")
+    public Produto recuperar(@RequestBody @Valid Long skul){
+       return resourceImpl.recuperar(skul);
+
     }
 }

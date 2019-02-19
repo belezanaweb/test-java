@@ -17,18 +17,14 @@ public class Inventory {
     @Column(name = "codigo")
     private long codigo;
 
-    @JsonIgnore
-    @Column(name = "locality")
-    private long quantity ;
 
-    @OneToMany(mappedBy = "inventory",  cascade = CascadeType.ALL)
+    @Column(name = "locality")
+    private long quantity;
+
+    @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
     private List<Warehouses> warehouses;
 
     @JsonIgnore
     @OneToOne
     private Produto produto;
-
-    @JsonIgnore
-    @Column(name = "isMarketable")
-    private boolean isMarketable;
 }
