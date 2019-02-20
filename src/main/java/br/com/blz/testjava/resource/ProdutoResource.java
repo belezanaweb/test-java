@@ -2,6 +2,7 @@ package br.com.blz.testjava.resource;
 
 import br.com.blz.testjava.entity.Produto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,23 +19,22 @@ public class ProdutoResource {
 
     @PostMapping("/salvar-produto")
     public ResponseEntity<?> salvarProduto(@RequestBody @Valid Produto produto){
-
-        return ResponseEntity.ok(resourceImpl.salvar(produto));
+            return new ResponseEntity<>(resourceImpl.salvar(produto), HttpStatus.OK);
     }
 
     @PutMapping("/editar-produto")
     public ResponseEntity<?> editar(@RequestBody @Valid Produto produto){
-        return ResponseEntity.ok(resourceImpl.editar(produto));
+        return new ResponseEntity<>(resourceImpl.editar(produto), HttpStatus.OK);
     }
 
-    @GetMapping("/deletar-produto/{sku}")
-    public void deletar(@PathVariable(value = "sku") Long sku){
-         resourceImpl.deletar(sku);
+    @DeleteMapping(path = "/deletar-produto/{sku}")
+    public ResponseEntity<?> deletar(@PathVariable(value = "sku") Long sku){
+        return new ResponseEntity<>(resourceImpl.deletar(sku), HttpStatus.OK);
     }
 
     @PatchMapping("/recuperar-Produto")
     public ResponseEntity<?> recuperar(@RequestBody @Valid Long skul){
-       return ResponseEntity.ok(resourceImpl.recuperar(skul));
+       return new ResponseEntity<>(resourceImpl.recuperar(skul), HttpStatus.OK);
 
     }
 }
