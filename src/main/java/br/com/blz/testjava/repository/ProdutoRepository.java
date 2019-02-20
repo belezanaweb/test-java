@@ -6,9 +6,12 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ProdutoRepository extends CrudRepository<Produto, Long> {
 
-    @Query("update Produto set isMarketable = 'false' where skul = :skul ")
-    void deletar(Long skul);
+    @Query(value = "update Produto set isMarketable = 'false' where sku = :sku and isMarketable = false ", nativeQuery = true)
+    void deletar(Long sku);
 
-    @Query("update Produto set isMarketable = 'true' where skul = :skul ")
-    Produto recuperarProduto(Long skul);
+    @Query(value = "update Produto set isMarketable = 'true' where sku = :sku and isMarketable = false", nativeQuery = true)
+    Produto recuperarProduto(Long sku);
+
+    @Query(value = "select p.isMarketable from Produto where sku = :sku", nativeQuery = true)
+    boolean buscaProdutoJaDisponivel(Long sku);
 }
