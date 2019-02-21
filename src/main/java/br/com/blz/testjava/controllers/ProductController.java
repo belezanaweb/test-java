@@ -5,6 +5,7 @@ import br.com.blz.testjava.controllers.dto.request.ProductRequest;
 import br.com.blz.testjava.controllers.dto.response.ProductResponse;
 import br.com.blz.testjava.entities.Product;
 import br.com.blz.testjava.services.ProductService;
+import lombok.val;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,9 +29,9 @@ public class ProductController {
     private transient ModelMapper mapper;
 
     @PostMapping
-    public ResponseEntity<ProductRequest> insert(@RequestBody @Valid ProductRequest body) {
+    public ResponseEntity<ProductResponse> insert(@RequestBody @Valid ProductRequest body) {
         Product product = this.productService.insert(this.mapper.map(body, Product.class));
-        ProductRequest response = this.mapper.map(product, ProductRequest.class);
+        ProductResponse response = this.mapper.map(product, ProductResponse.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -40,6 +41,20 @@ public class ProductController {
             .orElseThrow(() -> new IllegalArgumentException("Não foi encontrado nenhum produto por este SKU"));
         ProductResponse response = this.mapper.map(product, ProductResponse.class);
         return ResponseEntity.ok(response);
+    }
+
+    @PutMapping(path = "/{sku}")
+    public ResponseEntity<ProductResponse> update(
+        @PathVariable Long sku,
+        @RequestBody @Valid ProductRequest body) {
+        LOGGER.info("UPDATE PARAMTER - REQUEST: {}", body);
+        body.setSku(sku);
+        Product product = this.mapper.map(body, Product.class);
+        val response = this.productService.update(product);
+        if(response != null)
+            return ResponseEntity.status(HttpStatus.OK).body(this.mapper.map(response, ProductResponse.class));
+        else
+            return ResponseEntity.badRequest().build();
     }
 
     @DeleteMapping(path = "/{sku}")

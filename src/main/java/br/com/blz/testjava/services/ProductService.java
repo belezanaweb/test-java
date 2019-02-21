@@ -15,9 +15,17 @@ public class ProductService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductService.class);
 
     @Autowired
-    private ProductRepository productRepository;
+    private transient ProductRepository productRepository;
 
     public Product insert(final Product product) {
+        return this.productRepository.save(product);
+    }
+
+    public Product update(final Product product) {
+        Optional<Product> productOp = this.findBySku(product.getSku().longValue());
+        if(!productOp.isPresent())
+            throw new IllegalArgumentException("Produto inválido!");
+        product.setId(productOp.get().getId());
         return this.productRepository.save(product);
     }
 
