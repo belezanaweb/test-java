@@ -15,6 +15,8 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Optional;
+
 @RunWith(value = BlockJUnit4ClassRunner.class)
 public class ResourceImplTest {
 
@@ -34,16 +36,6 @@ public class ResourceImplTest {
 
     }
 
-    @Test(expected=Exception.class)
-    public void criarProdutoExistente(){
-        Produto produto = new Produto();
-        produto.setName("Maria teste");
-        produto.setSku(43264l);
-        produto.setInventory(inventory);
-        Mockito.when(produtoRepository.exists(produto.getSku())).thenReturn(true);
-
-     resourceImpl.salvar(produto);
-    }
     @Test
     public void criarProdutoComSucesso(){
         Produto produto = new Produto();
@@ -76,6 +68,8 @@ public class ResourceImplTest {
         produto.setSku(43264l);
         produto.setInventory(inventory);
         produto.setMarketable(false);
+
+        Mockito.when(produtoRepository.findBysku(produto.getSku())).thenReturn(Optional.of(produto));
 
         final ResponseEntity<?> recuperarProduto = resourceImpl.recuperar(produto.getSku());
 
