@@ -4,10 +4,7 @@ package br.com.blz.testjava.entities;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -20,7 +17,8 @@ public class Inventory {
     private Long id;
 
     private Number quantity;
-    
+
+    @OneToMany(cascade = CascadeType.REMOVE)
     private List<Warehouse> warehouses;
 
 }
