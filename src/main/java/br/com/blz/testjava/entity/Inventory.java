@@ -14,51 +14,17 @@ public class Inventory {
     @Id
     @GeneratedValue
     @JsonIgnore
-    @Column(name = "codigo")
-    private long codigo;
-
+    @Column(name = "codigoi")
+    private long codigoI;
 
     @Column(name = "locality")
     private long quantity;
 
-    @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "inventory_codigoi")
     private List<Warehouses> warehouses;
 
     @JsonIgnore
     @OneToOne
     private Produto produto;
-
-	public long getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(long codigo) {
-		this.codigo = codigo;
-	}
-
-	public long getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(long quantity) {
-		this.quantity = quantity;
-	}
-
-	public List<Warehouses> getWarehouses() {
-		return warehouses;
-	}
-
-	public void setWarehouses(List<Warehouses> warehouses) {
-		this.warehouses = warehouses;
-	}
-
-	public Produto getProduto() {
-		return produto;
-	}
-
-	public void setProduto(Produto produto) {
-		this.produto = produto;
-	}
-    
-    
 }

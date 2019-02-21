@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 
 @Service
+@Transactional
 @Slf4j
 public class ResourceImpl implements Serializable {
 
@@ -29,14 +31,13 @@ public class ResourceImpl implements Serializable {
         produto.getInventory().setQuantity(quantity);
             try{
                     if(produtoRepository.exists(produto.getSku())) {
-                        throw new Exception("Produto nao Existe");
-
+                        throw new Exception("Produto ja Existe");
                     }
             } catch (Exception e) {
-//                log.error(e.getMessage(),e);
-                return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+                log.error(e.getMessage(),e);
+                return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
     }
-     return new ResponseEntity(produtoRepository.save(produto), HttpStatus.ACCEPTED);
+     return new ResponseEntity(produtoRepository.save(produto), HttpStatus.OK);
     }
 
     public ResponseEntity<?> editar(Produto produto) {
@@ -47,24 +48,25 @@ public class ResourceImpl implements Serializable {
         return new ResponseEntity(produtoRepository.deletar(sku), HttpStatus.OK);
     }
 
-    public ResponseEntity<?> recuperar(Long skul) {
+    public ResponseEntity<?> recuperar(Long sku) {
             try {
-                 if(produtoRepository.buscaProdutoJaDisponivel(skul)){
+                 if(produtoRepository.buscaProdutoJaDisponivel(sku)){
                      throw new Exception("Produto já Disponivel");
                  }
             } catch (Exception e) {
-//                    log.error(e.getMessage(),e);
+                    log.error(e.getMessage(),e);
                 return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
             }
-            final Produto produto = produtoRepository.recuperarProduto(skul);
+        final Integer retorno = produtoRepository.recuperarProduto(sku);
+        final Produto produto = produtoRepository.findBysku(sku).get();
 
-            int quantity = produto.getInventory()
-                .getWarehouses()
-                .stream()
-                .mapToInt(inventario -> inventario.getQuantity()).sum();
+        int quantity = produto.getInventory()
+            .getWarehouses()
+            .stream()
+            .mapToInt(inventario -> inventario.getQuantity()).sum();
 
             produto.getInventory().setQuantity(quantity);
 
-        return new ResponseEntity(produto, HttpStatus.ACCEPTED) ;
+        return new ResponseEntity(produto, HttpStatus.OK) ;
     }
 }

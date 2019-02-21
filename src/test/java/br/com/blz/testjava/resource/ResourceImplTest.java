@@ -53,7 +53,8 @@ public class ResourceImplTest {
         produto.setMarketable(true);
         Mockito.when(produtoRepository.exists(produto.getSku())).thenReturn(false);
 
-        resourceImpl.salvar(produto);
+        final ResponseEntity<?> salvar = resourceImpl.salvar(produto);
+        Assert.assertNotNull(salvar);
     }
     @Test
     public void editarProdutoComSucesso(){
@@ -64,8 +65,9 @@ public class ResourceImplTest {
         produto.setInventory(inventory);
         produto.setMarketable(true);
 
-        resourceImpl.editar(produto);
+        final ResponseEntity<?> editar = resourceImpl.editar(produto);
 
+        Assert.assertNotNull(editar);
     }
     @Test
     public void recuperarProduto(){
@@ -77,6 +79,6 @@ public class ResourceImplTest {
 
         final ResponseEntity<?> recuperarProduto = resourceImpl.recuperar(produto.getSku());
 
-//        Assert.assertTrue(recuperarProduto.getBody().getClass().getName());
+        Assert.assertNotNull(recuperarProduto);
     }
 }

@@ -14,8 +14,8 @@ public class Warehouses {
     @Id
     @GeneratedValue
     @JsonIgnore
-    @Column(name = "codigo")
-    private long codigo;
+    @Column(name = "codigow")
+    private long codigoW;
 
     @Column(name = "locality")
     private String locality;
@@ -29,48 +29,6 @@ public class Warehouses {
     @JsonIgnore
     @ManyToOne
     private Inventory inventory;
-
-	public long getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(long codigo) {
-		this.codigo = codigo;
-	}
-
-	public String getLocality() {
-		return locality;
-	}
-
-	public void setLocality(String locality) {
-		this.locality = locality;
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public Inventory getInventory() {
-		return inventory;
-	}
-
-	public void setInventory(Inventory inventory) {
-		this.inventory = inventory;
-	}
-    
-    
     
 
 }

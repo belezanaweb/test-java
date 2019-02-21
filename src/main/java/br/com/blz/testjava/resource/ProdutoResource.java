@@ -32,9 +32,8 @@ public class ProdutoResource {
         return new ResponseEntity<>(resourceImpl.deletar(sku), HttpStatus.OK);
     }
 
-    @PatchMapping("/recuperar-Produto")
-    public ResponseEntity<?> recuperar(@RequestBody @Valid Long skul){
-       return new ResponseEntity<>(resourceImpl.recuperar(skul), HttpStatus.OK);
-
+    @PatchMapping(path = "/recuperar-Produto/{sku}")
+    public ResponseEntity<?> recuperar(@PathVariable(value = "sku") Long sku){
+       return new ResponseEntity<>(resourceImpl.recuperar(sku), HttpStatus.OK);
     }
 }

@@ -18,44 +18,11 @@ public class Produto {
     @Column (name = "name")
     private String name;
 
-    @OneToOne(mappedBy = "produto",  cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "produto_sku")
     private Inventory inventory;
 
-    @Column(name = "isMarketable")
-    private boolean isMarketable;
+    @Column(name = "marketable")
+    private boolean marketable;
 
-	public Long getSku() {
-		return sku;
-	}
-
-	public void setSku(Long sku) {
-		this.sku = sku;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Inventory getInventory() {
-		return inventory;
-	}
-
-	public void setInventory(Inventory inventory) {
-		this.inventory = inventory;
-	}
-
-	public boolean isMarketable() {
-		return isMarketable;
-	}
-
-	public void setMarketable(boolean isMarketable) {
-		this.isMarketable = isMarketable;
-	}
-    
-    
-    
 }
