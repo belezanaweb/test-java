@@ -6,6 +6,8 @@ import br.com.blz.testjava.controllers.dto.response.ProductResponse;
 import br.com.blz.testjava.entities.Product;
 import br.com.blz.testjava.services.ProductService;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,8 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping(path = "/products", produces = { "application/vnd.testjava.api.v1+json" })
 public class ProductController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductService.class);
 
     @Autowired
     private transient ProductService productService;
@@ -36,6 +40,12 @@ public class ProductController {
             .orElseThrow(() -> new IllegalArgumentException("Não foi encontrado nenhum produto por este SKU"));
         ProductResponse response = this.mapper.map(product, ProductResponse.class);
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping(path = "/{sku}")
+    public void delete(@PathVariable Long sku){
+        LOGGER.info("DELETE SKU Number {}", sku);
+        this.productService.delete(sku);
     }
 
 }

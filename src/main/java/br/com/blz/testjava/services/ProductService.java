@@ -25,4 +25,11 @@ public class ProductService {
         return this.productRepository.findBySku(sku);
     }
 
+    public void delete(Long sku) {
+        Optional<Product> product = this.findBySku(sku);
+        if(!product.isPresent())
+            throw new IllegalArgumentException("Sku inválido!");
+        this.productRepository.delete(product.get().getId());
+    }
+
 }
