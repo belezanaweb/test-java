@@ -18,6 +18,11 @@ public class ProductService {
     private transient ProductRepository productRepository;
 
     public Product insert(final Product product) {
+        Optional<Product> productOp = this.findBySku(product.getSku().longValue());
+        productOp.ifPresent(p -> {
+            if(p.getSku().equals(product.getSku()))
+                throw new IllegalArgumentException("Dois produtos são considerados iguais se os seus skus forem iguais");
+        });
         return this.productRepository.save(product);
     }
 
@@ -30,7 +35,18 @@ public class ProductService {
     }
 
     public Optional<Product> findBySku(final Long sku) {
-        return this.productRepository.findBySku(sku);
+        Optional<Product> product = this.productRepository.findBySku(sku);
+        if(product.isPresent()) {
+            Product p = product.get();
+            if(p.getInventory() != null) {
+                Number quantity = p.getInventory().getWarehouses().stream().mapToInt(q -> q.getQuantity().intValue()).sum();
+                p.getInventory().setQuantity(quantity);
+
+                boolean isMarketable = (quantity.intValue() > 0);
+                p.setIsMarketable(isMarketable);
+            }
+        }
+        return product;
     }
 
     public void delete(Long sku) {

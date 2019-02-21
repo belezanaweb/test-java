@@ -13,6 +13,8 @@ public class InventoryResponse {
 
     private Long id;
 
+    private Integer quantity;
+
     private List<WarehouseResponse> warehouses;
 
 }

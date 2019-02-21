@@ -3,6 +3,7 @@ package br.com.blz.testjava.controllers;
 
 import br.com.blz.testjava.controllers.dto.request.ProductRequest;
 import br.com.blz.testjava.controllers.dto.response.ProductResponse;
+import br.com.blz.testjava.controllers.dto.response.ResponseDto;
 import br.com.blz.testjava.entities.Product;
 import br.com.blz.testjava.services.ProductService;
 import lombok.val;
@@ -29,10 +30,10 @@ public class ProductController {
     private transient ModelMapper mapper;
 
     @PostMapping
-    public ResponseEntity<ProductResponse> insert(@RequestBody @Valid ProductRequest body) {
+    public ResponseEntity<ResponseDto> insert(@RequestBody @Valid ProductRequest body) {
         Product product = this.productService.insert(this.mapper.map(body, Product.class));
         ProductResponse response = this.mapper.map(product, ProductResponse.class);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto(response.getSku()));
     }
 
     @GetMapping(path = "/{sku}")
@@ -44,7 +45,7 @@ public class ProductController {
     }
 
     @PutMapping(path = "/{sku}")
-    public ResponseEntity<ProductResponse> update(
+    public ResponseEntity<Long> update(
         @PathVariable Long sku,
         @RequestBody @Valid ProductRequest body) {
         LOGGER.info("UPDATE PARAMTER - REQUEST: {}", body);
@@ -52,7 +53,7 @@ public class ProductController {
         Product product = this.mapper.map(body, Product.class);
         val response = this.productService.update(product);
         if(response != null)
-            return ResponseEntity.status(HttpStatus.OK).body(this.mapper.map(response, ProductResponse.class));
+            return ResponseEntity.status(HttpStatus.OK).body(this.mapper.map(response, ProductResponse.class).getSku());
         else
             return ResponseEntity.badRequest().build();
     }

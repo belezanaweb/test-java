@@ -18,7 +18,7 @@ public class Inventory {
 
     private Number quantity;
 
-    @OneToMany(cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     private List<Warehouse> warehouses;
 
 }
