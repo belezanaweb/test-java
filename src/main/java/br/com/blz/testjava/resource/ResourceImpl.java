@@ -33,7 +33,7 @@ public class ResourceImpl implements Serializable {
 
                     }
             } catch (Exception e) {
-                log.error(e.getMessage(),e);
+//                log.error(e.getMessage(),e);
                 return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
     }
      return new ResponseEntity(produtoRepository.save(produto), HttpStatus.ACCEPTED);
@@ -53,7 +53,7 @@ public class ResourceImpl implements Serializable {
                      throw new Exception("Produto já Disponivel");
                  }
             } catch (Exception e) {
-                    log.error(e.getMessage(),e);
+//                    log.error(e.getMessage(),e);
                 return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
             }
             final Produto produto = produtoRepository.recuperarProduto(skul);

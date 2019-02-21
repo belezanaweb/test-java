@@ -27,7 +27,7 @@ public class ProdutoResource {
         return new ResponseEntity<>(resourceImpl.editar(produto), HttpStatus.OK);
     }
 
-    @DeleteMapping(path = "/deletar-produto/{sku}")
+    @DeleteMapping(path = "/{sku}")
     public ResponseEntity<?> deletar(@PathVariable(value = "sku") Long sku){
         return new ResponseEntity<>(resourceImpl.deletar(sku), HttpStatus.OK);
     }

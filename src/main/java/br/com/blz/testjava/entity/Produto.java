@@ -23,4 +23,39 @@ public class Produto {
 
     @Column(name = "isMarketable")
     private boolean isMarketable;
+
+	public Long getSku() {
+		return sku;
+	}
+
+	public void setSku(Long sku) {
+		this.sku = sku;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Inventory getInventory() {
+		return inventory;
+	}
+
+	public void setInventory(Inventory inventory) {
+		this.inventory = inventory;
+	}
+
+	public boolean isMarketable() {
+		return isMarketable;
+	}
+
+	public void setMarketable(boolean isMarketable) {
+		this.isMarketable = isMarketable;
+	}
+    
+    
+    
 }
