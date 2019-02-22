@@ -6,7 +6,6 @@ import br.com.blz.testjava.controllers.dto.response.ProductResponse;
 import br.com.blz.testjava.controllers.dto.response.ResponseDto;
 import br.com.blz.testjava.entities.Product;
 import br.com.blz.testjava.services.ProductService;
-import lombok.val;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +36,7 @@ public class ProductController {
     }
 
     @GetMapping(path = "/{sku}")
-    public ResponseEntity<ProductResponse> getBySku( @PathVariable Long sku) {
+    public ResponseEntity<ProductResponse> getBySku(@PathVariable Long sku) {
         Product product = this.productService.findBySku(sku)
             .orElseThrow(() -> new IllegalArgumentException("Não foi encontrado nenhum produto por este SKU"));
         ProductResponse response = this.mapper.map(product, ProductResponse.class);
@@ -45,16 +44,16 @@ public class ProductController {
     }
 
     @PutMapping(path = "/{sku}")
-    public ResponseEntity<Long> update(
+    public ResponseEntity<ResponseDto> update(
         @PathVariable Long sku,
         @RequestBody @Valid ProductRequest body) {
-        LOGGER.info("UPDATE PARAMTER - REQUEST: {}", body);
+        LOGGER.info("UPDATE REQUEST: {}", sku);
         body.setSku(sku);
-        Product product = this.mapper.map(body, Product.class);
-        val response = this.productService.update(product);
-        if(response != null)
-            return ResponseEntity.status(HttpStatus.OK).body(this.mapper.map(response, ProductResponse.class).getSku());
-        else
+        Product product = this.productService.update(this.mapper.map(body, Product.class));
+        if(product != null) {
+            ProductResponse response = this.mapper.map(product, ProductResponse.class);
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(response.getSku()));
+        } else
             return ResponseEntity.badRequest().build();
     }
 

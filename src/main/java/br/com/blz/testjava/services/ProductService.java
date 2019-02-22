@@ -6,10 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
+@Transactional
 public class ProductService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductService.class);
@@ -34,6 +36,7 @@ public class ProductService {
         return this.productRepository.save(product);
     }
 
+    @Transactional(readOnly = true)
     public Optional<Product> findBySku(final Long sku) {
         Optional<Product> product = this.productRepository.findBySku(sku);
         if(product.isPresent()) {
