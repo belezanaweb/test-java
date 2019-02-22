@@ -15,4 +15,6 @@ public class ProductResponse {
 
     private InventoryResponse inventory;
 
+    private Boolean isMarketable;
+
 }
