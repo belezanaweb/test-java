@@ -3,7 +3,6 @@ package br.com.blz.testjava.controllers.exception;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -18,11 +17,6 @@ public class ApiError {
 
     private ApiError() {
         this.timestamp = new Date();
-    }
-
-    public ApiError(int status) {
-        this();
-        this.status = status;
     }
 
     public ApiError(int status, String message, Throwable ex) {

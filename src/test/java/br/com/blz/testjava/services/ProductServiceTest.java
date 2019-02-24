@@ -1,12 +1,10 @@
-package br.com.blz.testjava;
+package br.com.blz.testjava.services;
 
 
 import br.com.blz.testjava.entities.Inventory;
 import br.com.blz.testjava.entities.Product;
 import br.com.blz.testjava.entities.Type;
 import br.com.blz.testjava.entities.Warehouse;
-import br.com.blz.testjava.services.ProductService;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -16,7 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.given;
@@ -45,7 +44,6 @@ public class ProductServiceTest {
         productReturn.setIsMarketable(Boolean.TRUE);
 
         given(this.populationService.findBySku(1234L)).willReturn(Optional.of(productReturn));
-
 
         Product product = this.populationService.findBySku(1234L).get();
         assertNotNull(product.getId());
