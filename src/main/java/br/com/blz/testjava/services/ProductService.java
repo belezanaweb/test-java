@@ -39,20 +39,22 @@ public class ProductService {
     @Transactional(readOnly = true)
     public Optional<Product> findBySku(final Long sku) {
         Optional<Product> product = this.productRepository.findBySku(sku);
-        if(product.isPresent()) {
-            Product p = product.get();
-            if(p.getInventory() != null) {
-                Number quantity = p.getInventory().getWarehouses().stream().mapToInt(q -> q.getQuantity().intValue()).sum();
-                p.getInventory().setQuantity(quantity);
-
-                boolean isMarketable = (quantity.intValue() > 0);
-                p.setIsMarketable(isMarketable);
-            }
-        }
+        if(product.isPresent())
+            this.calcInventory(product.get());
         return product;
     }
 
-    public void delete(Long sku) {
+    private void calcInventory(Product product) {
+        if(product.getInventory() != null) {
+            Number quantity = product.getInventory().getWarehouses().stream().mapToInt(q -> q.getQuantity().intValue()).sum();
+            product.getInventory().setQuantity(quantity);
+
+            boolean isMarketable = (quantity.intValue() > 0);
+            product.setIsMarketable(isMarketable);
+        }
+    }
+
+    public void delete(final Long sku) {
         Optional<Product> product = this.findBySku(sku);
         if(!product.isPresent())
             throw new IllegalArgumentException("Sku inválido!");

@@ -20,9 +20,10 @@ public class Product {
 
     private String name;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, optional = true)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     private Inventory inventory;
 
+    @Transient
     private Boolean isMarketable;
 
 }
