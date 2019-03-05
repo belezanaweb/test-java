@@ -3,6 +3,7 @@ package br.com.blz.testjava.entities;
 
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import java.util.List;
@@ -23,7 +24,7 @@ public class Inventory {
     private List<Warehouse> warehouses;
 
     public Number getQuantity() {
-        if(this.warehouses != null)
+        if(!CollectionUtils.isEmpty(this.warehouses))
             this.quantity = this.warehouses.stream().mapToInt(q -> q.getQuantity().intValue()).sum();
         return quantity;
     }

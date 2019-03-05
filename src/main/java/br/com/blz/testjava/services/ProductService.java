@@ -1,6 +1,7 @@
 package br.com.blz.testjava.services;
 
 import br.com.blz.testjava.entities.Product;
+import br.com.blz.testjava.entities.Warehouse;
 import br.com.blz.testjava.repositories.ProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,7 +46,19 @@ public class ProductService {
     @Cacheable(value = "products", key = "#sku")
     @Transactional(readOnly = true)
     public Optional<Product> findBySku(final Long sku) {
-        return this.productRepository.findBySku(sku);
+        Optional<Product> product = this.productRepository.findBySku(sku);
+        this.loadWarehouses(product);
+        return product;
+    }
+
+    private void loadWarehouses(final Optional<Product> product) {
+        product.ifPresent(p -> {
+            if(p.getInventory() != null) {
+                List<Warehouse> warehouseList = new ArrayList<>(p.getInventory().getWarehouses().size());
+                warehouseList.addAll(p.getInventory().getWarehouses());
+                product.get().getInventory().setWarehouses(warehouseList);
+            }
+        });
     }
 
     @CacheEvict(value = "products", key = "#sku", allEntries = true)

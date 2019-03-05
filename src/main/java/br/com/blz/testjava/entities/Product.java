@@ -28,7 +28,7 @@ public class Product {
 
     public Boolean getIsMarketable() {
         if (this.inventory != null) {
-            return (this.inventory.getQuantity().intValue() > 0);
+            this.isMarketable = (this.inventory.getQuantity().intValue() > 0);
         }
         return isMarketable;
     }
