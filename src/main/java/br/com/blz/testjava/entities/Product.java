@@ -26,5 +26,12 @@ public class Product {
     @Transient
     private Boolean isMarketable;
 
+    public Boolean getIsMarketable() {
+        if (this.inventory != null) {
+            this.isMarketable = (this.inventory.getQuantity().intValue() > 0);
+        }
+        return isMarketable;
+    }
+
 }
 
