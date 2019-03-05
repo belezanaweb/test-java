@@ -22,4 +22,10 @@ public class Inventory {
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     private List<Warehouse> warehouses;
 
+    public Number getQuantity() {
+        if(this.warehouses != null)
+            this.quantity = this.warehouses.stream().mapToInt(q -> q.getQuantity().intValue()).sum();
+        return quantity;
+    }
+
 }
