@@ -7,7 +7,7 @@ import br.com.blz.testjava.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static br.com.blz.testjava.enums.MessagesEnum.*;
+import static br.com.blz.testjava.enums.MessageEnum.*;
 
 @Service
 public class ProductServiceImpl implements ProductService {

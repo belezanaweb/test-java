@@ -1,9 +1,9 @@
 package br.com.blz.testjava.enums;
 
 /**
- * Defines messages constants except error messages.
+ * Defines constants for messages.
  */
-public enum MessagesEnum {
+public enum MessageEnum {
 
     // errors
     OPERATION_ERROR("Something went wrong when trying to make this operation!"),
@@ -16,7 +16,7 @@ public enum MessagesEnum {
 
     private final String message;
 
-    MessagesEnum(String message) {
+    MessageEnum(String message) {
         this.message = message;
     }
 

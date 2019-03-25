@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static br.com.blz.testjava.enums.MessagesEnum.SUCESS;
+import static br.com.blz.testjava.enums.MessageEnum.SUCESS;
 import static org.springframework.http.HttpStatus.*;
 
 @RestController
