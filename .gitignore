@@ -198,7 +198,7 @@ Temporary Items
 
 ### Maven ###
 target/
-pom.xml.tag
+.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
 pom.xml.next
