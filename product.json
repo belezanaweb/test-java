@@ -1,0 +1,1 @@
+{"_id":{"$numberInt":"12349"},"_class":"br.com.blz.testjava.model.Product","name":"Laranja","inventory":{"warehouses":[{"locality":"RJ","quantity":{"$numberInt":"5"},"type":"ECOMMERCE"},{"locality":"BH","quantity":{"$numberInt":"10"},"type":"PHYSICAL_STORE"}]}}

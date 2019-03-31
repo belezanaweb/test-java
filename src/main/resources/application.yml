@@ -1,0 +1,24 @@
+# --------------------------------------------------------------------------------------------------
+#
+# the whole file can be externalized using the SPRING_CONFIG_LOCATION env variable
+#
+# For a complete list of the spring boot configuration properties, have a look at
+# the Spring Boot reference guide
+# http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#common-application-properties
+#
+# --------------------------------------------------------------------------------------------------
+
+# Spring boot settings
+spring:
+  application:
+    name: Prototype
+
+  pid:
+    file: build/prototype.pid
+
+  jmx:
+    enabled: false
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/teste-java-db
