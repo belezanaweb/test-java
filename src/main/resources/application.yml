@@ -1,0 +1,15 @@
+server:
+  port: 8191
+
+spring:
+ application:
+  name: graph
+ h2:
+  console: 
+    enabled: true
+    path: /h2
+ datasource:
+  url: jdbc:h2:file:~/h2db
+  username: h2sa
+  password: admin
+  driver-class-name: org.h2.Driver
