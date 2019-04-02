@@ -29,25 +29,25 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 
-	@PostMapping("/product")
+	@PostMapping("/v1/product")
 	public ResponseEntity<ProductResponse> save(@RequestBody Product product) {
 
-		ProductResponse<Product> SKUResponse;
+		ProductResponse<Product> response;
 
 		try {
 			productService.save(product);
-			SKUResponse = new ProductResponse<>(OK.value(), MSG_SUCESSO, product);
+			response = new ProductResponse<>(OK.value(), MSG_SUCESSO, product);
 
 		} catch (BusinessException e) {
-			SKUResponse = new ProductResponse<>(PRECONDITION_FAILED.value(), e.getMessage(), product);
+			response = new ProductResponse<>(PRECONDITION_FAILED.value(), e.getMessage(), product);
 		} catch (Exception e) {
-			SKUResponse = new ProductResponse<>(INTERNAL_SERVER_ERROR.value(), e.getMessage(), product);
+			response = new ProductResponse<>(INTERNAL_SERVER_ERROR.value(), e.getMessage(), product);
 		}
 
-		return new ResponseEntity<>(SKUResponse, valueOf(SKUResponse.getHttpStatus()));
+		return new ResponseEntity<>(response, valueOf(response.getHttpStatus()));
 	}
 
-	@PutMapping("/product/{sku}")
+	@PutMapping("/v1/product/{sku}")
 	public ResponseEntity<ProductResponse> update(@PathVariable Integer sku, @RequestBody Product product) {
 
 		ProductResponse<Product> SKUResponse;
@@ -65,7 +65,7 @@ public class ProductController {
 		return new ResponseEntity<>(SKUResponse, valueOf(SKUResponse.getHttpStatus()));
 	}
 
-	@GetMapping("/product/{sku}")
+	@GetMapping("/v1/product/{sku}")
 	public ResponseEntity<ProductResponse> find(@PathVariable Integer sku) {
 
 		ProductResponse<Product> productResponse;
@@ -82,7 +82,7 @@ public class ProductController {
 		return new ResponseEntity<>(productResponse, valueOf(productResponse.getHttpStatus()));
 	}
 
-	@DeleteMapping("/product/{sku}")
+	@DeleteMapping("/v1/product/{sku}")
 	public ResponseEntity<ProductResponse> delete(@PathVariable Integer sku) {
 
 		ProductResponse<Product> SKUResponse;

@@ -5,40 +5,30 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import br.com.blz.testjava.domain.Inventory;
 import br.com.blz.testjava.domain.Product;
 import br.com.blz.testjava.domain.Warehouse;
+import br.com.blz.testjava.exception.BusinessException;
 import br.com.blz.testjava.service.ProductService;
 
-@SpringBootApplication(scanBasePackageClasses = ProductTest.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class ProductTest {
-
-	public static void main(String[] args) {
-		SpringApplication.run(ProductTest.class, args);
-	}
 
 	@Autowired
 	private ProductService productService;
 
 	@Test
-	public void save() {
+	public void saveSuccess() {
 
-		boolean success = false;
-
-		try {
-			Product product = criarProduto();
-			productService.save(product);
-			success = true;
-
-		} catch (Exception e) {
-			Assert.assertFalse(success);
-		}
-
-		Assert.assertTrue(success);
+		Product product = criarProduto();
+		productService.save(product);
+		Assert.assertTrue(true);
 	}
 
 	@Test
@@ -48,22 +38,82 @@ public class ProductTest {
 			Product product = criarProduto();
 			productService.save(product);
 
-		} catch (Exception e) {
-			Assert.assertTrue(e instanceof RuntimeException);
+		} catch (BusinessException e) {
+			Assert.assertTrue("O produto já existe cadastrado.".equals(e.getMessage()));
+			return;
+		}
+
+		Assert.assertFalse(true);
+	}
+
+	@Test
+	public void findSuccess() throws RuntimeException {
+
+		productService.find(43264);
+		Assert.assertTrue(true);
+
+	}
+
+	@Test
+	public void findError() throws RuntimeException {
+
+		try {
+			productService.find(987890);
+
+		} catch (BusinessException e) {
+
+			Assert.assertTrue("O produto informado não existe cadastrado.".equals(e.getMessage()));
+			return;
+		}
+		Assert.assertFalse(true);
+	}
+
+	@Test
+	public void deleteSuccess() throws RuntimeException {
+		try {
+			Product obj = productService.find(43264);
+			if (obj != null) {
+				productService.delete(43264);
+				Assert.assertTrue(true);
+				return;
+			}
+
+		} catch (BusinessException e) {
+			if ("O produto informado não existe cadastrado.".equals(e.getMessage())) {
+				Product product = criarProduto();
+				productService.save(product);
+				productService.delete(43264);
+				Assert.assertTrue(true);
+				return;
+
+			}
+		}
+
+		Assert.assertFalse(true);
+	}
+
+	@Test
+	public void deleteError() throws RuntimeException {
+		try {
+			productService.delete(12345);
+
+		} catch (BusinessException e) {
+			Assert.assertTrue("O produto informado não existe cadastrado.".equals(e.getMessage()));
+			return;
 		}
 	}
 
-	private final Product criarProduto() {
+	private Product criarProduto() {
 
 		Product product = new Product();
-		product.setName("L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g");
 		product.setSku(43264);
-		product.setInventory(this.criarInventario());
+		product.setName("L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g");
+		product.setInventory(criarInventario());
 
 		return product;
 	}
 
-	private final Inventory criarInventario() {
+	private Inventory criarInventario() {
 
 		Inventory inventory = new Inventory();
 		inventory.setWarehouses(criarDeposito());
@@ -71,21 +121,21 @@ public class ProductTest {
 		return inventory;
 	}
 
-	private final List<Warehouse> criarDeposito() {
+	private List<Warehouse> criarDeposito() {
 
-		List<Warehouse> warehouses = new ArrayList<>();
+		List<Warehouse> warehouses = new ArrayList<Warehouse>();
 
 		Warehouse warehouse = new Warehouse();
 		warehouse.setLocality("SP");
-		warehouse.setQuantity(Integer.valueOf(12));
 		warehouse.setType("ECOMMERCE");
+		warehouse.setQuantity(12);
 
 		warehouses.add(warehouse);
 
 		warehouse = new Warehouse();
 		warehouse.setLocality("MOEMA");
-		warehouse.setQuantity(Integer.valueOf(3));
 		warehouse.setType("PHYSICAL_STORE");
+		warehouse.setQuantity(3);
 
 		warehouses.add(warehouse);
 
