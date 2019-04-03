@@ -12,15 +12,15 @@ public class ProductHandlingService implements ProductService {
 	@Autowired
 	ProductDAO dao;
 	
+	public Product postProduct(Product newProduct) {
+		return dao.insert(newProduct);
+	}
+	
 	public Product deleteProduct(Long sku) {
 		return null;
 	}
 	
 	public Product getProductBySKU(Long sku) {
-		return null;
-	}
-	
-	public Product postProduct(Product body) {
 		return null;
 	}
 	

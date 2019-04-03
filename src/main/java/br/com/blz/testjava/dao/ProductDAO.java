@@ -12,6 +12,10 @@ public class ProductDAO {
 	@Autowired
 	ProductRepository repo;
 	
+	public Product insert(Product newProduct) {
+		return null;
+	}
+	
 	public Product delete() {
 		return null;
 	}
@@ -21,10 +25,6 @@ public class ProductDAO {
 	}
 	
 	public Product update(Product newProduct) {
-		return null;
-	}
-	
-	public Product insert(Product newProduct) {
 		return null;
 	}
 }
