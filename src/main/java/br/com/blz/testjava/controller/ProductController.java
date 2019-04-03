@@ -20,15 +20,15 @@ public class ProductController implements ProductApi {
 	@Autowired
 	ProductService service;
 	
+	public ResponseEntity postProduct(@Valid @RequestBody Product body) {
+		return new ResponseEntity<>(service.postProduct(body), HttpStatus.OK); 
+	}
+	
 	public ResponseEntity deleteProduct(@PathVariable("sku") Long sku) {
 		return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 	}
 	
 	public ResponseEntity getProductBySKU(@PathVariable("sku") Long sku) {
-		return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-	}
-	
-	public ResponseEntity postProduct(@Valid @RequestBody Product body) {
 		return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 	}
 	
