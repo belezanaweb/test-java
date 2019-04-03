@@ -13,18 +13,32 @@ import br.com.blz.testjava.model.Product;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class ProductRepository {
 	private static Map<Long, Product> productRepo;
-	private AtomicLong id;
+//	private AtomicLong id;
 	
 	@Autowired
 	public ProductRepository() {
 		if(productRepo == null)
 			productRepo = new HashMap();
 		
-		if(id == null)
-			id = new AtomicLong(1);
+//		if(id == null)
+//			id = new AtomicLong(1);
 	}
 	
-	public void insert(Product newProduct) {
-		productRepo.put(id.getAndIncrement(), newProduct);
+	public Product insert(Product newProduct) {
+		productRepo.put(newProduct.getSku(), newProduct);
+		return newProduct;
+	}
+
+	public Product get(Long sku) {
+		return productRepo.get(sku);
+	}
+
+	public Product update(Product newProduct) {
+		productRepo.replace(newProduct.getSku(), newProduct);
+		return newProduct;
+	}
+
+	public Product delete(Long sku) {
+		return productRepo.remove(sku);
 	}
 }
