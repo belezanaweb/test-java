@@ -13,18 +13,18 @@ public class ProductDAO {
 	ProductRepository repo;
 	
 	public Product insert(Product newProduct) {
-		return null;
-	}
-	
-	public Product delete() {
-		return null;
+		return repo.insert(newProduct);
 	}
 	
 	public Product selectBySku(Long sku) {
-		return null;
+		return repo.get(sku);
 	}
 	
 	public Product update(Product newProduct) {
-		return null;
+		return repo.update(newProduct);
+	}
+	
+	public Product delete(Long sku) {
+		return repo.delete(sku);
 	}
 }
