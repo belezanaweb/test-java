@@ -122,11 +122,21 @@ definitions:
       kind:
         type: string
         description: "Type of warehouse (ECOMMERCE, PHYSICAL_STORE)"
+  Inventory:
+    type: "object"
+    properties:
+      quantity:
+        type: integer
+        description: "Total of products in all warehouses"
+        format: "int64"
+      warehouses:
+        type: "array"
+        items:
+          $ref: "#/definitions/Warehouse"
   Product:
     type: "object"
     required:
     - "name"
-    - "photoUrls"
     properties:
       sku:
         type: "integer"
@@ -135,10 +145,9 @@ definitions:
         type: "string"
         description: "product full name "
         example: "L'Oréal Professionnel Expert Absolut Repair Cortex"
-      inventory:
-        type: "array"
-        items:
-          $ref: "#/definitions/Warehouse"
+      inventory: 
+        type: "object"
+        $ref: "#/definitions/Inventory"
       isMarketable:
         type: "boolean"
         description: "informs if product is on stock or not"
