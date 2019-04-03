@@ -16,15 +16,15 @@ public class ProductHandlingService implements ProductService {
 		return dao.insert(newProduct);
 	}
 	
-	public Product deleteProduct(Long sku) {
-		return null;
-	}
-	
 	public Product getProductBySKU(Long sku) {
-		return null;
+		return dao.selectBySku(sku);
 	}
 	
 	public Product updateProductWithForm(Product newProduct) {
-		return null;
+		return dao.update(newProduct);
+	}
+	
+	public Product deleteProduct(Long sku) {
+		return dao.delete(sku);
 	}
 }
