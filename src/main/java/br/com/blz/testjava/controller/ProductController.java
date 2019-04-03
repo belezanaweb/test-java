@@ -24,15 +24,15 @@ public class ProductController implements ProductApi {
 		return new ResponseEntity<>(service.postProduct(body), HttpStatus.OK); 
 	}
 	
-	public ResponseEntity deleteProduct(@PathVariable("sku") Long sku) {
-		return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-	}
-	
 	public ResponseEntity getProductBySKU(@PathVariable("sku") Long sku) {
-		return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+		return new ResponseEntity<>(service.getProductBySKU(sku), HttpStatus.OK);
 	}
 	
 	public ResponseEntity updateProductWithForm(@Valid @RequestBody Product body) {
-		return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+		return new ResponseEntity<>(service.updateProductWithForm(body), HttpStatus.OK);
+	}
+	
+	public ResponseEntity deleteProduct(@PathVariable("sku") Long sku) {
+		return new ResponseEntity<>(service.deleteProduct(sku), HttpStatus.OK);
 	}
 }
