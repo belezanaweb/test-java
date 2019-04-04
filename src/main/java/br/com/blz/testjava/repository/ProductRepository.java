@@ -91,6 +91,11 @@ public class ProductRepository {
 	}
 
 	public Product update(Product newProduct) {
+		if(productRepo.get(newProduct.getSku()) == null) {
+			
+			throw new ProductNotExistentException("Product to update was not found");
+		}
+		
 		if(isInvalidId(newProduct.getSku())) {
 			throw new InvalidIdException("Unable to update product due invalid id");
 		}
