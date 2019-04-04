@@ -12,6 +12,7 @@ import br.com.blz.testjava.exception.InvalidIdException;
 import br.com.blz.testjava.exception.InvalidProductNameException;
 import br.com.blz.testjava.exception.InvalidQuantityInventoryLinkException;
 import br.com.blz.testjava.exception.InvalidTotalProductQuantityException;
+import br.com.blz.testjava.exception.NullProductException;
 import br.com.blz.testjava.exception.ProductIdAlreadyInUseException;
 import br.com.blz.testjava.exception.ProductNotExistentException;
 import br.com.blz.testjava.exception.UnableToGetItemsQuantityException;
@@ -20,6 +21,11 @@ import br.com.blz.testjava.model.ResponseError;
 @SuppressWarnings("rawtypes")
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
+	
+	@ExceptionHandler(value={NullProductException.class})
+	protected ResponseEntity handleNullProduct(NullProductException e, WebRequest request) {
+		return handleCustomException(e, request, HttpStatus.PRECONDITION_FAILED);
+	}
 	
 	@ExceptionHandler(value={InvalidIdException.class})
 	protected ResponseEntity handleInvalidId(InvalidIdException e, WebRequest request) {
