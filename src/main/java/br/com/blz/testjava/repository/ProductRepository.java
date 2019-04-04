@@ -1,6 +1,7 @@
 package br.com.blz.testjava.repository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.com.blz.testjava.exception.InvalidIdException;
+import br.com.blz.testjava.exception.NullProductException;
 import br.com.blz.testjava.exception.ProductIdAlreadyInUseException;
 import br.com.blz.testjava.exception.ProductNotExistentException;
 import br.com.blz.testjava.exception.UnableToGetItemsQuantityException;
@@ -27,7 +29,7 @@ public class ProductRepository {
 	private static final Logger LOG = LoggerFactory.getLogger(ProductRepository.class);
 	
 	private static Map<Long, Product> productRepo;
-	private AtomicLong id;
+	private static AtomicLong id;
 	
 	@Autowired
 	public ProductRepository() {
@@ -39,14 +41,27 @@ public class ProductRepository {
 	}
 	
 	public Product insert(Product newProduct) {
+		if(newProduct == null)
+			throw new NullProductException("Product must not be null");
 		if(productRepo.get(newProduct.getSku()) != null)
 			throw new ProductIdAlreadyInUseException("There is another product stored with the informed id.");
 		
 		Long id = checkId(newProduct);
 		ProductValidator.validate(newProduct);
 		
+		if(newProduct.getInventory() == null) {
+			newProduct.setInventory(initInventory());
+		}
+		
 		productRepo.put(id, newProduct);
 		return newProduct;
+	}
+
+	private Inventory initInventory() {
+		Inventory inventory = new Inventory();
+		inventory.setQuantity(0L);
+		inventory.setWarehouses(Collections.EMPTY_LIST);
+		return inventory;
 	}
 
 	private Long checkId(Product newProduct) {
@@ -75,8 +90,9 @@ public class ProductRepository {
 			throw new ProductNotExistentException("Product not found");
 		}
 		Inventory inventory = product.getInventory();
-		if(inventory == null || inventory.getWarehouses() == null || inventory.getWarehouses().isEmpty()) {
-			throw new UnableToGetItemsQuantityException("Unable to compute total quantity of items in stock");
+		if(areEmptyInventoryAndWarehoues(inventory)) {
+			// TODO check if this exception is still necessary
+			Exception e = new UnableToGetItemsQuantityException("Unable to compute total quantity of items in stock");
 		}
 		
 		long total = 0L;
@@ -90,15 +106,22 @@ public class ProductRepository {
 		return product;
 	}
 
+	private boolean areEmptyInventoryAndWarehoues(Inventory inventory) {
+		return inventory == null || inventory.getWarehouses() == null || inventory.getWarehouses().isEmpty();
+	}
+
 	public Product update(Product newProduct) {
-		if(productRepo.get(newProduct.getSku()) == null) {
-			
+		if(newProduct == null) {
 			throw new ProductNotExistentException("Product to update was not found");
 		}
-		
 		if(isInvalidId(newProduct.getSku())) {
 			throw new InvalidIdException("Unable to update product due invalid id");
 		}
+		
+		if(productRepo.get(newProduct.getSku()) == null) {
+			throw new ProductNotExistentException("Product to update was not found");
+		}
+		
 		ProductValidator.validate(newProduct);
 		
 		productRepo.replace(newProduct.getSku(), newProduct);
@@ -106,6 +129,9 @@ public class ProductRepository {
 	}
 
 	public Product delete(Long sku) {
+		if(isInvalidId(sku) || get(sku) == null) 
+			throw new ProductNotExistentException("Product to remove was not found");
+		
 		return productRepo.remove(sku);
 	}
 
