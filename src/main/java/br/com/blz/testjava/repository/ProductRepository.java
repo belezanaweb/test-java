@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import br.com.blz.testjava.exception.InvalidIdException;
 import br.com.blz.testjava.exception.ProductIdAlreadyInUseException;
+import br.com.blz.testjava.exception.ProductNotExistentException;
 import br.com.blz.testjava.exception.UnableToGetItemsQuantityException;
 import br.com.blz.testjava.model.Inventory;
 import br.com.blz.testjava.model.Product;
@@ -70,6 +71,9 @@ public class ProductRepository {
 	}
 
 	private Product prepareProductToBeRetrieved(Product product) {
+		if(product == null) {
+			throw new ProductNotExistentException("Product not found");
+		}
 		Inventory inventory = product.getInventory();
 		if(inventory == null || inventory.getWarehouses() == null || inventory.getWarehouses().isEmpty()) {
 			throw new UnableToGetItemsQuantityException("Unable to compute total quantity of items in stock");
