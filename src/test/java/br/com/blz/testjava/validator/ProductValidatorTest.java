@@ -10,7 +10,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import br.com.blz.testjava.exception.InvalidMarketableProductException;
 import br.com.blz.testjava.exception.InvalidProductNameException;
 import br.com.blz.testjava.exception.InvalidQuantityInventoryLinkException;
 import br.com.blz.testjava.exception.InvalidTotalProductQuantityException;
@@ -36,13 +35,6 @@ public class ProductValidatorTest {
 	public void tryValidateProductWithEmptyNameAndFail() {
 		Product prod = new Product();
 		prod.setName("");
-		ProductValidator.validate(prod);
-	}
-	
-	@Test(expected=InvalidMarketableProductException.class)
-	public void tryValidateProductWithInvalidMarketableStateAndFail() {
-		Product prod = new Product();
-		prod.setName(PROD_NAME);
 		ProductValidator.validate(prod);
 	}
 	

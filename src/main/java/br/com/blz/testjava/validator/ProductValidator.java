@@ -1,6 +1,5 @@
 package br.com.blz.testjava.validator;
 
-import br.com.blz.testjava.exception.InvalidMarketableProductException;
 import br.com.blz.testjava.exception.InvalidProductNameException;
 import br.com.blz.testjava.exception.InvalidQuantityInventoryLinkException;
 import br.com.blz.testjava.exception.InvalidTotalProductQuantityException;
@@ -18,7 +17,7 @@ public class ProductValidator {
 		if(product.getName().isEmpty())
 			throw new InvalidProductNameException("The product name must not be empty.");
 		if(product.isIsMarketable() == null)
-			throw new InvalidMarketableProductException("A product can only be marketable or not (true/false).");
+			product.setIsMarketable(Boolean.FALSE);
 		if(product.getInventory() != null) 
 			validateInventory(product.getInventory());
 	}
