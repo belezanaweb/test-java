@@ -44,7 +44,7 @@ paths:
         400:
           description: "Invalid Order"
           schema:
-            $ref: "#/definitions/Error"
+            $ref: "#/definitions/ResponseError"
     put:
       tags:
       - "product"
@@ -66,7 +66,7 @@ paths:
         405:
           description: "Invalid input"
           schema:
-            $ref: "#/definitions/Error"
+            $ref: "#/definitions/ResponseError"
   /product/{sku}:
     get:
       tags:
@@ -91,11 +91,11 @@ paths:
         400:
           description: "Invalid ID supplied"
           schema:
-            $ref: "#/definitions/Error"
+            $ref: "#/definitions/ResponseError"
         404:
           description: "Product not found"
           schema:
-            $ref: "#/definitions/Error"
+            $ref: "#/definitions/ResponseError"
     delete:
       tags:
       - "product"
@@ -117,7 +117,7 @@ paths:
         404:
           description: "Product not found"
           schema:
-            $ref: "#/definitions/Error"
+            $ref: "#/definitions/ResponseError"
 definitions:
   Warehouse:
     type: "object"
@@ -161,11 +161,12 @@ definitions:
       isMarketable:
         type: "boolean"
         description: "informs if product is on stock or not"
-  Error:
+  ResponseError:
     type: "object"
     properties:
       code:
-        type: "number"
+        type: "integer"
+        format: "int32"
       message:
         type: "string"
           
