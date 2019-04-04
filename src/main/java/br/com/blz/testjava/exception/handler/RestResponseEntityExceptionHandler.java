@@ -23,44 +23,43 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 	
 	@ExceptionHandler(value={InvalidIdException.class})
 	protected ResponseEntity handleInvalidId(InvalidIdException e, WebRequest request) {
-		return handleCustomException(e, request, HttpStatus.PRECONDITION_FAILED, "Invalid product id");
+		return handleCustomException(e, request, HttpStatus.PRECONDITION_FAILED);
 	}
 	
 	@ExceptionHandler(value={InvalidProductNameException.class})
 	protected ResponseEntity handleInvalidProductName(InvalidProductNameException e, WebRequest request) {
-		return handleCustomException(e, request, HttpStatus.PRECONDITION_FAILED, "Invalid product name");
+		return handleCustomException(e, request, HttpStatus.PRECONDITION_FAILED);
 	}
 	
 	@ExceptionHandler(value={InvalidQuantityInventoryLinkException.class})
 	protected ResponseEntity handleQuantity(InvalidQuantityInventoryLinkException e, WebRequest request) {
-		return handleCustomException(
-			e, request, HttpStatus.PRECONDITION_FAILED, "Inconsistent total and quantities in warehouse(s)");
+		return handleCustomException(e, request, HttpStatus.PRECONDITION_FAILED);
 	}
 	
 	@ExceptionHandler(value={InvalidTotalProductQuantityException.class})
 	protected ResponseEntity handleInvalidTotalOfProducts(InvalidTotalProductQuantityException e, WebRequest request) {
-		return handleCustomException(e, request, HttpStatus.PRECONDITION_FAILED, "Total Product quantity: zero or more");
+		return handleCustomException(e, request, HttpStatus.PRECONDITION_FAILED);
 	}
 	
 	@ExceptionHandler(value={ProductIdAlreadyInUseException.class})
 	protected ResponseEntity handleSKUAlreadyInUse(ProductIdAlreadyInUseException e, WebRequest request) {
-		return handleCustomException(e, request, HttpStatus.CONFLICT, "Id already in use");
+		return handleCustomException(e, request, HttpStatus.CONFLICT);
 	}
 	
 	@ExceptionHandler(value={UnableToGetItemsQuantityException.class})
 	protected ResponseEntity handleUnableToGetQuantity(UnableToGetItemsQuantityException e, WebRequest request) {
-		return handleCustomException(e, request, HttpStatus.BAD_REQUEST, "Unable to compute total quantity of items in stock");
+		return handleCustomException(e, request, HttpStatus.BAD_REQUEST);
 	}
 	
 	@ExceptionHandler(value={ProductNotExistentException.class})
 	protected ResponseEntity handleProductNotExistent(ProductNotExistentException e, WebRequest request) {
-		return handleCustomException(e, request, HttpStatus.NOT_FOUND, "Product not found"); 
+		return handleCustomException(e, request, HttpStatus.NOT_FOUND); 
 	}
 
-	private ResponseEntity handleCustomException(RuntimeException e, WebRequest request, HttpStatus status, String msg) {
+	private ResponseEntity handleCustomException(RuntimeException e, WebRequest request, HttpStatus status) {
 		ResponseError err = new ResponseError();
 		err.setCode(status.value());
-		err.setMessage(msg);
+		err.setMessage(e.getMessage());
 		
 		return handleExceptionInternal(e, err, new HttpHeaders(), status, request);
 	}
