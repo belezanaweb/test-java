@@ -7,16 +7,4 @@ public class InvalidTotalProductQuantityException extends RuntimeException {
 	public InvalidTotalProductQuantityException(String message) {
 		super(message);
 	}
-
-	public InvalidTotalProductQuantityException(Throwable cause) {
-		super(cause);
-	}
-
-	public InvalidTotalProductQuantityException(String message, Throwable cause) {
-		super(message, cause);
-	}
-
-	public InvalidTotalProductQuantityException(String message, Throwable cause, boolean enableSuppression,boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-	}
 }

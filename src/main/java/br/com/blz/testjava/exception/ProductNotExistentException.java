@@ -7,16 +7,4 @@ public class ProductNotExistentException extends RuntimeException {
 	public ProductNotExistentException(String message) {
 		super(message);
 	}
-	
-	public ProductNotExistentException(Throwable cause) {
-		super(cause);
-	}
-	
-	public ProductNotExistentException(String message, Throwable cause) {
-		super(message, cause);
-	}
-	
-	public ProductNotExistentException(String message, Throwable cause, boolean enableSuppression,boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-	}
 }

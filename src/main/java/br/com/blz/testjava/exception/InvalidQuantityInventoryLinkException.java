@@ -7,16 +7,4 @@ public class InvalidQuantityInventoryLinkException extends RuntimeException {
 	public InvalidQuantityInventoryLinkException(String message) {
 		super(message);
 	}
-
-	public InvalidQuantityInventoryLinkException(Throwable cause) {
-		super(cause);
-	}
-
-	public InvalidQuantityInventoryLinkException(String message, Throwable cause) {
-		super(message, cause);
-	}
-
-	public InvalidQuantityInventoryLinkException(String message, Throwable cause, boolean enableSuppression,boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-	}
 }
