@@ -11,8 +11,10 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.junit.Before;
 import org.junit.Test;
 
+import br.com.blz.testjava.exception.InvalidIdException;
 import br.com.blz.testjava.exception.InvalidProductNameException;
 import br.com.blz.testjava.exception.NullProductException;
+import br.com.blz.testjava.exception.ProductIdAlreadyInUseException;
 import br.com.blz.testjava.exception.ProductNotExistentException;
 import br.com.blz.testjava.model.Inventory;
 import br.com.blz.testjava.model.Product;
@@ -59,6 +61,16 @@ public class ProductRepositoryTest {
 		
 		assertEquals(PRODUCT_NAME, productInserted.getName());
 		assertTrue(productInserted.getSku().longValue() > 0);
+	}
+	
+	@Test(expected=ProductIdAlreadyInUseException.class)
+	public void tryInsertTwoProductsSameId() {
+		Product newProduct = new Product();
+		newProduct.setSku(id.getAndIncrement());
+		newProduct.setName(PRODUCT_NAME);
+		repo.insert(newProduct);
+		
+		repo.insert(newProduct);
 	}
 	
 	@Test
@@ -190,6 +202,58 @@ public class ProductRepositoryTest {
 		assertEquals(WARE_LOCALITY, warehouse.getLocality());
 	}
 	
+	@Test(expected=InvalidIdException.class)
+	public void tryUpdateProductWithNullIdAndFail() {
+		Product prod = new Product();
+		Long sku = id.getAndIncrement();
+		prod.setSku(sku);
+		prod.setName(PRODUCT_NAME);
+		repo.insert(prod);
+		
+		final long quantity = 10L;
+		
+		Product productToUpdate = new Product();
+		productToUpdate.setSku(null);
+		productToUpdate.setName(PRODUCT_NAME);
+		Inventory inventory = new Inventory();
+		
+		inventory.setQuantity(quantity);
+		Warehouse ware = new Warehouse();
+		ware.setQuantity(quantity);
+		ware.setKind(WARE_TYPE);
+		ware.setLocality(WARE_LOCALITY);
+		inventory.setWarehouses(Arrays.asList(ware));
+		productToUpdate.setInventory(inventory);
+		
+		repo.update(productToUpdate);
+	}
+	
+	@Test(expected=ProductNotExistentException.class)
+	public void tryUpdateProductWithInvalidIdAndFail() {
+		Product prod = new Product();
+		Long sku = id.getAndIncrement();
+		prod.setSku(sku);
+		prod.setName(PRODUCT_NAME);
+		repo.insert(prod);
+		
+		final long quantity = 10L;
+		
+		Product productToUpdate = new Product();
+		productToUpdate.setSku(Long.MAX_VALUE);
+		productToUpdate.setName(PRODUCT_NAME);
+		Inventory inventory = new Inventory();
+		
+		inventory.setQuantity(quantity);
+		Warehouse ware = new Warehouse();
+		ware.setQuantity(quantity);
+		ware.setKind(WARE_TYPE);
+		ware.setLocality(WARE_LOCALITY);
+		inventory.setWarehouses(Arrays.asList(ware));
+		productToUpdate.setInventory(inventory);
+		
+		repo.update(productToUpdate);
+	}
+	
 
 	@Test(expected=ProductNotExistentException.class)
 	public void tryUpdateNullProduct() {
@@ -202,7 +266,7 @@ public class ProductRepositoryTest {
 		repo.update(null);
 	}
 	
-	@Test(expected=ProductNotExistentException.class)
+	@Test(expected=InvalidIdException.class)
 	public void tryUpdateProductWithoutId() {
 		Product prod = new Product();
 		Long sku = id.getAndIncrement();
@@ -213,7 +277,7 @@ public class ProductRepositoryTest {
 		repo.update(new Product());
 	}
 	
-	@Test(expected=ProductNotExistentException.class)
+	@Test(expected=InvalidIdException.class)
 	public void tryUpdateProductWithInvalidId() {
 		Product prod = new Product();
 		Long sku = id.getAndIncrement();
