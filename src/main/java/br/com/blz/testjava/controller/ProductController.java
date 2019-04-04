@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,5 +35,10 @@ public class ProductController implements ProductApi {
 	
 	public ResponseEntity deleteProduct(@PathVariable("sku") Long sku) {
 		return new ResponseEntity<>(service.deleteProduct(sku), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/product/testGetAll", produces = { "application/json" })
+	public ResponseEntity getAllSkus() {
+		return new ResponseEntity<>(service.testGetAll(), HttpStatus.OK);
 	}
 }
