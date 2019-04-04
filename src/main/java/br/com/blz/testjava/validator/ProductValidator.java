@@ -1,7 +1,5 @@
 package br.com.blz.testjava.validator;
 
-import org.springframework.util.CollectionUtils;
-
 import br.com.blz.testjava.exception.InvalidMarketableProductException;
 import br.com.blz.testjava.exception.InvalidProductNameException;
 import br.com.blz.testjava.exception.InvalidQuantityInventoryLinkException;
@@ -40,7 +38,7 @@ public class ProductValidator {
 		boolean quantityAccordingToWarehouses = (inventory.getQuantity() == productsInWarehouses);
 		
 		if(!quantityAccordingToWarehouses) 
-			throw new InvalidQuantityInventoryLinkException("Quantity must be zero when no warehouses are informed");
+			throw new InvalidQuantityInventoryLinkException("Inventory quantity must be equal of quantities in all warehouses");
 	}
 
 	private static void validateQuantity(Inventory inventory) {
