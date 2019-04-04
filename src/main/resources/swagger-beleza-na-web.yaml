@@ -43,6 +43,8 @@ paths:
             $ref: "#/definitions/Product"
         400:
           description: "Invalid Order"
+          schema:
+            $ref: "#/definitions/Error"
     put:
       tags:
       - "product"
@@ -63,6 +65,8 @@ paths:
       responses:
         405:
           description: "Invalid input"
+          schema:
+            $ref: "#/definitions/Error"
   /product/{sku}:
     get:
       tags:
@@ -86,8 +90,12 @@ paths:
             $ref: "#/definitions/Product"
         400:
           description: "Invalid ID supplied"
+          schema:
+            $ref: "#/definitions/Error"
         404:
           description: "Product not found"
+          schema:
+            $ref: "#/definitions/Error"
     delete:
       tags:
       - "product"
@@ -108,6 +116,8 @@ paths:
           description: "Invalid ID supplied"
         404:
           description: "Product not found"
+          schema:
+            $ref: "#/definitions/Error"
 definitions:
   Warehouse:
     type: "object"
@@ -151,6 +161,14 @@ definitions:
       isMarketable:
         type: "boolean"
         description: "informs if product is on stock or not"
+  Error:
+    type: "object"
+    properties:
+      code:
+        type: "number"
+      message:
+        type: "string"
+          
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"
