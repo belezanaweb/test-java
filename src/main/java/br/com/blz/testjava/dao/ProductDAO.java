@@ -1,5 +1,7 @@
 package br.com.blz.testjava.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -26,5 +28,9 @@ public class ProductDAO {
 	
 	public Product delete(Long sku) {
 		return repo.delete(sku);
+	}
+
+	public List<Long> testGetAll() {
+		return repo.testGetAll();
 	}
 }
