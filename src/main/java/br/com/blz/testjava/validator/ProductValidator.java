@@ -36,7 +36,7 @@ public class ProductValidator {
 		
 		boolean quantityAccordingToWarehouses = (inventory.getQuantity() == productsInWarehouses);
 		
-		if(!quantityAccordingToWarehouses) 
+		if(!quantityAccordingToWarehouses)
 			throw new InvalidQuantityInventoryLinkException("Inventory quantity must be equal of quantities in all warehouses");
 	}
 
