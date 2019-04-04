@@ -1,5 +1,7 @@
 package br.com.blz.testjava.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +28,9 @@ public class ProductHandlingService implements ProductService {
 	
 	public Product deleteProduct(Long sku) {
 		return dao.delete(sku);
+	}
+
+	public List<Long> testGetAll() {
+		return dao.testGetAll();
 	}
 }
