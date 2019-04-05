@@ -26,7 +26,7 @@ paths:
       - "product"
       summary: "Place a new product"
       description: ""
-      operationId: "postProduct"
+      operationId: "createProduct"
       produces:
       - "application/json"
       parameters:
@@ -50,7 +50,7 @@ paths:
       - "product"
       summary: "Updates a product in the warehouse with form data"
       description: ""
-      operationId: "updateProductWithForm"
+      operationId: "updateProduct"
       consumes:
       - "application/json"
       produces:
