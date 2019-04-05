@@ -26,7 +26,7 @@ paths:
       - "product"
       summary: "Place a new product"
       description: ""
-      operationId: "postProduct"
+      operationId: "createProduct"
       produces:
       - "application/json"
       parameters:
@@ -40,7 +40,7 @@ paths:
         200:
           description: "successful operation"
           schema:
-            $ref: "#/definitions/Product"
+            $ref: "#/definitions/ResponseSuccess"
         400:
           description: "Invalid Order"
           schema:
@@ -50,7 +50,7 @@ paths:
       - "product"
       summary: "Updates a product in the warehouse with form data"
       description: ""
-      operationId: "updateProductWithForm"
+      operationId: "updateProduct"
       consumes:
       - "application/json"
       produces:
@@ -63,6 +63,10 @@ paths:
         schema:
           $ref: "#/definitions/Product"
       responses:
+        200:
+          description: "Product updated"
+          schema:
+            $ref: "#/definitions/ResponseSuccess"
         405:
           description: "Invalid input"
           schema:
@@ -112,6 +116,10 @@ paths:
         type: "integer"
         format: "int64"
       responses:
+        200:
+          description: "Product was removed"
+          schema:
+            $ref: "#/definitions/ResponseSuccess"
         400:
           description: "Invalid ID supplied"
         404:
@@ -161,6 +169,11 @@ definitions:
       isMarketable:
         type: "boolean"
         description: "informs if product is on stock or not"
+  ResponseSuccess:
+    type: "object"
+    properties:
+      message:
+        type: "string"
   ResponseError:
     type: "object"
     properties:
