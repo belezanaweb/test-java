@@ -1,13 +1,8 @@
 package br.com.blz.testjava.validator;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 
 import br.com.blz.testjava.exception.DupItemsInWarehousesException;
 import br.com.blz.testjava.exception.InvalidProductNameException;
@@ -17,10 +12,7 @@ import br.com.blz.testjava.model.Inventory;
 import br.com.blz.testjava.model.Product;
 import br.com.blz.testjava.model.Warehouse;
 
-@SuppressWarnings({ "rawtypes", "unchecked" })
 public class ProductValidator {
-	
-	private static final Logger LOG = LoggerFactory.getLogger(ProductValidator.class);
 	
 	private ProductValidator() {}
 	
@@ -43,14 +35,6 @@ public class ProductValidator {
 			inventory.setQuantity(0L);
 			return; // to avoid nullPointer in for
 		}
-		
-
-//		(s1, s2) ->
-//		(	s1.getLocality().equals(s2.getLocality())
-//		&&  s1.getType().equals(s2.getType()) ) ||
-//		( ( s1.getLocality() == null && s2.getLocality() == null ) && 
-//		( s1.getType() == null && s2.getType() == null ) )  ?
-//				0 : 1
 		
 		Set<Warehouse> warehouseSet = new ConcurrentSkipListSet<Warehouse>( // below: Comparator
 				new Comparator<Warehouse>() {
