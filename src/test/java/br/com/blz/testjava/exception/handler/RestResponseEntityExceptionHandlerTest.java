@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.WebRequest;
 
+import br.com.blz.testjava.exception.DupItemsInWarehousesException;
 import br.com.blz.testjava.exception.InvalidIdException;
 import br.com.blz.testjava.exception.InvalidProductNameException;
 import br.com.blz.testjava.exception.InvalidQuantityInventoryLinkException;
@@ -109,6 +110,17 @@ public class RestResponseEntityExceptionHandlerTest {
 		ResponseEntity handleResponse = handler.handleProductNotExistent(new ProductNotExistentException(message), request);
 		
 		assertEquals(HttpStatus.NOT_FOUND, handleResponse.getStatusCode());
+		
+		ResponseError err = (ResponseError) handleResponse.getBody();
+		assertEquals(message, err.getMessage());
+	}
+	
+	@Test
+	public void handleDupWarehouses() {
+		final String message = "Remove repeated warehouses";
+		ResponseEntity handleResponse = handler.handleDupWarehouses(new DupItemsInWarehousesException(message), request);
+		
+		assertEquals(HttpStatus.PRECONDITION_FAILED, handleResponse.getStatusCode());
 		
 		ResponseError err = (ResponseError) handleResponse.getBody();
 		assertEquals(message, err.getMessage());
