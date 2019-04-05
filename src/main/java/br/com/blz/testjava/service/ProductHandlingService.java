@@ -22,7 +22,7 @@ public class ProductHandlingService implements ProductService {
 		return dao.selectBySku(sku);
 	}
 	
-	public Product updateProductWithForm(Product newProduct) {
+	public Product updateProduct(Product newProduct) {
 		return dao.update(newProduct);
 	}
 	

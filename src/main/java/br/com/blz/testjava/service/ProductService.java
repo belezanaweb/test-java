@@ -12,7 +12,7 @@ public interface ProductService {
 	
 	Product postProduct(Product body);
 	
-	Product updateProductWithForm(Product newProduct);
+	Product updateProduct(Product newProduct);
 
 	List<Long> testGetAll();
 }

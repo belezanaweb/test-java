@@ -30,7 +30,8 @@ public class ProductController implements ProductApi {
 	}
 	
 	public ResponseEntity updateProduct(@Valid @RequestBody Product body) {
-		return new ResponseEntity<>(service.updateProductWithForm(body), HttpStatus.OK);
+		Product updatedItem = service.updateProduct(body);
+		return new ResponseEntity<>("Product with id "+updatedItem.getSku()+" was updated", HttpStatus.OK);
 	}
 	
 	public ResponseEntity deleteProduct(@PathVariable("sku") Long sku) {
