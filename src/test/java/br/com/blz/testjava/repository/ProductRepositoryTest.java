@@ -110,7 +110,7 @@ public class ProductRepositoryTest {
 		inventory.setQuantity(quantity);
 		Warehouse ware = new Warehouse();
 		ware.setQuantity(quantity);
-		ware.setKind(WARE_TYPE);
+		ware.setType(WARE_TYPE);
 		ware.setLocality(WARE_LOCALITY);
 		inventory.setWarehouses(Arrays.asList(ware));
 		newProduct.setInventory(inventory);
@@ -124,7 +124,7 @@ public class ProductRepositoryTest {
 		assertTrue(inventoryRetrieved.getQuantity().longValue() == quantity);
 		Warehouse warehouse = inventoryRetrieved.getWarehouses().get(0);
 		assertTrue(quantity == warehouse.getQuantity());
-		assertEquals(WARE_TYPE, warehouse.getKind());
+		assertEquals(WARE_TYPE, warehouse.getType());
 		assertEquals(WARE_LOCALITY, warehouse.getLocality());
 	}
 	
@@ -142,12 +142,12 @@ public class ProductRepositoryTest {
 		inventory.setQuantity(quantity+quantity2);
 		Warehouse ware = new Warehouse();
 		ware.setQuantity(quantity);
-		ware.setKind(WARE_TYPE);
+		ware.setType(WARE_TYPE);
 		ware.setLocality(WARE_LOCALITY);
 		
 		Warehouse ware2 = new Warehouse();
 		ware2.setQuantity(quantity2);
-		ware2.setKind(WARE_TYPE);
+		ware2.setType(WARE_TYPE);
 		ware2.setLocality(WARE_LOCALITY_2);
 		
 		inventory.setWarehouses(Arrays.asList(ware, ware2));
@@ -164,12 +164,12 @@ public class ProductRepositoryTest {
 		
 		Warehouse warehouse = inventoryRetrieved.getWarehouses().get(0);
 		assertTrue(quantity == warehouse.getQuantity());
-		assertEquals(WARE_TYPE, warehouse.getKind());
+		assertEquals(WARE_TYPE, warehouse.getType());
 		assertEquals(WARE_LOCALITY, warehouse.getLocality());
 		
 		Warehouse warehouse2 = inventoryRetrieved.getWarehouses().get(1);
 		assertTrue(quantity2 == warehouse2.getQuantity());
-		assertEquals(WARE_TYPE, warehouse2.getKind());
+		assertEquals(WARE_TYPE, warehouse2.getType());
 		assertEquals(WARE_LOCALITY_2, warehouse2.getLocality());
 	}
 	
@@ -191,7 +191,7 @@ public class ProductRepositoryTest {
 		inventory.setQuantity(quantity);
 		Warehouse ware = new Warehouse();
 		ware.setQuantity(quantity);
-		ware.setKind(WARE_TYPE);
+		ware.setType(WARE_TYPE);
 		ware.setLocality(WARE_LOCALITY);
 		inventory.setWarehouses(Arrays.asList(ware));
 		productToUpdate.setInventory(inventory);
@@ -205,7 +205,7 @@ public class ProductRepositoryTest {
 		assertTrue(inventoryRetrieved.getQuantity().longValue() == quantity);
 		Warehouse warehouse = inventoryRetrieved.getWarehouses().get(0);
 		assertTrue(quantity == warehouse.getQuantity());
-		assertEquals(WARE_TYPE, warehouse.getKind());
+		assertEquals(WARE_TYPE, warehouse.getType());
 		assertEquals(WARE_LOCALITY, warehouse.getLocality());
 	}
 	
@@ -227,7 +227,7 @@ public class ProductRepositoryTest {
 		inventory.setQuantity(quantity);
 		Warehouse ware = new Warehouse();
 		ware.setQuantity(quantity);
-		ware.setKind(WARE_TYPE);
+		ware.setType(WARE_TYPE);
 		ware.setLocality(WARE_LOCALITY);
 		inventory.setWarehouses(Arrays.asList(ware));
 		productToUpdate.setInventory(inventory);
@@ -253,7 +253,7 @@ public class ProductRepositoryTest {
 		inventory.setQuantity(quantity);
 		Warehouse ware = new Warehouse();
 		ware.setQuantity(quantity);
-		ware.setKind(WARE_TYPE);
+		ware.setType(WARE_TYPE);
 		ware.setLocality(WARE_LOCALITY);
 		inventory.setWarehouses(Arrays.asList(ware));
 		productToUpdate.setInventory(inventory);
