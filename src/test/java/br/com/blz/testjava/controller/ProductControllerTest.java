@@ -41,7 +41,7 @@ public class ProductControllerTest {
 	public void insert() {
 		Mockito.when(service.postProduct(any() ) ).thenReturn(product);
 		
-		ResponseEntity testProduct = controller.postProduct(new Product());
+		ResponseEntity testProduct = controller.createProduct(new Product());
 		assertEquals(product, testProduct.getBody());
 	}
 	
@@ -49,7 +49,7 @@ public class ProductControllerTest {
 	public void update() {
 		Mockito.when(service.updateProductWithForm(any() ) ).thenReturn(product);
 		
-		ResponseEntity testProduct = controller.updateProductWithForm(new Product());
+		ResponseEntity testProduct = controller.updateProduct(new Product());
 		assertEquals(product, testProduct.getBody());
 	}
 	
