@@ -21,15 +21,15 @@ public class ProductController implements ProductApi {
 	@Autowired
 	ProductService service;
 	
-	public ResponseEntity postProduct(@Valid @RequestBody Product body) {
-		return new ResponseEntity<>(service.postProduct(body), HttpStatus.OK); 
+	public ResponseEntity createProduct(@Valid @RequestBody Product body) {
+		return new ResponseEntity<>(service.postProduct(body), HttpStatus.CREATED); 
 	}
 	
 	public ResponseEntity getProductBySKU(@PathVariable("sku") Long sku) {
 		return new ResponseEntity<>(service.getProductBySKU(sku), HttpStatus.OK);
 	}
 	
-	public ResponseEntity updateProductWithForm(@Valid @RequestBody Product body) {
+	public ResponseEntity updateProduct(@Valid @RequestBody Product body) {
 		return new ResponseEntity<>(service.updateProductWithForm(body), HttpStatus.OK);
 	}
 	
