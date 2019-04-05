@@ -61,8 +61,12 @@ paths:
         description: "Product object that needs to be added to the warehouse"
         required: true
         schema:
-          $ref: "#/definitions/ResponseSuccess"
+          $ref: "#/definitions/Product"
       responses:
+        200:
+          description: "Product updated"
+          schema:
+            $ref: "#/definitions/ResponseSuccess"
         405:
           description: "Invalid input"
           schema:
