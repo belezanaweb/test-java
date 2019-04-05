@@ -45,6 +45,13 @@ public class ProductRepositoryTest {
 		repo.insert(new Product());
 	}
 	
+	@Test(expected=InvalidIdException.class)
+	public void tryInsertProductWithNameButNegativeId() {
+		Product newProduct = new Product();
+		newProduct.setSku(Long.MIN_VALUE);
+		repo.insert(newProduct);
+	}
+	
 	@Test(expected=InvalidProductNameException.class)
 	public void tryInsertProductWhiIdAndWithoutName() {
 		Product newProduct = new Product();
