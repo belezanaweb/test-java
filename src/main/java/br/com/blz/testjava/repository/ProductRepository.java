@@ -44,11 +44,12 @@ public class ProductRepository {
 	public Product insert(Product newProduct) {
 		if(newProduct == null)
 			throw new NullProductException("Product must not be null");
-		if(productRepo.get(newProduct.getSku()) != null)
-			throw new ProductIdAlreadyInUseException("There is another product stored with the informed id.");
 		
 		Long id = checkId(newProduct);
 		ProductValidator.validate(newProduct);
+		
+		if(productRepo.get(newProduct.getSku()) != null)
+			throw new ProductIdAlreadyInUseException("There is another product stored with the informed id.");
 		
 		if(newProduct.getInventory() == null) {
 			newProduct.setInventory(initInventory());
