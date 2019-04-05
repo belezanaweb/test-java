@@ -47,7 +47,7 @@ public class ProductControllerTest {
 	
 	@Test
 	public void update() {
-		Mockito.when(service.updateProductWithForm(any() ) ).thenReturn(product);
+		Mockito.when(service.updateProduct(any() ) ).thenReturn(product);
 		
 		ResponseEntity testProduct = controller.updateProduct(new Product());
 		assertEquals(product, testProduct.getBody());

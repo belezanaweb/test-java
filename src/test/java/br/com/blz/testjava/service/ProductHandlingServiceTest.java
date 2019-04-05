@@ -45,10 +45,10 @@ public class ProductHandlingServiceTest {
 	}
 	
 	@Test
-	public void updateProductWithForm() {
+	public void updateProduct() {
 		Mockito.when(dao.update(any() ) ).thenReturn(product);
 		
-		Product insert = service.updateProductWithForm(new Product());
+		Product insert = service.updateProduct(new Product());
 		assertEquals(product, insert);
 	}
 	
