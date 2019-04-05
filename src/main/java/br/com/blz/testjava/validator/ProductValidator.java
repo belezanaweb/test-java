@@ -31,8 +31,13 @@ public class ProductValidator {
 		}
 		
 		long productsInWarehouses = 0;
-		for (Warehouse warehouse : inventory.getWarehouses()) 
+		for (Warehouse warehouse : inventory.getWarehouses()) {
+			if(warehouse.getQuantity().longValue() < 0) {
+				throw new InvalidQuantityInventoryLinkException("All warehouses must have zero or more items");
+			}
+			
 			productsInWarehouses += warehouse.getQuantity();
+		}
 		
 		boolean quantityAccordingToWarehouses = (inventory.getQuantity() == productsInWarehouses);
 		
