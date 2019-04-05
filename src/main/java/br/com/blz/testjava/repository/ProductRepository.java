@@ -2,16 +2,17 @@ package br.com.blz.testjava.repository;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 
 import br.com.blz.testjava.exception.InvalidIdException;
 import br.com.blz.testjava.exception.NullProductException;
@@ -34,7 +35,7 @@ public class ProductRepository {
 	@Autowired
 	public ProductRepository() {
 		if(productRepo == null)
-			productRepo = new HashMap();
+			productRepo = new ConcurrentHashMap(); // to avoid null keys
 		
 		if(id == null)
 			id = new AtomicLong(1);
@@ -65,17 +66,25 @@ public class ProductRepository {
 	}
 
 	private Long checkId(Product newProduct) {
-		Long id = newProduct.getSku();
-		if(isInvalidId(id)) {
-			LOG.error("Invalid id informed. A new one will be generated.");
-			id = this.id.getAndIncrement();
-			newProduct.setSku(id);
+		Long sku = newProduct.getSku();
+		if(ObjectUtils.isEmpty(sku)) {
+			LOG.error("Null id informed. A new one will be generated");
+			sku = id.getAndIncrement() ;
+			newProduct.setSku(sku);
 		}
-		return id;
+		else if(negativeId(sku)) {
+			throw new InvalidIdException("Unable to insert product due invalid id");
+		}
+		
+		return sku;
 	}
 
 	private boolean isInvalidId(Long id) {
-		return id == null || id < Long.valueOf(1L);
+		return ObjectUtils.isEmpty(id) || negativeId(id);
+	}
+
+	private boolean negativeId(Long id) {
+		return id.longValue() < 1L;
 	}
 
 	public Product get(Long sku) {
