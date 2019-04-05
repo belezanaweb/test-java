@@ -20,7 +20,6 @@ import br.com.blz.testjava.exception.InvalidTotalProductQuantityException;
 import br.com.blz.testjava.exception.NullProductException;
 import br.com.blz.testjava.exception.ProductIdAlreadyInUseException;
 import br.com.blz.testjava.exception.ProductNotExistentException;
-import br.com.blz.testjava.exception.UnableToGetItemsQuantityException;
 import br.com.blz.testjava.model.ResponseError;
 
 @SuppressWarnings("rawtypes")
@@ -99,17 +98,6 @@ public class RestResponseEntityExceptionHandlerTest {
 		ResponseEntity handleResponse = handler.handleSKUAlreadyInUse(new ProductIdAlreadyInUseException(message), request);
 		
 		assertEquals(HttpStatus.CONFLICT, handleResponse.getStatusCode());
-		
-		ResponseError err = (ResponseError) handleResponse.getBody();
-		assertEquals(message, err.getMessage());
-	}
-	
-	@Test
-	public void handleUnableToGetQuantity() {
-		final String message = "Unable to get items quantity";
-		ResponseEntity handleResponse = handler.handleUnableToGetQuantity(new UnableToGetItemsQuantityException(message), request);
-		
-		assertEquals(HttpStatus.BAD_REQUEST, handleResponse.getStatusCode());
 		
 		ResponseError err = (ResponseError) handleResponse.getBody();
 		assertEquals(message, err.getMessage());

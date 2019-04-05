@@ -15,7 +15,6 @@ import br.com.blz.testjava.exception.InvalidTotalProductQuantityException;
 import br.com.blz.testjava.exception.NullProductException;
 import br.com.blz.testjava.exception.ProductIdAlreadyInUseException;
 import br.com.blz.testjava.exception.ProductNotExistentException;
-import br.com.blz.testjava.exception.UnableToGetItemsQuantityException;
 import br.com.blz.testjava.model.ResponseError;
 
 @SuppressWarnings("rawtypes")
@@ -50,11 +49,6 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 	@ExceptionHandler(value={ProductIdAlreadyInUseException.class})
 	protected ResponseEntity handleSKUAlreadyInUse(ProductIdAlreadyInUseException e, WebRequest request) {
 		return handleCustomException(e, request, HttpStatus.CONFLICT);
-	}
-	
-	@ExceptionHandler(value={UnableToGetItemsQuantityException.class})
-	protected ResponseEntity handleUnableToGetQuantity(UnableToGetItemsQuantityException e, WebRequest request) {
-		return handleCustomException(e, request, HttpStatus.BAD_REQUEST);
 	}
 	
 	@ExceptionHandler(value={ProductNotExistentException.class})

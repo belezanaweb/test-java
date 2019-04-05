@@ -18,7 +18,6 @@ import br.com.blz.testjava.exception.InvalidIdException;
 import br.com.blz.testjava.exception.NullProductException;
 import br.com.blz.testjava.exception.ProductIdAlreadyInUseException;
 import br.com.blz.testjava.exception.ProductNotExistentException;
-import br.com.blz.testjava.exception.UnableToGetItemsQuantityException;
 import br.com.blz.testjava.model.Inventory;
 import br.com.blz.testjava.model.Product;
 import br.com.blz.testjava.model.Warehouse;
@@ -100,10 +99,6 @@ public class ProductRepository {
 			throw new ProductNotExistentException("Product not found");
 		}
 		Inventory inventory = product.getInventory();
-		if(areEmptyInventoryAndWarehoues(inventory)) {
-			// TODO check if this exception is still necessary
-			Exception e = new UnableToGetItemsQuantityException("Unable to compute total quantity of items in stock");
-		}
 		
 		long total = 0L;
 		for(Warehouse ware : inventory.getWarehouses()) {
@@ -114,10 +109,6 @@ public class ProductRepository {
 		product.setIsMarketable(total > 0);
 		
 		return product;
-	}
-
-	private boolean areEmptyInventoryAndWarehoues(Inventory inventory) {
-		return inventory == null || inventory.getWarehouses() == null || inventory.getWarehouses().isEmpty();
 	}
 
 	public Product update(Product newProduct) {
