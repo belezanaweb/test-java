@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import br.com.blz.testjava.exception.DupItemsInWarehousesException;
 import br.com.blz.testjava.exception.InvalidIdException;
 import br.com.blz.testjava.exception.InvalidProductNameException;
 import br.com.blz.testjava.exception.InvalidQuantityInventoryLinkException;
@@ -55,6 +56,12 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 	protected ResponseEntity handleProductNotExistent(ProductNotExistentException e, WebRequest request) {
 		return handleCustomException(e, request, HttpStatus.NOT_FOUND); 
 	}
+	
+	@ExceptionHandler(value={DupItemsInWarehousesException.class})
+	protected ResponseEntity handleDupWarehouses(DupItemsInWarehousesException e, WebRequest request) {
+		return handleCustomException(e, request, HttpStatus.PRECONDITION_FAILED);
+	}
+	
 
 	private ResponseEntity handleCustomException(RuntimeException e, WebRequest request, HttpStatus status) {
 		ResponseError err = new ResponseError();
