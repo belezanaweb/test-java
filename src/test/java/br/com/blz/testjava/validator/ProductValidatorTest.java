@@ -154,4 +154,32 @@ public class ProductValidatorTest {
 		prod.setInventory(inventory);
 		ProductValidator.validate(prod);
 	}
+	
+	@Test(expected=InvalidQuantityInventoryLinkException.class)
+	public void tryValidateProductWithInventoryContainingQuantityAndItemsInWarehousesAndFail() {
+		Product prod = new Product();
+		prod.setName(PROD_NAME);
+		prod.setIsMarketable(NOT_MARKETABLE);
+		
+		Inventory inventory = new Inventory();
+		inventory.setQuantity(0L);
+		
+		List<Warehouse> warehousesList = new ArrayList();
+		Warehouse ware = new Warehouse();
+		ware.setQuantity(9L);
+		ware.setLocality(FIRST_WARE_LOCATION);
+		ware.setKind(WARE_KIND);
+		
+		Warehouse ware2 = new Warehouse();
+		ware2.setQuantity(-9L);
+		ware2.setLocality(FIRST_WARE_LOCATION);
+		ware2.setKind(WARE_KIND);
+		
+		warehousesList.add(ware);
+		warehousesList.add(ware2);
+		inventory.setWarehouses(warehousesList);
+		
+		prod.setInventory(inventory);
+		ProductValidator.validate(prod);
+	}
 }
