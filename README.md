@@ -74,3 +74,70 @@ Crie endpoints para as seguintes ações:
 - Os produtos podem ficar em memória, não é necessário persistir os dados
 - Sinta-se a vontade para fazer o código em ```groovy``` se preferir, utilizamos bastante aqui
 - Testes são sempre bem-vindos :smiley:
+
+#### Summary
+This project aims at the creation of a basic crud of products.
+
+#### Business rules:
+* Include products.
+* Update products.
+* Get products.
+* Delete products.
+
+#### Technology
+
+* [Java 1.8](http://www.oracle.com/technetwork/pt/java/javase/downloads/jdk8-downloads-2133151.html)
+* [Spring Boot](https://projects.spring.io/spring-boot/) * Default tomcat embedded
+* [MongoDB](https://www.mongodb.com/) * MongoDB in memory, used to store data
+* [JUnit](https://junit.org/junit5/)
+* [Swagger](https://swagger.io/)
+* [Lombok](https://projectlombok.org/)
+* [Maven](https://maven.apache.org/)
+
+#### Prerequisites for local execution:
+Have Java installed on the local machine;
+
+Have maven installed, starting with version 3.3;
+
+#### Steps for project execution
+
+On the root folder of the project run the command: 
+```
+mvn clean install
+```
+After performing the application build run the application with the following command:
+
+```
+mvn spring-boot:run
+```
+
+#### Execution port
+Execution port default 8666 
+
+#### URL Swagger
+Connection URL:
+
+* [Swagger URL](http://localhost:8666/swagger-ui.html)
+
+#### Test data to create products
+
+```json
+{
+    "sku": 43264,
+    "name": "L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g",
+    "inventory": {
+        "warehouses": [
+            {
+                "locality": "SP",
+                "quantity": 12,
+                "type": "ECOMMERCE"
+            },
+            {
+                "locality": "MOEMA",
+                "quantity": 3,
+                "type": "PHYSICAL_STORE"
+            }
+        ]
+    }
+}
+```
