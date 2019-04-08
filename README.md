@@ -94,6 +94,10 @@ This project aims at the creation of a basic crud of products.
 * [Lombok](https://projectlombok.org/)
 * [Maven](https://maven.apache.org/)
 
+#### Architecture
+This project uses as a basis the architecture model Clean Architecture
+More info: http://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+
 #### Prerequisites for local execution:
 Have Java installed on the local machine;
 
