@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import com.google.gson.annotations.Expose;
 
-import br.com.blz.testjava.entity.Inventory;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,7 +39,7 @@ public class ProdutoDTO implements Serializable {
 	
 	@Expose(serialize = true)
 	@ApiModelProperty(hidden = false)
-	private Inventory inventory;
+	private InventoryDTO inventory;
 	
 	@Expose(serialize = true)
 	@ApiModelProperty(hidden = true)

@@ -1,10 +1,10 @@
 package br.com.blz.testjava.resource;
 
 import javax.validation.Valid;
-import javax.ws.rs.NotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,39 +15,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.blz.testjava.constants.ConstantsPath;
-import br.com.blz.testjava.constants.ConstantsUtil;
+import br.com.blz.testjava.constant.ConstantsPath;
+import br.com.blz.testjava.constant.ConstantsUtil;
 import br.com.blz.testjava.dto.ProdutoDTO;
 import br.com.blz.testjava.entity.Produto;
 import br.com.blz.testjava.exception.SkuException;
-import br.com.blz.testjava.service.ProdutoService;
+import br.com.blz.testjava.services.ProdutoService;
 import io.swagger.annotations.ApiOperation;
+import javassist.NotFoundException;
 
 @io.swagger.annotations.Api(value = ConstantsPath.PATH_PRODUTO, produces = MediaType.APPLICATION_JSON_VALUE, tags = { ConstantsUtil.TAG_TRANSFER })
 @RestController
 @RequestMapping(value = ConstantsPath.PATH_PRODUTO)
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class ProdutoResource {
-	
-	@Autowired
-	private ProdutoService service;
 
+	@Autowired
+	private ProdutoService produtoService;
 	
 	/**
 	 * 
-	 * Produto.
+	 * P2PTransfer.
 	 * 
-	 * @param produto
+	 * @param 
 	 * @return
 	 * @throws SkuException 
 	 * 
 	 * */
 	@ResponseBody
-	@ApiOperation(value = "produto", response = ProdutoDTO.class)
-	@PostMapping("/")
-	public Produto produto(@RequestBody @Valid ProdutoDTO dto) throws SkuException {
+	@ApiOperation(value = "Create Produto", response = ProdutoDTO.class)
+	@PostMapping
+	public Produto createProduto(@RequestBody @Valid ProdutoDTO dto) throws SkuException {
 		
-		return service.createProduto(dto);
+		return produtoService.createProduto(dto);
 		 
 	}
 	
@@ -56,14 +56,15 @@ public class ProdutoResource {
 	 * 
 	 * @param FindBySku {@link FindBySKU}
 	 * @return {@link ProdutoDTO}
+	 * @throws SkuException 
 	 * @throws NotFoundException
 	 */
 	@ResponseBody
-    @ApiOperation(value = "Find Produto by sku", response = ProdutoDTO.class)
+    @ApiOperation(value = "Alterar Produto by sku", response = ProdutoDTO.class)
 	@PutMapping(value = "/{sku}")
-    public Produto atualizarProduto(ProdutoDTO dto, String sku) {
+    public Produto atualizarProduto(String sku, @RequestBody @Valid ProdutoDTO dto) throws SkuException {
 
-		return service.atualizarProduto(dto, sku);
+		return produtoService.atualizarProduto(dto, sku);
 		
     }
 	
@@ -72,14 +73,15 @@ public class ProdutoResource {
 	 * 
 	 * @param FindBySku {@link FindBySKU}
 	 * @return {@link ProdutoDTO}
+	 * @throws SkuException 
 	 * @throws NotFoundException
 	 */
 	@ResponseBody
-    @ApiOperation(value = "Find Produto by sku", response = ProdutoDTO.class)
+    @ApiOperation(value = "Buscar Produto by sku", response = ProdutoDTO.class)
 	@GetMapping(value = "/{sku}")
-    public Produto findBySku(String sku) {
+    public Produto findBySku(String sku) throws SkuException {
 
-		return service.findBySku(sku);
+		return produtoService.buscarProduto(sku);
 		
     }
 	
@@ -88,14 +90,15 @@ public class ProdutoResource {
 	 * 
 	 * @param FindBySku {@link FindBySKU}
 	 * @return {@link ProdutoDTO}
+	 * @throws SkuException 
 	 * @throws NotFoundException
 	 */
 	@ResponseBody
-    @ApiOperation(value = "Find Produto by sku", response = ProdutoDTO.class)
+    @ApiOperation(value = "Deletar Produto by sku", response = ProdutoDTO.class)
 	@DeleteMapping(value = "/{sku}")
-    public void deleteProduto(String sku) {
+    public void deleteProduto(String sku) throws SkuException {
 
-		service.deleteProduto(sku);
+		produtoService.deleteProduto(sku);
 		
     }
 }

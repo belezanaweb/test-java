@@ -2,11 +2,13 @@ package br.com.blz.testjava.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -18,7 +20,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Table(name = "PRODUTO", schema = "TEST_JAVA")
+@Table(name = "PRODUTO", schema = "TESTJAVA")
 @Entity
 @DynamicUpdate
 @DynamicInsert
@@ -42,10 +44,11 @@ public class Produto implements Serializable {
 	@Column(name = "NAME", length = 100, nullable = false)
 	private String name;
 	
-	@OneToOne
+	@JoinColumn(unique = true)
+	@OneToOne(cascade = {CascadeType.ALL})
 	private Inventory inventory;
 	
-	@Column(name = "IS_MARKETABLE", nullable = false)
+	@Column(name = "IS_MARKETABLE")
 	private Boolean isMarketable;
 
 }

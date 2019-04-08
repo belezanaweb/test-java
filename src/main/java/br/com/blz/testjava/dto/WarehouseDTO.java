@@ -5,7 +5,19 @@ import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper=false)
+@Getter
+@Setter
 public class WarehouseDTO implements Serializable {
 	
 	/**
@@ -25,7 +37,7 @@ public class WarehouseDTO implements Serializable {
 	@ApiModelProperty(hidden = false)
 	private Integer quantity;
 	
-	@Expose(serialize = false)
+	@Expose(serialize = true)
 	@ApiModelProperty(hidden = false)
 	private String type;
 	

@@ -42,14 +42,13 @@ public class SwaggerConfiguration {
      private ApiInfo apiInfo() {
 
           ApiInfo apiInfo = new ApiInfoBuilder()
-                    .title("Produto API")
+                    .title("Produto API Gateway")
                     .description("APIs for produtos")
                     .version("1.0.0")
-                    .termsOfServiceUrl("Test-Java")
+                    .termsOfServiceUrl("users")
                     .build();
 
           return apiInfo;
      }
 
 }
-
