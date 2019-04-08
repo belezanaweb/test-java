@@ -72,3 +72,12 @@ Crie endpoints para as seguintes ações:
 - Os produtos podem ficar em memória, não é necessário persistir os dados
 - Sinta-se a vontade para fazer o código em ```groovy``` se preferir, utilizamos bastante aqui
 - Testes são sempre bem-vindos :smiley:
+
+
+===============================================================================================================
+
+Bando de dados usados foi o Postgre e as configuracoes estao no application.propeerties 
+e precisa apenas criar o schema conforme esta na Entity (testjava), apos isso subindo a aplicacao
+criara as tabelas conforme estao mapeadas.
+
+Qualquer duvida estou a disposicao, usei alguns framaworks.
