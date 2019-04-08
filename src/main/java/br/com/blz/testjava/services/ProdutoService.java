@@ -24,7 +24,7 @@ public class ProdutoService {
 
 		Produto produto = new Produto();
 		Inventory inventory = new Inventory();
-		Warehouse warehouse = new Warehouse();
+		
 		List<Warehouse> warehouses = new ArrayList<>();
 		
 		produto.setName(dto.getName());
@@ -48,7 +48,7 @@ public class ProdutoService {
 			long count = dto.getInventory().getWarehouses().stream().count();
 
 			dto.getInventory().getWarehouses().stream().forEach(ware -> {
-				
+				Warehouse warehouse = new Warehouse();
 				warehouse.setLocality(ware.getLocality());
 				warehouse.setQuantity(ware.getQuantity());
 				warehouse.setType(ware.getType());
@@ -99,7 +99,7 @@ public class ProdutoService {
 	public Produto atualizarProduto(ProdutoDTO dto, String sku) throws SkuException {
 		
 		Produto prod = new Produto();
-		Warehouse warehouse = new Warehouse();
+		
 		Inventory inventory = new Inventory();
 		List<Warehouse> warehouses = new ArrayList<>();
 
@@ -113,7 +113,7 @@ public class ProdutoService {
 			long count = dto.getInventory().getWarehouses().stream().count();
 
 			dto.getInventory().getWarehouses().stream().forEach(ware -> {
-				
+				Warehouse warehouse = new Warehouse();
 				warehouse.setLocality(ware.getLocality());
 				warehouse.setQuantity(ware.getQuantity());
 				warehouse.setType(ware.getType());
