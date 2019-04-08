@@ -1,6 +1,6 @@
 ### Backend Test
 
-[![Build Status](https://travis-ci.org/belezanaweb/test-java.svg?branch=master)](https://travis-ci.org/belezanaweb/test-java)
+[![Build Status](https://travis-ci.com/belezanaweb/test-java.svg?branch=master)
 
 Esta é uma avaliação básica de código.
 
