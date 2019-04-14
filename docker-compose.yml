@@ -1,0 +1,28 @@
+version: "2.0"
+services:
+  springboot:
+    build:
+      context: ""
+      dockerfile: docker/Dockerfile
+    environment:
+    - SPRING_DATA_MONGODB_URI=mongodb://mongo:27017/beleza-na-web
+    container_name: beleza-na-web-api
+    ports:
+    - 8666:8666
+    depends_on:
+    - mongo
+    links:
+    - mongo
+    networks:
+    - spring-mongo-net
+  mongo:
+    image: mongo
+    container_name: beleza-na-web-mongodb
+    ports:
+    - 27017:27017
+    command: mongod --smallfiles --logpath=/dev/null # --quiet
+    networks:
+    - spring-mongo-net
+networks:
+  spring-mongo-net:
+    driver: bridge

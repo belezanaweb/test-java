@@ -1,0 +1,15 @@
+spring:
+  profiles: test
+  data:
+    mongodb:
+      uri: "mongodb://mongo:27017/beleza-na-web"
+server:
+  port: 8666
+---
+spring:
+  profiles: default
+  data:
+    mongodb:
+      uri: "mongodb://mongo:27017/beleza-na-web"
+server:
+  port: 8666
