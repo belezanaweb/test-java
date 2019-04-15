@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  nginx:
+    container_name: blz_nginx
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./config/nginx:/etc/nginx/conf.d
+    depends_on:
+      - web
+  mysql:
+   container_name: blz_mysql
+   image: mysql/mysql-server:5.7
+   environment:
+    MYSQL_DATABASE: blz
+    MYSQL_ROOT_PASSWORD: root
+    MYSQL_ROOT_HOST: '%'
+   ports:
+   - "3306:3306"
+   restart: always
+  web:
+    container_name: blz_web
+    depends_on:
+      - mysql
+    command: mvn spring-boot:run 
+    restart: always
+    build: ./src
+    working_dir: /src
+    volumes:
+      - ./src:/src
+    expose:
+      - "8080"
