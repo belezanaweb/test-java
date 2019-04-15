@@ -23,6 +23,10 @@ public class ProductService {
         return productRepository.save(product);
     }
 
+    public Product updateProduct(Product product) {
+        return productRepository.save(product);
+    }
+
     public Product findBySku(Long sku){
         if(!productRepository.existsBySku(sku)){
             throw new RecordNotFoundException("Product Not Found");

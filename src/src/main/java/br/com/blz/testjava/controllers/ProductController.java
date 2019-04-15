@@ -53,7 +53,7 @@ public class ProductController {
         consumes = "application/json",
         produces = "application/json")
     public ResponseEntity<Product> updateProduct(@Valid @RequestBody Product values) {
-        Product saved = productService.saveProduct(values);
+        Product saved = productService.updateProduct(values);
         return ResponseEntity.status(HttpStatus.OK).body(saved);
     }
 
