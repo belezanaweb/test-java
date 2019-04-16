@@ -1,17 +1,17 @@
 package br.com.blz.testjava.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Inventory {
+public class Inventory implements Serializable {
 
-    private Integer quantity;
+    private static final long serialVersionUID = 6013562766442950067L;
     private List<Warehouse> warehouses;
 
     public Inventory() {
     }
 
-    public Inventory(Integer quantity, List<Warehouse> warehouses) {
-        this.quantity = quantity;
+    public Inventory(List<Warehouse> warehouses) {
         this.warehouses = warehouses;
     }
 
@@ -24,6 +24,10 @@ public class Inventory {
     }
 
     public Integer getQuantity() {
+        Integer quantity = 0;
+        for (Warehouse warehouse : warehouses) {
+            quantity += warehouse.getQuantity();
+        }
         return quantity;
     }
 }

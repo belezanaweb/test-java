@@ -7,28 +7,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
 
-    List<Product> products = new ArrayList<>();
+    private List<Product> products = new ArrayList<>();
 
-    public Product save(Product product) {
+    @Override
+    public Product save(Product product) throws Exception {
+        Product product1 = this.find(product.getSku());
+        if(product1 != null) {
+            throw new Exception("O produto com esse sku já está cadastrado.");
+        }
         products.add(product);
         return product;
     }
 
     @Override
     public Product find(String sku) {
-        return products.stream().filter(p -> p.getSku().equals(sku)).findAny().get();
+        Product product = null;
+        if (products != null && !products.isEmpty()) {
+            product = products.stream().filter(p -> p.getSku().equals(sku)).findAny().get();
+        }
+        return product;
     }
 
     @Override
     public Product update(String sku, Product product) {
-        return null;
+        this.remove(sku);
+        products.add(product);
+        return product;
     }
 
     @Override
     public void remove(String sku) {
-
+        Product product = this.find(sku);
+        if(product != null) {
+            products.remove(product);
+        }
     }
 
     public List<Product> findAll() {

@@ -1,9 +1,15 @@
 package br.com.blz.testjava.model;
 
-public class Warehouse {
+import java.io.Serializable;
+
+public class Warehouse implements Serializable {
+    private static final long serialVersionUID = -2604555741588856459L;
     private String locality;
     private Integer quantity;
     private WarehouseType type;
+
+    public Warehouse() {
+    }
 
     public Warehouse(String locality, Integer quantity, WarehouseType type) {
         this.locality = locality;

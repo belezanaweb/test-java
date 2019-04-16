@@ -6,9 +6,13 @@ import java.util.List;
 
 public interface ProductService {
 
-    Product save(Product product);
+    Product save(Product product) throws Exception;
+
     Product find(String sku);
+
     Product update(String sku, Product product);
+
     void remove(String sku);
+
     List<Product> findAll();
 }
