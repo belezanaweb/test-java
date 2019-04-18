@@ -1,14 +1,10 @@
-package br.com.blz.testjava.products.controller;
+package br.com.blz.testjava.controller;
 
-import br.com.blz.testjava.products.model.Product;
+import br.com.blz.testjava.model.Product;
 import br.com.blz.testjava.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-/**
- * @author pzatta
- */
 
 @RestController
 @RequestMapping(path = "/products")

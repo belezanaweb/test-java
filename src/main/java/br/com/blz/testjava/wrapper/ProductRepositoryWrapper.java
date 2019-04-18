@@ -1,6 +1,6 @@
 package br.com.blz.testjava.wrapper;
 
-import br.com.blz.testjava.products.model.Product;
+import br.com.blz.testjava.model.Product;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 

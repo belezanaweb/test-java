@@ -1,9 +1,8 @@
-package br.com.blz.testjava.products.model;
+package br.com.blz.testjava.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Getter
