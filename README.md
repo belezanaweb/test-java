@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.com/belezanaweb/test-java.svg?branch=master)](https://travis-ci.com/belezanaweb/test-java)
 
+[![codecov](https://codecov.io/gh/belezanaweb/test-java/branch/master/graph/badge.svg)](https://codecov.io/gh/belezanaweb/test-java)
+
 Esta é uma avaliação básica de código.
 
 O objetivo é conhecer um pouco do seu conhecimento/prática de RESTful, Spring e Java.
