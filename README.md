@@ -10,7 +10,7 @@ O objetivo é conhecer um pouco do seu conhecimento/prática de RESTful, Spring 
 
 Recomendamos que você não gaste mais do que 4 - 6 horas.
 
-Faça um fork deste repositório que contém o bootstrap de uma aplicação SpringBoot 1.5.12.
+Faça um fork deste repositório que contém o bootstrap de uma aplicação SpringBoot 1.5.12. (você pode utilizar spring boot 2+)
 
 Ao finalizar o teste, submeta um pull request para o repositório que nosso time será notificado.
 
