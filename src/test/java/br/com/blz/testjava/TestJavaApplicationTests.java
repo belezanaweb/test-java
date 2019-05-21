@@ -30,6 +30,10 @@ import br.com.blz.util.WarehouseType;
 @AutoConfigureMockMvc
 public class TestJavaApplicationTests {
 
+	@Test
+	public void contextLoads() {
+	}
+	
 	/*
 	@Autowired
     private MockMvc mvc;
