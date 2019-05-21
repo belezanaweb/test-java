@@ -76,3 +76,47 @@ Crie endpoints para as seguintes ações:
 - Os produtos podem ficar em memória, não é necessário persistir os dados
 - Sinta-se a vontade para fazer o código em ```groovy``` se preferir, utilizamos bastante aqui
 - Testes são sempre bem-vindos :smiley:
+
+-----------------------------------------------------------------
+# Test Java BNW
+Crud de produto
+
+## Features
+- CRUD por SKU
+## Tecnologias/Frameworks usados
+Construido com:
+- [Spring](https://spring.io/)
+- [Java 8](https://www.oracle.com/technetwork/pt/java/javase/downloads/jdk8-downloads-2133151.html)
+- [Maven](https://maven.apache.org/)
+- [Docker](https://docs.docker.com/install/)
+- [Flyway](https://flywaydb.org/)
+- [Postgresql](https://www.postgresql.org/)
+- ...
+## Iniciando
+Clone o repositório
+```shell
+https://github.com/rhuambarbosa/test-java.git
+```
+Subindo o banco de dados
+```shell
+docker run -d --restart=always --name bnw-db -e POSTGRES_PASSWORD=bnwdb%#r2 -p 5432:5432 postgres:9.3
+```
+### Building
+Local
+```shell
+mvn clean package
+```
+## Deploying
+Local: Dentro da pasta raiz do projeto onde exite o maven
+```shell
+mvn spring-boot:run
+```
+## Funcionalidades API
+```shell
+| Verbo    | Funcionalidade                   | Descrição
+| ---------|----------------------------------|---------------------------------------
+| Post     | http://localhost:8080/sku        | Cria ou atualiza um produto
+| Post     | http://localhost:8080/sku/create | Cria um produto
+| Get      | localhost:8080/sku/{sku}         | Retorna o produto por SKU
+| Delete   | localhost:8080/sku/{sku}         | Deleta o produto por SKU
+```
