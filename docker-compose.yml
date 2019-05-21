@@ -1,0 +1,11 @@
+version: "3.4"
+services:
+  maven:
+    image: maven:3-jdk-8
+    container_name: ws-beleza-web
+    ports: 
+      - 8585:8585
+    volumes:
+      - "./:/app"
+    working_dir: /app
+    command: mvn spring-boot:run
