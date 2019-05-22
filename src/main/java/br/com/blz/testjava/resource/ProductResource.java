@@ -32,7 +32,7 @@ public class ProductResource {
 
 	@PutMapping("/{sku}")
 	public Product update(@PathVariable Integer sku, @Valid @RequestBody Product product) {
-		product.setSku(sku);;
+		product.setSku(sku);
 		return service.save(product);
 	}
 

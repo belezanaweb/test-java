@@ -26,10 +26,14 @@ public class ProductService {
 		Optional<Product> productBySku = products.findBySku(product.getSku());
 
 		if (productBySku.isPresent()) {
-			throw new ProductAlreadyExistsException();
+			if (productBySku.get().getId() == null) {
+				throw new ProductAlreadyExistsException();
+			} else {
+				product.setId(productBySku.get().getId());
+			}
 		}
 
-		return products.save(product);
+		return products.save(product); 
 	}
 
 	public void delete(final Integer sku) {
