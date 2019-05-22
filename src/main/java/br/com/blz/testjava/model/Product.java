@@ -1,4 +1,4 @@
-package br.com.blz.testjava.domain;
+package br.com.blz.testjava.model;
 
 import java.io.Serializable;
 
