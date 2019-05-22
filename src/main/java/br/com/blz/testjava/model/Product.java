@@ -3,7 +3,6 @@ package br.com.blz.testjava.model;
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class Product implements Serializable {
@@ -23,12 +25,13 @@ public class Product implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq")
 	private Long id;
 
-	@Column(nullable = false, unique = true)
+	@NotNull(message = "products-1")
 	private Integer sku;
 
+	@NotBlank(message = "products-2")
 	private String name;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, optional = true)
 	@JoinColumn(name = "inventory_fk")
 	private Inventory inventory;
 

@@ -4,12 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Transient;
 
@@ -23,7 +25,8 @@ public class Inventory implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "inventory_seq")
 	private Long id;
 
-	@OneToMany( mappedBy = "inventory", cascade = CascadeType.ALL)
+	@ElementCollection(fetch = FetchType.LAZY)
+	@CollectionTable(name = "warehouses", joinColumns = @JoinColumn(name = "inventory_fk"))
 	private List<Warehouse> warehouses;
 
 	public Inventory() {
