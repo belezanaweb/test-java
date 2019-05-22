@@ -14,7 +14,6 @@ import br.com.blz.testjava.service.exception.ProductAlreadyExistsException;
 @Service
 public class ProductService {
 
-	@Autowired
 	private Products products;
 
 	public ProductService(@Autowired Products products) {
@@ -26,7 +25,7 @@ public class ProductService {
 		Optional<Product> productBySku = products.findBySku(product.getSku());
 
 		if (productBySku.isPresent()) {
-			if (productBySku.get().getId() == null) {
+			if (productBySku.get().getSku().equals(product.getSku())) {
 				throw new ProductAlreadyExistsException();
 			} else {
 				product.setId(productBySku.get().getId());

@@ -10,6 +10,4 @@ public interface Products extends JpaRepository<Product, Long> {
 
 	Optional<Product> findBySku(Integer sku);
 
-	Optional<Product> findById(Long id);
-
 }
