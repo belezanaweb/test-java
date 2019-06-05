@@ -1,6 +1,6 @@
 package br.com.blz.testjava.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +12,7 @@ public class Inventory {
 
     private Long id;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @JsonIgnore
     private Integer quantity;
 
     private List<Warehouse> warehouses;

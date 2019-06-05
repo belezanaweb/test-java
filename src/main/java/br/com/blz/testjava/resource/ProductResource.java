@@ -1,8 +1,10 @@
 package br.com.blz.testjava.resource;
 
 import br.com.blz.testjava.business.ProductBusiness;
+import br.com.blz.testjava.exception.ProductAlreadyExistException;
 import br.com.blz.testjava.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,12 +16,18 @@ public class ProductResource {
     @Autowired
     private ProductBusiness productBusiness;
 
-    @PostMapping("/produto")
+    @PostMapping("/product")
     public ResponseEntity save(@RequestBody Product product){
-        return ResponseEntity.ok().body(product);
+        try {
+            Product productNew = productBusiness.save(product);
+            return ResponseEntity.ok().body(productNew);
+        } catch (ProductAlreadyExistException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
-    @GetMapping("/produto/{sku}")
+    @GetMapping("/product/{sku}")
     public ResponseEntity get(@PathVariable(name = "sku") Long sku){
         Product product = productBusiness.getBySku(sku);
         if(product != null){
@@ -28,14 +36,15 @@ public class ProductResource {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/produto/{sku}")
+    @DeleteMapping("/product/{sku}")
     public ResponseEntity delete(@PathVariable(name = "sku") Long sku){
-        return ResponseEntity.ok(new ArrayList<>());
+        productBusiness.delete(sku);
+        return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/produto/{sku}")
+    @PutMapping("/product/{sku}")
     public ResponseEntity update(@PathVariable(name = "sku") Long sku, @RequestBody Product product){
-        return ResponseEntity.ok(new ArrayList<>());
+        Product update = productBusiness.update(sku, product);
+        return ResponseEntity.ok().body(update);
     }
-
 }

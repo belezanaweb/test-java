@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "warehouse")
 public class WarehouseEntity {
@@ -20,4 +21,11 @@ public class WarehouseEntity {
     @ManyToOne
     @JoinColumn(name = "inventory_id")
     private InventoryEntity inventoryEntity;
+
+    public WarehouseEntity(Long id, String locality, Integer quantity, String type) {
+        this.id = id;
+        this.locality = locality;
+        this.quantity = quantity;
+        this.type = type;
+    }
 }
