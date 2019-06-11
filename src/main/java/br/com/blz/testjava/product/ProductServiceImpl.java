@@ -3,6 +3,9 @@ package br.com.blz.testjava.product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.blz.testjava.error.NoProductResultException;
+import br.com.blz.testjava.error.ProductSavedException;
+
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -10,10 +13,10 @@ public class ProductServiceImpl implements ProductService {
 	private ProductRepository repository;
 	
 	@Override
-	public Product saveProduct(Product product) {
+	public Product saveProduct(Product product) throws ProductSavedException {
 		Product p = repository.findBySku(product.getSku());
 		if(p != null) {
-			//lanca exe
+			throw new ProductSavedException("There is a product with sku " + product.getSku() + " saved.");
 		}
 		return repository.save(product);
 	}
@@ -24,7 +27,11 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Product update(Product product) {
+	public Product update(Product product) throws NoProductResultException {
+		Product p = repository.findBySku(product.getSku()); 
+		if(p == null) {
+			throw new NoProductResultException("No product with sku " + product.getSku());
+		}
 		return repository.update(product);
 	}
 

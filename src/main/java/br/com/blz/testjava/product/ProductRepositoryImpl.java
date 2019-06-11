@@ -13,18 +13,13 @@ public class ProductRepositoryImpl implements ProductRepository {
 	@Override
 	public Product save(Product product) {
 		products.put(product.getSku(), product);
-		return this.findBySku(product.getSku());
+		return product;
 	}
 	
 	@Override
 	public Product update(Product product) {
-		Product p = this.findBySku(product.getSku());
-		if(p == null) {
-			//lanca exe
-		}
 		this.delete(product.getSku());
-		this.save(product);
-		return this.findBySku(product.getSku());
+		return this.save(product);
 	}
 
 	@Override

@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import br.com.blz.testjava.error.NoProductResultException;
+import br.com.blz.testjava.error.ProductSavedException;
 import br.com.blz.testjava.inventory.Inventory;
 import br.com.blz.testjava.product.Product;
 import br.com.blz.testjava.product.ProductService;
@@ -51,7 +53,11 @@ public class ProductTests {
 		
 		product.setInventory(inventory);
 		
-		product = service.saveProduct(product);
+		try {
+			product = service.saveProduct(product);
+		} catch (ProductSavedException e) {
+			e.printStackTrace();
+		}
 		
 		assertNotNull(product);
 		
@@ -85,7 +91,11 @@ public class ProductTests {
 		
 		product.setInventory(inventory);
 		
-		service.saveProduct(product);
+		try {
+			service.saveProduct(product);
+		} catch (ProductSavedException e) {
+			e.printStackTrace();
+		}
 		
 		Product productTest = service.getBySku(43264L);
 		
@@ -121,14 +131,22 @@ public class ProductTests {
 		
 		product.setInventory(inventory);
 		
-		product = service.saveProduct(product);
+		try {
+			product = service.saveProduct(product);
+		} catch (ProductSavedException e) {
+			e.printStackTrace();
+		}
 		
 		Product productTest = service.getBySku(43264L);
 		
 		
 		productTest.setName(productTest.getName() + " edited");
 		
-		service.update(productTest);
+		try {
+			service.update(productTest);
+		} catch (NoProductResultException e) {
+			e.printStackTrace();
+		}
 		
 		Product ProductEdited = service.getBySku(43264L);
 		
@@ -164,7 +182,11 @@ public class ProductTests {
 		
 		product.setInventory(inventory);
 		
-		service.saveProduct(product);
+		try {
+			service.saveProduct(product);
+		} catch (ProductSavedException e) {
+			e.printStackTrace();
+		}
 		
 		Product productTest = service.getBySku(43264L);
 		
