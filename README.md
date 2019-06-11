@@ -1,78 +1,29 @@
-### Backend Test
+# PRODUCT API - BELEZA NA WEB
 
-[![Build Status](https://travis-ci.com/belezanaweb/test-java.svg?branch=master)](https://travis-ci.com/belezanaweb/test-java)
+Micro-serviço desenvolvido para o processo seletivo da Beleza na Web.
 
-[![codecov](https://codecov.io/gh/belezanaweb/test-java/branch/master/graph/badge.svg)](https://codecov.io/gh/belezanaweb/test-java)
+Sua responsabilidade é manipular produtos mediante criação, busca, edição e deleção.
 
-Esta é uma avaliação básica de código.
+# Para executá-la localmente:
+```
+Comando para rodar o redis via docker:
+1) docker pull redis:5.0.5
+2) docker run -d -p 6379:6379 -i -t redis:5.0.5
 
-O objetivo é conhecer um pouco do seu conhecimento/prática de RESTful, Spring e Java.
-
-Recomendamos que você não gaste mais do que 4 - 6 horas.
-
-Faça um fork deste repositório que contém o bootstrap de uma aplicação SpringBoot 1.5.12. (você pode utilizar spring boot 2+)
-
-Ao finalizar o teste, submeta um pull request para o repositório que nosso time será notificado.
-
-### Tarefas
-
-Com a seguinte representação de produto:
-
-```json
-{
-    "sku": 43264,
-    "name": "L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g",
-    "inventory": {
-        "quantity": 15,
-        "warehouses": [
-            {
-                "locality": "SP",
-                "quantity": 12,
-                "type": "ECOMMERCE"
-            },
-            {
-                "locality": "MOEMA",
-                "quantity": 3,
-                "type": "PHYSICAL_STORE"
-            }
-        ]
-    },
-    "isMarketable": true
-}
+Subindo a app via IDE:
+3) habilitar annotation processors na IDE
+4) executar a classe ApiStarter.java dentro do módulo test-api 
+5) acessar em: http://localhost:8083/blz-api/swagger-ui.html
 ```
 
-Crie endpoints para as seguintes ações:
-
-- [ ] Criação de produto onde o payload será o json informado acima (exceto as propriedades **isMarketable** e **inventory.quantity**)
-
-- [ ] Edição de produto por **sku**
-
-- [ ] Recuperação de produto por **sku**
-
-- [ ] Deleção de produto por **sku**
-
-### Requisitos
-
-
-- [ ] Toda vez que um produto for recuperado por **sku** deverá ser calculado a propriedade: **inventory.quantity**
-
-        A propriedade inventory.quantity é a soma da quantity dos warehouses
-
-- [ ] Toda vez que um produto for recuperado por **sku** deverá ser calculado a propriedade: **isMarketable**
-
-        Um produto é marketable sempre que seu inventory.quantity for maior que 0
-
-- [ ] Caso um produto já existente em memória tente ser criado com o mesmo **sku** uma exceção deverá ser lançada
-
-        Dois produtos são considerados iguais se os seus skus forem iguais
-
-
-- [ ] Ao atualizar um produto, o antigo deve ser sobrescrito com o que esta sendo enviado na requisição
-
-        A requisição deve receber o sku e atualizar com o produto que tbm esta vindo na requisição
-
-### Dicas
-
-- Os produtos podem ficar em memória, não é necessário persistir os dados
-- Sinta-se a vontade para fazer o código em ```groovy``` se preferir, utilizamos bastante aqui
-- Testes são sempre bem-vindos :smiley:
+# Tecnologias utilizadas:
+    - redis para cache dos produtos (TTL está configurado para 1 dia)
+    - documentação da api disponível no swagger
+      - mockito _(testes unitários)_
+        - **ProductResourceTest.java**
+        - **ProductServiceTest.java**
+        - **ProductCacheTest.java**
+      - restAssured _(testes integrados)_
+        - para executá-los basta rodar a classe **ProductIntegrationTest.java** dentro de test-api/src/integrationTestApi
+        
+Para maiores contatos, meu currículo segue visível na raiz do projeto com todos os dados pessoais.         

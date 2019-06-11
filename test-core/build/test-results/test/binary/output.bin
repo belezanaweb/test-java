@@ -1,0 +1,9 @@
+[02:44:30.310 [Test worker] INFO test.blz.service.ProductServiceImpl - M=findProduct, sku=1
+[02:44:30.332 [Test worker] INFO test.blz.service.ProductServiceImpl - M=findProduct, sku=1
+À02:44:30.334 [Test worker] INFO test.blz.service.ProductServiceImpl - M=createProduct, productVO=ProductVO(sku=1, name=produto teste, inventory=Inventory(quantity=1, warehouses=[Warehouse(locality=sao paulo, quantity=1, type=ECOMMERCE), Warehouse(locality=sao paulo, quantity=1, type=PHYSICAL_STORE)]), marketable=true)
+[02:44:30.335 [Test worker] INFO test.blz.service.ProductServiceImpl - M=findProduct, sku=1
+À02:44:30.335 [Test worker] INFO test.blz.service.ProductServiceImpl - M=updateProduct, productVO=ProductVO(sku=1, name=produto teste, inventory=Inventory(quantity=1, warehouses=[Warehouse(locality=sao paulo, quantity=1, type=ECOMMERCE), Warehouse(locality=sao paulo, quantity=1, type=PHYSICAL_STORE)]), marketable=true)
+À02:44:30.336 [Test worker] INFO test.blz.service.ProductServiceImpl - M=updateProduct, productVO=ProductVO(sku=1, name=produto teste, inventory=Inventory(quantity=1, warehouses=[Warehouse(locality=sao paulo, quantity=1, type=ECOMMERCE), Warehouse(locality=sao paulo, quantity=1, type=PHYSICAL_STORE)]), marketable=true)
+À02:44:30.339 [Test worker] INFO test.blz.service.ProductServiceImpl - M=createProduct, productVO=ProductVO(sku=1, name=produto teste, inventory=Inventory(quantity=1, warehouses=[Warehouse(locality=sao paulo, quantity=1, type=ECOMMERCE), Warehouse(locality=sao paulo, quantity=1, type=PHYSICAL_STORE)]), marketable=true)
+[02:44:30.339 [Test worker] INFO test.blz.service.ProductServiceImpl - M=findProduct, sku=1
+]02:44:30.341 [Test worker] INFO test.blz.service.ProductServiceImpl - M=deleteProcuct, sku=1

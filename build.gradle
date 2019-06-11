@@ -1,0 +1,112 @@
+buildscript {
+    ext {
+        springBootVersion = '2.1.2.RELEASE'
+        dependencyManagementPluginVersion = '1.0.3.RELEASE'
+        snakeyamlVersion = '1.21'
+        lombokVersion = '1.18.4'
+        slf4jVersion = '1.7.25'
+        junitVersion = '4.12'
+        mockitoVersion = '2.22.0'
+        swaggerVersion = '2.7.0'
+    }
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.spring.gradle:dependency-management-plugin:${dependencyManagementPluginVersion}")
+        classpath "org.unbroken-dome.gradle-plugins:gradle-testsets-plugin:2.1.1"
+        classpath("org.yaml:snakeyaml:${snakeyamlVersion}")
+    }
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    compileJava.options.encoding = 'UTF-8'
+    compileTestJava.options.encoding = 'UTF-8'
+
+    dependencies {
+        compile group: 'org.slf4j', name: 'jcl-over-slf4j', version: "${slf4jVersion}"
+        compile(group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version: "${springBootVersion}") {
+            exclude group: 'org.springframework', module: 'spring-context'
+        }
+
+        testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: "${springBootVersion}"
+
+        compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: "${springBootVersion}"
+
+        annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+        compileOnly "org.projectlombok:lombok:${lombokVersion}"
+        compile "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
+
+        testCompile group: 'junit', name: 'junit', version: "${junitVersion}"
+        testCompile group: 'org.mockito', name: 'mockito-core', version: "${mockitoVersion}"
+    }
+
+    test {
+        dependsOn 'cleanTest'
+    }
+}
+
+project(':test-api') {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'application'
+    apply plugin: 'org.unbroken-dome.test-sets'
+
+    testSets {
+        integrationTestApi {
+            dirName = 'integrationTestApi'
+        }
+    }
+
+    project.integrationTestApi {
+        outputs.upToDateWhen { false }
+    }
+
+    dependencies {
+        compile project(':test-core')
+
+        //swagger documentation
+        compile(group: 'io.springfox', name: 'springfox-swagger-ui', version: "${swaggerVersion}")
+        compile(group: 'io.springfox', name: 'springfox-swagger2', version: "${swaggerVersion}")
+
+        compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}") {
+            exclude group: 'commons-logging', module: 'commons-logging'
+        }
+
+        compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}") {
+            exclude group: 'commons-logging', module: 'commons-logging'
+        }
+
+        integrationTestApiAnnotationProcessor("org.projectlombok:lombok:1.18.4")
+        integrationTestApiCompileOnly("org.projectlombok:lombok:1.18.4")
+        integrationTestApiCompile("io.rest-assured:rest-assured:3.0.6")
+        integrationTestApiCompile("io.rest-assured:json-schema-validator:3.0.6")
+    }
+
+    mainClassName = 'test.ml.ApiStarter'
+}
+
+project(':test-core') {
+    dependencies {
+        compile group: 'org.springframework.boot', name: 'spring-boot-starter-cache', version: '2.1.2.RELEASE'
+        compile(group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '2.1.5.RELEASE'){
+            exclude group: 'io.lettuce', module: 'lettuce-core'
+        }
+        compile group: 'redis.clients', name: 'jedis', version: '2.10.2'
+    }
+}
