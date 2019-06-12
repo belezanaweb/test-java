@@ -1,6 +1,0 @@
-server:
-  servlet:
-    context-path: /blz-api
-  port: ${PORT:8083}
-  graceful-shutdown:
-    timeout-ms: 60000

@@ -1,7 +1,0 @@
-Q02:44:25.709 [Test worker] INFO test.blz.resource.ProductResource - M=clearCache
-¹02:44:25.858 [Test worker] INFO test.blz.resource.ProductResource - M=createProduct, request=ProductCreateRequest(sku=1, name=produto teste, inventory=Inventory(quantity=null, warehouses=[Warehouse(locality=sao paulo, quantity=1, type=ECOMMERCE), Warehouse(locality=sao paulo, quantity=1, type=PHYSICAL_STORE)]))
-Y02:44:25.867 [Test worker] INFO test.blz.resource.ProductResource - M=findProduct, sku=1
-Y02:44:25.871 [Test worker] INFO test.blz.resource.ProductResource - M=findProduct, sku=1
-É02:44:25.884 [Test worker] INFO test.blz.resource.ProductResource - M=editProduct, request=ProductUpdateRequest(sku=1, name=produto teste, inventory=Inventory(quantity=null, warehouses=[Warehouse(locality=sao paulo, quantity=1, type=ECOMMERCE), Warehouse(locality=sao paulo, quantity=1, type=PHYSICAL_STORE)]), marketable=false)
-¶02:44:25.891 [Test worker] INFO test.blz.resource.ProductResource - M=createProduct, request=ProductCreateRequest(sku=1, name=produto teste, inventory=Inventory(quantity=2, warehouses=[Warehouse(locality=sao paulo, quantity=1, type=ECOMMERCE), Warehouse(locality=sao paulo, quantity=1, type=PHYSICAL_STORE)]))
-_02:44:25.898 [Test worker] INFO test.blz.resource.ProductResource - M=createProduct, request=1
