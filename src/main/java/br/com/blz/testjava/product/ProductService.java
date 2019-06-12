@@ -11,6 +11,6 @@ public interface ProductService {
 	
 	Product update(Product product) throws NoProductResultException;
 	
-	void deleteBySku(Long sku);
+	void deleteBySku(Long sku) throws NoProductResultException;
 
 }

@@ -54,14 +54,18 @@ public class ProductTests {
 		product.setInventory(inventory);
 		
 		try {
+			
 			product = service.saveProduct(product);
+			assertNotNull(product);			
+			service.deleteBySku(product.getSku());
+			
 		} catch (ProductSavedException e) {
+			e.printStackTrace();
+		} catch (NoProductResultException e) {
 			e.printStackTrace();
 		}
 		
-		assertNotNull(product);
 		
-		service.deleteBySku(product.getSku());
 	
 	}
 	
@@ -93,16 +97,16 @@ public class ProductTests {
 		
 		try {
 			service.saveProduct(product);
+			Product productTest = service.getBySku(43264L);
+			
+			assertNotNull(productTest);
+			
+			service.deleteBySku(productTest.getSku());
 		} catch (ProductSavedException e) {
 			e.printStackTrace();
+		} catch (NoProductResultException e) {
+			e.printStackTrace();
 		}
-		
-		Product productTest = service.getBySku(43264L);
-		
-		assertNotNull(productTest);
-		
-		service.deleteBySku(productTest.getSku());
-	
 	}
 	
 	@Test
@@ -144,16 +148,14 @@ public class ProductTests {
 		
 		try {
 			service.update(productTest);
+			Product ProductEdited = service.getBySku(43264L);
+			
+			assertEquals("L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g edited", ProductEdited.getName());
+			
+			service.deleteBySku(ProductEdited.getSku());
 		} catch (NoProductResultException e) {
 			e.printStackTrace();
 		}
-		
-		Product ProductEdited = service.getBySku(43264L);
-		
-		assertEquals("L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g edited", ProductEdited.getName());
-		
-		service.deleteBySku(ProductEdited.getSku());
-	
 	}
 	
 	@Test
@@ -184,17 +186,20 @@ public class ProductTests {
 		
 		try {
 			service.saveProduct(product);
+			Product productTest = service.getBySku(43264L);
+			
+			service.deleteBySku(productTest.getSku());
+			
+			Product productDeleted = service.getBySku(43264L);
+			
+			assertNull(productDeleted);
 		} catch (ProductSavedException e) {
+			e.printStackTrace();
+		} catch (NoProductResultException e) {
 			e.printStackTrace();
 		}
 		
-		Product productTest = service.getBySku(43264L);
 		
-		service.deleteBySku(productTest.getSku());
-		
-		Product productDeleted = service.getBySku(43264L);
-		
-		assertNull(productDeleted);
 	}
 
 }
