@@ -2,7 +2,18 @@ package br.com.blz.testjava.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+
 import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * 
@@ -11,14 +22,40 @@ import com.fasterxml.jackson.annotation.JsonAlias;
  * @author Andre Barroso
  *
  */
+@Entity
 public class Inventory {
+
+	/**
+	 * Inventory ID.
+	 */
+	@Id
+	@Column(name = "inventory_id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@JsonIgnore
+	private Long inventoryId;
 
 	/**
 	 * Ware houses list.
 	 */
 	@JsonAlias({"warehouses", "wareHouses"})
+	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, orphanRemoval = true)
+	@JoinColumn(name = "inventory_id")
 	private List<WareHouse> wareHouses;
 
+	/**
+	 * @return the inventoryId
+	 */
+	public Long getInventoryId() {
+		return inventoryId;
+	}
+
+	/**
+	 * @param inventoryId the inventoryId to set
+	 */
+	public void setInventoryId(Long inventoryId) {
+		this.inventoryId = inventoryId;
+	}
+	
 	/**
 	 * Method responsible for recovering the amount of inventory.
 	 * 
@@ -49,5 +86,5 @@ public class Inventory {
 	public void setWareHouses(List<WareHouse> wareHouses) {
 		this.wareHouses = wareHouses;
 	}
-	
+
 }

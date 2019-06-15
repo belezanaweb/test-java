@@ -34,27 +34,16 @@ public class TestJavaProductServiceTests {
 	private ProductService service;
 	
 	/**
-	 * Method responsible for testing product search with empty return with empty cache.
-	 */
-	@Test
-	public void findProducIsEmptyCacheIsEmptyTest() {
-		
-		Product product = this.service.findProduct(123L);
-		
-		assertTrue("Product not found when we cache is empty.", product == null);
-	}
-	
-	/**
 	 * Method responsible for testing product search with empty return with invalid sku.
 	 */
 	@Test
-	public void findProducIsEmptyToSkuInvalidTest() {
+	public void findProducNotFoundTest() {
 		
-		Product product = this.createProduct(654222L);
+		Product product = this.createProduct(12L);
 
 		this.service.createProduct(product);
 		
-		Product entityBase = this.service.findProduct(12L);
+		Product entityBase = this.service.findProduct(1L);
 		
 		assertTrue("Product not found when we inform a nonexistent sku.", entityBase == null);
 	}
@@ -65,11 +54,11 @@ public class TestJavaProductServiceTests {
 	@Test
 	public void findProducFoundTest() {
 		
-		Product product = this.createProduct(654321L);
+		Product product = this.createProduct(123L);
 		
 		this.service.createProduct(product);
 		
-		Product entityCache = this.service.findProduct(654321L);
+		Product entityCache = this.service.findProduct(123L);
 		
 		assertTrue("Product found when we inform a sku valid.", entityCache != null);
 	}
@@ -93,7 +82,9 @@ public class TestJavaProductServiceTests {
 	@Test(expected = ProductAlreadyException.class)
 	public void createProductWithErrorTest() {
 
-		Product product = this.createProduct(1234L);
+		
+		Product product = this.createProduct(12345L);
+		this.service.createProduct(product);
 		this.service.createProduct(product);
 	}
 
@@ -103,7 +94,7 @@ public class TestJavaProductServiceTests {
 	@Test
 	public void updateProductWithSuccessTest() {
 		
-		Product product = this.createProduct(1234333L);
+		Product product = this.createProduct(123456L);
 		
 		this.service.createProduct(product);
 		
@@ -120,11 +111,11 @@ public class TestJavaProductServiceTests {
 	@Test(expected = ProductNotFoundException.class)
 	public void updateProductWithErrorTest() {
 		
-		Product product = this.createProduct(1234344L);
+		Product product = this.createProduct(1234567L);
 		
 		this.service.createProduct(product);
 		
-		Product product2 = this.createProduct(1234355L);
+		Product product2 = this.createProduct(123458L);
 		product2.setName("Black Bean");
 		
 		this.service.updateProduct(product2);
@@ -136,11 +127,11 @@ public class TestJavaProductServiceTests {
 	@Test
 	public void deleteProductWithSuccessTest() {
 		
-		Product product = this.createProduct(1234399L);
+		Product product = this.createProduct(12345679L);
 		
 		this.service.createProduct(product);
 
-		boolean isDeleted = this.service.removeProduct(1234399L);
+		boolean isDeleted = this.service.removeProduct(12345679L);
 		
 		assertTrue("Product is deleted with succes when we inform a sku valid.", isDeleted);
 	}
@@ -151,7 +142,7 @@ public class TestJavaProductServiceTests {
 	@Test(expected = ProductNotFoundException.class)
 	public void deleteProductWithErrorTest() {
 		
-		this.service.removeProduct(1234300L);
+		this.service.removeProduct(1234567810L);
 	}
 
 	/**

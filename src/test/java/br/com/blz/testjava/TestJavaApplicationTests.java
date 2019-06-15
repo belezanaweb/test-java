@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,20 +24,32 @@ import br.com.blz.testjava.model.WareHouseTypeEnum;
 @SpringBootTest( classes = TestJavaApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT )
 public class TestJavaApplicationTests {
 	
+	/**
+	 * Local server port.
+	 */
 	@LocalServerPort
 	private int port;
 	
-	private String url = "http://localhost:";
+	/**
+	 * URL base.
+	 */
+	private String url;
+	
+	private RestTemplate template;
+			
+	@Before
+	public void setup() {
+		this.url = "http://localhost:" + this.port + "/products";
+		this.template = new RestTemplate();
+	}
 	
 	/**
-	 * Method responsible for testing product search with empty return with empty cache.
+	 * Method responsible for testing product search with empty return.
 	 */
 	@Test
-	public void findProducByApiIsEmptyCacheIsEmptyTest() {
+	public void findProducByApiNotFoundTest() {
 		
-		RestTemplate template = new RestTemplate();
-		
-		Product response = template.getForObject(url + port + "/products/123", Product.class);
+		Product response = this.template.getForObject(url + "/1", Product.class);
 		
 		assertTrue("Product not found when we cache is empty.", response == null);
 	}
@@ -47,13 +60,11 @@ public class TestJavaApplicationTests {
 	@Test
 	public void findProductApiIsEmptyBySkuInvalidSuccessTest() {
 		
-		Product product = this.createProduct(654222L);
+		Product product = this.createProduct(1234567811L);
 		
-		RestTemplate template = new RestTemplate();
-
-		template.postForEntity(url + port + "/products", product, Product.class).getBody();
+		this.template.postForEntity(url, product, Product.class).getBody();
 		
-		Product response = template.getForObject(url + port + "/products/12", Product.class);
+		Product response = this.template.getForObject(url + "/1200000000000", Product.class);
 		
 		assertTrue("Product not found when we cache not is empty and sku is invalid.", response == null);
 	}
@@ -64,13 +75,11 @@ public class TestJavaApplicationTests {
 	@Test
 	public void findProductApiFoundsTest() {
 		
-		Product product = this.createProduct(654112L);
+		Product product = this.createProduct(1234567812L);
 		
-		RestTemplate template = new RestTemplate();
-
-		template.postForEntity(url + port + "/products", product, Product.class).getBody();
+		this.template.postForEntity(url, product, Product.class).getBody();
 		
-		Product response = template.getForObject(url + port + "/products/654112", Product.class);
+		Product response = this.template.getForObject(url + "/1234567812", Product.class);
 		
 		assertTrue("Product found when we inform a sku valid.", response != null);
 	}
@@ -81,11 +90,9 @@ public class TestJavaApplicationTests {
 	@Test
 	public void createProducApitWithSuccessTest() {
 		
-		Product product = this.createProduct(65405502L);
+		Product product = this.createProduct(1234567813L);
 		
-		RestTemplate template = new RestTemplate();
-
-		Product response = template.postForEntity(url + port + "/products", product, Product.class).getBody();
+		Product response = this.template.postForEntity(url, product, Product.class).getBody();
 		
 		assertTrue("Product is created with succes when we inform a data valid.", response != null);
 	}
@@ -96,14 +103,12 @@ public class TestJavaApplicationTests {
 	@Test()
 	public void createProductApiWithErrorTest() {
 		
-		Product product = this.createProduct(6541102L);
+		Product product = this.createProduct(1234567814L);
 		
-		RestTemplate template = new RestTemplate();
-
-		template.postForEntity(url + port + "/products", product, Product.class).getBody();
+		this.template.postForEntity(url, product, Product.class).getBody();
 
 		try {
-			template.postForEntity(url + port + "/products", product, Product.class).getBody();
+			this.template.postForEntity(url, product, Product.class).getBody();
 		}catch (HttpClientErrorException e) {
 			assertTrue("Product not was created with succes.", e.getStatusCode().name().equals("NOT_ACCEPTABLE"));
 		}
@@ -115,14 +120,12 @@ public class TestJavaApplicationTests {
 	@Test
 	public void updateProductApiWithSuccessTest() {
 		
-		Product product = this.createProduct(654002L);
-		product.setName("Balck Bean");
+		Product product = this.createProduct(1234567815L);
 		
-		RestTemplate template = new RestTemplate();
+		this.template.postForEntity(url, product, Product.class).getBody();
 
-		template.postForEntity(url + port + "/products", product, Product.class).getBody();
-
-		boolean response = template.exchange(url + port + "/products", HttpMethod.PUT, new HttpEntity<Product>(product), Boolean.class).getBody();
+		product.setName("Balck Bean");
+		boolean response = this.template.exchange(url, HttpMethod.PUT, new HttpEntity<Product>(product), Boolean.class).getBody();
 		
 		assertTrue("Product is updated with succes when we inform a data valid.", response);
 	}
@@ -133,13 +136,10 @@ public class TestJavaApplicationTests {
 	@Test
 	public void updateProductApiWithErrorTest() {
 		
-		Product product = this.createProduct(654111002L);
-		product.setName("Balck Bean");
+		Product product = this.createProduct(1234567816L);
 		
-		RestTemplate template = new RestTemplate();
-
 		try {
-			template.exchange(url + port + "/products", HttpMethod.PUT, new HttpEntity<Product>(product), Product.class).getBody();
+			this.template.exchange(url, HttpMethod.PUT, new HttpEntity<Product>(product), Product.class).getBody();
 		} catch (HttpClientErrorException e) {
 			assertTrue("Product not was created with succes.", e.getStatusCode().name().equals("NOT_FOUND"));
 		}
@@ -151,13 +151,11 @@ public class TestJavaApplicationTests {
 	@Test
 	public void deleteProducApitWithSuccessTest() {
 		
-		Product product = this.createProduct(654011102L);
+		Product product = this.createProduct(1234567817L);
 		
-		RestTemplate template = new RestTemplate();
+		this.template.postForEntity(url, product, Product.class).getBody();
 
-		template.postForEntity(url + port + "/products", product, Product.class).getBody();
-
-		boolean isDeleted = template.exchange(url + port + "/products/654011102", HttpMethod.DELETE, new HttpEntity<String>(""), Boolean.class).getBody();
+		boolean isDeleted = this.template.exchange(url + "/1234567817", HttpMethod.DELETE, new HttpEntity<String>(""), Boolean.class).getBody();
 		
 		assertTrue("Product is deleted with succes when we inform a sku valid.", isDeleted);
 	}
@@ -168,14 +166,12 @@ public class TestJavaApplicationTests {
 	@Test
 	public void deleteProductApiWithErrorTest() {
 		
-		Product product = this.createProduct(65401001102L);
+		Product product = this.createProduct(1234567818L);
 		
-		RestTemplate template = new RestTemplate();
-
-		template.postForEntity(url + port + "/products", product, Product.class).getBody();
+		this.template.postForEntity(url, product, Product.class).getBody();
 
 		try {
-			template.exchange(url + port + "/products/6542", HttpMethod.DELETE, new HttpEntity<String>(""), Boolean.class).getBody();
+			this.template.exchange(url + "/1234567819", HttpMethod.DELETE, new HttpEntity<String>(""), Boolean.class).getBody();
 		} catch (HttpClientErrorException e) {
 			assertTrue("Product not was deleted with succes.", e.getStatusCode().name().equals("NOT_FOUND"));
 		}
