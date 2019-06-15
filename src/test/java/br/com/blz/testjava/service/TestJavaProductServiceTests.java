@@ -105,15 +105,13 @@ public class TestJavaProductServiceTests {
 		
 		Product product = this.createProduct(1234333L);
 		
-		String nameOld = "Bean";
-		
 		this.service.createProduct(product);
 		
 		product.setName("Black Bean");
 		
-		Product entityUpdated = this.service.updateProduct(product);
+		boolean result = this.service.updateProduct(product);
 		
-		assertTrue("Product is updated with succes when we inform a data valid.", !nameOld.equals(entityUpdated.getName()));
+		assertTrue("Product is updated with succes when we inform a data valid.", result);
 	}
 
 	/**

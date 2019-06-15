@@ -118,15 +118,13 @@ public class TestJavaApplicationTests {
 		Product product = this.createProduct(654002L);
 		product.setName("Balck Bean");
 		
-		String nameOld = "Bean";
-		
 		RestTemplate template = new RestTemplate();
 
 		template.postForEntity(url + port + "/products", product, Product.class).getBody();
 
-		Product response = template.exchange(url + port + "/products", HttpMethod.PUT, new HttpEntity<Product>(product), Product.class).getBody();
+		boolean response = template.exchange(url + port + "/products", HttpMethod.PUT, new HttpEntity<Product>(product), Boolean.class).getBody();
 		
-		assertTrue("Product is updated with succes when we inform a data valid.", !nameOld.equals(response.getName()));
+		assertTrue("Product is updated with succes when we inform a data valid.", response);
 	}
 	
 	/**

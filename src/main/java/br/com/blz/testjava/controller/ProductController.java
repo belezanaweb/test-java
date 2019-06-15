@@ -45,10 +45,10 @@ public class ProductController {
 	 * Method responsible for updating products.
 	 * 
 	 * @param product Product to update.
-	 * @return Entity updated.
+	 * @return Result.
 	 */
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Product updateProduct(@RequestBody Product product) {
+	public boolean updateProduct(@RequestBody Product product) {
 		
 		return this.service.updateProduct(product);
 	}

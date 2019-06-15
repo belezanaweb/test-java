@@ -83,9 +83,9 @@ public class ProductService {
 	 * Method responsible for updating a product.
 	 * 
 	 * @param product Entity base
-	 * @return Entity base updated
+	 * @return Result.
 	 */
-	public Product updateProduct(Product product) {
+	public boolean updateProduct(Product product) {
 		
 		Optional<Entry<Long, Product>> opProduct = this.getProducts().entrySet().stream().filter( p -> p.getKey().equals(product.getSku())).findFirst();
 
@@ -102,7 +102,7 @@ public class ProductService {
 		
 		logger.info("Product " + product.getSku() + " updated!");
 		
-		return entityCache;
+		return true;
 	}
 
 	/**
