@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,8 @@ import br.com.blz.testjava.model.WareHouse;
 @Service
 public class ProductService {
 
+	Logger logger = LoggerFactory.getLogger(ProductService.class);
+	
 	/**
 	 * Product list cache.
 	 */
@@ -37,11 +41,16 @@ public class ProductService {
 	 */
 	public Product findProduct(Long sku) {
 		
+		logger.info("Searching the product with the SKU: " + sku);
+		
 		Product product = null;
 		Optional<Entry<Long, Product>> opProduct = this.getProducts().entrySet().stream().filter( p -> p.getKey().equals(sku)).findFirst();
 		
 		if(opProduct.isPresent()) {
 			product = opProduct.get().getValue();
+			logger.info("Product " + sku + " found!");
+		} else {
+			logger.info("Product " + sku + " not found!");
 		}
 		return product;
 	}
@@ -57,11 +66,16 @@ public class ProductService {
 		Optional<Entry<Long, Product>> opProduct = this.getProducts().entrySet().stream().filter( p -> p.getKey().equals(product.getSku())).findFirst();
 
 		opProduct.ifPresent( p -> {
+			logger.error("Product " + product.getSku() + " already registered!");
 			throw new ProductAlreadyException("Product already registered!");
 		});
 		
+		logger.info("Creating the product with the SKU: " + product.getSku());
+		
 		this.getProducts().put(product.getSku(), product);
 
+		logger.info("Product " + product.getSku() + " created!");
+		
 		return product;
 	}
 
@@ -76,12 +90,17 @@ public class ProductService {
 		Optional<Entry<Long, Product>> opProduct = this.getProducts().entrySet().stream().filter( p -> p.getKey().equals(product.getSku())).findFirst();
 
 		if(!opProduct.isPresent()) {
+			logger.error("Product " + product.getSku() + " not found!");
 			throw new ProductNotFoundException("Product not found to update!");
 		}
+		
+		logger.info("Updating the product with the SKU: " + product.getSku());
 		
 		Product entityCache = opProduct.get().getValue();
 		
 		this.prepareProductToUpdate(entityCache, product);
+		
+		logger.info("Product " + product.getSku() + " updated!");
 		
 		return entityCache;
 	}
@@ -97,10 +116,15 @@ public class ProductService {
 		Optional<Entry<Long, Product>> opProduct = this.getProducts().entrySet().stream().filter( p -> p.getKey().equals(sku)).findFirst();
 
 		opProduct.ifPresent( p -> {
+			logger.info("Removing the product with the SKU: " + sku);
+			
 			this.getProducts().remove(sku);
+			
+			logger.info("Product " + sku + " removed!");
 		});
 
 		if(!opProduct.isPresent()) {
+			logger.error("Product " + sku + " not found!");
 			throw new ProductNotFoundException("Product not found to delete!");
 		}
 		return true;
