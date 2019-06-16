@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -15,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  *
  */
 @Entity
-public class WareHouse {
+public class Warehouse {
 
 	/**
 	 * Inventory ID.
@@ -29,18 +31,21 @@ public class WareHouse {
 	/**
 	 * The WareHouse locality.
 	 */
+	@NotEmpty(message = "Field: Warehouse --> locality is mandatory!")
 	@Column(nullable = false)
 	private String locality;
 
 	/**
 	 * The WareHouse quantity.
 	 */
+	@NotNull(message = "Field: Warehouse --> quantity is mandatory!")
 	@Column(nullable = false)
 	private Long quantity;
 	
 	/**
 	 * The WareHouse enum type.
 	 */
+	@NotNull(message = "Field: Warehouse --> type is mandatory!")
 	@Column(nullable = false)
 	private WareHouseTypeEnum type;
 	

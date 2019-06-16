@@ -11,8 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -37,10 +38,11 @@ public class Inventory {
 	/**
 	 * Ware houses list.
 	 */
-	@JsonAlias({"warehouses", "wareHouses"})
+	@Valid
+	@NotEmpty(message = "Field: Inventory --> wareHouses is mandatory!")
 	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, orphanRemoval = true)
 	@JoinColumn(name = "inventory_id")
-	private List<WareHouse> wareHouses;
+	private List<Warehouse> warehouses;
 
 	/**
 	 * @return the inventoryId
@@ -65,26 +67,26 @@ public class Inventory {
 		
 		Long quantity = 0L;
 		
-		if(this.wareHouses != null && !this.wareHouses.isEmpty()) {
-			quantity = this.wareHouses.stream().mapToLong(w -> w.getQuantity()).sum();
+		if(this.warehouses != null && !this.warehouses.isEmpty()) {
+			quantity = this.warehouses.stream().mapToLong(w -> w.getQuantity()).sum();
 		}
 		return quantity;
 	}
 
 	/**
-	 * Gets wareHouses
-	 * @return wareHouses
+	 * Gets warehouses
+	 * @return warehouses
 	 */
-	public List<WareHouse> getWareHouses() {
-		return wareHouses;
+	public List<Warehouse> getWarehouses() {
+		return warehouses;
 	}
 
 	/**
-	 * Sets wareHouses
-	 * @param Inventory wareHouses
+	 * Sets warehouses
+	 * @param Inventory warehouses
 	 */
-	public void setWareHouses(List<WareHouse> wareHouses) {
-		this.wareHouses = wareHouses;
+	public void setWarehouses(List<Warehouse> warehouses) {
+		this.warehouses = warehouses;
 	}
 
 }

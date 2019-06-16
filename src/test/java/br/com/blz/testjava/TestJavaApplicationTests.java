@@ -19,7 +19,7 @@ import org.springframework.web.client.RestTemplate;
 
 import br.com.blz.testjava.model.Inventory;
 import br.com.blz.testjava.model.Product;
-import br.com.blz.testjava.model.WareHouse;
+import br.com.blz.testjava.model.Warehouse;
 import br.com.blz.testjava.model.WareHouseTypeEnum;
 
 @RunWith(SpringRunner.class)
@@ -206,14 +206,14 @@ public class TestJavaApplicationTests {
 	private Product createProduct(Long sku) {
 		
 		Inventory inv = new Inventory();
-		inv.setWareHouses(new ArrayList<>());
+		inv.setWarehouses(new ArrayList<>());
 		
-		WareHouse wh = new WareHouse();
+		Warehouse wh = new Warehouse();
 		wh.setLocality("RJ");
 		wh.setQuantity(2L);
 		wh.setType(WareHouseTypeEnum.ECOMMERCE);
 		
-		inv.getWareHouses().add(wh);
+		inv.getWarehouses().add(wh);
 		
 		Product product = new Product();
 		product.setName("Bean");

@@ -11,7 +11,7 @@ import br.com.blz.testjava.exception.ProductAlreadyException;
 import br.com.blz.testjava.exception.ProductNotFoundException;
 import br.com.blz.testjava.model.Inventory;
 import br.com.blz.testjava.model.Product;
-import br.com.blz.testjava.model.WareHouse;
+import br.com.blz.testjava.model.Warehouse;
 import br.com.blz.testjava.repository.ProductRepository;
 
 /**
@@ -136,23 +136,23 @@ public class ProductService {
 		entityBase.setName(product.getName());
 		
 		// If collection is empty return.
-		if(product.getInventory() == null || product.getInventory().getWareHouses() == null || product.getInventory().getWareHouses().isEmpty()) {
+		if(product.getInventory() == null || product.getInventory().getWarehouses() == null || product.getInventory().getWarehouses().isEmpty()) {
 			return;
 		}
 		
 		// If entity base collection is empty input new collection
-		if(entityBase.getInventory() == null || entityBase.getInventory().getWareHouses() == null || entityBase.getInventory().getWareHouses().isEmpty()) {
+		if(entityBase.getInventory() == null || entityBase.getInventory().getWarehouses() == null || entityBase.getInventory().getWarehouses().isEmpty()) {
 			
 			if(entityBase.getInventory() == null) {
 				entityBase.setInventory(new Inventory());
 			}
-			entityBase.getInventory().setWareHouses(product.getInventory().getWareHouses());
+			entityBase.getInventory().setWarehouses(product.getInventory().getWarehouses());
 		} else {
 			
 			// Update if WH exists or insert.
-			product.getInventory().getWareHouses().forEach( pWh -> {
+			product.getInventory().getWarehouses().forEach( pWh -> {
 				
-				Optional<WareHouse> wh = entityBase.getInventory().getWareHouses().stream().filter( eWh -> {
+				Optional<Warehouse> wh = entityBase.getInventory().getWarehouses().stream().filter( eWh -> {
 					
 					return eWh.getLocality() != null && eWh.getLocality().equalsIgnoreCase(pWh.getLocality()) 
 							&& eWh.getType() != null && eWh.getType().equals(pWh.getType());
@@ -161,7 +161,7 @@ public class ProductService {
 				wh.ifPresent( w -> w.setQuantity(pWh.getQuantity()) );
 				
 				if(!wh.isPresent()) {
-					entityBase.getInventory().getWareHouses().add(pWh);
+					entityBase.getInventory().getWarehouses().add(pWh);
 				}
 			});
 		}

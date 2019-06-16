@@ -1,5 +1,7 @@
 package br.com.blz.testjava.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,7 +38,7 @@ public class ProductController {
 	 * @return Product entity base.
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Product createProduct(@RequestBody Product product) {
+	public Product createProduct(@Valid @RequestBody(required = true) Product product) {
 		
 		return this.service.createProduct(product);
 	}
@@ -48,7 +50,7 @@ public class ProductController {
 	 * @return Result.
 	 */
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public boolean updateProduct(@RequestBody Product product) {
+	public boolean updateProduct(@Valid @RequestBody(required = true) Product product) {
 		
 		return this.service.updateProduct(product);
 	}
@@ -60,7 +62,7 @@ public class ProductController {
 	 * @return Entity base.
 	 */
 	@GetMapping("/{sku}")
-	public Product findProduct(@PathVariable(name = "sku") Long sku) {
+	public Product findProduct(@PathVariable(name = "sku", required = true) Long sku) {
 		
 		return this.service.findProduct(sku);
 	}
@@ -72,7 +74,7 @@ public class ProductController {
 	 * @return Boolean true or false.
 	 */
 	@DeleteMapping("/{sku}")
-	public boolean deleteProduct(@PathVariable(name = "sku") Long sku) {
+	public boolean deleteProduct(@PathVariable(name = "sku", required = true) Long sku) {
 		
 		return this.service.removeProduct(sku);
 	}

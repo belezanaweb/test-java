@@ -10,6 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.OneToOne;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -34,18 +38,23 @@ public class Product {
 	/**
 	 * Product SKU.
 	 */
+	@NotNull(message = "Field: Product --> sku is mandatory!")
+	@Min(value = 1L, message = "FIeld: Product --> sku must be a positive number and greater than zero!")
 	@Column(nullable = false, unique = true)
 	private Long sku;
 	
 	/**
 	 * Product name.
 	 */
+	@NotEmpty(message = "Field: Product --> name is mandatory!")
 	@Column(nullable = false)
 	private String name;
 	
 	/**
 	 * Product inventory.
 	 */
+	@Valid
+	@NotNull(message = "Field: Product --> inventory is mandatory!")
 	@OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, optional = false)
 	@JoinColumns({@JoinColumn( name = "inventory_id", referencedColumnName = "inventory_id")})
 	private Inventory inventory;

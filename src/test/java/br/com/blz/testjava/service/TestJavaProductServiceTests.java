@@ -9,12 +9,13 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.TransactionSystemException;
 
 import br.com.blz.testjava.exception.ProductAlreadyException;
 import br.com.blz.testjava.exception.ProductNotFoundException;
 import br.com.blz.testjava.model.Inventory;
 import br.com.blz.testjava.model.Product;
-import br.com.blz.testjava.model.WareHouse;
+import br.com.blz.testjava.model.Warehouse;
 import br.com.blz.testjava.model.WareHouseTypeEnum;
 
 /**
@@ -144,6 +145,148 @@ public class TestJavaProductServiceTests {
 		
 		this.service.removeProduct(1234567810L);
 	}
+	
+	/**
+	 * Method responsible for testing product sku is mandatory.
+	 */
+	@Test(expected = TransactionSystemException.class)
+	public void findProducSkuIsMandatoryTest() {
+		
+		Product product = this.createProduct(null);
+
+		this.service.createProduct(product);
+	}
+	
+	/**
+	 * Method responsible for testing product sku is less than allowed.
+	 */
+	@Test(expected = TransactionSystemException.class)
+	public void findProducSkuIsLessThanAllowedTest() {
+		
+		Product product = this.createProduct(0L);
+
+		this.service.createProduct(product);
+	}
+	
+	/**
+	 * Method responsible for testing product name is mandatory.
+	 */
+	@Test(expected = TransactionSystemException.class)
+	public void findProducNameIsMandatoryTest() {
+		
+		Product product = this.createProduct(12L);
+		product.setName(null);
+		
+		this.service.createProduct(product);
+	}
+	
+	/**
+	 * Method responsible for testing product name empty is mandatory.
+	 */
+	@Test(expected = TransactionSystemException.class)
+	public void findProducNameEmptyIsMandatoryTest() {
+		
+		Product product = this.createProduct(12L);
+		product.setName("");
+		
+		this.service.createProduct(product);
+	}
+	
+	/**
+	 * Method responsible for testing product inventory is mandatory.
+	 */
+	@Test(expected = TransactionSystemException.class)
+	public void findProducInventoryIsMandatoryTest() {
+		
+		Product product = this.createProduct(12L);
+		product.setInventory(null);
+		
+		this.service.createProduct(product);
+	}
+	
+	/**
+	 * Method responsible for testing product inventory empty is mandatory.
+	 */
+	@Test(expected = TransactionSystemException.class)
+	public void findProducInventoryEmptyIsMandatoryTest() {
+		
+		Product product = this.createProduct(12L);
+		product.setInventory(new Inventory());
+		
+		this.service.createProduct(product);
+	}
+	
+	/**
+	 * Method responsible for testing product inventory warehouse is mandatory.
+	 */
+	@Test(expected = TransactionSystemException.class)
+	public void findProducInventoryWarehouseIsMandatoryTest() {
+		
+		Product product = this.createProduct(12L);
+		product.getInventory().setWarehouses(null);
+		
+		this.service.createProduct(product);
+	}
+	
+	/**
+	 * Method responsible for testing product inventory warehouse empty is mandatory.
+	 */
+	@Test(expected = TransactionSystemException.class)
+	public void findProducInventoryWarehouseEmptyIsMandatoryTest() {
+		
+		Product product = this.createProduct(12L);
+		product.getInventory().setWarehouses(new ArrayList<>());
+		
+		this.service.createProduct(product);
+	}
+	
+	/**
+	 * Method responsible for testing product inventory warehouse locality is mandatory.
+	 */
+	@Test(expected = TransactionSystemException.class)
+	public void findProducInventoryWarehouseLocalityIsMandatoryTest() {
+		
+		Product product = this.createProduct(12L);
+		product.getInventory().getWarehouses().get(0).setLocality(null);
+		
+		this.service.createProduct(product);
+	}
+	
+	/**
+	 * Method responsible for testing product inventory warehouse locality empty is mandatory.
+	 */
+	@Test(expected = TransactionSystemException.class)
+	public void findProducInventoryWarehouseLocalityEmptyIsMandatoryTest() {
+		
+		Product product = this.createProduct(12L);
+		product.getInventory().getWarehouses().get(0).setLocality("");
+		
+		this.service.createProduct(product);
+	}
+	
+	/**
+	 * Method responsible for testing product inventory warehouse quantity is mandatory.
+	 */
+	@Test(expected = TransactionSystemException.class)
+	public void findProducInventoryWarehouseQuantityIsMandatoryTest() {
+		
+		Product product = this.createProduct(12L);
+		product.getInventory().getWarehouses().get(0).setQuantity(null);
+		
+		this.service.createProduct(product);
+	}
+	
+	/**
+	 * Method responsible for testing product inventory warehouse type is mandatory.
+	 */
+	@Test(expected = TransactionSystemException.class)
+	public void findProducInventoryWarehouseTypeIsMandatoryTest() {
+		
+		Product product = this.createProduct(12L);
+		product.getInventory().getWarehouses().get(0).setType(null);
+		
+		this.service.createProduct(product);
+	}
 
 	/**
 	 * Method responsible to create the Product.
@@ -153,14 +296,14 @@ public class TestJavaProductServiceTests {
 	private Product createProduct(Long sku) {
 		
 		Inventory inv = new Inventory();
-		inv.setWareHouses(new ArrayList<>());
+		inv.setWarehouses(new ArrayList<>());
 		
-		WareHouse wh = new WareHouse();
+		Warehouse wh = new Warehouse();
 		wh.setLocality("RJ");
 		wh.setQuantity(2L);
 		wh.setType(WareHouseTypeEnum.ECOMMERCE);
 		
-		inv.getWareHouses().add(wh);
+		inv.getWarehouses().add(wh);
 		
 		Product product = new Product();
 		product.setName("Bean");
@@ -169,5 +312,5 @@ public class TestJavaProductServiceTests {
 		
 		return product;
 	}
-	
+
 }
