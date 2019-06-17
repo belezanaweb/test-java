@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-java-api-deployment
+spec:
+  template:
+    metadata:
+      labels:
+        name: test-java-api-pod
+    spec:
+      containers:
+        - name: container-test-java-api
+          image: test-java-api:v1
+          ports:
+            - containerPort: 8080
