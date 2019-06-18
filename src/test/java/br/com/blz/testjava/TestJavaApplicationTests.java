@@ -10,6 +10,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class TestJavaApplicationTests {
 
 	@Test
+	public void testGetAllWarehouse() {
+		
+	}
+	
+	@Test
 	public void contextLoads() {
 	}
 

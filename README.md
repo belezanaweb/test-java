@@ -1,3 +1,19 @@
+##Descrição do projeto
+
+Esse projeto foi desenvolvido utilizando a abordagem Test-Driven Development seguindo o padrão arquitetural MVC Model View Controller e implementado usando o data spring, jpa hibernate e junit.
+
+`mvn spring-boot:run` 
+ Executa o projeto 
+
+- Note:  Para reter os dados será necessario alterar o "ddl-auto" para `ddl-auto: update` que fica localizado resources/application.yml, para reinicializar o banco de dados é recomendado mudar para  `ddl-auto: create` assim o jpa recriará as tabelas.
+
+`mvn test`
+Executa todos testes do projeto exceto os testes que precisam de "id" ou "sku", pois precisa informar o id/sku existente no banco de dados para não gerar erros.
+
+Para verificar monitorar os dados registrado no banco de dados h2 acesse apos executar o projeto
+`http://localhost:8080/console`
+
+
 ### Backend Test
 
 [![Build Status](https://travis-ci.com/belezanaweb/test-java.svg?branch=master)](https://travis-ci.com/belezanaweb/test-java)
