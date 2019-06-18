@@ -20,19 +20,11 @@ To verify monitor the data registered in the database h2 access after executing 
 
 [![codecov](https://codecov.io/gh/belezanaweb/test-java/branch/master/graph/badge.svg)](https://codecov.io/gh/belezanaweb/test-java)
 
-Esta é uma avaliação básica de código.
+ 
 
-O objetivo é conhecer um pouco do seu conhecimento/prática de RESTful, Spring e Java.
+### Tasks
 
-Recomendamos que você não gaste mais do que 4 - 6 horas.
-
-Faça um fork deste repositório que contém o bootstrap de uma aplicação SpringBoot 1.5.12. (você pode utilizar spring boot 2+)
-
-Ao finalizar o teste, submeta um pull request para o repositório que nosso time será notificado.
-
-### Tarefas
-
-Com a seguinte representação de produto:
+With the following product representation:
 
 ```json
 {
@@ -57,38 +49,33 @@ Com a seguinte representação de produto:
 }
 ```
 
-Crie endpoints para as seguintes ações:
+Create endpoints for the following actions:
 
-- [ ] Criação de produto onde o payload será o json informado acima (exceto as propriedades **isMarketable** e **inventory.quantity**)
+- [] Product creation where the payload will be the json informed above (except the ** isMarketable ** and ** inventory.quantity ** properties)
 
-- [ ] Edição de produto por **sku**
+- [] Product editing by ** sku **
 
-- [ ] Recuperação de produto por **sku**
+- [] Product recovery by ** sku **
 
-- [ ] Deleção de produto por **sku**
+- [] Deletion of product by ** sku **
 
-### Requisitos
-
-
-- [ ] Toda vez que um produto for recuperado por **sku** deverá ser calculado a propriedade: **inventory.quantity**
-
-        A propriedade inventory.quantity é a soma da quantity dos warehouses
-
-- [ ] Toda vez que um produto for recuperado por **sku** deverá ser calculado a propriedade: **isMarketable**
-
-        Um produto é marketable sempre que seu inventory.quantity for maior que 0
-
-- [ ] Caso um produto já existente em memória tente ser criado com o mesmo **sku** uma exceção deverá ser lançada
-
-        Dois produtos são considerados iguais se os seus skus forem iguais
+### Requirements
 
 
-- [ ] Ao atualizar um produto, o antigo deve ser sobrescrito com o que esta sendo enviado na requisição
+- [] Whenever a product is retrieved by ** sku ** the property must be calculated: ** inventory.quantity **
 
-        A requisição deve receber o sku e atualizar com o produto que tbm esta vindo na requisição
+        The inventory.quantity property is the sum of the quantity of the warehouses
 
-### Dicas
+- [] Whenever a product is retrieved by ** sku ** the property must be calculated: ** isMarketable **
 
-- Os produtos podem ficar em memória, não é necessário persistir os dados
-- Sinta-se a vontade para fazer o código em ```groovy``` se preferir, utilizamos bastante aqui
-- Testes são sempre bem-vindos :smiley:
+        A product is marketable whenever its inventory.quantity is greater than 0
+
+- [] If an existing memory product tries to be created with the same ** sku ** an exception must be thrown
+
+        Two products are considered equal if their skus are equal
+
+
+- [] When updating a product, the old one must be overwritten with what is being sent in the requisition
+
+        The request must receive the sku and update with the product that is also coming in the request
+ 
