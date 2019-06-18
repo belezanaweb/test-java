@@ -11,7 +11,7 @@ This project was developed using the Test-Driven Development approach following 
 Run all project tests except tests that need "id" or "sku", since you need to inform the id / sku in the database to avoid errors.
 
 To verify monitor the data registered in the database h2 access after executing the project
-`http: // localhost: 8080 / console`
+`http://localhost:8080/console`
 
 
 ### Backend Test
