@@ -1,0 +1,8 @@
+Os endpoints abaixo foram criados para testar a implementação via browser.
+
+Teste na ordem abaixo:
+
+http://localhost:8080/servicesREST/create 		( Endpoint abaixo para CRIAR um usuário, será automaticamente carregado como payload! )
+http://localhost:8080/servicesREST/findBySku/{sku}	( Endpoint para BUSCAR um produto por sku, forneça um sku como parâmetro no lugar de {sku} )
+http://localhost:8080/servicesREST/update/{sku}		( Endpoint para ATUALIZAR um produto por sku, forneça um sku como parâmetro no lugar de {sku} )
+http://localhost:8080/servicesREST/delete/{sku}		( Endpoint para EXCLUIR um produto por sku, forneça um sku como parâmetro no lugar de {sku})	

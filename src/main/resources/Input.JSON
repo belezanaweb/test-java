@@ -1,0 +1,20 @@
+{
+    "sku": 43266,
+    "name": "L'Oréal PRODUTO 3",
+    "inventory": {
+        "quantity": 0,
+        "warehouses": [
+            {
+                "locality": "SP",
+                "quantity": 14,
+                "type": "ECOMMERCE"
+            },
+            {
+                "locality": "MOEMA",
+                "quantity": 7,
+                "type": "PHYSICAL_STORE"
+            }
+        ]
+    },
+    "isMarketable": false
+}
