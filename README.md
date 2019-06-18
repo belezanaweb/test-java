@@ -15,10 +15,7 @@ To verify monitor the data registered in the database h2 access after executing 
 
 
 ### Backend Test
-
-[![Build Status](https://travis-ci.com/belezanaweb/test-java.svg?branch=master)](https://travis-ci.com/belezanaweb/test-java)
-
-[![codecov](https://codecov.io/gh/belezanaweb/test-java/branch/master/graph/badge.svg)](https://codecov.io/gh/belezanaweb/test-java)
+ 
 
  
 
