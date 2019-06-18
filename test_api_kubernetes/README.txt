@@ -10,18 +10,20 @@ Ambiente:
 Executando:
 
 1 - Executar os passos descritos no arquivo README.txt do docker e, antes de executar o descrito abaixo, pare o container docker.
-  * sudo docker stop <ID do container em execução>
+  * docker stop <ID do container em execução>
 
 2 - No diretório deste arquivo, rodar o comando abaixo para iniciar kubernetes e criar o deployment e service da API no orquestrador de containers Kubernetes:
-  * sudo minikuber start
-  * sudo kubectl create -f deployment.yaml
-  * sudo kubectl create -f service.yaml
+  * minikube start
+  * kubectl create -f deployment.yaml
+  * kubectl create -f service.yaml
 
-3 - Rode o comando abaixo para verificar se o POD da API foi crado com sucesso:
-  * sudo kubectl get pods
+3 - Rode o comando abaixo para verificar se o POD, Service e Deployment da API foram criados com sucesso:
+  * kubectl get pods
+  * kubectl get deployments
+  * kubectl get services
 
 4 - No diretório deste arquivo, rodar comando para pegar a URL de acesso a API:
-  * sudo minikube service servico-test-java-api --url
+  * minikube service service-test-java-api --url
 
 5 - Utilizar os dados abaixo para acessar a API substituindo a URL pela gerada pelo serviço do minikube:
 

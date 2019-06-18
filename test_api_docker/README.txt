@@ -12,19 +12,19 @@ Executando:
 1 - Ter o aruivo jar do projeto no diretório onde o arquivo dockerfile está
 
 2 - No diretório deste arquivo, rodar o comando abaixo para baixar a imagem e preparar o container para rodar a API:
-  * sudo docker build -f test-java-api.dockerfile -t test-java-api:v1 .
+  * docker build -f test-java-api.dockerfile -t barrosodegas/test-java-api .
 
 3 - No diretório deste arquivo, rodar comando para verificar se a imagem foi criada com sucesso:
-  * sudo docker images
+  * docker images
 
 4 - No diretório deste arquivo, executar o comando abaixo para criar o container e subir a API:
-  * sudo docker run -d -p 8080:8080 test-java-api:v1
+  * docker run -d -p 8080:8080 test-java-api:v1
 
 5 - No diretório deste arquivo, executar o comando abaixo para ver se o container subiu:
-  * sudo docker ps
+  * docker ps
 
 6 - No diretório deste arquivo, execute o comando abaixo para parar o container após os testes:
-  * sudo docker stop <ID do container>
+  * docker stop <ID do container>
 
 Para acessar a API:
 

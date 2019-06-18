@@ -1,8 +1,12 @@
-apiVersion: apps/v1
+apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
   name: test-java-api-deployment
 spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      name: test-java-api-pod
   template:
     metadata:
       labels:
@@ -10,6 +14,6 @@ spec:
     spec:
       containers:
         - name: container-test-java-api
-          image: test-java-api:v1
+          image: barrosodegas/test-java-api
           ports:
             - containerPort: 8080
