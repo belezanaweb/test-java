@@ -1,17 +1,17 @@
-##Descrição do projeto
+### Project description
 
-Esse projeto foi desenvolvido utilizando a abordagem Test-Driven Development seguindo o padrão arquitetural MVC Model View Controller e implementado usando o data spring, jpa hibernate e junit.
+This project was developed using the Test-Driven Development approach following the architectural standard MVC Model View Controller and implemented using data spring, jpa hibernate and junit.
 
-`mvn spring-boot:run` 
- Executa o projeto 
+`mvn spring-boot: run`
+ Run the project
 
-- Note:  Para reter os dados será necessario alterar o "ddl-auto" para `ddl-auto: update` que fica localizado resources/application.yml, para reinicializar o banco de dados é recomendado mudar para  `ddl-auto: create` assim o jpa recriará as tabelas.
+- Note: To retain the data it is necessary to change the "ddl-auto" to `ddl-auto: update` which is located resources / application.yml, to restart the database it is recommended to change to` ddl-auto: create` so jpa will re-create the tables.
 
 `mvn test`
-Executa todos testes do projeto exceto os testes que precisam de "id" ou "sku", pois precisa informar o id/sku existente no banco de dados para não gerar erros.
+Run all project tests except tests that need "id" or "sku", since you need to inform the id / sku in the database to avoid errors.
 
-Para verificar monitorar os dados registrado no banco de dados h2 acesse apos executar o projeto
-`http://localhost:8080/console`
+To verify monitor the data registered in the database h2 access after executing the project
+`http: // localhost: 8080 / console`
 
 
 ### Backend Test
