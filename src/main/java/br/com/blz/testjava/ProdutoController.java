@@ -22,6 +22,6 @@ public class ProdutoController {
             return ResponseEntity.status(HttpStatus.OK).body(byId.get());
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
-            .body("prodouto (sku="+sku+") não encontrado");
+             .body("prodouto (sku="+sku+") não encontrado");
     }
 }
