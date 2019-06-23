@@ -1,4 +1,4 @@
-package br.com.blz.testjava;
+package br.com.blz.testjava.domain;
 
 import org.springframework.data.annotation.Id;
 import java.util.Objects;
@@ -9,6 +9,8 @@ public class Produto {
     private long sku;
 
     private String name;
+    private Inventory inventory;
+    private boolean isMarketable;
 
     public Produto(long sku, String name) {
         this.sku = sku;
@@ -30,6 +32,18 @@ public class Produto {
     @Override
     public int hashCode() {
         return Objects.hash(sku, name);
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public boolean isMarketable() {
+        return isMarketable;
     }
 
     public long getSku() {

@@ -1,5 +1,6 @@
 package br.com.blz.testjava;
 
+import br.com.blz.testjava.domain.Produto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
