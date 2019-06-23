@@ -16,8 +16,18 @@ public class ProdutoController {
     private ProdutoRepository repository;
 
 
+    @DeleteMapping(value = "/{sku}")
+    public ResponseEntity deletarProdutoBySku(@PathVariable Long sku) {
+        if (repository.existsById(sku)) {
+            repository.deleteById(sku);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body("produto (sku="+sku+") não encontrado");
+    }
+
     @PutMapping(value = "/{sku}")
-    public ResponseEntity atualizarProduto(@PathVariable Long sku,@RequestBody Produto produto) {
+    public ResponseEntity atualizarProdutoBySku(@PathVariable Long sku,@RequestBody Produto produto) {
         Optional<Produto> byId = repository.findById(sku);
         if (byId.isPresent()) {
             produto.setSku(sku);

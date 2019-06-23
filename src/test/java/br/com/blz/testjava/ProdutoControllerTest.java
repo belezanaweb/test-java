@@ -38,6 +38,18 @@ public class ProdutoControllerTest {
     }
 
     @Test
+    public void deve_DeletarProdutoPorSku_comSkuValido() {
+        Produto produto = salvarProdutoNoBanco(43264);
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("sku", String.valueOf(produto.getSku()));
+
+        restTemplate.delete ("/produtos/{sku}",  params);
+
+        assertNull(mongoTemplate.findById(produto.getSku(),Produto.class));
+    }
+
+    @Test
     public void deve_AtualizarProdutoExistente_comSkuValido() {
 
         final long sku = 43264;
