@@ -46,16 +46,7 @@ public class ProdutoControllerTest {
         assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
         Produto produto = responseEntity.getBody();
         assertEquals(produtoExpected, produto);
-
-        Inventory inventory = produto.getInventory();
-        assertNotNull(inventory);
-        assertTrue(inventory.getQuantity() > 0);
-        List<Warehouse> warehouses = inventory.getWarehouses();
-        Warehouse warehouse = warehouses.get(0);
-        assertNotNull(warehouse);
-        assertNotNull(warehouse.getLocality());
-        assertTrue(warehouse.getQuantity() > 0);
-        assertNotNull(warehouse.getType());
+        assertRetornouInformacoes(produto);
     }
 
     @Test
@@ -68,15 +59,34 @@ public class ProdutoControllerTest {
         assertEquals("prodouto (sku="+sku+") não encontrado",responseEntity.getBody());
     }
 
+    private void assertRetornouInformacoes(Produto produto) {
+        Inventory inventory = produto.getInventory();
+        assertNotNull(inventory);
+        assertTrue(inventory.getQuantity() > 0);
+        List<Warehouse> warehouses = inventory.getWarehouses();
+        assertNotNullWarehouse(warehouses.get(0));
+        assertNotNullWarehouse(warehouses.get(1));
+    }
+
+    private void assertNotNullWarehouse(Warehouse warehouse) {
+        assertNotNull(warehouse);
+        assertNotNull(warehouse.getLocality());
+        assertTrue(warehouse.getQuantity() > 0);
+        assertNotNull(warehouse.getType());
+    }
+
     private Produto salvarProdutoNoBanco(long sku) {
         Produto produto = new Produto(sku,"produto salvo no banco");
-
-        List<Warehouse> warehouses = new ArrayList<Warehouse>();
-        warehouses.add(new Warehouse("SP",12, WarehouseType.ECOMMERCE));
-        Inventory inventory = new Inventory(15,warehouses);
-
+        Inventory inventory = new Inventory(15, getWarehouses());
         produto.setInventory(inventory);
         mongoTemplate.save(produto);
         return produto;
+    }
+
+    private List<Warehouse> getWarehouses() {
+        List<Warehouse> warehouses = new ArrayList<Warehouse>();
+        warehouses.add(new Warehouse("SP",12, WarehouseType.ECOMMERCE));
+        warehouses.add(new Warehouse("MOEMA",3, WarehouseType.PHYSICAL_STORE));
+        return warehouses;
     }
 }
