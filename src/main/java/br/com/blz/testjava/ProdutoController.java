@@ -4,19 +4,30 @@ import br.com.blz.testjava.domain.Produto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/produtos")
 public class ProdutoController {
 
     @Autowired
     private ProdutoRepository repository;
 
-    @GetMapping(value = "/produtos/{sku}")
+
+    @PostMapping
+    public ResponseEntity criarProduto(@RequestBody Produto produto) {
+        try {
+            Produto produtoSalvo = repository.save(produto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(produtoSalvo);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("ocorreu algum erro ao tentar criar o produto - [Produto="+produto+"] . " + e.getMessage());
+        }
+    }
+
+    @GetMapping(value = "/{sku}")
     public ResponseEntity getProdutosBySku(@PathVariable Long sku) {
         Optional<Produto> byId = repository.findById(sku);
         if (byId.isPresent()) {

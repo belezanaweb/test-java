@@ -55,4 +55,11 @@ public class Produto {
         return name;
     }
 
+    @Override
+    public String toString() {
+        return "Produto{" +
+            "sku=" + sku +
+            ", name='" + name + '\'' +
+            '}';
+    }
 }

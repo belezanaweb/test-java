@@ -36,10 +36,21 @@ public class ProdutoControllerTest {
     }
 
     @Test
+    public void deve_CriarProduto_comSkuValido() {
+
+        Produto produto = new Produto(43264,"deve_CriarProduto_comSkuValido");
+        Inventory inventory = new Inventory(getWarehouses());
+        produto.setInventory(inventory);
+
+        ResponseEntity<Produto> responseEntity = restTemplate.postForEntity("/produtos/", produto, Produto.class);
+        assertEquals(HttpStatus.CREATED,responseEntity.getStatusCode());
+        assertEquals(produto,responseEntity.getBody());
+    }
+
+    @Test
     public void deve_RecuperarProdutoPorSku_comSkuValido() {
 
         final long sku = 123L;
-
         Produto produtoExpected = salvarProdutoNoBanco(sku);
 
         ResponseEntity<Produto> responseEntity = restTemplate.getForEntity("/produtos/" + sku, Produto.class);
@@ -52,7 +63,7 @@ public class ProdutoControllerTest {
     @Test
     public void deve_RetonarProdutoNaoEncontrado_comSkuInvalido() {
 
-        final long sku = 123L;
+        final long sku = 43264L;
 
         ResponseEntity<String> responseEntity = restTemplate.getForEntity("/produtos/" + sku, String.class);
         assertEquals(HttpStatus.NOT_FOUND,responseEntity.getStatusCode());
@@ -60,6 +71,7 @@ public class ProdutoControllerTest {
     }
 
     private void assertRetornouInformacoes(Produto produto) {
+        assertNotNull(produto.getName());
         Inventory inventory = produto.getInventory();
         assertNotNull(inventory);
         List<Warehouse> warehouses = inventory.getWarehouses();
