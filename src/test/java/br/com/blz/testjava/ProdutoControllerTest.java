@@ -53,7 +53,7 @@ public class ProdutoControllerTest {
     }
 
     @Test
-    public void deve_RetonarProdutoJaExiste_comSkuRepetido() {
+    public void deve_RetonarProdutoJaExisteBadRequest_comSkuRepetido() {
 
         Produto produto = salvarProdutoNoBanco(43264);
 
