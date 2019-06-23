@@ -62,10 +62,12 @@ public class ProdutoControllerTest {
     private void assertRetornouInformacoes(Produto produto) {
         Inventory inventory = produto.getInventory();
         assertNotNull(inventory);
-        assertTrue(inventory.getQuantity() > 0);
         List<Warehouse> warehouses = inventory.getWarehouses();
-        assertNotNullWarehouse(warehouses.get(0));
-        assertNotNullWarehouse(warehouses.get(1));
+        Warehouse warehouse0 = warehouses.get(0);
+        assertNotNullWarehouse(warehouse0);
+        Warehouse warehouse1 = warehouses.get(1);
+        assertNotNullWarehouse(warehouse1);
+        assertEquals((warehouse0.getQuantity() + warehouse1.getQuantity() ),inventory.getQuantity());
     }
 
     private void assertNotNullWarehouse(Warehouse warehouse) {
@@ -77,7 +79,7 @@ public class ProdutoControllerTest {
 
     private Produto salvarProdutoNoBanco(long sku) {
         Produto produto = new Produto(sku,"produto salvo no banco");
-        Inventory inventory = new Inventory(15, getWarehouses());
+        Inventory inventory = new Inventory(getWarehouses());
         produto.setInventory(inventory);
         mongoTemplate.save(produto);
         return produto;
