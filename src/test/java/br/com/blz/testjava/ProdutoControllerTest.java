@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -21,7 +21,7 @@ public class ProdutoControllerTest {
     private TestRestTemplate restTemplate;
 
     @Autowired
-    private JpaRepository repository;
+    private MongoRepository repository;
 
     @Before
     public void setUp() throws Exception {
@@ -52,7 +52,7 @@ public class ProdutoControllerTest {
 
     private Produto salvarProdutoNoBanco(long sku) {
         Produto produto = new Produto(sku,"produto salvo no banco");
-        repository.saveAndFlush(produto);
+        repository.save(produto);
         return produto;
     }
 }

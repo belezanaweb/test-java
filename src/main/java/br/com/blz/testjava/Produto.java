@@ -1,10 +1,8 @@
 package br.com.blz.testjava;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
 import java.util.Objects;
 
-@Entity
 public class Produto {
 
     @Id

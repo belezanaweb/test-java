@@ -1,6 +1,6 @@
 package br.com.blz.testjava;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface ProdutoRepository extends JpaRepository<Produto, Long> {
+public interface ProdutoRepository extends MongoRepository<Produto, Long> {
 }
