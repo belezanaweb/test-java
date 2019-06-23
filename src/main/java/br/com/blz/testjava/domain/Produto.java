@@ -55,6 +55,10 @@ public class Produto {
         return name;
     }
 
+    public void setSku(long sku) {
+        this.sku = sku;
+    }
+
     @Override
     public String toString() {
         return "Produto{" +

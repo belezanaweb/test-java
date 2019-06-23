@@ -16,7 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -36,12 +38,24 @@ public class ProdutoControllerTest {
     }
 
     @Test
+    public void deve_AtualizarProdutoExistente_comSkuValido() {
+
+        final long sku = 43264;
+        Produto produto = salvarProdutoNoBanco(sku);
+        produto = new Produto(sku,"Alterei o nome do produto");
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("sku", String.valueOf(sku));
+
+        restTemplate.put("/produtos/{sku}",produto,params);
+
+        assertAtualizouNomeDoProduto(sku, produto, "Alterei o nome do produto");
+    }
+
+    @Test
     public void deve_RetonarProdutoJaExiste_comSkuRepetido() {
 
-        Produto produto = new Produto(43264,"Produto 43264");
-        Inventory inventory = new Inventory(getWarehouses());
-        produto.setInventory(inventory);
-        mongoTemplate.save(produto);
+        Produto produto = salvarProdutoNoBanco(43264);
 
         ResponseEntity<String> responseEntity = restTemplate.postForEntity("/produtos/", produto, String.class);
 
@@ -85,6 +99,12 @@ public class ProdutoControllerTest {
 
         assertEquals(HttpStatus.NOT_FOUND,responseEntity.getStatusCode());
         assertEquals("produto (sku="+sku+") não encontrado",responseEntity.getBody());
+    }
+
+    private void assertAtualizouNomeDoProduto(long sku, Produto produto, String newName) {
+        Produto produtoDoBanco = mongoTemplate.findById(sku, Produto.class);
+        assertEquals(produto,produtoDoBanco);
+        assertEquals(newName,produtoDoBanco.getName());
     }
 
     private void assertRetornouInformacoes(Produto produto) {

@@ -16,24 +16,30 @@ public class ProdutoController {
     private ProdutoRepository repository;
 
 
+    @PutMapping(value = "/{sku}")
+    public ResponseEntity atualizarProduto(@PathVariable Long sku,@RequestBody Produto produto) {
+        Optional<Produto> byId = repository.findById(sku);
+        if (byId.isPresent()) {
+            produto.setSku(sku);
+            repository.save(produto);
+            return ResponseEntity.status(HttpStatus.OK).body(produto);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body("produto (sku="+sku+") não encontrado");
+    }
+
     @PostMapping
     public ResponseEntity criarProduto(@RequestBody Produto produto) {
-        try {
-            Optional<Produto> byId = repository.findById(produto.getSku());
-            if (byId.isPresent()) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("produto (sku="+produto.getSku()+") já existe na base");
-            }
-            Produto produtoSalvo = repository.save(produto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(produtoSalvo);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("ocorreu algum erro ao tentar criar o produto - [Produto="+produto+"] . " + e.getMessage());
+        if (repository.existsById(produto.getSku())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("produto (sku="+produto.getSku()+") já existe na base");
         }
+        Produto produtoSalvo = repository.save(produto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(produtoSalvo);
     }
 
     @GetMapping(value = "/{sku}")
-    public ResponseEntity getProdutosBySku(@PathVariable Long sku) {
+    public ResponseEntity getProdutoBySku(@PathVariable Long sku) {
         Optional<Produto> byId = repository.findById(sku);
         if (byId.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(byId.get());
