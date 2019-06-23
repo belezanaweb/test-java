@@ -50,15 +50,9 @@ public class Produto {
         return sku;
     }
 
-    public void setSku(long sku) {
-        this.sku = sku;
-    }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 }
