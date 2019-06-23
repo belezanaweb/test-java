@@ -36,6 +36,20 @@ public class ProdutoControllerTest {
     }
 
     @Test
+    public void deve_RetonarProdutoJaExiste_comSkuRepetido() {
+
+        Produto produto = new Produto(43264,"Produto 43264");
+        Inventory inventory = new Inventory(getWarehouses());
+        produto.setInventory(inventory);
+        mongoTemplate.save(produto);
+
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity("/produtos/", produto, String.class);
+
+        assertEquals(HttpStatus.BAD_REQUEST,responseEntity.getStatusCode());
+        assertEquals("produto (sku="+produto.getSku()+") já existe na base",responseEntity.getBody());
+    }
+
+    @Test
     public void deve_CriarProduto_comSkuValido() {
 
         Produto produto = new Produto(43264,"deve_CriarProduto_comSkuValido");
@@ -43,6 +57,7 @@ public class ProdutoControllerTest {
         produto.setInventory(inventory);
 
         ResponseEntity<Produto> responseEntity = restTemplate.postForEntity("/produtos/", produto, Produto.class);
+
         assertEquals(HttpStatus.CREATED,responseEntity.getStatusCode());
         assertEquals(produto,responseEntity.getBody());
     }
@@ -54,6 +69,7 @@ public class ProdutoControllerTest {
         Produto produtoExpected = salvarProdutoNoBanco(sku);
 
         ResponseEntity<Produto> responseEntity = restTemplate.getForEntity("/produtos/" + sku, Produto.class);
+
         assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
         Produto produto = responseEntity.getBody();
         assertEquals(produtoExpected, produto);
@@ -66,8 +82,9 @@ public class ProdutoControllerTest {
         final long sku = 43264L;
 
         ResponseEntity<String> responseEntity = restTemplate.getForEntity("/produtos/" + sku, String.class);
+
         assertEquals(HttpStatus.NOT_FOUND,responseEntity.getStatusCode());
-        assertEquals("prodouto (sku="+sku+") não encontrado",responseEntity.getBody());
+        assertEquals("produto (sku="+sku+") não encontrado",responseEntity.getBody());
     }
 
     private void assertRetornouInformacoes(Produto produto) {

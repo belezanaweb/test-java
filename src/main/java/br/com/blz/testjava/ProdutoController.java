@@ -19,6 +19,11 @@ public class ProdutoController {
     @PostMapping
     public ResponseEntity criarProduto(@RequestBody Produto produto) {
         try {
+            Optional<Produto> byId = repository.findById(produto.getSku());
+            if (byId.isPresent()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("produto (sku="+produto.getSku()+") já existe na base");
+            }
             Produto produtoSalvo = repository.save(produto);
             return ResponseEntity.status(HttpStatus.CREATED).body(produtoSalvo);
         } catch (Exception e) {
@@ -34,6 +39,6 @@ public class ProdutoController {
             return ResponseEntity.status(HttpStatus.OK).body(byId.get());
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
-             .body("prodouto (sku="+sku+") não encontrado");
+             .body("produto (sku="+sku+") não encontrado");
     }
 }
