@@ -1,7 +1,5 @@
 package br.com.blz.testjava.domain;
 
-import org.springframework.data.annotation.Transient;
-
 import java.util.List;
 
 public class Inventory {

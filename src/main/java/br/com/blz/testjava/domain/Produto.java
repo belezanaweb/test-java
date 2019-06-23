@@ -10,14 +10,19 @@ public class Produto {
 
     private String name;
     private Inventory inventory;
-    private boolean isMarketable;
 
     public Produto(long sku, String name) {
         this.sku = sku;
         this.name = name;
     }
 
-    public Produto() {
+    public Produto() {}
+
+    public boolean isMarketable() {
+        if (inventory == null) {
+            return false;
+        }
+        return inventory.getQuantity() > 0;
     }
 
     @Override
@@ -25,13 +30,12 @@ public class Produto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Produto produto = (Produto) o;
-        return sku == produto.sku &&
-            Objects.equals(name, produto.name);
+        return sku == produto.sku;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(sku, name);
+        return Objects.hash(sku);
     }
 
     public void setInventory(Inventory inventory) {
@@ -40,10 +44,6 @@ public class Produto {
 
     public Inventory getInventory() {
         return inventory;
-    }
-
-    public boolean isMarketable() {
-        return isMarketable;
     }
 
     public long getSku() {

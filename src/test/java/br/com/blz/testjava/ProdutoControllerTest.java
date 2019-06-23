@@ -68,6 +68,7 @@ public class ProdutoControllerTest {
         Warehouse warehouse1 = warehouses.get(1);
         assertNotNullWarehouse(warehouse1);
         assertEquals((warehouse0.getQuantity() + warehouse1.getQuantity() ),inventory.getQuantity());
+        assertTrue(produto.isMarketable());
     }
 
     private void assertNotNullWarehouse(Warehouse warehouse) {
