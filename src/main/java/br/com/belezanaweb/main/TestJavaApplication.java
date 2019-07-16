@@ -1,4 +1,4 @@
-package br.com.blz.testjava;
+package br.com.belezanaweb.main;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

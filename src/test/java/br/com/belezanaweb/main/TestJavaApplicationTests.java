@@ -1,4 +1,4 @@
-package br.com.blz.testjava;
+package br.com.belezanaweb.main;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

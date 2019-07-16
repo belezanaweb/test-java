@@ -1,0 +1,62 @@
+package br.com.belezanaweb.controller;
+
+import br.com.belezanaweb.domain.Produto;
+import br.com.belezanaweb.repository.ProdutoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/produtos")
+public class ProdutoController {
+
+        @Autowired
+        private ProdutoRepository repository;
+
+
+        @DeleteMapping(value = "/{sku}")
+        public ResponseEntity deletarProdutoBySku(@PathVariable Long sku) {
+            if (repository.existsById(sku)) {
+                repository.deleteById(sku);
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            }
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("produto (sku="+sku+") não encontrado");
+        }
+
+        @PutMapping(value = "/{sku}")
+        public ResponseEntity atualizarProdutoBySku(@PathVariable Long sku,@RequestBody Produto produto) {
+            Optional<Produto> byId = repository.findById(sku);
+            if (byId.isPresent()) {
+                produto.setSku(sku);
+                repository.save(produto);
+                return ResponseEntity.status(HttpStatus.OK).body(produto);
+            }
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("produto (sku="+sku+") não encontrado");
+        }
+
+        @PostMapping
+        public ResponseEntity criarProduto(@RequestBody Produto produto) {
+            if (repository.existsById(produto.getSku())) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("produto (sku="+produto.getSku()+") já existe na base");
+            }
+            Produto produtoSalvo = repository.save(produto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(produtoSalvo);
+        }
+
+        @GetMapping(value = "/{sku}")
+        public ResponseEntity getProdutoBySku(@PathVariable Long sku) {
+            Optional<Produto> byId = repository.findById(sku);
+            if (byId.isPresent()) {
+                return ResponseEntity.status(HttpStatus.OK).body(byId.get());
+            }
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("produto (sku="+sku+") não encontrado");
+        }
+
+}
