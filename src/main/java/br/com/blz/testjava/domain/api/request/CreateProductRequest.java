@@ -1,12 +1,11 @@
 package br.com.blz.testjava.domain.api.request;
 
-import java.util.List;
+import br.com.blz.testjava.domain.api.response.InventoryResponse;
+import br.com.blz.testjava.domain.api.response.ProductResponse;
 
-public class CreateProductRequest {
+public class CreateProductRequest extends ReplaceProductRequest {
 
     private Long sku;
-    private String name;
-    private List<WarehouseRequest> warehouses;
 
     public Long getSku() {
         return sku;
@@ -16,19 +15,25 @@ public class CreateProductRequest {
         this.sku = sku;
     }
 
-    public String getName() {
-        return name;
+    public ProductResponse toResponse() {
+        ProductResponse productResponse = new ProductResponse();
+
+        productResponse.setSku(sku);
+        productResponse.setName(getName());
+
+        InventoryResponse inventory = new InventoryResponse();
+        inventory.setWarehouses(getWarehouses());
+        inventory.setQuantity(retrieveInventoryQuantity());
+
+        productResponse.setInventory(inventory);
+
+        productResponse.setMarketable(inventory.getQuantity() > 0);
+
+
+        return productResponse;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<WarehouseRequest> getWarehouses() {
-        return warehouses;
-    }
-
-    public void setWarehouses(List<WarehouseRequest> warehouses) {
-        this.warehouses = warehouses;
+    public Long retrieveInventoryQuantity() {
+        return getWarehouses().stream().map(WarehouseRequest::getQuantity).reduce(0L, Long::sum);
     }
 }
