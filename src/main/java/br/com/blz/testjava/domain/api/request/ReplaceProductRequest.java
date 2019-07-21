@@ -1,11 +1,16 @@
 package br.com.blz.testjava.domain.api.request;
 
-import java.util.List;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class ReplaceProductRequest {
 
+    @NotBlank
     private String name;
-    private List<WarehouseRequest> warehouses;
+    @Valid
+    @NotNull
+    private InventoryRequest inventory;
 
     public String getName() {
         return name;
@@ -15,11 +20,11 @@ public class ReplaceProductRequest {
         this.name = name;
     }
 
-    public List<WarehouseRequest> getWarehouses() {
-        return warehouses;
+    public InventoryRequest getInventory() {
+        return inventory;
     }
 
-    public void setWarehouses(List<WarehouseRequest> warehouses) {
-        this.warehouses = warehouses;
+    public void setInventory(InventoryRequest inventory) {
+        this.inventory = inventory;
     }
 }

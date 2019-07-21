@@ -3,57 +3,79 @@ package br.com.blz.testjava.controller;
 import br.com.blz.testjava.domain.api.request.CreateProductRequest;
 import br.com.blz.testjava.domain.api.request.ReplaceProductRequest;
 import br.com.blz.testjava.domain.api.response.CreateProductResponse;
-import br.com.blz.testjava.domain.api.response.ProductResponse;
+import br.com.blz.testjava.domain.api.response.FindProductResponse;
 import br.com.blz.testjava.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
+
+import static br.com.blz.testjava.controller.BaseController.PRODUCT_ROOT;
 
 @RestController
-@RequestMapping("/products")
-public class ProductController {
+@RequestMapping(PRODUCT_ROOT)
+public class ProductController extends BaseController {
 
     @Autowired
     private ProductService service;
 
     @PostMapping
     public ResponseEntity<CreateProductResponse> create(@RequestBody @Valid CreateProductRequest request) {
-        CreateProductResponse response = service.createProduct(request);
-        return ResponseEntity.created(getLocation(request.getSku().toString())).body(response);
+        logRequest(request);
+
+        CreateProductResponse product = service.createProduct(request);
+        ResponseEntity<CreateProductResponse> response = ResponseEntity.created(getLocation(request.getSku().toString())).body(product);
+
+        logResponse(response);
+        return response;
     }
 
-    @GetMapping("/{sku}")
-    public ResponseEntity<ProductResponse> read(@PathVariable("sku") String sku) {
-        return ResponseEntity.ok(service.findPrduct(sku));
+    @GetMapping(SKU_PATH)
+    public ResponseEntity<FindProductResponse> read(@PathVariable(SKU_PLACEHOLDER) String sku) {
+        logRequest(sku, HttpMethod.GET);
+
+        FindProductResponse product = service.findProduct(sku);
+        ResponseEntity<FindProductResponse> response = ResponseEntity.ok(product);
+
+        logResponse(getURI(sku), HttpMethod.GET, response);
+        return response;
     }
 
-    @PutMapping("/{sku}")
-    public ResponseEntity<ProductResponse> replace(@PathVariable("sku") String sku,
+    @PutMapping(SKU_PATH)
+    public ResponseEntity<CreateProductResponse> replace(@PathVariable(SKU_PLACEHOLDER) String sku,
                                                    @RequestBody @Valid ReplaceProductRequest request) {
-        ProductResponse response = service.updateProduct(sku, request);
+        logRequest(getURI(sku), HttpMethod.PUT, request);
+        CreateProductResponse product = service.replaceProduct(sku, request);
 
-        if (response.getUpdated()) {
-            return ResponseEntity.ok(response);
+        ResponseEntity<CreateProductResponse> response;
+
+        if (product.getUpdated()) {
+            response = ResponseEntity.ok(product);
         } else {
-            return ResponseEntity.created(getLocation(sku)).body(response);
+            response = ResponseEntity.created(getLocation(sku)).body(product);
         }
+
+        logResponse(getURI(sku), HttpMethod.PUT, response);
+        return response;
     }
 
-    @DeleteMapping("/{sku}")
-    public ResponseEntity<Void> delete(@PathVariable("sku") String sku) {
+    @DeleteMapping(SKU_PATH)
+    public ResponseEntity<Void> delete(@PathVariable(SKU_PLACEHOLDER) String sku) {
+        logRequest(sku, HttpMethod.DELETE);
+
         service.deleteProduct(sku);
-        return ResponseEntity.noContent().build();
-    }
+        ResponseEntity<Void> response = ResponseEntity.noContent().build();
 
-    private URI getLocation(@RequestBody @Valid String sku) {
-        try {
-            return new URI("/product/" + sku);
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
+        logResponse(getURI(sku), HttpMethod.DELETE, response);
+        return response;
     }
 }

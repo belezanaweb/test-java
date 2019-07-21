@@ -1,10 +1,21 @@
 package br.com.blz.testjava.domain.api.request;
 
+import br.com.blz.testjava.domain.api.request.validation.WarehouseType;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class WarehouseRequest {
 
+    @NotBlank
     private String locality;
+    @Min(0)
+    @NotNull
     private Long quantity;
-    private String type; // TODO enum
+    @NotBlank
+    @WarehouseType
+    private String type;
 
     public String getLocality() {
         return locality;
@@ -23,7 +34,7 @@ public class WarehouseRequest {
     }
 
     public String getType() {
-        return type;
+        return type.toUpperCase();
     }
 
     public void setType(String type) {

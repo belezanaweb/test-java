@@ -3,7 +3,7 @@ package br.com.blz.testjava.service;
 import br.com.blz.testjava.domain.api.request.CreateProductRequest;
 import br.com.blz.testjava.domain.api.request.ReplaceProductRequest;
 import br.com.blz.testjava.domain.api.response.CreateProductResponse;
-import br.com.blz.testjava.domain.api.response.ProductResponse;
+import br.com.blz.testjava.domain.api.response.FindProductResponse;
 import br.com.blz.testjava.domain.exception.ConflictException;
 import br.com.blz.testjava.domain.exception.NotFoundException;
 import br.com.blz.testjava.repository.ProductRepository;
@@ -24,30 +24,30 @@ public class ProductService {
         return repository.insert(request).toCreateResponse();
     }
 
-    public ProductResponse findPrduct(String sku) {
+    public FindProductResponse findProduct(String sku) {
         try {
             return repository.findBySku(Long.valueOf(sku))
-                .map(CreateProductRequest::toResponse)
+                .map(CreateProductRequest::toFindResponse)
                 .orElseThrow(NotFoundException::new);
         } catch (NumberFormatException e) {
             throw new NotFoundException();
         }
     }
 
-    public ProductResponse updateProduct(String sku, ReplaceProductRequest request) {
+    public CreateProductResponse replaceProduct(String sku, ReplaceProductRequest request) {
         try {
             Long productKey = Long.valueOf(sku);
 
             CreateProductRequest product = new CreateProductRequest();
             product.setSku(productKey);
             product.setName(request.getName());
-            product.setWarehouses(request.getWarehouses());
+            product.setInventory(request.getInventory());
 
             boolean productUpdated = repository.findBySku(productKey).isPresent();
 
-            return repository.insert(product).toResponse(productUpdated);
+            return repository.insert(product).toCreateResponse(productUpdated);
         } catch (NumberFormatException e) {
-            throw new NotFoundException(); // TODO ver qual melhor exceção
+            throw new NotFoundException();
         }
     }
 

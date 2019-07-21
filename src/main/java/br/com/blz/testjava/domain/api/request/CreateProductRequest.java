@@ -2,10 +2,13 @@ package br.com.blz.testjava.domain.api.request;
 
 import br.com.blz.testjava.domain.api.response.CreateProductResponse;
 import br.com.blz.testjava.domain.api.response.InventoryResponse;
-import br.com.blz.testjava.domain.api.response.ProductResponse;
+import br.com.blz.testjava.domain.api.response.FindProductResponse;
+
+import javax.validation.constraints.NotNull;
 
 public class CreateProductRequest extends ReplaceProductRequest {
 
+    @NotNull
     private Long sku;
 
     public Long getSku() {
@@ -16,39 +19,44 @@ public class CreateProductRequest extends ReplaceProductRequest {
         this.sku = sku;
     }
 
-    public ProductResponse toResponse() {
-        return toResponse(false);
-    }
+    public FindProductResponse toFindResponse() {
+        FindProductResponse response = new FindProductResponse();
 
-    public ProductResponse toResponse(boolean updated) {
-        ProductResponse productResponse = new ProductResponse();
-
-        productResponse.setSku(sku);
-        productResponse.setName(getName());
+        response.setSku(sku);
+        response.setName(getName());
 
         InventoryResponse inventory = new InventoryResponse();
-        inventory.setWarehouses(getWarehouses());
+        inventory.setWarehouses(getInventory().getWarehouses());
         inventory.setQuantity(retrieveInventoryQuantity());
 
-        productResponse.setInventory(inventory);
+        response.setInventory(inventory);
 
-        productResponse.setMarketable(inventory.getQuantity() > 0);
-        productResponse.setUpdated(updated);
+        response.setMarketable(retriveMarketable());
 
-
-        return productResponse;
+        return response;
     }
 
     public CreateProductResponse toCreateResponse() {
+        return toCreateResponse(false);
+    }
+
+    public CreateProductResponse toCreateResponse(boolean updated) {
         CreateProductResponse response = new CreateProductResponse();
         response.setSku(sku);
         response.setInventoryQuantity(retrieveInventoryQuantity());
-        response.setMarketable(response.getInventoryQuantity() > 0);
+        response.setMarketable(retriveMarketable());
+        response.setUpdated(updated);
 
         return response;
     }
 
     private Long retrieveInventoryQuantity() {
-        return getWarehouses().stream().map(WarehouseRequest::getQuantity).reduce(0L, Long::sum);
+        return getInventory().getWarehouses().stream()
+            .map(WarehouseRequest::getQuantity)
+            .reduce(0L, Long::sum);
+    }
+
+    private Boolean retriveMarketable() {
+        return retrieveInventoryQuantity() > 0;
     }
 }
