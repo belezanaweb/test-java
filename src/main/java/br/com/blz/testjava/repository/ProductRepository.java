@@ -12,7 +12,7 @@ public class ProductRepository {
 
     private Map<Long, CreateProductRequest> products = new HashMap<>();
 
-    public Optional<CreateProductRequest> find(Long sku) {
+    public Optional<CreateProductRequest> findBySku(Long sku) {
         return Optional.ofNullable(products.get(sku));
     }
 
@@ -21,7 +21,7 @@ public class ProductRepository {
         return product;
     }
 
-    public void delete(Long sku) {
-        products.remove(sku);
+    public Optional<CreateProductRequest> delete(Long sku) {
+        return Optional.ofNullable(products.remove(sku));
     }
 }

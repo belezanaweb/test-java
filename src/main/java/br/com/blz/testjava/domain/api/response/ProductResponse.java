@@ -1,11 +1,15 @@
 package br.com.blz.testjava.domain.api.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class ProductResponse {
 
     private Long sku;
     private String name;
     private InventoryResponse inventory;
     private Boolean isMarketable;
+    @JsonIgnore
+    private Boolean updated = false;
 
     public Long getSku() {
         return sku;
@@ -37,5 +41,13 @@ public class ProductResponse {
 
     public void setMarketable(Boolean marketable) {
         isMarketable = marketable;
+    }
+
+    public Boolean getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Boolean updated) {
+        this.updated = updated;
     }
 }
