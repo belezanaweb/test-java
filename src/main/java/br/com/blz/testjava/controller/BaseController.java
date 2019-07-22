@@ -19,11 +19,11 @@ import java.util.stream.Collectors;
 
 public abstract class BaseController {
 
-    static final String PRODUCT_ROOT = "/products";
+    public static final String PRODUCT_ROOT = "/products";
     static final String SKU_PLACEHOLDER = "sku";
-    static final String SKU_PATH_VARIABLE = "{" + SKU_PLACEHOLDER +"}";
+    public static final String SKU_PATH_VARIABLE = "{" + SKU_PLACEHOLDER +"}";
     static final String SKU_PATH = "/" + SKU_PATH_VARIABLE;
-    static final String PRODUCT_RESOURCE = PRODUCT_ROOT + SKU_PATH;
+    public static final String PRODUCT_RESOURCE = PRODUCT_ROOT + SKU_PATH;
 
     @Autowired
     private ObjectMapper objectMapper;
