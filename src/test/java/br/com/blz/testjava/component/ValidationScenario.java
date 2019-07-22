@@ -15,7 +15,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ValidationScenario extends BaseTest {
+public class ValidationScenario extends BaseScenario {
 
     @Test
     public void validateOnCreateProduct() {

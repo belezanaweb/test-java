@@ -14,7 +14,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ReplaceProductScenario extends BaseTest {
+public class ReplaceProductScenario extends BaseScenario {
 
     @Test
     public void replaceProduct_ok_productReplaced() {

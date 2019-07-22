@@ -1,30 +1,23 @@
-package br.com.blz.testjava.domain.api.request;
+package br.com.blz.testjava.domain.api.request.validation;
 
+import br.com.blz.testjava.domain.api.request.ReplaceProductRequest;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class ValidationCreateProductRequestTest extends BaseValidationTest {
+public class ValidationReplaceProductRequestTest extends BaseValidationTest {
 
     @Test
     public void success() {
-        CreateProductRequest request = createProductRequest();
+        ReplaceProductRequest request = createReplaceProductRequest();
 
         assertTrue(validator.validate(request).isEmpty());
     }
 
     @Test
-    public void validateNullSku() {
-        CreateProductRequest request = createProductRequest();
-
-        request.setSku(null);
-        assertEquals(1, validator.validate(request).size());
-    }
-
-    @Test
     public void validateInvalidName() {
-        CreateProductRequest request = createProductRequest();
+        ReplaceProductRequest request = createReplaceProductRequest();
 
         request.setName(null);
         assertEquals(1, validator.validate(request).size());
@@ -38,16 +31,15 @@ public class ValidationCreateProductRequestTest extends BaseValidationTest {
 
     @Test
     public void validateNullInventory() {
-        CreateProductRequest request = createProductRequest();
+        ReplaceProductRequest request = createReplaceProductRequest();
 
         request.setInventory(null);
         assertEquals(1, validator.validate(request).size());
     }
 
-    private CreateProductRequest createProductRequest() {
-        CreateProductRequest request = new CreateProductRequest();
+    private ReplaceProductRequest createReplaceProductRequest() {
+        ReplaceProductRequest request = new ReplaceProductRequest();
 
-        request.setSku(123L);
         request.setName("nome");
         request.setInventory(ValidationInventoryRequestTest.createInventoryRequest());
 

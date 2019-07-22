@@ -12,7 +12,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class DeleteProductScenario extends BaseTest {
+public class DeleteProductScenario extends BaseScenario {
 
     @Test
     public void deleteProduct_noContent_productDeleted() {

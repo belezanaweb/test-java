@@ -33,7 +33,7 @@ public class ProductController extends BaseController {
         logRequest(request);
 
         CreateProductResponse product = service.createProduct(request);
-        ResponseEntity<CreateProductResponse> response = ResponseEntity.created(getLocation(request.getSku().toString())).body(product);
+        ResponseEntity<CreateProductResponse> response = ResponseEntity.created(getLocation(product)).body(product);
 
         logResponse(response);
         return response;

@@ -1,5 +1,6 @@
 package br.com.blz.testjava.controller;
 
+import br.com.blz.testjava.domain.api.response.CreateProductResponse;
 import br.com.blz.testjava.domain.api.response.ErrorResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -53,6 +54,10 @@ public abstract class BaseController {
         errorDetail.setCause(fieldError.getDefaultMessage());
 
         return errorDetail;
+    }
+
+    protected  URI getLocation(CreateProductResponse response) {
+        return getLocation(response.getSku().toString());
     }
 
     protected URI getLocation(String sku) {

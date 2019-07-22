@@ -1,6 +1,7 @@
-package br.com.blz.testjava.domain.api.request;
+package br.com.blz.testjava.domain.api.request.validation;
 
-import org.junit.Assert;
+import br.com.blz.testjava.domain.api.request.InventoryRequest;
+import br.com.blz.testjava.domain.api.request.WarehouseRequest;
 import org.junit.Test;
 
 import java.util.ArrayList;

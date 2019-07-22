@@ -17,7 +17,7 @@ import static org.hamcrest.Matchers.hasItems;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
-public class FindProductScenario extends BaseTest {
+public class FindProductScenario extends BaseScenario {
 
     private static final int SKU_VALUE = 43264;
     private static final String NAME_VALUE = "Nome qualquer";

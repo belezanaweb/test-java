@@ -1,4 +1,4 @@
-package br.com.blz.testjava.domain.api.request;
+package br.com.blz.testjava.domain.api.request.validation;
 
 import javax.validation.Validation;
 import javax.validation.Validator;

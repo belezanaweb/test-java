@@ -1,9 +1,7 @@
-package br.com.blz.testjava.domain.api.request;
+package br.com.blz.testjava.domain.api.request.validation;
 
+import br.com.blz.testjava.domain.api.request.WarehouseRequest;
 import org.junit.Test;
-
-import javax.validation.ConstraintViolation;
-import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

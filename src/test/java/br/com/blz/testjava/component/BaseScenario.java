@@ -13,7 +13,7 @@ import java.io.File;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public abstract class BaseTest {
+public abstract class BaseScenario {
 
     static final String HOST = "http://localhost:";
 

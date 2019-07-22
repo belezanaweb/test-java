@@ -25,36 +25,32 @@ public class ProductService {
     }
 
     public FindProductResponse findProduct(String sku) {
-        try {
-            return repository.findBySku(Long.valueOf(sku))
-                .map(CreateProductRequest::toFindResponse)
-                .orElseThrow(NotFoundException::new);
-        } catch (NumberFormatException e) {
-            throw new NotFoundException();
-        }
+        return repository.findBySku(sanitizeSku(sku))
+            .map(CreateProductRequest::toFindResponse)
+            .orElseThrow(NotFoundException::new);
     }
 
     public CreateProductResponse replaceProduct(String sku, ReplaceProductRequest request) {
-        try {
-            Long productKey = Long.valueOf(sku);
+        Long productKey = sanitizeSku(sku);
 
-            CreateProductRequest product = new CreateProductRequest();
-            product.setSku(productKey);
-            product.setName(request.getName());
-            product.setInventory(request.getInventory());
+        CreateProductRequest product = new CreateProductRequest();
+        product.setSku(productKey);
+        product.setName(request.getName());
+        product.setInventory(request.getInventory());
 
-            boolean productUpdated = repository.findBySku(productKey).isPresent();
+        boolean productUpdated = repository.findBySku(productKey).isPresent();
 
-            return repository.insert(product).toCreateResponse(productUpdated);
-        } catch (NumberFormatException e) {
-            throw new NotFoundException();
-        }
+        return repository.insert(product).toCreateResponse(productUpdated);
     }
 
     public void deleteProduct(String sku) {
+        repository.delete(sanitizeSku(sku))
+            .orElseThrow(NotFoundException::new);
+    }
+
+    private Long sanitizeSku(String sku) {
         try {
-            repository.delete(Long.valueOf(sku))
-                .orElseThrow(NotFoundException::new);
+            return Long.valueOf(sku);
         } catch (NumberFormatException e) {
             throw new NotFoundException();
         }
