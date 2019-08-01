@@ -43,7 +43,7 @@ public class TestJavaApplicationTests {
 	@Test
 	public void productInventoryQuantityWithoutWarehousesTest() {
 		assertThat("quantity should be (0)",
-				product.getInventory().getQuantity(), CoreMatchers.is(0L));
+				product.getInventory().getQuantity(), CoreMatchers.is(0));
 	}
 	
 	@Test
@@ -91,7 +91,7 @@ public class TestJavaApplicationTests {
 		product.getInventory().setWarehouses(warehouseList);
 
 		assertThat("correct quantity", product.getInventory().getQuantity(),
-				CoreMatchers.is(35L));
+				CoreMatchers.is(35));
 	}
 
 }

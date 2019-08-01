@@ -25,7 +25,7 @@ public class Product {
 	}
 
 	public boolean isMarketable() {
-		if (Objects.nonNull(inventory)) {
+		if (Objects.isNull(inventory)) {
 			return false;
 		}
 		return inventory.getQuantity() > 0;
