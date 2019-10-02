@@ -1,5 +1,19 @@
 ### Backend Test
 
+### Minhas Considerações sobre o projeto
+
+- realizei o teste em menos de 6 horas
+- não tive grandes dificuldades para implementar os endpoints e errors handlings
+- mapei a estrutura json para modelo relacional apenas para utilizar persistência no h2
+- anexei uma collection do postman para eventuais testes integrados na pasta src/main/resources
+
+### TO DO List
+
+- Testes unitários
+- Swagger
+- Logger
+- Docker
+
 [![Build Status](https://travis-ci.com/belezanaweb/test-java.svg?branch=master)](https://travis-ci.com/belezanaweb/test-java)
 
 [![codecov](https://codecov.io/gh/belezanaweb/test-java/branch/master/graph/badge.svg)](https://codecov.io/gh/belezanaweb/test-java)
