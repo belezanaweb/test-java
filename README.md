@@ -9,6 +9,9 @@
 
 ### TO DO List
 
+- enum to warehouse type?
+- lombok
+- interfaces?
 - Testes unitários
 - Swagger
 - Logger
