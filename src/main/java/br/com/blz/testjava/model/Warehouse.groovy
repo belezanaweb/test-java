@@ -1,5 +1,6 @@
 package br.com.blz.testjava.model
 
+import javax.validation.constraints.Min
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
@@ -10,7 +11,7 @@ class Warehouse {
     String locality;
 
     @NotNull
-    @Size(min =1)
+    @Min(value = 0l)
     Integer quantity;
 
     @NotNull

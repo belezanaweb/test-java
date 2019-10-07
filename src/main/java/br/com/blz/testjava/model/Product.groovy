@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 
 import javax.validation.Valid
+import javax.validation.constraints.Min
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
@@ -11,6 +12,8 @@ import javax.validation.constraints.Size
 class Product {
 
     @Id
+    @NotNull
+    @Min(value = 1l)
     Long sku;
 
     @NotNull
