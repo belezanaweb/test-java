@@ -1,19 +1,17 @@
-package br.com.blz.testjava.testjava.service.impl
+package br.com.blz.testjava.service.impl
 
 
-import br.com.blz.testjava.testjava.model.Product
-import br.com.blz.testjava.testjava.dao.ProductRepository
-import br.com.blz.testjava.testjava.service.ProductService
+import br.com.blz.testjava.model.Product
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.DuplicateKeyException
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
 
 @Service
-class ProductServiceImpl implements ProductService{
+class ProductServiceImpl implements br.com.blz.testjava.service.ProductService{
 
     @Autowired
-    private ProductRepository productRepository;
+    private br.com.blz.testjava.dao.ProductRepository productRepository;
 
     @Override
     Product save(Product product) {

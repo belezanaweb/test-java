@@ -1,7 +1,7 @@
-package br.com.blz.testjava.testjava.controller
+package br.com.blz.testjava.controller
 
-import br.com.blz.testjava.testjava.model.Product
-import br.com.blz.testjava.testjava.service.ProductService
+
+import br.com.blz.testjava.model.Product
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -15,7 +15,7 @@ class ProductController {
 
 
     @Autowired
-    private ProductService productService;
+    private br.com.blz.testjava.service.ProductService productService;
 
 
     /**

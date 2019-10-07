@@ -1,4 +1,4 @@
-package br.com.blz.testjava.testjava.model
+package br.com.blz.testjava.model
 
 class Inventory {
 

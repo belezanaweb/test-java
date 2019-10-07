@@ -1,6 +1,6 @@
-package br.com.blz.testjava.testjava.service
+package br.com.blz.testjava.service
 
-import br.com.blz.testjava.testjava.model.Product
+import br.com.blz.testjava.model.Product
 
 interface ProductService {
 

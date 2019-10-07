@@ -1,4 +1,4 @@
-package br.com.blz.testjava.testjava.config
+package br.com.blz.testjava.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

@@ -1,4 +1,4 @@
-package br.com.blz.testjava.testjava.handler
+package br.com.blz.testjava.handler
 
 import org.apache.commons.lang3.exception.ExceptionUtils
 import org.springframework.beans.factory.annotation.Autowired

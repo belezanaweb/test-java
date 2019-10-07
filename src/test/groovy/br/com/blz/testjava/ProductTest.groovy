@@ -1,14 +1,13 @@
 package br.com.blz.testjava
 
-import br.com.blz.testjava.testjava.TestJavaApplication
-import br.com.blz.testjava.testjava.controller.ProductController
-import br.com.blz.testjava.testjava.model.Inventory
-import br.com.blz.testjava.testjava.model.Product
-import br.com.blz.testjava.testjava.model.Warehouse
+
+import br.com.blz.testjava.controller.ProductController
+import br.com.blz.testjava.model.Inventory
+import br.com.blz.testjava.model.Product
+import br.com.blz.testjava.model.Warehouse
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc

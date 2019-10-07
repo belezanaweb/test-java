@@ -1,4 +1,4 @@
-package br.com.blz.testjava.testjava.model
+package br.com.blz.testjava.model
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document

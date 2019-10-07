@@ -1,4 +1,4 @@
-package br.com.blz.testjava.testjava.config
+package br.com.blz.testjava.config
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration;
