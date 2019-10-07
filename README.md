@@ -1,78 +1,46 @@
-### Backend Test
-
-[![Build Status](https://travis-ci.com/belezanaweb/test-java.svg?branch=master)](https://travis-ci.com/belezanaweb/test-java)
-
-[![codecov](https://codecov.io/gh/belezanaweb/test-java/branch/master/graph/badge.svg)](https://codecov.io/gh/belezanaweb/test-java)
-
-Esta é uma avaliação básica de código.
-
-O objetivo é conhecer um pouco do seu conhecimento/prática de RESTful, Spring e Java.
-
-Recomendamos que você não gaste mais do que 4 - 6 horas.
-
-Faça um fork deste repositório que contém o bootstrap de uma aplicação SpringBoot 1.5.12. (você pode utilizar spring boot 2+)
-
-Ao finalizar o teste, submeta um pull request para o repositório que nosso time será notificado.
-
-### Tarefas
-
-Com a seguinte representação de produto:
-
-```json
-{
-    "sku": 43264,
-    "name": "L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g",
-    "inventory": {
-        "quantity": 15,
-        "warehouses": [
-            {
-                "locality": "SP",
-                "quantity": 12,
-                "type": "ECOMMERCE"
-            },
-            {
-                "locality": "MOEMA",
-                "quantity": 3,
-                "type": "PHYSICAL_STORE"
-            }
-        ]
-    },
-    "isMarketable": true
-}
-```
-
-Crie endpoints para as seguintes ações:
-
-- [ ] Criação de produto onde o payload será o json informado acima (exceto as propriedades **isMarketable** e **inventory.quantity**)
-
-- [ ] Edição de produto por **sku**
-
-- [ ] Recuperação de produto por **sku**
-
-- [ ] Deleção de produto por **sku**
-
-### Requisitos
+#  Simple Springboot + EmbebbedMongoDB(memory database)
 
 
-- [ ] Toda vez que um produto for recuperado por **sku** deverá ser calculado a propriedade: **inventory.quantity**
+### To run
+mvn package spring-boot:run
 
-        A propriedade inventory.quantity é a soma da quantity dos warehouses
+### To test
 
-- [ ] Toda vez que um produto for recuperado por **sku** deverá ser calculado a propriedade: **isMarketable**
+mvn test
 
-        Um produto é marketable sempre que seu inventory.quantity for maior que 0
+### Endpoints documentation
 
-- [ ] Caso um produto já existente em memória tente ser criado com o mesmo **sku** uma exceção deverá ser lançada
-
-        Dois produtos são considerados iguais se os seus skus forem iguais
+* [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
 
 
-- [ ] Ao atualizar um produto, o antigo deve ser sobrescrito com o que esta sendo enviado na requisição
 
-        A requisição deve receber o sku e atualizar com o produto que tbm esta vindo na requisição
+### MongoDB Embebbed Config.
+* Database: test
+* Collections: product
+* url: localhost
+* port: 27018
 
-### Dicas
 
-- Os produtos podem ficar em memória, não é necessário persistir os dados
-- Sinta-se a vontade para fazer o código em ```groovy``` se preferir, utilizamos bastante aqui
-- Testes são sempre bem-vindos :smiley:
+
+### Used tools
+
+[Swagger](https://swagger.io)
+
+[Spring Boot](http://projects.spring.io/spring-boot/)
+
+[Spock Test Framework](http://spockframework.org/)
+
+[Junit](https://junit.org)
+
+[Maven](https://maven.apache.org)
+
+[Spring Data](http://projects.spring.io/spring-data/)
+
+[MongoDB](https://www.mongodb.com/)
+
+[embedmongo-spring](https://github.com/jirutka/embedmongo-spring)
+
+[de.flapdoodle.embed.mongo](https://github.com/flapdoodle-oss/de.flapdoodle.embed.mongo)
+
+[Groovy](https://groovy-lang.org/)
+
