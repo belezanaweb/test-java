@@ -21,7 +21,8 @@ public class ProductsApiController {
 
         service.createProduct(product);
 
-        return ResponseEntity.accepted().build();
+
+        return ResponseEntity.accepted().body("Cadastro de produto efetuado com sucesso!");
     }
 
     @GetMapping("/{sku}")
@@ -35,7 +36,7 @@ public class ProductsApiController {
 
         service.deleteProduct(sku);
 
-        return ResponseEntity.accepted().build();
+        return ResponseEntity.accepted().body("Produto "+sku+" deletado com sucesso!");
     }
 
     @PutMapping("/{sku}")
@@ -43,7 +44,7 @@ public class ProductsApiController {
 
         service.updateProduct(sku, product);
 
-        return ResponseEntity.accepted().build();
+        return ResponseEntity.accepted().body("Produto atualizado com sucesso!");
     }
 
 }
