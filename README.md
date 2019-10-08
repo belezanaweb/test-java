@@ -1,3 +1,54 @@
+### Atividades Realizadas
+Criação de CRUD de produtos com persitência em memória(H2).
+
+Obs.: Devido a alguns imprevistos não tive tempo de realizar testes unitários. Pode ser algo a ser acrescentado em uma próxima versão.
+### Como rodar:
+
+Primeiramente, ir na pasta raiz do projeto e compilar com o maven
+```
+ ./mvnw clean install
+```
+
+Executar o Docker
+
+```
+ docker-compose up --build
+```
+Recursos expostos nos endpoints abaixo:
+
+Criar Produto (POST - Utilizar como body request solicitado nas instruçoes do teste):
+```
+ http://localhost:8080/api/products
+```
+Recuperar produto pelo ID (GET)
+
+```
+http://localhost:8080/api/products/{sku}
+```
+
+Atualizar produto pelo id (PUT - Utilizar como body request solicitado nas instruçoes do teste)
+
+```
+http://localhost:8080/api/products/{sku}
+```
+
+Deletar produto pelo ID (DELETE)
+
+```
+http://localhost:8080/api/products/{sku}
+```
+###Pontos de melhoria:
+
+Realizar persistência em Banco de Dados;
+
+Implementação de Swagger;
+
+Implementação de camada de segurança, autenticação;
+
+Implementação de Logs.
+
+Criação de testes unitários.
+
 ### Backend Test
 
 [![Build Status](https://travis-ci.com/belezanaweb/test-java.svg?branch=master)](https://travis-ci.com/belezanaweb/test-java)

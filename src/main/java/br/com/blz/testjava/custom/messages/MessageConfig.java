@@ -23,4 +23,5 @@ public class MessageConfig {
     public String get(String code) {
         return accessor.getMessage(code);
     }
+
 }

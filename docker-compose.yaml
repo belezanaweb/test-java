@@ -1,0 +1,11 @@
+version: '2.2'
+services:
+  app:
+    build: .
+    ports:
+      - 8080:8080
+    networks:
+      - api-test
+networks:
+  api-test:
+    driver: bridge

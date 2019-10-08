@@ -39,7 +39,7 @@ public class ProductsApiController {
     }
 
     @PutMapping("/{sku}")
-    public final ResponseEntity<Object> updateProduct(@PathVariable int sku, @Valid @RequestBody Product product) {
+    public final ResponseEntity<Object> updateProduct(@PathVariable int sku, @RequestBody Product product) {
 
         service.updateProduct(sku, product);
 

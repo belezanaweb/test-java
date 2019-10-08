@@ -1,39 +1,28 @@
 package br.com.blz.testjava.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "inventories")
+@Table(name = "INVENTORIES")
 public final class Inventory {
 
-	@Id
-	@GeneratedValue
-	private Integer id;
+    @Id
+    @GeneratedValue
+    private Integer id;
 
-	private int quantity;
+    private int quantity;
 
-	@NotNull(message = "Please provide a warehouse")
-//	@NotEmpty(message = "Please provide a warehouse")
-	@Valid
-	@OneToMany
-	@Cascade(CascadeType.ALL)
-	private List<Warehouse> warehouses;
-
-	public Inventory() {
-
-	}
-
-	public Inventory(final int quantity, final List<Warehouse> warehouses) {
-		this.quantity = quantity;
-		this.warehouses = warehouses;
-	}
-
+    @OneToMany
+    @Cascade(CascadeType.ALL)
+    private List<Warehouse> warehouses;
 }
