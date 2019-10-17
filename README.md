@@ -1,3 +1,10 @@
+###Iniciar aplicação
+Executar docker-compose up para subir o banco de dados
+
+verificar o host através do comando docker inspect "id do container"
+
+Alterar o host no application.properties
+ 
 ### Backend Test
 
 [![Build Status](https://travis-ci.com/belezanaweb/test-java.svg?branch=master)](https://travis-ci.com/belezanaweb/test-java)

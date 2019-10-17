@@ -1,0 +1,23 @@
+version: '3.2'
+services:
+  db:
+    image: postgres:latest
+    hostname: localhost
+    environment:
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: products_db
+    ports:
+      - "5432:5432"
+    network_mode:
+      bridge
+
+  pgadmin4:
+    image: dpage/pgadmin4:latest
+    environment:
+      - "PGADMIN_DEFAULT_EMAIL=admin"
+      - "PGADMIN_DEFAULT_PASSWORD=admin"
+    ports:
+      - 8086:80
+    network_mode:
+      bridge
