@@ -1,4 +1,4 @@
-###Iniciar aplicação
+### Iniciar aplicação
 Executar docker-compose up para subir o banco de dados
 
 verificar o host através do comando docker inspect "id do container"
