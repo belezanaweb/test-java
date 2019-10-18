@@ -76,3 +76,7 @@ Crie endpoints para as seguintes ações:
 - Os produtos podem ficar em memória, não é necessário persistir os dados
 - Sinta-se a vontade para fazer o código em ```groovy``` se preferir, utilizamos bastante aqui
 - Testes são sempre bem-vindos :smiley:
+
+
+### COMO TESTAR
+importar no postman a colection
