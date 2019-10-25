@@ -10,5 +10,5 @@ public interface ProductService {
 
 	public void delete(Integer sku);
 
-	public Product find(Integer sku);
+	public Product search(Integer sku);
 }

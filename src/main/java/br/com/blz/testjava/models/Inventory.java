@@ -24,11 +24,7 @@ public class Inventory {
 			quantity += ofNullable(warehouse).map(Warehouse::getQuantity).orElse(0);
 		}
 
-		if (quantity != 0) {
-			return quantity;
-		} else {
-			return null;
-		}
+		return (quantity != 0) ? quantity : null ;
 	}
 
 	public List<Warehouse> getWarehouses() {

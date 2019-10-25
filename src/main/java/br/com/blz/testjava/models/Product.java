@@ -53,4 +53,12 @@ public class Product {
 	public String toString() {
 		return "Product [sku=" + sku + ", name=" + name + ", inventory=" + inventory + "]";
 	}
+
+	public Product(Integer sku, String name, Inventory inventory) {
+		super();
+		this.sku = sku;
+		this.name = name;
+		this.inventory = inventory;
+	}
+	
 }

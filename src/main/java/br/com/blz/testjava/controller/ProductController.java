@@ -25,7 +25,7 @@ import br.com.blz.testjava.service.ProductService;
 import br.com.blz.testjava.utils.Constants;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/api/v1/product")
 @SuppressWarnings("rawtypes")
 public class ProductController {
 
@@ -87,7 +87,7 @@ public class ProductController {
 
 		try {
 			log.info("Searching the product with ID: {}", sku);
-			Product product = this.productService.find(sku);
+			Product product = this.productService.search(sku);
 			productResponse = new ProductResponse<>(OK.value(), product);
 		} catch (BusinessException e) {
 
