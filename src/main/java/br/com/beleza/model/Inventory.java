@@ -27,11 +27,6 @@ public class Inventory {
 	}
 	
 	private int calcQuantity() {
-		Integer q = 0;
-		
-		for (Warehouse warehouse : this.warehouses) {
-			q += warehouse.getQuantity();
-		}		
-		return q;
+		return this.warehouses.stream().reduce(0, (sum, w) -> sum + w.getQuantity(), Integer::sum);
 	}
 }
