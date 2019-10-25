@@ -2,7 +2,6 @@ package br.com.blz.testjava;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
-import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,8 +14,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import java.util.Optional;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -42,6 +44,17 @@ public class ProductControllerTest {
     public void init() {
     	Inventory inventory = new Inventory();
         Product product = new Product(1, "Product Name", inventory);
-        when(mockRepository.findProduct(1)).thenReturn(Optional.of(product));
+        when(mockRepository.findProduct(1)).thenReturn(product);
     }
+    
+    @Test
+    public void search_product_ok() throws Exception {
+
+        mockMvc.perform(get("/api/v1/product/100"))
+                .andDo(print())
+                .andExpect(status().isOk());
+//                .andExpect(jsonPath("$.sku", is(100)))
+//                .andExpect(jsonPath("$.name", is("Product Name")));
+    }
+    
 }
