@@ -43,13 +43,5 @@ public class Warehouse {
 	public void setType(String type) {
 		this.type = type;
 	}
-
-	public Warehouse(String locality, Integer quantity, String type) {
-		super();
-		this.locality = locality;
-		this.quantity = quantity;
-		this.type = type;
-	}
-	
 	
 }

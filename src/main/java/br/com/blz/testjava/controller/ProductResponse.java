@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ProductResponse<T> {
 
 	@JsonProperty
-	private Integer httpStatus;
+	private Integer status;
 
 	@JsonProperty
 	private String message;
@@ -13,16 +13,16 @@ public class ProductResponse<T> {
 	@JsonProperty
 	private T response;
 
-	public ProductResponse(Integer httpStatus, T response) {
-		this(httpStatus, null, response);
+	public ProductResponse(Integer status, T response) {
+		this(status, null, response);
 	}
 
 	public ProductResponse(Integer httpStatus, String message) {
 		this(httpStatus, message, null);
 	}
 
-	public ProductResponse(Integer httpStatus, String message, T response) {
-		this.httpStatus = httpStatus;
+	public ProductResponse(Integer status, String message, T response) {
+		this.status = status;
 		this.message = message;
 		this.response = response;
 	}
@@ -43,11 +43,11 @@ public class ProductResponse<T> {
 		this.response = response;
 	}
 
-	public Integer getHttpStatus() {
-		return httpStatus;
+	public Integer getStatus() {
+		return status;
 	}
 
-	public void setHttpStatus(Integer httpStatus) {
-		this.httpStatus = httpStatus;
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 }

@@ -3,6 +3,7 @@ package br.com.blz.testjava.controller;
 
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.PRECONDITION_FAILED;
 import static org.springframework.http.HttpStatus.valueOf;
 
@@ -42,7 +43,7 @@ public class ProductController {
 		try {
 			log.info("Received the product to save with the infos: {}", product.toString());
 			productService.save(product);
-			response = new ProductResponse<>(OK.value(), Constants.OPERATION_OK, product);
+			response = new ProductResponse<>(CREATED.value(), Constants.OPERATION_OK, product);
 
 		} catch (BusinessException e) {
 
@@ -54,7 +55,7 @@ public class ProductController {
 			response = new ProductResponse<>(INTERNAL_SERVER_ERROR.value(), e.getMessage(), product);
 		}
 
-		return new ResponseEntity<>(response, valueOf(response.getHttpStatus()));
+		return new ResponseEntity<>(response, valueOf(response.getStatus()));
 	}
 
 	@PutMapping("/update/{sku}")
@@ -77,7 +78,7 @@ public class ProductController {
 			SKUResponse = new ProductResponse<>(INTERNAL_SERVER_ERROR.value(), e.getMessage());
 		}
 
-		return new ResponseEntity<>(SKUResponse, valueOf(SKUResponse.getHttpStatus()));
+		return new ResponseEntity<>(SKUResponse, valueOf(SKUResponse.getStatus()));
 	}
 
 	@GetMapping("/search/{sku}")
@@ -99,7 +100,7 @@ public class ProductController {
 			productResponse = new ProductResponse<>(INTERNAL_SERVER_ERROR.value(), e.getMessage());
 		}
 
-		return new ResponseEntity<>(productResponse, valueOf(productResponse.getHttpStatus()));
+		return new ResponseEntity<>(productResponse, valueOf(productResponse.getStatus()));
 	}
 
 	@DeleteMapping("/delete/{sku}")
@@ -121,6 +122,6 @@ public class ProductController {
 			SKUResponse = new ProductResponse<>(INTERNAL_SERVER_ERROR.value(), e.getMessage());
 		}
 
-		return new ResponseEntity<>(SKUResponse, valueOf(SKUResponse.getHttpStatus()));
+		return new ResponseEntity<>(SKUResponse, valueOf(SKUResponse.getStatus()));
 	}
 }

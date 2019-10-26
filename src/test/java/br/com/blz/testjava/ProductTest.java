@@ -36,9 +36,16 @@ public class ProductTest extends AbstractTest{
 	   
 	   Inventory inventory = new Inventory();
 	   ArrayList<Warehouse> warehouse = new ArrayList();
-	   warehouse.add(new Warehouse("SP", 10, "ECOMMERCE"));
+	   Warehouse wh = new Warehouse();
+	   wh.setLocality("SP");
+	   wh.setQuantity(10);
+	   wh.setType("ECOMMERCE");
+	   warehouse.add(wh);
 	   inventory.setWarehouses(warehouse);
-	   Product product = new Product(100, "Product Name", inventory);
+	   Product product = new Product();
+	   product.setSku(100);
+	   product.setName("L'Oréal");
+	   product.setInventory(inventory);
 	   String inputJson = super.mapToJson(product);
 	   MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
 	         .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -46,8 +53,6 @@ public class ProductTest extends AbstractTest{
 	      
 	   int status = mvcResult.getResponse().getStatus();
 	   assertEquals(201, status);
-	   String content = mvcResult.getResponse().getContentAsString();
-	   assertEquals(content, Constants.OPERATION_OK);
 	}
 	
 	@Test
