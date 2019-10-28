@@ -14,7 +14,7 @@ public class Product implements Serializable {
 	@EmbeddedId
 	private ProductEntryPK sku;
     private String name;
-    @OneToOne(cascade=CascadeType.ALL, targetEntity=Inventory.class,  fetch = FetchType.EAGER)
+    @OneToOne(cascade=CascadeType.ALL, orphanRemoval = true, targetEntity=Inventory.class,  fetch = FetchType.EAGER)
     private Inventory inventory;
     private Boolean isMarketable;
     private final static long serialVersionUID = -2026203869071939291L;

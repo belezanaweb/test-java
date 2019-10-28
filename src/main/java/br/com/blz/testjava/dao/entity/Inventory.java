@@ -24,7 +24,7 @@ public class Inventory implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id; 
     private Integer quantity;
-    @OneToMany(cascade=CascadeType.ALL, targetEntity=Warehouse.class, fetch=FetchType.EAGER)    
+    @OneToMany(cascade=CascadeType.ALL, orphanRemoval = true, targetEntity=Warehouse.class, fetch=FetchType.EAGER)    
     private List<Warehouse> warehouses;
     private final static long serialVersionUID = -5067163988590103177L;
 

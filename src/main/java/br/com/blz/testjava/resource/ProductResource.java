@@ -19,11 +19,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.blz.testjava.dao.entity.Product;
-import br.com.blz.testjava.dao.entity.ProductEntryPK;
-import br.com.blz.testjava.dao.repository.IProductRepository;
 import br.com.blz.testjava.dto.ProductDto;
-import br.com.blz.testjava.exception.ProductNotFoundException;
-import br.com.blz.testjava.exception.ProductSKUMismatchException;
+import br.com.blz.testjava.service.IProductService;
+import br.com.blz.testjava.service.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -35,21 +33,18 @@ import io.swagger.annotations.ApiResponses;
 public class ProductResource {
 
 	@Autowired
-    private IProductRepository productRepository;
+    private IProductService productService;
 	
 	 @Autowired
 	 private ModelMapper modelMapper;
 
 	@ApiOperation(value = "View a list of available products", response = ProductDto.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved list"),
-            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+            @ApiResponse(code = 200, message = "Successfully retrieved list")
     })
     @GetMapping
     public List<ProductDto> findAll() {
-        Iterable<Product> products = productRepository.findAll();
+        Iterable<Product> products = productService.findAll();
         return StreamSupport.stream(products.spliterator(), false)
                 .map(post -> convertToDto(post))
                 .collect(Collectors.toList());
@@ -57,50 +52,28 @@ public class ProductResource {
     
     @GetMapping(value = "/{sku}")
     public ProductDto findById(@PathVariable("sku") Long sku) {
-    	return convertToDto(productRepository.findById(buildProdSku(sku))
-    			.orElseThrow(ProductNotFoundException::new));
+    	return convertToDto(productService.findById(sku));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ProductDto create(@RequestBody ProductDto resource) throws ParseException {
-    	if (null == resource.getSku()){
-            throw new IllegalArgumentException("Sku is requerid.");
-    	}
-    	
-    	if (productRepository.findById(buildProdSku(resource.getSku())).isPresent()) {
-            throw new IllegalArgumentException("Product Already Exists");
-    	}
     	Product product = convertToEntity(resource);
-        Product productPostCreated = productRepository.save(product);
+        Product productPostCreated = productService.create(product);
         return convertToDto(productPostCreated);
     }
-
-	private ProductEntryPK buildProdSku(Long sku) {
-		ProductEntryPK productSku = new ProductEntryPK();
-    	productSku.setSku(sku);
-    	return productSku;
-	}
     
     @PutMapping(value = "/{sku}")
     @ResponseStatus(HttpStatus.OK)
     public ProductDto update(@PathVariable("sku") Long sku, @RequestBody ProductDto resource) throws ParseException {
-    	if (null == resource.getSku() || !resource.getSku().equals(sku)) {
-             throw new ProductSKUMismatchException("Product SKU mismatch.");
-        }
-    	productRepository.findById(buildProdSku(sku))
-        .orElseThrow(ProductNotFoundException::new);
-    	
     	Product product = convertToEntity(resource);
-        Product productPostCreated = productRepository.save(product);
+        Product productPostCreated = productService.update(sku, product);
         return convertToDto(productPostCreated);
     }
 
     @DeleteMapping(value = "/{sku}")
     public void delete(@PathVariable("sku") Long sku) {
-    	 productRepository.findById(buildProdSku(sku))
-         .orElseThrow(ProductNotFoundException::new);
-       productRepository.deleteById(buildProdSku(sku));
+       productService.delete(sku);
     }
 
     private ProductDto convertToDto(Product Product) {
@@ -110,7 +83,7 @@ public class ProductResource {
     
     private Product convertToEntity(ProductDto productDto) throws ParseException {
         Product product = modelMapper.map(productDto, Product.class);
-        product.setSku(buildProdSku(productDto.getSku()));
+        product.setSku(ProductService.buildProdSku(productDto.getSku()));
         return product;
     }    
 }
