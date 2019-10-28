@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.blz.testjava.dao.entity.Product;
 import br.com.blz.testjava.dto.ProductDto;
+import br.com.blz.testjava.dto.ProductRespDto;
 import br.com.blz.testjava.service.IProductService;
 import br.com.blz.testjava.service.ProductService;
 import io.swagger.annotations.Api;
@@ -43,7 +44,7 @@ public class ProductResource {
             @ApiResponse(code = 200, message = "Successfully retrieved list")
     })
     @GetMapping
-    public List<ProductDto> findAll() {
+    public List<ProductRespDto> findAll() {
         Iterable<Product> products = productService.findAll();
         return StreamSupport.stream(products.spliterator(), false)
                 .map(post -> convertToDto(post))
@@ -51,13 +52,13 @@ public class ProductResource {
     }
     
     @GetMapping(value = "/{sku}")
-    public ProductDto findById(@PathVariable("sku") Long sku) {
+    public ProductRespDto find(@PathVariable("sku") Long sku) {
     	return convertToDto(productService.findById(sku));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductDto create(@RequestBody ProductDto resource) throws ParseException {
+    public ProductRespDto create(@RequestBody ProductDto resource) throws ParseException {
     	Product product = convertToEntity(resource);
         Product productPostCreated = productService.create(product);
         return convertToDto(productPostCreated);
@@ -65,7 +66,7 @@ public class ProductResource {
     
     @PutMapping(value = "/{sku}")
     @ResponseStatus(HttpStatus.OK)
-    public ProductDto update(@PathVariable("sku") Long sku, @RequestBody ProductDto resource) throws ParseException {
+    public ProductRespDto update(@PathVariable("sku") Long sku, @RequestBody ProductDto resource) throws ParseException {
     	Product product = convertToEntity(resource);
         Product productPostCreated = productService.update(sku, product);
         return convertToDto(productPostCreated);
@@ -76,9 +77,9 @@ public class ProductResource {
        productService.delete(sku);
     }
 
-    private ProductDto convertToDto(Product Product) {
-        ProductDto ProductDto = modelMapper.map(Product, ProductDto.class);
-        return ProductDto;
+    private ProductRespDto convertToDto(Product Product) {
+    	ProductRespDto productRespDto = modelMapper.map(Product, ProductRespDto.class);
+        return productRespDto;
     }
     
     private Product convertToEntity(ProductDto productDto) throws ParseException {
