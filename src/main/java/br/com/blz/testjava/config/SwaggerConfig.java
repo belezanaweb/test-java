@@ -1,4 +1,4 @@
-package br.com.blz.testjava.swagger;
+package br.com.blz.testjava.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,11 +28,11 @@ public class SwaggerConfig {
 
     private ApiInfo apiEndPointsInfo() {
 
-        return new ApiInfoBuilder().title("Spring Boot REST API")
+        return new ApiInfoBuilder().title("Product REST API")
                 .description("Product Management REST API")
-                .contact(new Contact("Fernando Pessoa", "www.notExist.com", "fernandopessoafranco@gmail.com"))
-                .license("Apache 2.0")
-                .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
+                .contact(new Contact("Fernando Pessoa Franco", "www.notExist.com", "fernandopessoafranco@gmail.com"))
+                //.license("Apache 2.0")
+                //.licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
                 .version("1.0-SNAPSHOT")
                 .build();
     }

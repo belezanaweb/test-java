@@ -85,7 +85,7 @@ public class ProductResource {
     @PutMapping(value = "/{sku}")
     @ResponseStatus(HttpStatus.OK)
     public ProductDto update(@PathVariable("sku") Long sku, @RequestBody ProductDto resource) throws ParseException {
-    	if (!resource.getSku().equals(sku)) {
+    	if (null == resource.getSku() || !resource.getSku().equals(sku)) {
              throw new ProductSKUMismatchException("Product SKU mismatch.");
         }
     	productRepository.findById(buildProdSku(sku))
