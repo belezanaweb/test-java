@@ -29,20 +29,45 @@ public class ProductServiceTest {
 	@Before
 	public void setUp() {
 
-		product = criarProduto();
+		product = new Product();
+		product.setSku(123456);
+		product.setName(java.util.UUID.randomUUID().toString());
+		
+		Inventory inventory = new Inventory();
+		
+		List<Warehouse> warehouses = new ArrayList<Warehouse>();
+		String randomString = java.util.UUID.randomUUID().toString();
+		Warehouse warehouse = new Warehouse();
+		warehouse.setLocality(randomString);
+		warehouse.setType(randomString);
+		warehouse.setQuantity(Integer.MIN_VALUE);
+
+		warehouses.add(warehouse);
+
+		warehouse = new Warehouse();
+		warehouse.setLocality(randomString);
+		warehouse.setType(randomString);
+		warehouse.setQuantity(Integer.MIN_VALUE);
+
+		warehouses.add(warehouse);
+		
+		inventory.setWarehouses(warehouses);
+		product.setInventory(inventory);
 	}
 
 	@Test
 	public void saveSuccess() {
 
-		productService.save(product);
-		Assert.assertTrue(true);
+		Product prductSaved = productService.save(product);
+		Assert.assertEquals(prductSaved, product);
+		
 	}
 
 	@Test
 	public void saveDuplicated() throws RuntimeException {
 
 		try {
+			
 			productService.save(product);
 
 		} catch (BusinessException e) {
@@ -87,7 +112,7 @@ public class ProductServiceTest {
 
 		} catch (BusinessException e) {
 			if ("Product Invalid with the Sku informed".equals(e.getMessage())) {
-				Product product = criarProduto();
+				
 				productService.save(product);
 				productService.delete(123456);
 				Assert.assertTrue(true);
@@ -108,46 +133,6 @@ public class ProductServiceTest {
 			Assert.assertTrue("Product Invalid with the Sku informed".equals(e.getMessage()));
 			return;
 		}
-	}
-
-	private Product criarProduto() {
-
-		Product product = new Product();
-		product.setSku(123456);
-		product.setName(java.util.UUID.randomUUID().toString());
-		product.setInventory(criarInventario());
-
-		return product;
-	}
-
-	private Inventory criarInventario() {
-
-		Inventory inventory = new Inventory();
-		inventory.setWarehouses(criarDeposito());
-
-		return inventory;
-	}
-
-	private List<Warehouse> criarDeposito() {
-
-		List<Warehouse> warehouses = new ArrayList<Warehouse>();
-		String randomString = java.util.UUID.randomUUID().toString();
-		Warehouse warehouse = new Warehouse();
-		warehouse.setLocality(randomString);
-		warehouse.setType(randomString);
-		warehouse.setQuantity(Integer.MIN_VALUE);
-
-		warehouses.add(warehouse);
-
-		warehouse = new Warehouse();
-		warehouse.setLocality(randomString);
-		warehouse.setType(randomString);
-		warehouse.setQuantity(Integer.MIN_VALUE);
-
-		warehouses.add(warehouse);
-
-		return warehouses;
-
 	}
 
 }
