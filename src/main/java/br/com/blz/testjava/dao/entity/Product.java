@@ -11,7 +11,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import io.swagger.annotations.ApiModelProperty;
+@JsonInclude(Include.NON_NULL)
 @Entity
 public class Product implements Serializable {
 	@Id
@@ -44,10 +48,10 @@ public class Product implements Serializable {
 		this.inventory = inventory;
 	}
 	@ApiModelProperty(required = false, hidden = true)
-	public boolean isMarketable() {
-		if(inventory !=null && inventory.getQuantity() > 0) {
-			return this.isMarketable = true;
-		}
-		return this.isMarketable = false;
+	public Boolean isMarketable() {
+		return this.isMarketable;
+	}
+	public void isMarketable(Boolean isMarketable) {
+		this.isMarketable = isMarketable;
 	}
 }

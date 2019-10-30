@@ -13,11 +13,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import io.swagger.annotations.ApiModelProperty;
 
 @Entity
+@JsonInclude(Include.NON_NULL)
 public class Inventory implements Serializable {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,11 +40,11 @@ public class Inventory implements Serializable {
 	}
 	@ApiModelProperty(required = false, hidden = true)
     public Long getQuantity() {
-		if(warehouses == null) {
-			return this.quantity = 0L;
-		}
-		return this.quantity = warehouses.stream().mapToLong(p -> p.getQuantity()).sum();
+		return this.quantity;
     }
+	public void setQuantity(Long quantity) {
+		this.quantity = quantity;
+	}
 
     public List<Warehouse> getWarehouses() {
         return warehouses;
@@ -52,7 +54,4 @@ public class Inventory implements Serializable {
         this.warehouses = warehouses;
     }
 
-	public void setQuantity(Long quantity) {
-		this.quantity = quantity;
-	}
 }
