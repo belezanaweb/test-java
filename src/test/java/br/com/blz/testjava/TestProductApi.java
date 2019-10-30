@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ProductController.class)
-public class ProductApiTest {
+public class TestProductApi {
     @Autowired
     private MockMvc mvc;
 
@@ -60,7 +60,7 @@ public class ProductApiTest {
 
         doNothing().when(service).save(product);
 
-        mvc.perform(post("/api/v1/products/")
+        mvc.perform(post("/api/v1/products")
             .content(new ObjectMapper().writeValueAsString(product))
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isCreated())

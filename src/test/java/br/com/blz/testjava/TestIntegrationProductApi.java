@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ContextConfiguration
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ProductApiIntegratedTest {
+public class TestIntegrationProductApi {
 
     @LocalServerPort
     private int port;
@@ -31,7 +31,7 @@ public class ProductApiIntegratedTest {
         HttpEntity<Product> entity = new HttpEntity<Product>(product, new HttpHeaders());
 
         ResponseEntity<ErrorResponse> response = restTemplate.exchange(
-          "http://localhost:" + port + "/api/v1/products/", HttpMethod.POST, entity, ErrorResponse.class);
+          "http://localhost:" + port + "/api/v1/products", HttpMethod.POST, entity, ErrorResponse.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(response.getBody().getError()).isEqualTo("Produto já cadastrado");
