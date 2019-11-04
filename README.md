@@ -76,3 +76,25 @@ Crie endpoints para as seguintes ações:
 - Os produtos podem ficar em memória, não é necessário persistir os dados
 - Sinta-se a vontade para fazer o código em ```groovy``` se preferir, utilizamos bastante aqui
 - Testes são sempre bem-vindos :smiley:
+
+
+### Instruções
+
+Todos os comandos deverão ser executado via terminal.
+
+- Fazer o checkout do projeto e na raiz executar o comando abaixo:
+
+    $ mvn clean compile install
+
+- Com o build realizado com sucesso, executar o comando abaixo para subir a aplicação:
+
+    $ cd target
+    
+    $ java -jar test-java-0.0.1-SNAPSHOT.jar
+    
+
+A partir de agora você poderá acessar os serviços pelos endpoints.
+
+### Swagger
+
+http://localhost:8080/swagger-ui.html
