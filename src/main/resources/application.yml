@@ -1,0 +1,17 @@
+server:
+  port: 8084
+  undertow:
+    accesslog:
+      enabled: true
+      pattern: "%t %a \"%r\" %s (%D ms)"
+      dir: ./logs/
+      rotate: true
+
+logging:
+  file: ./logs/service.log
+  level:
+    root: error
+    org.springframework: info
+    br.com.kroton: info
+  pattern:
+    file: "[%d{ISO8601}] %-5level %-40.40c{1.} : %m%ex%n"
