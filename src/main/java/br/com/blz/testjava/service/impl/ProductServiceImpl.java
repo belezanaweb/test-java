@@ -30,13 +30,18 @@ public class ProductServiceImpl implements ProductService {
             throw new ConflictException("Já existe um produto com o sku informado cadastrado na base");
         }
 
+        repository.save(product);
+
         Inventory inventory = new Inventory.Builder()
             .withWarehouses(product.getInventory().getWarehouses())
             .withQuantity(calculateInventoryQuantity(product.getInventory().getWarehouses()))
             .build();
-        product.setInventory(inventory);
-        product.setMarketable(inventory.getQuantity() > 0 ? true : false);
-        return repository.save(product);
+
+        return new Product.Builder()
+            .withInventory(inventory)
+            .withName(product.getName())
+            .withIsMarketable(inventory.getQuantity() > 0 ? true : false)
+            .build();
     }
 
     private Integer calculateInventoryQuantity(List<Warehouse> warehouses) {
