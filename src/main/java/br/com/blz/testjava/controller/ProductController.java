@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -54,5 +51,14 @@ public class ProductController {
         response.setData(productResponse);
         log.error("Produto cadastrado com sucesso: [{}]", response.getData());
         return ResponseEntity.created(new URI("/products")).body(response);
+    }
+
+    @RequestMapping(value = "/{sku}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Response<?>> findProductBySku(@PathVariable("sku") Long sku) {
+        log.error("Buscando produto com sku: [{}]", sku);
+        ProductResponse productResponse = productConversorComponent.entityToResponseConverter(productService.findBySku(sku));
+        Response<ProductResponse> response = new Response<>();
+        response.setData(productResponse);
+        return ResponseEntity.ok(response);
     }
 }
