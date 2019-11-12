@@ -1,11 +1,15 @@
 package br.com.blz.testjava.contract.request;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
 public class InventoryRequest {
 
     private List<WarehouseRequest> warehouses = new ArrayList<>();
+
+    public InventoryRequest() {
+    }
 
     private InventoryRequest(Builder builder) {
         setWarehouses(builder.warehouses);

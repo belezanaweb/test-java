@@ -6,6 +6,9 @@ public class WarehouseRequest {
     private Integer quantity;
     private String type;
 
+    public WarehouseRequest() {
+    }
+
     private WarehouseRequest(Builder builder) {
         setLocality(builder.locality);
         setQuantity(builder.quantity);

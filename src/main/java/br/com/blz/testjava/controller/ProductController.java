@@ -38,7 +38,7 @@ public class ProductController {
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response<?>> create(@Valid @RequestBody ProductRequest request, BindingResult result) throws URISyntaxException {
-        log.info("Iniciando cadastro de artista com request: [{}]", request.toString());
+        log.info("Iniciando cadastro de produto com request: [{}]", request.toString());
 
         if (result.hasErrors()) {
             Response<ProductRequest> responseRequest = new Response<>();

@@ -2,17 +2,22 @@ package br.com.blz.testjava.contract.request;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 public class ProductRequest {
 
     @NotNull(message = "Sku cannot be null")
-    @NotEmpty(message = "Sku cannot be empty")
+    @Min(value = 1, message = "sku should not be less than 1")
     private Long sku;
     @NotNull(message = "Name cannot be null")
     @NotEmpty(message = "Name cannot be empty")
     private String name;
+    @NotNull(message = "Inventory cannot be null")
     private InventoryRequest inventory;
+
+    public ProductRequest() {
+    }
 
     private ProductRequest(Builder builder) {
         setSku(builder.sku);

@@ -7,7 +7,7 @@ import java.util.List;
 
 public class InventoryResponse {
 
-    private Integer quantity;
+    private Integer quantity = 0;
     private List<WarehouseResponse> warehouses = new ArrayList<>();
 
     private InventoryResponse(Builder builder) {
