@@ -1,23 +1,19 @@
-package br.com.blz.testjava.contract.request;
+package br.com.blz.testjava.domain;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import br.com.blz.testjava.contract.request.InventoryRequest;
 
-import javax.validation.constraints.NotNull;
+public class Product {
 
-public class ProductRequest {
-
-    @NotNull(message = "Sku cannot be null")
-    @NotEmpty(message = "Sku cannot be empty")
     private Long sku;
-    @NotNull(message = "Name cannot be null")
-    @NotEmpty(message = "Name cannot be empty")
     private String name;
-    private InventoryRequest inventory;
+    private Inventory inventory;
+    private boolean isMarketable;
 
-    private ProductRequest(Builder builder) {
+    private Product(Builder builder) {
         setSku(builder.sku);
         setName(builder.name);
         setInventory(builder.inventory);
+        setMarketable(builder.isMarketable);
     }
 
     public Long getSku() {
@@ -36,20 +32,29 @@ public class ProductRequest {
         this.name = name;
     }
 
-    public InventoryRequest getInventory() {
+    public Inventory getInventory() {
         return inventory;
     }
 
-    public void setInventory(InventoryRequest inventory) {
+    public void setInventory(Inventory inventory) {
         this.inventory = inventory;
+    }
+
+    public boolean isMarketable() {
+        return isMarketable;
+    }
+
+    public void setMarketable(boolean marketable) {
+        isMarketable = marketable;
     }
 
     @Override
     public String toString() {
-        return "ProductRequest{" +
+        return "Product{" +
             "sku=" + sku +
             ", name='" + name + '\'' +
             ", inventory=" + inventory +
+            ", isMarketable=" + isMarketable +
             '}';
     }
 
@@ -57,7 +62,8 @@ public class ProductRequest {
     public static final class Builder {
         private Long sku;
         private String name;
-        private InventoryRequest inventory;
+        private Inventory inventory;
+        private boolean isMarketable;
 
         public Builder() {
         }
@@ -72,13 +78,18 @@ public class ProductRequest {
             return this;
         }
 
-        public Builder withInventory(InventoryRequest val) {
+        public Builder withInventory(Inventory val) {
             inventory = val;
             return this;
         }
 
-        public ProductRequest build() {
-            return new ProductRequest(this);
+        public Builder withIsMarketable(boolean val) {
+            isMarketable = val;
+            return this;
+        }
+
+        public Product build() {
+            return new Product(this);
         }
     }
 }

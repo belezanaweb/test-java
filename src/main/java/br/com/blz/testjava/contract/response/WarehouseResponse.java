@@ -1,12 +1,12 @@
-package br.com.blz.testjava.contract.request;
+package br.com.blz.testjava.contract.response;
 
-public class WarehouseRequest {
+public class WarehouseResponse {
 
     private String locality;
     private Integer quantity;
     private String type;
 
-    private WarehouseRequest(Builder builder) {
+    private WarehouseResponse(Builder builder) {
         setLocality(builder.locality);
         setQuantity(builder.quantity);
         setType(builder.type);
@@ -38,7 +38,7 @@ public class WarehouseRequest {
 
     @Override
     public String toString() {
-        return "WarehouseRequest{" +
+        return "Warehouse{" +
             "locality='" + locality + '\'' +
             ", quantity=" + quantity +
             ", type='" + type + '\'' +
@@ -69,8 +69,8 @@ public class WarehouseRequest {
             return this;
         }
 
-        public WarehouseRequest build() {
-            return new WarehouseRequest(this);
+        public WarehouseResponse build() {
+            return new WarehouseResponse(this);
         }
     }
 }

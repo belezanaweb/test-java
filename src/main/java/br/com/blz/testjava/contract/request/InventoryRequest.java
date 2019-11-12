@@ -11,7 +11,6 @@ public class InventoryRequest {
         setWarehouses(builder.warehouses);
     }
 
-
     public List<WarehouseRequest> getWarehouses() {
         return warehouses;
     }
@@ -34,7 +33,7 @@ public class InventoryRequest {
         public Builder() {
         }
 
-        public Builder warehouses(List<WarehouseRequest> val) {
+        public Builder withWarehouses(List<WarehouseRequest> val) {
             warehouses = val;
             return this;
         }
