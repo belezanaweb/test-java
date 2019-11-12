@@ -15,4 +15,8 @@ public class ProductRepository {
         productMap.put(product.getSku(), product);
         return product;
     }
+
+    public Product findBySku(Long sku){
+        return productMap.get(sku);
+    }
 }

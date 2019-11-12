@@ -3,6 +3,7 @@ package br.com.blz.testjava.service.impl;
 import br.com.blz.testjava.domain.Inventory;
 import br.com.blz.testjava.domain.Product;
 import br.com.blz.testjava.domain.Warehouse;
+import br.com.blz.testjava.exception.ConflictException;
 import br.com.blz.testjava.repository.ProductRepository;
 import br.com.blz.testjava.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product create(Product product) {
+
+        if(repository.findBySku(product.getSku()) != null){
+            throw new ConflictException("Já existe um produto com o sku informado cadastrado na base");
+        }
+
         Inventory inventory = new Inventory.Builder()
             .withWarehouses(product.getInventory().getWarehouses())
             .withQuantity(calculateInventoryQuantity(product.getInventory().getWarehouses()))
