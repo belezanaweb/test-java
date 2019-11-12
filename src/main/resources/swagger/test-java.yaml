@@ -1,0 +1,255 @@
+swagger: "2.0"
+info:
+  description: "Product Service"
+  version: "1.0.0"
+  title: "Product Service"
+host: "dev.testjava.com.br"
+basePath: "/marketplace/product/v1"
+tags:
+- name: "test-java"
+  description: "Beleza na Web Product Service"
+schemes:
+- "http"
+
+responses:
+  200-Ok:
+    description: "Ok"
+  204-NoContent:
+    description: "No content"
+  400-BadRequest:
+    description: "Bad request"
+  401-Unauthorized:
+    description: Unauthorized
+    schema:
+      $ref: "#/definitions/ApiErrorResponse"    
+  403-Forbidden:
+    description: Forbidden
+    schema:
+      $ref: "#/definitions/ApiErrorResponse"            
+  404-DataNotFound:
+    description: "Data not found"
+    schema:
+      $ref: "#/definitions/ApiErrorResponse"
+  405-DataInvalid:
+    description: "Data input not supplied or invalid"
+    schema:
+      $ref: "#/definitions/ApiErrorResponse"                  
+  406-Exception:
+    description: "Exception"
+    schema:
+      $ref: "#/definitions/ApiErrorResponse"            
+
+paths:
+  /:
+    post:
+      tags:
+      - "New-Product"
+      summary: "Save new product"
+      description: "Save new product"
+      operationId: "POST /"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "productDto"
+        in: "body"
+        description: "product object"
+        required: true
+        type: "object"
+      responses:
+        200:
+          description: "Ok"
+          schema: {
+              type: "array",
+              items: {
+                $ref: "#/definitions/ProductDto"
+              }
+            }
+        204:
+          $ref: "#/responses/204-NoContent"
+        400:               
+          $ref: "#/responses/400-BadRequest"   
+        401:               
+          $ref: "#/responses/401-Unauthorized"   
+        403:
+          $ref: "#/responses/403-Forbidden"
+        404:
+          $ref: "#/responses/404-DataNotFound"          
+        405:
+          $ref: "#/responses/405-DataInvalid"
+        406:
+           $ref: "#/responses/406-Exception"
+      
+  /:
+    get:
+      tags:
+      - "Get-Product"
+      summary: "get product by sku"
+      description: "get product by sku"
+      operationId: "GET /"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "sku"
+        in: "query"
+        description: "product sku"
+        required: true
+        type: "Long"
+      responses:
+        200:
+          description: "Ok"
+          schema: {
+              type: "array",
+              items: {
+                $ref: "#/definitions/ProductDto"
+              }
+            }
+        204:
+          $ref: "#/responses/204-NoContent"
+        400:               
+          $ref: "#/responses/400-BadRequest"   
+        401:               
+          $ref: "#/responses/401-Unauthorized"   
+        403:
+          $ref: "#/responses/403-Forbidden"
+        404:
+          $ref: "#/responses/404-DataNotFound"          
+        405:
+          $ref: "#/responses/405-DataInvalid"
+        406:
+           $ref: "#/responses/406-Exception"
+           
+  /:
+    put:
+      tags:
+      - "Put-Product"
+      summary: "update product"
+      description: "update product"
+      operationId: "PUT /"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "productDto"
+        in: "body"
+        description: "product object"
+        required: true
+        type: "object"
+      responses:
+        200:
+          description: "Ok"
+          schema: {
+              type: "array",
+              items: {
+                $ref: "#/definitions/ProductDto"
+              }
+            }
+        204:
+          $ref: "#/responses/204-NoContent"
+        400:               
+          $ref: "#/responses/400-BadRequest"   
+        401:               
+          $ref: "#/responses/401-Unauthorized"   
+        403:
+          $ref: "#/responses/403-Forbidden"
+        404:
+          $ref: "#/responses/404-DataNotFound"          
+        405:
+          $ref: "#/responses/405-DataInvalid"
+        406:
+           $ref: "#/responses/406-Exception"     
+           
+  /:
+    delete:
+      tags:
+      - "Delete-Product"
+      summary: "delete product by sku"
+      description: "delete product by sku"
+      operationId: "DELETE /"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "sku"
+        in: "query"
+        description: "product sku"
+        required: true
+        type: "Long"
+      responses:
+        200:
+          description: "Ok"
+          type: string
+        204:
+          $ref: "#/responses/204-NoContent"
+        400:               
+          $ref: "#/responses/400-BadRequest"   
+        401:               
+          $ref: "#/responses/401-Unauthorized"   
+        403:
+          $ref: "#/responses/403-Forbidden"
+        404:
+          $ref: "#/responses/404-DataNotFound"          
+        405:
+          $ref: "#/responses/405-DataInvalid"
+        406:
+           $ref: "#/responses/406-Exception"                 
+           
+definitions:   
+  ApiErrorResponse:
+    type: "object"
+    description: "Error API responses"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+        description: "Id of the technical exception"
+      message:
+        type: "string"
+        description: "Technical message"
+      description:
+        type: "string"
+        description: "Description error message" 
+  ProductDto:
+    type: "object"
+    description: "Product object"
+    properties:
+      sku:
+        type: "Long"
+        description: "sku product code"
+      name:
+        type: "string"
+        description: "product name"   
+      inventory:
+        type: "object"
+        description: "Inventory object"
+        schema: 
+          $ref: '#/definitions/Inventory'
+      isMarketable:
+        type: "boolean"
+        description: "is marketable flag"  
+  InventoryDto:
+    type: "object"
+    description: "Inventory object"
+    properties:
+      quantity:
+        type: "integer"
+        format: "int32"
+        description: "inventory product quantity"
+      warehouses:
+        type: "object"
+        description: "warehouse object"
+        schema: 
+          $ref: '#/definitions/WarehouseDto'
+  WarehouseDto:
+    type: "object"
+    description: "Product object"
+    properties:
+      locality:
+        type: "string"
+        description: "warehouse locality"
+      quantity:
+        type: "integer"
+        format: "int32"
+        description: "warehouse product quantity"                     
+                 
