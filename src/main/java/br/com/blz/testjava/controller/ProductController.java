@@ -63,7 +63,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/{sku}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Response<?>> putArtist(@PathVariable("sku") Long sku,
+    public ResponseEntity<Response<?>> update(@PathVariable("sku") Long sku,
                                                  @Valid @RequestBody ProductRequest request,
                                                  BindingResult result)  {
 
@@ -86,7 +86,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/{sku}", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> remover(@PathVariable("sku") Long sku) {
+    public ResponseEntity<Void> remove(@PathVariable("sku") Long sku) {
         log.info("Iniciando Remoção de produto sku: [{}]", sku);
         productService.delete(sku);
         log.info("produto de sku: [{}] removido com sucesso", sku);
