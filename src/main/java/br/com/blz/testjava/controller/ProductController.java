@@ -61,4 +61,35 @@ public class ProductController {
         response.setData(productResponse);
         return ResponseEntity.ok(response);
     }
+
+    @RequestMapping(value = "/{sku}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Response<?>> putArtist(@PathVariable("sku") Long sku,
+                                                 @Valid @RequestBody ProductRequest request,
+                                                 BindingResult result)  {
+
+        log.info("Atualizando produto [{}] com sku: [{}]", request.toString(), sku);
+
+        if (result.hasErrors()) {
+            Response<ProductRequest> responseRequest = new Response<>();
+            log.error("Erro validando dados de update de produto: [{}]", result.getAllErrors());
+            result.getAllErrors().forEach(error -> responseRequest.getErrors().add(error.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(responseRequest);
+        }
+
+        Response<ProductResponse> response = new Response<>();
+
+        Product product = productService.update(sku, productConversorComponent.requestToEntityConverter(request));
+        ProductResponse productResponse = productConversorComponent.entityToResponseConverter(product);
+        response.setData(productResponse);
+        log.error("Produto atualizado com sucesso: [{}]", response.getData());
+        return ResponseEntity.ok(response);
+    }
+
+    @RequestMapping(value = "/{sku}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> remover(@PathVariable("sku") Long sku) {
+        log.info("Iniciando Remoção de produto sku: [{}]", sku);
+        productService.delete(sku);
+        log.info("produto de sku: [{}] removido com sucesso", sku);
+        return ResponseEntity.noContent().build();
+    }
 }

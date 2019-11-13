@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Repository
 public class ProductRepository {
@@ -16,7 +17,11 @@ public class ProductRepository {
         return product;
     }
 
-    public Product findBySku(Long sku){
-        return productMap.get(sku);
+    public Optional<Product> findBySku(Long sku){
+        return Optional.ofNullable(productMap.get(sku));
+    }
+
+    public void delete(Long sku){
+        productMap.remove(sku);
     }
 }

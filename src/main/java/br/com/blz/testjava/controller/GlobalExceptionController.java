@@ -1,6 +1,7 @@
 package br.com.blz.testjava.controller;
 
 import br.com.blz.testjava.contract.response.ErrorMessageResponse;
+import br.com.blz.testjava.exception.BadRequestException;
 import br.com.blz.testjava.exception.ConflictException;
 import br.com.blz.testjava.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
@@ -22,5 +23,11 @@ public class GlobalExceptionController {
     public ResponseEntity<ErrorMessageResponse> handleNotFoundException(Exception e) {
         ErrorMessageResponse errorMessage = new ErrorMessageResponse(e.getMessage());
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ErrorMessageResponse> handleBadRequestException(Exception e) {
+        ErrorMessageResponse errorMessage = new ErrorMessageResponse(e.getMessage());
+        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 }
