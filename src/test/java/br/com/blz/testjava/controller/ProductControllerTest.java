@@ -178,6 +178,22 @@ public class ProductControllerTest {
         Assert.assertEquals(HttpStatus.NOT_FOUND, productController.findProductBySku(INVALID_SKU).getStatusCode());
     }
 
+    @Test
+    public void controllerShouldUpdateAProductWithSuccess() {
+        BindingResult result = mock(BindingResult.class);
+        when(result.hasErrors()).thenReturn(false);
+        when(productConversorComponent.requestToEntityConverter(VALID_PRODUCT_REQUEST)).thenReturn(VALID_PRODUCT);
+        when(productService.update(VALID_SKU, VALID_PRODUCT)).thenReturn(VALID_PRODUCT);
+        when(productConversorComponent.entityToResponseConverter(VALID_PRODUCT)).thenReturn(VALID_PRODUCT_REPONSE);
+        Assert.assertNotNull(productController.update(VALID_SKU, VALID_PRODUCT_REQUEST, result));
+    }
+
+    @Test
+    public void controllerShouldReturnErrorsWhenReceivesInvalidRequestOnUpdate() {
+        BindingResult result = mock(BindingResult.class);
+        when(result.hasErrors()).thenReturn(true);
+        Assert.assertEquals(HttpStatus.BAD_REQUEST, productController.update(VALID_SKU, INVALID_PRODUCT_REQUEST, result).getStatusCode());
+    }
 
     @Test
     public void controllerShouldDeleteProductWhenReceivesValidSku(){
