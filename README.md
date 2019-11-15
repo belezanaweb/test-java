@@ -5,7 +5,7 @@
 [![codecov](https://codecov.io/gh/belezanaweb/test-java/branch/master/graph/badge.svg)](https://codecov.io/gh/belezanaweb/test-java)
 
 ## Versão 1.0.0 - API REST
-- This Application Programming Interface contains a service.
+- This Application Programming Interface contains a service restfull.
 
 ## What you'll build
 - API Rest
