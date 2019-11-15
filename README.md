@@ -6,6 +6,7 @@
 
 ## Versão 1.0.0 - API REST
 - This Application Programming Interface contains a service restfull.
+- And with unit test cover of 64.5%
 
 ## What you'll build
 - API Rest
