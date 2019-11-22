@@ -1,3 +1,18 @@
+###First Version of REST Api with Swagger
+
+Api REST desenvolvida utilizando as seguitnes configurações:
+
+		server:
+		    port: 8026
+		    servlet:
+		      contextPath: /blz/api
+      
+- Testando com Swagger:
+	
+	http://localhost:8026/blz/api/swagger-ui.html
+
+- Up to 65% unit tests coverage
+
 ### Backend Test
 
 [![Build Status](https://travis-ci.com/belezanaweb/test-java.svg?branch=master)](https://travis-ci.com/belezanaweb/test-java)

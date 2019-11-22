@@ -1,0 +1,4 @@
+server:
+    port: 8026
+    servlet:
+      contextPath: /blz/api
