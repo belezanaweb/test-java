@@ -1,11 +1,11 @@
-###First Version of REST Api with Swagger
+### First Version of REST Api with Swagger
 
 Api REST desenvolvida utilizando as seguitnes configurações:
 
-		server:
-		    port: 8026
-		    servlet:
-		      contextPath: /blz/api
+	server:
+	    port: 8026
+	    servlet:
+	      contextPath: /blz/api
       
 - Testando com Swagger:
 	
