@@ -21,4 +21,11 @@ public class InventoryDTO {
 				.build();
 	}
 
+	public Inventory parse() {
+		return Inventory.builder()
+				.quantity(this.quantity)
+				.warehouses(warehousesDTO.stream().map(WarehouseDTO::parse).collect(Collectors.toList()))
+				.build();
+	}
+
 }

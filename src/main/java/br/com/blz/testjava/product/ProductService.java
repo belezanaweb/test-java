@@ -7,4 +7,6 @@ public interface ProductService {
 	Product save(Product post);
 	
 	void delete(Long id);
+
+	Boolean hasBySku(Long sku);
 }

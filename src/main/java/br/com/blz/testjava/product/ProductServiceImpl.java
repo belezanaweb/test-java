@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.blz.testjava.commons.exception.InternalServerErrorException;
 import br.com.blz.testjava.commons.exception.NotFoundException;
+import br.com.blz.testjava.commons.exception.ProductAlreadyExistsException;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -14,7 +15,6 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Override
 	public Product findBySku(Long sku) {
-		
 		Product product = this.productRepository.findBySku(sku).orElseThrow(NotFoundException::new);
 		long quantity = product.getInventory().getWarehouses().stream().mapToLong(Warehouse::getQuantity).sum();
 		product.getInventory().setQuantity(quantity);
@@ -23,8 +23,18 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	public Product save(Product post) {
-		return this.productRepository.save(post).orElseThrow(InternalServerErrorException::new);
+	public Boolean hasBySku(Long sku) {
+		return this.productRepository.hasBySku(sku);
+	}
+	
+	@Override
+	public Product save(Product product) {
+
+		if(this.productRepository.findBySku(product.getSku()).isPresent()) {
+			throw new ProductAlreadyExistsException();
+		}
+
+		return this.productRepository.save(product).orElseThrow(InternalServerErrorException::new);
 	}
 
 	@Override

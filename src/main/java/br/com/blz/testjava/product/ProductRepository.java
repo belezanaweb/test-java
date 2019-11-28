@@ -10,4 +10,6 @@ public interface ProductRepository {
 	
 	Optional<Product> deleteBySku(Long sku);
 
+	Boolean hasBySku(Long sku);
+
 }
