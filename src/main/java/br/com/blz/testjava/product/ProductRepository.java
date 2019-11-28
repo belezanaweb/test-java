@@ -1,8 +1,13 @@
 package br.com.blz.testjava.product;
 
-import org.springframework.stereotype.Repository;
+import java.util.Optional;
 
-@Repository
-public class ProductRepository {
+public interface ProductRepository {
+	
+	Optional<Product> save(Product product);
+	
+	Optional<Product> findBySku(Long sku);
+	
+	Optional<Product> deleteBySku(Long sku);
 
 }

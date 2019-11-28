@@ -1,12 +1,10 @@
 package br.com.blz.testjava.product;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+public interface ProductService {
 
-@Service
-public class ProductService {
+	Product findBySku(Long sku);
 	
-	@Autowired
-	private ProductRepository productRepository;
-
+	Product save(Product post);
+	
+	void delete(Long id);
 }
