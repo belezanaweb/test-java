@@ -2,16 +2,21 @@ package br.com.blz.testjava.product;
 
 import javax.validation.constraints.NotNull;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
+@ApiModel(value="Product", description="Classe que representa um produto")
 public class ProductDTO {
 	
 	@NotNull
+	@ApiModelProperty(value="Código SKU do produto")
 	private Long sku;
 	@NotNull
+	@ApiModelProperty(value="Código nome do produto")
 	private String name;
 	private InventoryDTO inventoryDTO;
 	private Boolean isMarketable;

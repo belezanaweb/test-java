@@ -16,7 +16,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Product findBySku(Long sku) {
 		Product product = this.productRepository.findBySku(sku).orElseThrow(NotFoundException::new);
-		long quantity = product.getInventory().getWarehouses().stream().mapToLong(Warehouse::getQuantity).sum();
+		long quantity = product.getInventory().getWarehousesInventoryQuantity();
 		product.getInventory().setQuantity(quantity);
 		product.setIsMarketable(quantity > 0);
 		return product;
@@ -32,6 +32,16 @@ public class ProductServiceImpl implements ProductService {
 
 		if(this.productRepository.findBySku(product.getSku()).isPresent()) {
 			throw new ProductAlreadyExistsException();
+		}
+
+		return this.productRepository.save(product).orElseThrow(InternalServerErrorException::new);
+	}
+	
+	@Override
+	public Product update(Product product) {
+
+		if(!this.productRepository.findBySku(product.getSku()).isPresent()) {
+			throw new NotFoundException();
 		}
 
 		return this.productRepository.save(product).orElseThrow(InternalServerErrorException::new);

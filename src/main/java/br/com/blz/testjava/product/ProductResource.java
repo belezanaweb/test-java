@@ -51,7 +51,7 @@ public class ProductResource {
 			throw new NotFoundException();
 		}
 
-		Product newProduct = this.productService.save(Product.builder()
+		Product newProduct = this.productService.update(Product.builder()
 				.sku(data.getSku())
 				.name(data.getName())
 				.inventory(data.getInventoryDTO().parse())
