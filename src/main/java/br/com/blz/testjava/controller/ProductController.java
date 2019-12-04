@@ -32,12 +32,23 @@ public class ProductController {
 	@Autowired
 	private ProductRepository repository;
 	
+	/**
+	 * Lists all products
+	 * 
+	 * @return
+	 */
 	@GetMapping
 	public List<ProductDTO> index() {
 		List<Product> products = repository.findAll();
 		return products.stream().map(ProductDTO::new).collect(Collectors.toList());
 	}
 	
+	/**
+	 * Retrieve a product by SKU
+	 * 
+	 * @param sku
+	 * @return
+	 */
 	@GetMapping("/{sku}")
 	public ResponseEntity<ProductDTO> show(@PathVariable Long sku) {
 		Product product = repository.findBySku(sku);
@@ -46,7 +57,14 @@ public class ProductController {
 		
 		return ResponseEntity.ok(new ProductDTO(product));
 	}
-	
+
+	/**
+	 * Store a new Product
+	 * 
+	 * @param form
+	 * @param uriBuilder
+	 * @return
+	 */
 	@PostMapping
 	public ResponseEntity<?> store(@RequestBody @Valid ProductForm form, UriComponentsBuilder uriBuilder) {
 		try {
@@ -58,6 +76,12 @@ public class ProductController {
 		}
 	}
 	
+	/**
+	 * Delete product by SKU
+	 * 
+	 * @param sku
+	 * @return
+	 */
 	@DeleteMapping("/{sku}")
 	public ResponseEntity<?> delete(@PathVariable Long sku) {
 		repository.deleteBySku(sku);
@@ -65,6 +89,14 @@ public class ProductController {
 		return ResponseEntity.ok().build();
 	}
 	
+	/**
+	 * Update product with given SKU
+	 * 
+	 * @param sku
+	 * @param form
+	 * @return
+	 * @throws ProductAlreadyExistsException
+	 */
 	@PutMapping("/{sku}")
 	public ResponseEntity<ProductDTO> update(@PathVariable Long sku, @RequestBody @Valid ProductForm form) throws ProductAlreadyExistsException {
 		repository.deleteBySku(sku);
