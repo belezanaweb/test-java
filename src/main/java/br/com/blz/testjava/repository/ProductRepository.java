@@ -15,7 +15,7 @@ public class ProductRepository implements ProductRepositoryInterface {
 	private List<Product> products = new ArrayList<Product>();
 
 	@Override
-	public Product save(Product product) throws ProductAlreadyExistsException {
+	public Product save(Product product) {
 		if(this.findBySku(product.getSku()) != null)
 			throw new ProductAlreadyExistsException("Product already stored");
 		

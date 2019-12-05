@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import br.com.blz.testjava.exception.ProductAlreadyExistsException;
 import br.com.blz.testjava.model.dto.ValidationExceptionDTO;
 
 @RestControllerAdvice
@@ -32,6 +33,16 @@ public class ValidationHandler {
 			ValidationExceptionDTO error = new ValidationExceptionDTO(e.getField(), message);
 			exceptions.add(error);
 		});
+		
+		return exceptions;
+	}
+	
+	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(ProductAlreadyExistsException.class)
+	public List<ValidationExceptionDTO> handle(ProductAlreadyExistsException exception) {
+		List<ValidationExceptionDTO> exceptions = new ArrayList<>();
+		ValidationExceptionDTO error = new ValidationExceptionDTO("sku", exception.getMessage());
+		exceptions.add(error);
 		
 		return exceptions;
 	}

@@ -66,14 +66,10 @@ public class ProductController {
 	 * @return
 	 */
 	@PostMapping
-	public ResponseEntity<?> store(@RequestBody @Valid ProductForm form, UriComponentsBuilder uriBuilder) {
-		try {
-			Product product = repository.save(form.convert());
-			URI uri = uriBuilder.path("/product/{sku}").buildAndExpand(product.getSku()).toUri();
-			return ResponseEntity.created(uri).body(new ProductDTO(product));
-		} catch (ProductAlreadyExistsException e) {
-			return ResponseEntity.badRequest().body(new ValidationExceptionDTO("sku", e.getMessage()));
-		}
+	public ResponseEntity<ProductDTO> store(@RequestBody @Valid ProductForm form, UriComponentsBuilder uriBuilder) {
+		Product product = repository.save(form.convert());
+		URI uri = uriBuilder.path("/product/{sku}").buildAndExpand(product.getSku()).toUri();
+		return ResponseEntity.created(uri).body(new ProductDTO(product));
 	}
 	
 	/**
