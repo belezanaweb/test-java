@@ -13,7 +13,11 @@ public class ProductService {
 
 	@Autowired
 	ProductRepository repository;
-
+	/**
+	 * 
+	 * @param sku
+	 * @return
+	 */
 	public ProductDTO getProduct(int sku) {
 		ProductDTO product = repository.getProduct(sku);
 		if (product != null) {
@@ -24,18 +28,34 @@ public class ProductService {
 		}
 		return product;
 	}
+	/**
+	 * 
+	 * @param sku
+	 * @return
+	 */
 	public ProductDTO removeProduct(int sku) {
 		return repository.deleteProduct(sku);
 	}
-
+	/**
+	 * 
+	 * @param product
+	 * @return
+	 * @throws Exception
+	 */
 	public ProductDTO createProduct(ProductDTO product) throws Exception {
 		return repository.createProduct(product);
 	}
-	
+	/**
+	 * 
+	 * @param product
+	 */
 	private void isMarketable(ProductDTO product) {
 		product.setIsMarketable(product.getInventory().getQuantity()>0?true:false);
 	}
-	
+	/**
+	 * 
+	 * @param product
+	 */
 	private void calculateInventoryQuantity(ProductDTO product) {
 		if (product.getInventory() != null && product.getInventory().getWarehouses() != null) {
 			//caso exista algum warehouse com quantidade forçamos o zero para garantir que 
@@ -52,6 +72,11 @@ public class ProductService {
 			product.getInventory().setQuantity(0);
 		}
 	}
+	/**
+	 * 
+	 * @param product
+	 * @return
+	 */
 	public ProductDTO updateProduct(ProductDTO product) {
 		return repository.updateProduct(product);
 	}

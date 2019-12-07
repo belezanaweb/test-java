@@ -18,7 +18,12 @@ public class ProductController {
 
 	@Autowired
 	ProductService service;
-
+	/**
+	 * 
+	 * @param sku
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping(path = "/product/{sku}", method = RequestMethod.GET)
 	public @ResponseBody ProductDTO getProduct(@PathVariable int sku, HttpServletResponse response) {
 		ProductDTO dto = service.getProduct(sku);
@@ -27,7 +32,13 @@ public class ProductController {
 		}
 		return dto;
 	}
-
+	/**
+	 * 
+	 * @param product
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(path = "/product", method = RequestMethod.PUT)
 	public @ResponseBody ProductDTO includeProduct(@RequestBody ProductDTO product, HttpServletResponse response) throws Exception {
 		try {
@@ -41,7 +52,12 @@ public class ProductController {
 		}
 		return null;
 	}
-
+	/**
+	 * 
+	 * @param product
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping(path = "/product", method = RequestMethod.POST)
 	public @ResponseBody ProductDTO updateProduct(@RequestBody ProductDTO product, HttpServletResponse response) {
 		ProductDTO pd = service.updateProduct(product);
@@ -50,7 +66,11 @@ public class ProductController {
 		}
 		return pd;
 	}
-
+	/**
+	 * 
+	 * @param sku
+	 * @return
+	 */
 	@RequestMapping(path = "/product/{sku}", method = RequestMethod.DELETE)
 	public @ResponseBody ProductDTO deleteProduct(@PathVariable int sku) {
 		return service.removeProduct(sku);
