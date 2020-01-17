@@ -1,0 +1,6 @@
+server:
+  contextPath: /test-java
+spring:
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
