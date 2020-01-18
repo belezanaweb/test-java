@@ -28,14 +28,14 @@ public class ProductController {
     /**
      * Recupera produto dado um sku
      *
-     * @param sku
-     * @return
+     * @param sku id do produto
+     * @return ResponseEntity
      */
     @GetMapping(value = "/{sku}", produces = "application/json")
     public ResponseEntity<String> getProduct(@PathVariable(value = "sku") Long sku) {
 
-        AtomicReference<String> responseProductJson = new AtomicReference<String>();
-        AtomicReference<Boolean> isBadRequest = new AtomicReference<Boolean>();
+        AtomicReference<String> responseProductJson = new AtomicReference<>();
+        AtomicReference<Boolean> isBadRequest = new AtomicReference<>();
         Optional<Product> optionalProduct = Optional.ofNullable(productDataHandler.getProduct(sku));
         optionalProduct.ifPresent(product -> {
             try {
@@ -55,8 +55,8 @@ public class ProductController {
     /**
      * Exclui produto dado um sku
      *
-     * @param sku
-     * @return
+     * @param sku id do produto
+     * @return ResponseEntity
      */
     @DeleteMapping("/{sku}")
     public ResponseEntity<String> removeProduct(@PathVariable(value = "sku") Long sku) {
@@ -69,19 +69,19 @@ public class ProductController {
     /**
      * Atualiza produto dado um sku
      *
-     * @param request
-     * @return
+     * @param request  mensagem json do produto
+     * @return ResponseEntity
      */
     @PutMapping(consumes = "application/json")
     public ResponseEntity<String> updateProduct(@RequestBody String request) {
-        AtomicReference<String> productJson = new AtomicReference<String>();
+        AtomicReference<String> productJson = new AtomicReference<>();
         Product product;
         try {
-            productJson.set(String.format("Não foi possível alterar o produto "));
+            productJson.set("Não foi possível alterar o produto ");
             product = objectMapper.readValue(request.getBytes(), Product.class);
-            Optional.ofNullable(productDataHandler.updateProduct(product)).ifPresent(obj -> {
-                productJson.set(String.format(" Alterado com sucesso o produto com sku %d", product.getSku()));
-            });
+            Optional.ofNullable(productDataHandler.updateProduct(product)).ifPresent(obj ->
+                productJson.set(String.format(" Alterado com sucesso o produto com sku %d", product.getSku()))
+            );
         } catch (IOException e) {
             return ResponseEntity.badRequest().body(productJson.get());
         } catch (Exception ex) {
@@ -93,20 +93,20 @@ public class ProductController {
     /**
      * Cria novo produto
      *
-     * @param request
-     * @return sku
+     * @param request mensagem json do produto
+     * @return ResponseEntity
      */
     @PostMapping(consumes = "application/json")
     public ResponseEntity<String> createProduct(@RequestBody String request) {
 
-        AtomicReference<String> productJson = new AtomicReference<String>();
+        AtomicReference<String> productJson = new AtomicReference<>();
         Product product;
         try {
             productJson.set("Não foi possível criar o produto");
             product = objectMapper.readValue(request.getBytes(), Product.class);
-            Optional.ofNullable(productDataHandler.addProduct(product)).ifPresent(obj -> {
-                productJson.set(String.format(" Criado com sucesso o produto com sku %d", product.getSku()));
-            });
+            Optional.ofNullable(productDataHandler.addProduct(product)).ifPresent(obj ->
+                productJson.set(String.format(" Criado com sucesso o produto com sku %d", product.getSku()))
+            );
         } catch (IOException e) {
             return ResponseEntity.badRequest().body(productJson.get());
         } catch (ProductSkuAlreadyExistsException e) {
