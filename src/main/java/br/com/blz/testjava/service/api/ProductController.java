@@ -7,7 +7,6 @@ import br.com.blz.testjava.service.data.exception.SkuNotProvidedException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,11 +60,10 @@ public class ProductController {
      */
     @DeleteMapping("/{sku}")
     public ResponseEntity<String> removeProduct(@PathVariable(value = "sku") Long sku) {
-        String resultRequest = String.format("não foi possível remover o produto %d", sku);
         if (productDataHandler.removeProduct(sku)) {
-            resultRequest = String.format("Produto %d foi removido", sku);
+            return ResponseEntity.ok(String.format("Produto %d foi removido", sku));
         }
-        return ResponseEntity.ok(resultRequest);
+        return ResponseEntity.notFound().build();
     }
 
     /**
@@ -110,7 +108,7 @@ public class ProductController {
                 productJson.set(String.format(" Criado com sucesso o produto com sku %d", product.getSku()));
             });
         } catch (IOException e) {
-            ResponseEntity.badRequest().body(productJson.get());
+            return ResponseEntity.badRequest().body(productJson.get());
         } catch (ProductSkuAlreadyExistsException e) {
             return ResponseEntity.badRequest().body(" Produto com sku ja existente!");
         } catch (SkuNotProvidedException e) {
