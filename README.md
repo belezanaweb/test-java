@@ -76,3 +76,11 @@ Crie endpoints para as seguintes ações:
 - Os produtos podem ficar em memória, não é necessário persistir os dados
 - Sinta-se a vontade para fazer o código em ```groovy``` se preferir, utilizamos bastante aqui
 - Testes são sempre bem-vindos :smiley:
+
+### Endpoint para testes
+
+#### POST E PUT
+- http://localhost:8080/test-java/product
+
+#### GET E DELETE
+- http://localhost:8080/test-java/product/{sku}

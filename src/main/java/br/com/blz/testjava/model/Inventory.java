@@ -15,7 +15,7 @@ public class Inventory {
 
     @JsonProperty("quantity")
     private Long quantity;
-    @JsonProperty(value = "warehouses", required = true)
+    @JsonProperty(value = "warehouses")
     private List<Warehouse> warehouses = null;
 
     public Long getQuantity() {
