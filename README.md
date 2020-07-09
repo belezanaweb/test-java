@@ -76,3 +76,35 @@ Crie endpoints para as seguintes ações:
 - Os produtos podem ficar em memória, não é necessário persistir os dados
 - Sinta-se a vontade para fazer o código em ```groovy``` se preferir, utilizamos bastante aqui
 - Testes são sempre bem-vindos :smiley:
+
+RUN APPLICATION
+
+**Start the application**
+
+```bash
+docker build -t test-java .
+```
+```bash
+docker run -p 8081:8081 test-java
+```
+
+Alternatively, you can run the app directly without packaging like this -
+
+```bash
+mvn spring-boot:run
+```
+
+The app will start running at <http://localhost:8080>.
+
+## Explore API Endpoints
+
+All the endpoints will be available at 
+<http://localhost:8081/swagger-ui.html>.
+
+
+## Explore Actuator Endpoints
+
+All the actuator endpoints will be available at <http://localhost:8081/actuator>.
+
+Some of the actuator endpoints are protected with Spring Security's HTTP Basic Authentication. You can use the username `actuator` and password `actuator` for http basic authentication.
+
