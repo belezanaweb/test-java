@@ -3,15 +3,10 @@ package br.com.blz.testjava.domain.request;
 import br.com.blz.testjava.domain.enums.LocalityEnum;
 import br.com.blz.testjava.domain.enums.WarehouseTypeEnum;
 
-import javax.validation.constraints.NotNull;
-
 public class WarehouseRequest {
 
-    @NotNull
     private LocalityEnum locality;
-    @NotNull
     private Integer quantity;
-    @NotNull
     private WarehouseTypeEnum type;
 
     public LocalityEnum getLocality() {

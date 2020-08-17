@@ -73,7 +73,7 @@ public class ProductService {
         WarehouseResponse warehouseResponse = new WarehouseResponse();
         warehouseResponse.setLocality(warehouse.getLocality());
         warehouseResponse.setQuantity(warehouse.getQuantity());
-        warehouseResponse.setType(warehouseResponse.getType());
+        warehouseResponse.setType(warehouse.getType());
         return warehouseResponse;
     }
 }
