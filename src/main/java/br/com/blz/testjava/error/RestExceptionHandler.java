@@ -1,6 +1,7 @@
-package com.aeq.transformers.error;
+package br.com.blz.testjava.error;
 
-import com.aeq.transformers.exceptions.TransformerNotFoundException;
+import br.com.blz.testjava.exceptions.SkuAlreadyExistsException;
+import br.com.blz.testjava.exceptions.SkuNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.Ordered;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -43,9 +45,16 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(new ApiError(status, StringUtils.join(errors, ", "), ex));
     }
 
-    @ExceptionHandler(TransformerNotFoundException.class)
-    protected ResponseEntity<Object> handleEntityNotFound(TransformerNotFoundException ex) {
+    @ExceptionHandler(SkuNotFoundException.class)
+    protected ResponseEntity<Object> handleEntityNotFound(SkuNotFoundException ex) {
         ApiError apiError = new ApiError(NOT_FOUND);
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(SkuAlreadyExistsException.class)
+    protected ResponseEntity<Object> handleEntityNotFound(SkuAlreadyExistsException ex) {
+        ApiError apiError = new ApiError(BAD_REQUEST);
         apiError.setMessage(ex.getMessage());
         return buildResponseEntity(apiError);
     }

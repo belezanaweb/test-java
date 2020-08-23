@@ -1,8 +1,8 @@
 package br.com.blz.testjava.exceptions;
 
-public class ProductAlreadyExistsException extends RuntimeException {
-    public ProductAlreadyExistsException(Long id) {
-        super(String.format("Product %s already exists!", id));
+public class SkuAlreadyExistsException extends RuntimeException {
+    public SkuAlreadyExistsException(Long id) {
+        super(String.format("Sku %s already exists!", id));
     }
 
 }
