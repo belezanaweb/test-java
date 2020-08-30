@@ -1,0 +1,365 @@
+{
+	"info": {
+		"_postman_id": "04bf57b1-f089-44c6-aaad-493b440018b6",
+		"name": "testjava",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "product",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"sku\": 432646,\r\n    \"name\": \"L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g\",\r\n    \"inventory\": {\r\n        \"warehouses\": [\r\n            {\r\n                \"locality\": \"SP\",\r\n                \"quantity\": 12,\r\n                \"type\": \"ECOMMERCE\"\r\n            },\r\n            {\r\n                \"locality\": \"MOEMA\",\r\n                \"quantity\": 3,\r\n                \"type\": \"PHYSICAL_STORE\"\r\n            }\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/product",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/product/43264",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"product",
+								"43264"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "read",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/product/432646",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"product",
+								"432646"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g 33\",\r\n    \"inventory\": {\r\n        \"warehouses\": [\r\n            {\r\n                \"locality\": \"SP\",\r\n                \"quantity\": 12,\r\n                \"type\": \"ECOMMERCE\"\r\n            },\r\n            {\r\n                \"locality\": \"MOEMA\",\r\n                \"quantity\": 3,\r\n                \"type\": \"PHYSICAL_STORE\"\r\n            }\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/product/432646",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"product",
+								"432646"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": " integrated tests",
+			"item": [
+				{
+					"name": "Deve permitir cadastrar um produto novo",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "0205d194-105c-4bb0-b56a-d41298090809",
+								"exec": [
+									"pm.collectionVariables.set(\"product.sku\", pm.variables.replaceIn(\"{{$randomInt}}\"));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d559d6ad-84ba-4be7-ae71-0f64ac725663",
+								"exec": [
+									"pm.test(\"Status code is 201\", () => pm.response.to.have.status(201));\r",
+									"\r",
+									"pm.test(\"Response time is less than 900ms\", () => \r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200)\r",
+									");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"sku\": {{product.sku}},\r\n    \"name\": \"{{$randomFullName}}\",\r\n    \"inventory\": {\r\n        \"warehouses\": [\r\n            {\r\n                \"locality\": \"SP\",\r\n                \"quantity\": {{$randomInt}},\r\n                \"type\": \"ECOMMERCE\"\r\n            }\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/product",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Nao deve permitir cadastrar um produto com SKU existente",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "a87cab71-b7bc-4b27-8215-9fd9bd7f4c81",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "fd2c6140-0020-4a92-80e1-037ce1db621a",
+								"exec": [
+									"pm.test(\"Status code is 422\", () => pm.response.to.have.status(422));\r",
+									"\r",
+									"pm.test(\"Response time is less than 900ms\", () => \r",
+									"    pm.expect(pm.response.responseTime).to.be.below(900)\r",
+									");\r",
+									"\r",
+									"pm.test(\"Body is correct\", () => pm.response.to.have.body('{\"message\":\"O produto ja existe.\"}'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"sku\": {{product.sku}},\r\n    \"name\": \"{{$randomFullName}}\",\r\n    \"inventory\": {\r\n        \"warehouses\": [\r\n            {\r\n                \"locality\": \"SP\",\r\n                \"quantity\": {{$randomInt}},\r\n                \"type\": \"ECOMMERCE\"\r\n            }\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/product",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deve permitir buscar por SKU",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "95663e47-6d2e-49c9-b7f0-6afa3472fa7b",
+								"exec": [
+									"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));\r",
+									"\r",
+									"pm.test(\"Response time is less than 900ms\", () => \r",
+									"    pm.expect(pm.response.responseTime).to.be.below(900)\r",
+									");\r",
+									"\r",
+									"\r",
+									"const responseJson = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response body is valid\", () => {\r",
+									"   pm.expect(responseJson.sku).to.eql(parseInt(pm.collectionVariables.get(\"product.sku\")));\r",
+									"   pm.expect(responseJson).to.have.property(\"name\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/product/{{product.sku}}",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"product",
+								"{{product.sku}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deve permitir atualizar um produto existente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "61658940-19ea-4888-9924-08387b64b988",
+								"exec": [
+									"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));\r",
+									"\r",
+									"pm.test(\"Response time is less than 900ms\", () => \r",
+									"    pm.expect(pm.response.responseTime).to.be.below(900)\r",
+									");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g 33\",\r\n    \"inventory\": {\r\n        \"warehouses\": [\r\n            {\r\n                \"locality\": \"SP\",\r\n                \"quantity\": 12,\r\n                \"type\": \"ECOMMERCE\"\r\n            },\r\n            {\r\n                \"locality\": \"MOEMA\",\r\n                \"quantity\": 3,\r\n                \"type\": \"PHYSICAL_STORE\"\r\n            }\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/product/{{product.sku}}",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"product",
+								"{{product.sku}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deve permitir a exclusao de um produto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "71f37fed-d41b-4a8b-84a7-c9d6c38ef9fd",
+								"exec": [
+									"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));\r",
+									"\r",
+									"pm.test(\"Response time is less than 900ms\", () =>\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(900)\r",
+									");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/product/{{product.sku}}",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"product",
+								"{{product.sku}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "f0506819-333b-4199-9087-a0e38ff62543",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "95fff91d-741d-4342-a3d8-23c15da14f7e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "6ab790cc-aca5-488e-8143-36a3fb7c4ffb",
+			"key": "product.sku",
+			"value": ""
+		}
+	],
+	"protocolProfileBehavior": {}
+}

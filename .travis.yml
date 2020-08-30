@@ -1,5 +1,5 @@
-language: java
-jdk:
-  - openjdk8
-notifications:
-  email: false
+  env:
+    - CODECOV_TOKEN="358b1659-425f-4be8-9f29-25cd694e4f6e"
+  language: java
+  after_success:
+    - bash <(curl -s https://codecov.io/bash)

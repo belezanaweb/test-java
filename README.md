@@ -1,78 +1,66 @@
-### Backend Test
+[![Build Status](https://travis-ci.com/olbi-wan/test-java.svg?branch=master)](https://travis-ci.com/olbi-wan/test-java)
+[![codecov](https://codecov.io/gh/olbi-wan/test-java/branch/master/graph/badge.svg)](https://codecov.io/gh/olbi-wan/test-java)
 
-[![Build Status](https://travis-ci.com/belezanaweb/test-java.svg?branch=master)](https://travis-ci.com/belezanaweb/test-java)
+## CRUD - Beleza na Web
+Kotlin + Spring Boot + H2 Database Engine + JUnit 5
 
-[![codecov](https://codecov.io/gh/belezanaweb/test-java/branch/master/graph/badge.svg)](https://codecov.io/gh/belezanaweb/test-java)
+[![gluten free](https://forthebadge.com/images/badges/gluten-free.svg)](https://forthebadge.com)
+[![feito com amor](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
+[![makes people smile](https://forthebadge.com/images/badges/makes-people-smile.svg)](https://forthebadge.com)
 
-Esta é uma avaliação básica de código.
+## Database
 
-O objetivo é conhecer um pouco do seu conhecimento/prática de RESTful, Spring e Java.
+**Banco de dados** do projeto: [H2 Database Engine](https://www.h2database.com/html/main.html). 
 
-Recomendamos que você não gaste mais do que 4 - 6 horas.
+- Para editar o digrama utilize o DB Designer: https://dbdesigner.page.link/Yf9yQnWhu3HRGxFy7.
 
-Faça um fork deste repositório que contém o bootstrap de uma aplicação SpringBoot 1.5.12. (você pode utilizar spring boot 2+)
+_Modelo Entidade Relacional:_
+<p align="center">
+  <img src="site/images/database-diagrama.png">
+</p>
 
-Ao finalizar o teste, submeta um pull request para o repositório que nosso time será notificado.
+### Recursos disponíveis no projeto: 
+- _{{domain}}_/h2/console - console do H2 Database Engine
 
-### Tarefas
+## Postman
 
-Com a seguinte representação de produto:
+**Testes de integração**, localizados na pasta ["integrations/postman"](integrations/postman).
 
-```json
-{
-    "sku": 43264,
-    "name": "L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g",
-    "inventory": {
-        "quantity": 15,
-        "warehouses": [
-            {
-                "locality": "SP",
-                "quantity": 12,
-                "type": "ECOMMERCE"
-            },
-            {
-                "locality": "MOEMA",
-                "quantity": 3,
-                "type": "PHYSICAL_STORE"
-            }
-        ]
-    },
-    "isMarketable": true
-}
-```
+    postman-enviroment_local.json - ambiente local
 
-Crie endpoints para as seguintes ações:
+<details><summary><b>Clique aqui para ver as evidências:</b></summary>
+ 
+<br/>
+ 
+_Resultado dos testes de integração:_
+<p align="left">
+  <img src="site/images/postman-automated_testing.png">
+</p>
 
-- [ ] Criação de produto onde o payload será o json informado acima (exceto as propriedades **isMarketable** e **inventory.quantity**)
+<br/>
 
-- [ ] Edição de produto por **sku**
+_TypeScript utilizado nos testes:_
+<p align="center">
+  <img src="site/images/postman-automated_testing-typescript.png">
+</p>
 
-- [ ] Recuperação de produto por **sku**
+</details>
 
-- [ ] Deleção de produto por **sku**
+## JMeter
 
-### Requisitos
+**Testes de performance**, localizados na pasta ["integrations/jmeter"](integrations/jmeter).
 
+<details><summary><b>Clique aqui para ver as evidências:</b></summary>
+ 
+<br/>
+ 
+_Resultado dos testes de performance:_
+<p align="left">
+  <img src="site/images/jmeter-performance.png">
+</p>
 
-- [ ] Toda vez que um produto for recuperado por **sku** deverá ser calculado a propriedade: **inventory.quantity**
+</details>
 
-        A propriedade inventory.quantity é a soma da quantity dos warehouses
+#### Apêndice
 
-- [ ] Toda vez que um produto for recuperado por **sku** deverá ser calculado a propriedade: **isMarketable**
-
-        Um produto é marketable sempre que seu inventory.quantity for maior que 0
-
-- [ ] Caso um produto já existente em memória tente ser criado com o mesmo **sku** uma exceção deverá ser lançada
-
-        Dois produtos são considerados iguais se os seus skus forem iguais
-
-
-- [ ] Ao atualizar um produto, o antigo deve ser sobrescrito com o que esta sendo enviado na requisição
-
-        A requisição deve receber o sku e atualizar com o produto que tbm esta vindo na requisição
-
-### Dicas
-
-- Os produtos podem ficar em memória, não é necessário persistir os dados
-- Sinta-se a vontade para fazer o código em ```groovy``` se preferir, utilizamos bastante aqui
-- Testes são sempre bem-vindos :smiley:
+* domain - URL do projeto

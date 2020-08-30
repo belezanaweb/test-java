@@ -1,0 +1,14 @@
+{
+	"id": "6275e517-61c3-4e66-955d-46d79916ed65",
+	"name": "testjava local",
+	"values": [
+		{
+			"key": "domain",
+			"value": "http://localhost:8080/test-java",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2020-08-30T18:59:26.683Z",
+	"_postman_exported_using": "Postman/7.30.1"
+}
