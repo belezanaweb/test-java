@@ -14,10 +14,8 @@ import java.util.*
 class ProductController(private val productUseCase: ProductUseCase) {
 
     @PostMapping
-    fun create(@RequestBody product: Product) : ResponseEntity<HttpStatus> {
-       productUseCase.create(product)
-       return status(CREATED).build()
-    }
+    @ResponseStatus(CREATED)
+    fun create(@RequestBody product: Product) = productUseCase.create(product)
 
     @DeleteMapping("/{sku}")
     fun delete(@PathVariable sku: Long) = productUseCase.delete(sku)
