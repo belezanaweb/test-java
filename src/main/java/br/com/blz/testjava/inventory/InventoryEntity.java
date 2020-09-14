@@ -23,7 +23,7 @@ public class InventoryEntity {
     @NotNull
     private Integer quantity;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="id_inventory")
     private List<WarehouseEntity> warehouses;
 

@@ -3,9 +3,7 @@ package br.com.blz.testjava.product;
 import br.com.blz.testjava.exception.NotFoundProductException;
 import br.com.blz.testjava.exception.ProductSkuExistsException;
 import br.com.blz.testjava.inventory.InventoryEntity;
-import br.com.blz.testjava.inventory.InventoryRepository;
 import br.com.blz.testjava.warehouse.WarehouseEntity;
-import br.com.blz.testjava.warehouse.WarehouseRepository;
 import br.com.blz.testjava.warehouse.WarehouseType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,9 +11,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.transaction.annotation.Transactional;
+
 import static org.junit.Assert.*;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProductServiceTest {
@@ -33,10 +34,8 @@ public class ProductServiceTest {
 
     @Test
     public void findBySkuWithSuccess() throws NotFoundProductException {
-
         Mockito.when(productRepository.findBySku(BELEZA_NA_WEB_PRODUCT_SKU))
             .thenReturn(productMocked());
-
         ProductEntity productEntity = productService.findBySku(BELEZA_NA_WEB_PRODUCT_SKU);
 
         assertNotNull(productEntity);
@@ -52,23 +51,35 @@ public class ProductServiceTest {
     }
 
     @Test
+    @Transactional
     public void saveProductWithSucess() throws ProductSkuExistsException {
         Mockito.when(productRepository.save(productMocked())).thenReturn(productMocked());
-
-        ProductEntity productEntity = productService.save(productBuilded());
+        ProductEntity productEntity = productService.save(productMocked());
 
         assertNotNull(productEntity);
     }
 
-    private ProductEntity productMocked(){
-        ProductEntity productEntity = new ProductEntity();
-        productEntity.setId(1L);
-        productEntity.setSku(BELEZA_NA_WEB_PRODUCT_SKU);
-        productEntity.setName(BELEZA_NA_WEB_PRODUCT_NAME);
-        return productEntity;
+    @Test(expected = ProductSkuExistsException.class)
+    public void saveProductWithProductSkuExistsError() throws ProductSkuExistsException {
+        Mockito.when(productRepository.findBySku(BELEZA_NA_WEB_PRODUCT_SKU)).thenReturn(productMocked());
+        productService.save(productMocked());
     }
 
-    private LinkedList<WarehouseEntity> warehouseMocked(){
+    @Test
+    @Transactional
+    public void updateProductWithSuccess(){}
+
+    @Test(expected = NotFoundProductException.class)
+    public void updateProductWithError() throws NotFoundProductException {
+        Mockito.when(productRepository.findBySku(BELEZA_NA_WEB_PRODUCT_SKU)).thenReturn(null);
+        productService.update(productMocked(), BELEZA_NA_WEB_PRODUCT_SKU);
+    }
+
+    @Test
+    @Transactional
+    public void deleteProduct() {}
+
+    private ProductEntity productMocked(){
         WarehouseEntity warehouseEntityMock1 = new WarehouseEntity();
         warehouseEntityMock1.setId(1L);
         warehouseEntityMock1.setLocality(WAREHOUSE_LOCALITY_MG);
@@ -81,24 +92,18 @@ public class ProductServiceTest {
         warehouseEntityMock2.setType(WarehouseType.ECOMMERCE);
         warehouseEntityMock2.setQuantity(3);
 
-        LinkedList<WarehouseEntity> warehouseEntityList = new LinkedList<>();
+        List<WarehouseEntity> warehouseEntityList = new ArrayList<>();
         warehouseEntityList.add(warehouseEntityMock1);
         warehouseEntityList.add(warehouseEntityMock2);
-        return warehouseEntityList;
-    }
 
-    private InventoryEntity inventoryMocked(){
         InventoryEntity inventoryEntity = new InventoryEntity();
         inventoryEntity.setId(1L);
-        return inventoryEntity;
-    }
+        inventoryEntity.setWarehouses(warehouseEntityList);
 
-    private ProductEntity productBuilded(){
-        ProductEntity productEntity = productMocked();
-        InventoryEntity inventoryEntity = inventoryMocked();
-        inventoryEntity.setWarehouses(warehouseMocked());
+        ProductEntity productEntity = new ProductEntity();
         productEntity.setInventory(inventoryEntity);
+        productEntity.setSku(BELEZA_NA_WEB_PRODUCT_SKU);
+        productEntity.setName(BELEZA_NA_WEB_PRODUCT_NAME);
         return productEntity;
     }
-
 }

@@ -3,10 +3,8 @@ package br.com.blz.testjava.product;
 import br.com.blz.testjava.exception.NotFoundProductException;
 import br.com.blz.testjava.exception.ProductSkuExistsException;
 import br.com.blz.testjava.inventory.InventoryEntity;
-import br.com.blz.testjava.inventory.InventoryRepository;
 import br.com.blz.testjava.utils.Constants;
 import br.com.blz.testjava.warehouse.WarehouseEntity;
-import br.com.blz.testjava.warehouse.WarehouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -39,13 +37,6 @@ public class ProductService {
         }
     }
 
-    public void update(ProductEntity productEntity, Long sku) throws NotFoundProductException {
-        if(Objects.isNull(productRepository.findBySku(sku))){
-            throw new NotFoundProductException(Constants.PRODUCT_NOT_FOUND_EXCEPTION_MESSAGE);
-        }
-//        productRepository.updateProduct(productEntity, sku);
-    }
-
     public ProductEntity buildProduct(ProductEntity productEntity){
         InventoryEntity inventoryEntity = productEntity.getInventory();
         List<WarehouseEntity> warehouseEntities = inventoryEntity.getWarehouses();
@@ -57,7 +48,15 @@ public class ProductService {
     }
 
     @Transactional(propagation= Propagation.REQUIRED)
-    public void delete(String sku) {
+    public void update(ProductEntity productEntity, Long sku) throws NotFoundProductException {
+        if(Objects.isNull(productRepository.findBySku(sku))){
+            throw new NotFoundProductException(Constants.PRODUCT_NOT_FOUND_EXCEPTION_MESSAGE);
+        }
+        productRepository.save(productEntity);
+    }
+
+    @Transactional(propagation= Propagation.REQUIRED)
+    public void delete(Long sku) {
         productRepository.deleteBySku(sku);
     }
 

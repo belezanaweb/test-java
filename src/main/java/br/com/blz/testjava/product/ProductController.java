@@ -36,7 +36,7 @@ public class ProductController {
 
     @DeleteMapping(Constants.PATH_PARAM_SKU)
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable String sku){
+    public void delete(@PathVariable Long sku){
         productService.delete(sku);
     }
 }
