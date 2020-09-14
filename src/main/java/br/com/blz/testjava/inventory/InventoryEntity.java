@@ -20,6 +20,7 @@ public class InventoryEntity {
     private Long id;
 
     @Column(name = "quantity")
+    @NotNull
     private Integer quantity;
 
     @OneToMany(cascade = CascadeType.ALL)

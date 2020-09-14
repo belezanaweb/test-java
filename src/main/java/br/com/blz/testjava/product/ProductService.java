@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -22,32 +21,26 @@ public class ProductService {
     @Autowired
     ProductRepository productRepository;
 
-    @Autowired
-    InventoryRepository inventoryRepository;
-
-    @Autowired
-    WarehouseRepository warehouseRepository;
-
-    public ProductEntity findBySku(String sku) throws NotFoundProductException {
-        Optional<ProductEntity> product = productRepository.findBySku(sku);
-        if(!product.isPresent()){
+    public ProductEntity findBySku(Long sku) throws NotFoundProductException {
+        ProductEntity product = productRepository.findBySku(sku);
+        if(Objects.isNull(product)){
             throw new NotFoundProductException(Constants.PRODUCT_NOT_FOUND_EXCEPTION_MESSAGE);
         }
-        return buildProduct(product.get());
+        return buildProduct(product);
     }
 
 
-    public void save(ProductEntity productEntity) throws ProductSkuExistsException {
-        String skuProduct = productEntity.getSku();
-        if(productRepository.findBySku(skuProduct).isPresent()){
+    public ProductEntity save(ProductEntity productEntity) throws ProductSkuExistsException {
+        Long skuProduct = productEntity.getSku();
+        if(Objects.nonNull(productRepository.findBySku(skuProduct))){
             throw new ProductSkuExistsException(Constants.PRODUCT_SKU_EXISTS_EXCEPTION_MESSAGE);
         } else {
-            saveProductTransaction(productEntity);
+            return saveProductTransaction(productEntity);
         }
     }
 
-    public void update(ProductEntity productEntity, String sku) throws NotFoundProductException {
-        if(!productRepository.findBySku(sku).isPresent()){
+    public void update(ProductEntity productEntity, Long sku) throws NotFoundProductException {
+        if(Objects.isNull(productRepository.findBySku(sku))){
             throw new NotFoundProductException(Constants.PRODUCT_NOT_FOUND_EXCEPTION_MESSAGE);
         }
 //        productRepository.updateProduct(productEntity, sku);
@@ -69,15 +62,8 @@ public class ProductService {
     }
 
     @Transactional(propagation= Propagation.REQUIRED)
-    public void saveProductTransaction(ProductEntity productEntity){
-        InventoryEntity inventoryEntity = productEntity.getInventory();
-        if(Objects.nonNull(inventoryEntity) && Objects.nonNull(inventoryEntity.getWarehouses())){
-            productEntity.getInventory().getWarehouses().stream().forEach(warehouseEntity -> {
-                warehouseRepository.saveAndFlush(warehouseEntity);
-            });
-            inventoryRepository.saveAndFlush(productEntity.getInventory());
-        }
-        productRepository.save(productEntity);
+    public ProductEntity saveProductTransaction(ProductEntity productEntity){
+        return buildProduct(productRepository.save(productEntity));
     }
 
 }

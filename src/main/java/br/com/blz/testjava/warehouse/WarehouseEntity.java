@@ -1,6 +1,5 @@
 package br.com.blz.testjava.warehouse;
 
-import br.com.blz.testjava.inventory.InventoryEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.Data;
@@ -19,12 +18,15 @@ public class WarehouseEntity {
     private Long id;
 
     @JoinColumn(name = "locality", nullable = false)
+    @NotNull
     private String locality;
 
     @JoinColumn(name = "quantity", nullable = false)
+    @NotNull
     private Integer quantity;
 
     @JoinColumn(name = "type", nullable = false)
+    @NotNull
     private WarehouseType type;
 
 }

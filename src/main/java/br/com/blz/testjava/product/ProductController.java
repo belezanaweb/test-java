@@ -16,20 +16,21 @@ public class ProductController {
     ProductService productService;
 
     @GetMapping(Constants.PATH_PARAM_SKU)
-    public ProductEntity findBySku(@PathVariable String sku) throws NotFoundProductException {
+    public ProductEntity findBySku(@PathVariable Long sku) throws NotFoundProductException {
         return productService.findBySku(sku);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void save(@RequestBody @Validated ProductEntity productEntity) throws ProductSkuExistsException {
-        productService.save(productEntity);
+    public ProductEntity save(@RequestBody @Validated ProductEntity productEntity)
+            throws ProductSkuExistsException {
+        return productService.save(productEntity);
     }
 
     @PutMapping(Constants.PATH_PARAM_SKU)
     @ResponseStatus(HttpStatus.OK)
     public void update(@RequestBody ProductEntity productEntity,
-                       @PathVariable String sku) throws NotFoundProductException {
+                       @PathVariable Long sku) throws NotFoundProductException {
         productService.update(productEntity, sku);
     }
 

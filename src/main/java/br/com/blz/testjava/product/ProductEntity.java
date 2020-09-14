@@ -20,9 +20,10 @@ public class ProductEntity {
 
     @Column(name = "sku", unique = true, nullable = false)
     @NotNull
-    private String sku;
+    private Long sku;
 
     @Column(name = "name", nullable = false)
+    @NotNull
     private String name;
 
     @OneToOne(cascade = CascadeType.ALL)
