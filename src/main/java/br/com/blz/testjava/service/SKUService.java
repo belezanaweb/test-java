@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.blz.testjava.dao.SKUDAO;
+import br.com.blz.testjava.exception.DuplicatedException;
 import br.com.blz.testjava.model.SKU;
 import br.com.blz.testjava.utils.Utils;
 
@@ -37,7 +38,7 @@ public class SKUService {
 		return sku;
 	}
 
-	public SKU insert(SKU param) throws Exception {
+	public SKU insert(SKU param) throws RuntimeException, Exception {
 		util.prepareInsertUpdate(param);
 		boolean status = dao.insert(param);
 		if (status) {
@@ -45,7 +46,7 @@ public class SKUService {
 			util.checkIsMarketable(param);
 			return param;
 		} else {
-			return null;
+			throw new DuplicatedException(param.getSku());
 		}
 	}
 

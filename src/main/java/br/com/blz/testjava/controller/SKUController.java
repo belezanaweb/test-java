@@ -62,7 +62,7 @@ public class SKUController {
 	
 	@ApiOperation(value = "Inserir sku")
 	@PostMapping(consumes = "application/json", produces = "application/json", path = "/sku")
-	public SKU insert(@RequestBody SKU param) throws Exception {
+	public SKU insert(@RequestBody SKU param) throws RuntimeException, Exception {
 		return skuService.insert(param);
 	}
 	
