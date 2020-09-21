@@ -18,6 +18,17 @@ import br.com.blz.testjava.service.SKUService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+/*
+ * Eu poderia ter colocado um tratamento mlehor das exceptions,
+ * Uma melhor validacao das regras de negocio,
+ * Um banco de memoria de verdade ao inves de apenas um hashmap,
+ * Internacionalizacao das mensagens no retorno do header
+ * E ate mesmo um sonar com coverage alto e code smells e duplications zerado
+ * 
+ * Porem, como e apenas um desafio basico e estou sem tempo por causa do trabalho, 
+ * espero que isso seja o suficiente para avncar a uma proxima etapa :) 
+ */
+
 @Api(value = "TestJavaBlz", protocols = "https")
 @RestController
 @RequestMapping(path = "/testjava")
