@@ -1,3 +1,14 @@
+## notas de solução
+
+Exemplos de chamadas, endpoint método http parametro
+http://localhost:8080/product/?id=5454 get obter produto
+
+localhost:8080/product post =>adicionar produto
+
+localhost:8080/product put => editar produto
+
+http://localhost:8080/product/?id=5454 delete => delete produto por sku
+
 ### Backend Test
 
 [![Build Status](https://travis-ci.com/belezanaweb/test-java.svg?branch=master)](https://travis-ci.com/belezanaweb/test-java)
