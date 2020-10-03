@@ -29,4 +29,16 @@ public class ProductResource {
         return new ResponseEntity<>(this.productBusiness.save(product), HttpStatus.CREATED);
     }
 
+    @ApiOperation(value = "Api resposável por buscar um produto por sku", nickname = "Busca de produto")
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "Retorno de sucesso na busca de um produto"),
+        @ApiResponse(code = 422, message = "Retorno de erro de regras de negocio"),
+        @ApiResponse(code = 500, message = "Retorno de erro interno da aplicação")
+    })
+    @GetMapping(value = "/{sku}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Product> findBySku(@PathVariable(value = "sku") Long sku) {
+        return new ResponseEntity<>(this.productBusiness.findBySku(sku), HttpStatus.OK);
+    }
+
 }
