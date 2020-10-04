@@ -41,4 +41,17 @@ public class ProductResource {
         return new ResponseEntity<>(this.productBusiness.findBySku(sku), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Api resposável por editar um produto por sku", nickname = "Edição de produto")
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "Retorno de sucesso na edição de um produto"),
+        @ApiResponse(code = 422, message = "Retorno de erro de regras de negocio"),
+        @ApiResponse(code = 500, message = "Retorno de erro interno da aplicação")
+    })
+    @PutMapping(value = "/{sku}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Product> update(@PathVariable(value = "sku") Long sku,
+                                          @RequestBody Product product) {
+        return new ResponseEntity<>(this.productBusiness.update(sku, product), HttpStatus.OK);
+    }
+
 }

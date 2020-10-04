@@ -29,4 +29,12 @@ public class ProductBusiness {
         return Optional.ofNullable(this.productService.findBySku(sku))
             .orElseThrow(() -> new SkuNotExistsException(ErrorEnum.SKU_NOT_EXISTS.getDescription()));
     }
+
+    public Product update(Long sku, Product product) {
+        var productSaved = Optional.ofNullable(this.productService.findBySku(sku))
+            .orElseThrow(() -> new SkuNotExistsException(ErrorEnum.SKU_NOT_EXISTS.getDescription()));
+        productSaved.setInventory(product.getInventory());
+        productSaved.setName(product.getName());
+        return this.productService.save(productSaved);
+    }
 }

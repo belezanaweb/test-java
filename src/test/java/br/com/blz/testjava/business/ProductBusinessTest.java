@@ -1,6 +1,7 @@
 package br.com.blz.testjava.business;
 
 import br.com.blz.testjava.TestJavaApplication;
+import br.com.blz.testjava.domain.Product;
 import br.com.blz.testjava.enums.WarehouseType;
 import br.com.blz.testjava.exception.SkuExistsException;
 import br.com.blz.testjava.exception.SkuNotExistsException;
@@ -96,6 +97,35 @@ class ProductBusinessTest {
     @Test
     void mustThrowExceptionBecauseProductBySkuNotExistsInBase() {
         Assertions.assertThrows(SkuNotExistsException.class, () -> this.productBusiness.findBySku(12234l));
+    }
+
+    @Test
+    void deveEstourarExcecaoAoFazerUpdatePoisProdutoNaoExiste() {
+        Assertions.assertThrows(SkuNotExistsException.class, () -> this.productBusiness.update(12234l,
+            Product.builder().build()));
+    }
+
+    @Test
+    void deveAlterarProdutoComSucesso() {
+        var warehouses = List.of(createWarehouse("SP", WarehouseType.PHYSICAL_STORE,
+            250l));
+        var inventory = createInventory(warehouses);
+        var product = createProduct("ps5 digital edition", 12234l, inventory);
+
+        var newWarehouses = List.of(createWarehouse("SP", WarehouseType.PHYSICAL_STORE,
+            250l), createWarehouse("SC", WarehouseType.PHYSICAL_STORE,
+            250l));
+        var newInventory = createInventory(newWarehouses);
+        var newProduct = createProduct("ps5 digital edition", 12234l, newInventory);
+
+        this.productBusiness.save(product);
+        var newProductSaved = this.productBusiness.update(12234l, newProduct);
+
+        Assertions.assertAll(
+            () -> Assertions.assertTrue(newProductSaved.isMarketable()),
+            () -> Assertions.assertEquals(500l, newProductSaved.getInventory().getQuantity()),
+            () -> Assertions.assertEquals(2, newProductSaved.getInventory().getWarehouses().size()),
+            () -> Assertions.assertEquals(newProduct.getName(), newProductSaved.getName()));
     }
 
 }
