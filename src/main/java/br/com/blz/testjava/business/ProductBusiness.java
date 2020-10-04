@@ -37,4 +37,10 @@ public class ProductBusiness {
         productSaved.setName(product.getName());
         return this.productService.save(productSaved);
     }
+
+    public void delete(Long sku) {
+        var product = Optional.ofNullable(this.productService.findBySku(sku))
+            .orElseThrow(() -> new SkuNotExistsException(ErrorEnum.SKU_NOT_EXISTS.getDescription()));
+        this.productService.delete(product);
+    }
 }

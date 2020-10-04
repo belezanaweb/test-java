@@ -100,13 +100,13 @@ class ProductBusinessTest {
     }
 
     @Test
-    void deveEstourarExcecaoAoFazerUpdatePoisProdutoNaoExiste() {
+    void mustThrowsExceptionWhenUpdateProductBecauseProductNotExists() {
         Assertions.assertThrows(SkuNotExistsException.class, () -> this.productBusiness.update(12234l,
             Product.builder().build()));
     }
 
     @Test
-    void deveAlterarProdutoComSucesso() {
+    void mustUpdateProductSuccessfully() {
         var warehouses = List.of(createWarehouse("SP", WarehouseType.PHYSICAL_STORE,
             250l));
         var inventory = createInventory(warehouses);
@@ -126,6 +126,22 @@ class ProductBusinessTest {
             () -> Assertions.assertEquals(500l, newProductSaved.getInventory().getQuantity()),
             () -> Assertions.assertEquals(2, newProductSaved.getInventory().getWarehouses().size()),
             () -> Assertions.assertEquals(newProduct.getName(), newProductSaved.getName()));
+    }
+
+    @Test
+    void mustThrowsExceptionWhenDeleteProductBecauseProductNotExists() {
+        Assertions.assertThrows(SkuNotExistsException.class, () -> this.productBusiness.delete(12234l));
+    }
+
+    @Test
+    void mustDeleteProductSuccessfully() {
+        var warehouses = List.of(createWarehouse("SP", WarehouseType.PHYSICAL_STORE,
+            250l));
+        var inventory = createInventory(warehouses);
+        var product = createProduct("ps5 digital edition", 12234l, inventory);
+
+        this.productBusiness.save(product);
+        this.productBusiness.delete(12234l);
     }
 
 }

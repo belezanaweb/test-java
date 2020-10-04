@@ -19,4 +19,8 @@ public class ProductService {
         return this.productRepository.findBySku(sku);
     }
 
+    public void delete(Product product) {
+        this.productRepository.delete(product);
+    }
+
 }

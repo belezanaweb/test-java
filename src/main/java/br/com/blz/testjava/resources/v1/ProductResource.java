@@ -54,4 +54,17 @@ public class ProductResource {
         return new ResponseEntity<>(this.productBusiness.update(sku, product), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Api resposável por deletar um produto por sku", nickname = "Deleção de produto")
+    @ApiResponses({
+        @ApiResponse(code = 204, message = "Retorno de sucesso na deleção de um produto"),
+        @ApiResponse(code = 422, message = "Retorno de erro de regras de negocio"),
+        @ApiResponse(code = 500, message = "Retorno de erro interno da aplicação")
+    })
+    @DeleteMapping(value = "/{sku}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<Void> delete(@PathVariable(value = "sku") Long sku) {
+        this.productBusiness.delete(sku);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }
