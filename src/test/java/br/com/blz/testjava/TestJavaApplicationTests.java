@@ -1,16 +1,21 @@
 package br.com.blz.testjava;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
+import br.com.blz.testjava.repository.ProductRepository;
+
 @SpringBootTest
-public class TestJavaApplicationTests {
+class TestJavaApplicationTests {
 
+	@Autowired
+	private ProductRepository productRepository;
+	
 	@Test
-	public void contextLoads() {
+	void contextLoads() {
+		assertThat(productRepository).isNotNull();
 	}
-
 }
