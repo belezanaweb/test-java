@@ -11,12 +11,13 @@ mvn:spring-boot:run
 - A aplicação está com o Swagger-UI implementado. O qual pode ser acessado via http://localhost:8080/swagger-ui/
 
 - A aplicação possui dois metodos de consulta implementados com GraphQL. Os quais podem ser executados via http://localhost:8080/graphql:
- - productById
- - listProducts
+  - productById
+  - listProducts
+  
 ```json
 {
-	listProducts {
-		sku
+  listProducts {
+    sku
 		description
 		marketable
 		inventory {
