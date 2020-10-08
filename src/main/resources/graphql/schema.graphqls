@@ -1,0 +1,27 @@
+type Query {
+	productById(sku: ID): Product
+	listProducts: [Product]
+}
+
+type Product {
+	sku: ID
+	description: String
+	inventory: Inventory
+	marketable: Boolean
+}
+
+type Inventory {
+	warehouses: [Warehouse]
+	quantity: Int
+}
+
+type Warehouse {
+	locality: String
+	quantity: Int
+	type: WarehouseType
+}
+
+enum WarehouseType {
+	ECOMMERCE
+	PHYSICAL_STORE
+}

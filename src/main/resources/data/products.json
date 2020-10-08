@@ -1,0 +1,75 @@
+[
+	{
+        "_class": "br.com.blz.testjava.model.Product",
+        "sku": 1,
+        "description": "Miraculous Colônia 100ml",
+        "inventory": {
+            "warehouses": [{
+                    "locality": "São Paulo",
+                    "quantity": 50,
+                    "type": "PHYSICAL_STORE"
+                }, {
+                    "locality": "São Bernardo do Campo",
+                    "quantity": 150,
+                    "type": "PHYSICAL_STORE"
+                }, {
+                    "locality": "Santo André",
+                    "quantity": 80,
+                    "type": "PHYSICAL_STORE"
+                }, {
+                    "locality": "Rio de Janeiro",
+                    "quantity": 200,
+                    "type": "ECOMMERCE"
+                }
+            ]
+        }
+    }, {
+        "_class": "br.com.blz.testjava.model.Product",
+        "sku": 2,
+        "description": "Combo Cabelinho Perfumado Dr. Botica: Shampoo + Condicionador + Creme de Pentear",
+        "inventory": {
+            "warehouses": [{
+                    "locality": "São Paulo",
+                    "quantity": 0,
+                    "type": "PHYSICAL_STORE"
+                }, {
+                    "locality": "São Bernardo do Campo",
+                    "quantity": 10,
+                    "type": "PHYSICAL_STORE"
+                }, {
+                    "locality": "Santo André",
+                    "quantity": 40,
+                    "type": "PHYSICAL_STORE"
+                }, {
+                    "locality": "Rio de Janeiro",
+                    "quantity": 1,
+                    "type": "ECOMMERCE"
+                }
+            ]
+        }
+    }, {
+        "_class": "br.com.blz.testjava.model.Product",
+        "sku": 3,
+        "description": "Dr.Botica Poção do Coração Colônia Infantil, 120ml",
+        "inventory": {
+            "warehouses": [{
+                    "locality": "São Paulo",
+                    "quantity": 5,
+                    "type": "PHYSICAL_STORE"
+                }, {
+                    "locality": "São Bernardo do Campo",
+                    "quantity": 100,
+                    "type": "PHYSICAL_STORE"
+                }, {
+                    "locality": "Santo André",
+                    "quantity": 2,
+                    "type": "PHYSICAL_STORE"
+                }, {
+                    "locality": "Rio de Janeiro",
+                    "quantity": 20,
+                    "type": "ECOMMERCE"
+                }
+            ]
+        }
+    }
+]
