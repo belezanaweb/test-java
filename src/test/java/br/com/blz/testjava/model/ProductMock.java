@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import br.com.blz.testjava.util.WarehouseType;
 
-public class ProductMock extends Product {
+public class ProductMock {
 	static private Long skuSequence = 0l;
 
 	public static Product getNewProduct() { 

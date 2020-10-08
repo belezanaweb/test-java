@@ -14,10 +14,10 @@ import br.com.blz.testjava.model.Product;
 import br.com.blz.testjava.model.ProductMock;
 
 @DataMongoTest
-class ProductRepositoryTest {
+class ProductRestRepositoryTest {
 	
 	@Autowired
-	private ProductRepository productRepository;
+	private ProductRestRepository productRepository;
 	
 	@Test
 	void shouldBeEqual_whenSaveProduct() {

@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import br.com.blz.testjava.repository.ProductRepository;
+import br.com.blz.testjava.repository.ProductRestRepository;
 
 @SpringBootTest
 class TestJavaApplicationTests {
 
 	@Autowired
-	private ProductRepository productRepository;
+	private ProductRestRepository productRepository;
 	
 	@Test
 	void contextLoads() {

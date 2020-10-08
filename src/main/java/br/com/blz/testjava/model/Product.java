@@ -6,23 +6,26 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
+@Document
 public class Product {
 	
-	@NotNull @Id
+	@Id @NotNull
 	private Long sku;
 	@NotBlank
 	private String description;
 	@Valid @NotNull 
 	private Inventory inventory;
-	
 	@Transient
 	public boolean isMarketable() {
 		return this.inventory != null && this.inventory.getQuantity() > 0;
