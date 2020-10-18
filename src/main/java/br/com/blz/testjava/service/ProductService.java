@@ -18,7 +18,6 @@ import br.com.blz.testjava.model.dto.InventoryItemDTO;
 import br.com.blz.testjava.model.dto.InventoryItemsDTO;
 import br.com.blz.testjava.model.dto.ProductDTO;
 import br.com.blz.testjava.repository.ProductRepository;
-import jdk.internal.org.jline.utils.Log;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
