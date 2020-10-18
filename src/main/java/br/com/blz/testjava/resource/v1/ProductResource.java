@@ -1,4 +1,4 @@
-package br.com.blz.testjava.v1;
+package br.com.blz.testjava.resource.v1;
 
 import br.com.blz.testjava.model.Product;
 import br.com.blz.testjava.service.ProductService;
