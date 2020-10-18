@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -34,7 +35,8 @@ public class TestJavaApplicationTests {
 
     @BeforeClass
     static public void setup() {
-        List<Warehouse> warehouses = List.of(Mocks.createWarehouse("SP", WarehouseType.ECOMMERCE, 12L));
+        List<Warehouse> warehouses = new ArrayList<>();
+        warehouses.add(Mocks.createWarehouse("SP", WarehouseType.ECOMMERCE, 12L));
         Inventory inventory = Mocks.createInventory(warehouses);
         product = Mocks.createProduct(sku, "Expert Absolut", inventory);
     }
