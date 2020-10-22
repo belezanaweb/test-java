@@ -7,6 +7,8 @@ import br.com.blz.testjava.exception.ProductAlreadyExistsException;
 import br.com.blz.testjava.exception.ProductNotFoundException;
 import br.com.blz.testjava.service.ProductService;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +27,13 @@ public class ProductController {
 
     @PostMapping
     @ApiOperation(value = "API para criar novos produtos")
+    @ApiResponses(
+        {
+            @ApiResponse(code = 201, message = "Retorno de sucesso na criação de produtos"),
+            @ApiResponse(code = 400, message = "Retorno de request inválido ou produto já existente"),
+            @ApiResponse(code = 500, message = "Retorno de erro interno da aplicação")
+        }
+    )
     public ResponseEntity<ProductResponseDTO>
         createProduct(@RequestBody @Valid ProductRequestDTO product) throws ProductAlreadyExistsException {
         log.info("Start -  createProduct.....");
@@ -38,6 +47,13 @@ public class ProductController {
 
     @GetMapping(path = "/{sku}")
     @ApiOperation(value = "API para Buscar produtos pelo SKU")
+    @ApiResponses(
+        {
+            @ApiResponse(code = 200, message = "Retorno de produto encontrado com sucesso"),
+            @ApiResponse(code = 404, message = "Retorno de produto não encontrado"),
+            @ApiResponse(code = 500, message = "Retorno de erro interno da aplicação")
+        }
+    )
     public ResponseEntity<ProductResponseDTO>
     findProductBySku(@PathVariable  Long sku) throws ProductNotFoundException {
         log.info("Start -  findProductBySku.....");
@@ -49,6 +65,13 @@ public class ProductController {
 
     @DeleteMapping(path="/{sku}")
     @ApiOperation(value = "API para Deletar produtos pelo SKU")
+    @ApiResponses(
+        {
+            @ApiResponse(code = 200, message = "Retorno de sucesso na deleção do produto"),
+            @ApiResponse(code = 404, message = "Retorno de produto não encontrado"),
+            @ApiResponse(code = 500, message = "Retorno de erro interno da aplicação")
+        }
+    )
     public ResponseEntity<ProductResponseDTO> deleteProduct( @PathVariable Long sku) throws ProductNotFoundException {
         log.info("Start -  deleteProduct.....");
         ProductResponseDTO productResponseDTO = productService.deleteProduct(sku);
@@ -59,6 +82,14 @@ public class ProductController {
 
     @PutMapping(path="/{sku}")
     @ApiOperation(value = "API para Atualizar Produtos")
+    @ApiResponses(
+        {
+            @ApiResponse(code = 200, message = "Retorno de sucesso na atualização do produto"),
+            @ApiResponse(code = 400, message = "Retorno de request inválido ou produto já existente"),
+            @ApiResponse(code = 404, message = "Retorno de produto não encontrado"),
+            @ApiResponse(code = 500, message = "Retorno de erro interno da aplicação")
+        }
+    )
     public ResponseEntity<ProductResponseDTO> updateProduct( @PathVariable Long sku,
                                                              @RequestBody @Valid ProductUpdateRequestDTO productUpdate) throws ProductNotFoundException {
         log.info("Start -  updateProduct.....");
