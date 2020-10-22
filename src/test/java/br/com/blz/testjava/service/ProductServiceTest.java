@@ -16,10 +16,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Optional;
+
+import static br.com.blz.testjava.utils.TestUtils.asJsonString;
+import static br.com.blz.testjava.utils.TestUtils.convertInputStreamToString;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {ProductService.class, ProductRepository.class})
@@ -141,24 +143,5 @@ public class ProductServiceTest {
     }
 
 
-    public static String asJsonString(final Object obj) {
-        try {
-            return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 
-    public static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        StringBuilder textBuilder = new StringBuilder();
-        try (Reader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName(StandardCharsets.UTF_8.name()))))
-        {
-            int c = 0;
-            while((c = reader.read()) != -1) {
-                textBuilder.append((char) c);
-            }
-        }
-        inputStream.close();
-        return textBuilder.toString();
-    }
 }

@@ -16,11 +16,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.io.*;
-import java.nio.charset.Charset;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
+import static br.com.blz.testjava.utils.TestUtils.convertInputStreamToString;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -179,24 +179,5 @@ public class ProductControllerTest {
     }
 
 
-    public static String asJsonString(final Object obj) {
-        try {
-            return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 
-    public static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        StringBuilder textBuilder = new StringBuilder();
-        try (Reader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName(StandardCharsets.UTF_8.name()))))
-            {
-                int c = 0;
-                while((c = reader.read()) != -1) {
-                    textBuilder.append((char) c);
-                }
-            }
-        inputStream.close();
-        return textBuilder.toString();
-    }
 }
