@@ -8,6 +8,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode
+@ToString
 public class InventoryResponseDTO {
 
     private Integer quantity;

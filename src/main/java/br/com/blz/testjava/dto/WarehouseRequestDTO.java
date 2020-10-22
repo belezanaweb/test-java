@@ -3,10 +3,11 @@ package br.com.blz.testjava.dto;
 import br.com.blz.testjava.model.Warehouse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @AllArgsConstructor
+@ToString
 public class WarehouseRequestDTO {
 
     private String locality;

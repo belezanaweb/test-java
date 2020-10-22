@@ -3,7 +3,7 @@ package br.com.blz.testjava.dto;
 import br.com.blz.testjava.model.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.ToString;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @Getter
 @AllArgsConstructor
+@ToString
 public class ProductRequestDTO {
 
     @NotNull(message = "The field sku is mandatory")

@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode
+@ToString
 public class ProductResponseDTO {
 
     private Long sku;

@@ -4,6 +4,7 @@ import br.com.blz.testjava.model.Inventory;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
+@ToString
 public class InventoryRequestDTO {
 
     private List<WarehouseRequestDTO> warehouses;
