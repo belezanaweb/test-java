@@ -6,6 +6,7 @@ import br.com.blz.testjava.dto.ProductUpdateRequestDTO;
 import br.com.blz.testjava.exception.ProductAlreadyExistsException;
 import br.com.blz.testjava.exception.ProductNotFoundException;
 import br.com.blz.testjava.service.ProductService;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,7 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping
+    @ApiOperation(value = "API para criar novos produtos")
     public ResponseEntity<ProductResponseDTO>
         createProduct(@RequestBody @Valid ProductRequestDTO product) throws ProductAlreadyExistsException {
         log.info("Start -  createProduct.....");
@@ -35,6 +37,7 @@ public class ProductController {
     }
 
     @GetMapping(path = "/{sku}")
+    @ApiOperation(value = "API para Buscar produtos pelo SKU")
     public ResponseEntity<ProductResponseDTO>
     findProductBySku(@PathVariable  Long sku) throws ProductNotFoundException {
         log.info("Start -  findProductBySku.....");
@@ -45,6 +48,7 @@ public class ProductController {
     }
 
     @DeleteMapping(path="/{sku}")
+    @ApiOperation(value = "API para Deletar produtos pelo SKU")
     public ResponseEntity<ProductResponseDTO> deleteProduct( @PathVariable Long sku) throws ProductNotFoundException {
         log.info("Start -  deleteProduct.....");
         ProductResponseDTO productResponseDTO = productService.deleteProduct(sku);
@@ -54,6 +58,7 @@ public class ProductController {
     }
 
     @PutMapping(path="/{sku}")
+    @ApiOperation(value = "API para Atualizar Produtos")
     public ResponseEntity<ProductResponseDTO> updateProduct( @PathVariable Long sku,
                                                              @RequestBody @Valid ProductUpdateRequestDTO productUpdate) throws ProductNotFoundException {
         log.info("Start -  updateProduct.....");
