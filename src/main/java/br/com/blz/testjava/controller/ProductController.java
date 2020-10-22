@@ -2,6 +2,7 @@ package br.com.blz.testjava.controller;
 
 import br.com.blz.testjava.dto.ProductRequestDTO;
 import br.com.blz.testjava.dto.ProductResponseDTO;
+import br.com.blz.testjava.dto.ProductUpdateRequestDTO;
 import br.com.blz.testjava.exception.ProductAlreadyExistsException;
 import br.com.blz.testjava.exception.ProductNotFoundException;
 import br.com.blz.testjava.service.ProductService;
@@ -30,6 +31,19 @@ public class ProductController {
     public ResponseEntity<ProductResponseDTO>
     createProduct(@PathVariable  Long sku) throws ProductNotFoundException {
         ProductResponseDTO productResponseDTO = productService.findProductBySku(sku);
+        return new ResponseEntity<ProductResponseDTO>(productResponseDTO, HttpStatus.OK);
+    }
+
+    @DeleteMapping(path="/{sku}")
+    public ResponseEntity<ProductResponseDTO> deleteProduct( @PathVariable Long sku) throws ProductNotFoundException {
+        ProductResponseDTO productResponseDTO = productService.deleteProduct(sku);
+        return new ResponseEntity<ProductResponseDTO>(productResponseDTO, HttpStatus.OK);
+    }
+
+    @PutMapping(path="/{sku}")
+    public ResponseEntity<ProductResponseDTO> updateProduct( @PathVariable Long sku,
+                                                             @RequestBody @Valid ProductUpdateRequestDTO productUpdate) throws ProductNotFoundException {
+        ProductResponseDTO productResponseDTO = productService.updateProduct(sku,productUpdate);
         return new ResponseEntity<ProductResponseDTO>(productResponseDTO, HttpStatus.OK);
     }
 

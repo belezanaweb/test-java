@@ -20,8 +20,13 @@ public class Inventory {
                 .stream()
                 .map(Warehouse::toResponseDTO)
                 .collect(Collectors.toList()))
-            .quantity(this.getWarehouses()
-                .stream().mapToInt(Warehouse::getQuantity).sum())
+            .quantity(this.getQuantity())
             .build();
+    }
+
+    public Integer getQuantity() {
+        List<Warehouse> warehouses = this.getWarehouses();
+        return warehouses != null? warehouses
+            .stream().mapToInt(Warehouse::getQuantity).sum() : 0;
     }
 }

@@ -1,0 +1,17 @@
+{
+  "name": "Teste Update - Alterado",
+  "inventory": {
+    "warehouses": [
+      {
+        "locality": "SP",
+        "quantity": 2,
+        "type": "ECOMMERCE"
+      },
+      {
+        "locality": "MOEMA",
+        "quantity": 3,
+        "type": "PHYSICAL_STORE"
+      }
+    ]
+  }
+}

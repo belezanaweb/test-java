@@ -94,6 +94,91 @@ public class ProductControllerTest {
 
     }
 
+    @Test
+    public void testDeleteProductSuccess() throws Exception {
+
+        InputStream inputStream = ProductControllerTest.class.getResourceAsStream("/delete-product-by-sku-11112-create-request.json");
+        String jsonRequest = convertInputStreamToString(inputStream);
+        ObjectMapper mapper = new ObjectMapper();
+        ProductRequestDTO requestDTO = mapper.readValue(jsonRequest,ProductRequestDTO.class);
+        productRepository.save(requestDTO.toEntity());
+
+        MvcResult result = mockMvc.perform( MockMvcRequestBuilders
+            .delete("/product/11112")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andReturn();
+
+        String jsonResponse = result.getResponse().getContentAsString(StandardCharsets.UTF_8);
+        InputStream responseInputStream = ProductControllerTest.class.getResourceAsStream("/delete-product-by-sku-11112-response.json");
+        String jsonExpectedResponse = convertInputStreamToString(responseInputStream);
+        Assert.assertEquals(jsonExpectedResponse.trim(), jsonResponse);
+
+        Optional<Product> product = productRepository.findBySku(requestDTO.getSku());
+        Assert.assertFalse(product.isPresent());
+
+    }
+
+    @Test
+    public void testDeleteProductNotFound() throws Exception {
+
+        mockMvc.perform( MockMvcRequestBuilders
+            .delete("/product/99999")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound());
+
+    }
+
+    @Test
+    public void testPutProductSuccess() throws Exception {
+
+        InputStream createInputStream = ProductControllerTest.class.getResourceAsStream("/update-product-by-sku-11113-create-request.json");
+        String jsonCreateRequest = convertInputStreamToString(createInputStream);
+        ObjectMapper mapper = new ObjectMapper();
+        ProductRequestDTO requestDTO = mapper.readValue(jsonCreateRequest, ProductRequestDTO.class);
+        Product productBefore = productRepository.save(requestDTO.toEntity());
+
+        InputStream inputStream = ProductControllerTest.class.getResourceAsStream("/update-product-by-sku-11113-update-request.json");
+        String jsonRequest = convertInputStreamToString(inputStream);
+
+        MvcResult result = mockMvc.perform( MockMvcRequestBuilders
+            .put("/product/11113")
+            .content(jsonRequest)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andReturn();
+
+        String jsonResponse = result.getResponse().getContentAsString(StandardCharsets.UTF_8);
+        InputStream responseInputStream = ProductControllerTest.class.getResourceAsStream("/update-product-by-sku-11113-response.json");
+        String jsonExpectedResponse = convertInputStreamToString(responseInputStream);
+        Assert.assertEquals(jsonExpectedResponse.trim(), jsonResponse);
+
+        Optional<Product> product = productRepository.findBySku(requestDTO.getSku());
+        Assert.assertTrue(product.isPresent());
+        Assert.assertEquals(11113l, product.get().getSku().longValue());
+        Assert.assertNotEquals(productBefore.toResponseDTO(), product.get().toResponseDTO());
+
+
+
+    }
+
+    @Test
+    public void testPutProductNotFound() throws Exception {
+
+        InputStream inputStream = ProductControllerTest.class.getResourceAsStream("/update-product-by-sku-11113-update-request.json");
+        String jsonRequest = convertInputStreamToString(inputStream);
+
+        mockMvc.perform( MockMvcRequestBuilders
+            .put("/product/99999")
+            .content(jsonRequest)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound());
+
+    }
+
+
     public static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);

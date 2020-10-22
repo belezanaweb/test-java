@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.Optional;
 
 @Getter
 @AllArgsConstructor
@@ -17,7 +19,7 @@ public class ProductRequestDTO {
     @NotNull(message = "The field sku is mandatory")
     private String name;
 
-    @NotNull(message = "The inventory group is mandatory")
+    //@NotNull(message = "The inventory group is mandatory")
     private InventoryRequestDTO inventory;
 
 
@@ -25,7 +27,7 @@ public class ProductRequestDTO {
         return Product.builder()
             .sku(this.getSku())
             .name(this.getName())
-            .inventory(this.getInventory().toEntity())
+            .inventory(Optional.ofNullable(this.getInventory()).orElse(new InventoryRequestDTO(new ArrayList<WarehouseRequestDTO>())).toEntity())
             .build();
 
     }

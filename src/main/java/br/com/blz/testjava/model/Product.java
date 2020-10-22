@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+import java.util.Optional;
+
 @Getter
 @AllArgsConstructor
 @Builder
@@ -22,7 +24,12 @@ public class Product {
             .sku(this.getSku())
             .name(this.getName())
             .inventory(inventory)
-            .isMarketable(inventory.getQuantity() > 0)
+            .isMarketable(getIsMarketable())
             .build();
+    }
+
+    public boolean getIsMarketable() {
+        Inventory inventory = this.getInventory();
+        return inventory.getQuantity() > 0;
     }
 }

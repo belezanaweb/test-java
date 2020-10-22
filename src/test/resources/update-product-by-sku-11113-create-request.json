@@ -1,0 +1,18 @@
+{
+  "sku": 11113,
+  "name": "Teste Update - Criação",
+  "inventory": {
+    "warehouses": [
+      {
+        "locality": "SP",
+        "quantity": 6,
+        "type": "ECOMMERCE"
+      },
+      {
+        "locality": "MOEMA",
+        "quantity": 7,
+        "type": "PHYSICAL_STORE"
+      }
+    ]
+  }
+}

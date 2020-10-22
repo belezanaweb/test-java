@@ -2,6 +2,7 @@ package br.com.blz.testjava.service;
 
 import br.com.blz.testjava.dto.ProductRequestDTO;
 import br.com.blz.testjava.dto.ProductResponseDTO;
+import br.com.blz.testjava.dto.ProductUpdateRequestDTO;
 import br.com.blz.testjava.exception.ProductAlreadyExistsException;
 import br.com.blz.testjava.exception.ProductNotFoundException;
 import br.com.blz.testjava.model.Product;
@@ -33,5 +34,17 @@ public class ProductService {
         Optional<Product> product = productRepository.findBySku(sku);
         return product.orElseThrow(()-> new ProductNotFoundException(sku)).toResponseDTO();
 
+    }
+
+    public ProductResponseDTO deleteProduct(Long sku)  throws ProductNotFoundException{
+        Product product = productRepository.findBySku(sku).orElseThrow(()-> new ProductNotFoundException(sku));
+        productRepository.delete(product.getSku());
+        return product.toResponseDTO();
+    }
+
+    public ProductResponseDTO updateProduct(Long sku, ProductUpdateRequestDTO productRequestDTO) throws ProductNotFoundException {
+        Product product = productRepository.findBySku(sku).orElseThrow(()-> new ProductNotFoundException(sku));
+        product = productRepository.save(productRequestDTO.toEntity(sku));
+        return product.toResponseDTO();
     }
 }
