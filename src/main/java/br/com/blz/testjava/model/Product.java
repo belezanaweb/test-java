@@ -12,7 +12,6 @@ import java.util.Optional;
 @Getter
 @AllArgsConstructor
 @Builder
-@EqualsAndHashCode(of = "sku")
 public class Product {
     private Long sku;
     private String name;
