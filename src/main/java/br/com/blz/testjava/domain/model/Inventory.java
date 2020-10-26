@@ -26,7 +26,7 @@ public class Inventory implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
     
-    @OneToMany(mappedBy = "inventory")
+    @OneToMany
     private List<Warehouse> warehouses;
     
     public Integer getQuantity() {		
