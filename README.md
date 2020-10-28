@@ -1,47 +1,14 @@
-### Backend Test
+### Backend Test - Aplicação de José Kassimo Jr
 
 [![Build Status](https://travis-ci.com/belezanaweb/test-java.svg?branch=master)](https://travis-ci.com/belezanaweb/test-java)
 
 [![codecov](https://codecov.io/gh/belezanaweb/test-java/branch/master/graph/badge.svg)](https://codecov.io/gh/belezanaweb/test-java)
 
-Esta é uma avaliação básica de código.
-
-O objetivo é conhecer um pouco do seu conhecimento/prática de RESTful, Spring e Java.
-
-Recomendamos que você não gaste mais do que 4 - 6 horas.
-
-Faça um fork deste repositório que contém o bootstrap de uma aplicação SpringBoot 1.5.12. (você pode utilizar spring boot 2+)
-
-Ao finalizar o teste, submeta um pull request para o repositório que nosso time será notificado.
 
 ### Tarefas
 
-Com a seguinte representação de produto:
-
-```json
-{
-    "sku": 43264,
-    "name": "L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g",
-    "inventory": {
-        "quantity": 15,
-        "warehouses": [
-            {
-                "locality": "SP",
-                "quantity": 12,
-                "type": "ECOMMERCE"
-            },
-            {
-                "locality": "MOEMA",
-                "quantity": 3,
-                "type": "PHYSICAL_STORE"
-            }
-        ]
-    },
-    "isMarketable": true
-}
-```
-
 Crie endpoints para as seguintes ações:
+
 
 - [ ] Criação de produto onde o payload será o json informado acima (exceto as propriedades **isMarketable** e **inventory.quantity**)
 
@@ -73,6 +40,7 @@ Crie endpoints para as seguintes ações:
 
 ### Dicas
 
-- Os produtos podem ficar em memória, não é necessário persistir os dados
-- Sinta-se a vontade para fazer o código em ```groovy``` se preferir, utilizamos bastante aqui
-- Testes são sempre bem-vindos :smiley:
+- Para rodar o projeto basta baixa-lo e ter instalados o `maven 3` e o `java 1.8`
+- Na pasta do projeto, execute:
+    - `mvn clean package` para empacotar e rodar testes
+    - `mvn spring-boot:run` para executar a aplicação
