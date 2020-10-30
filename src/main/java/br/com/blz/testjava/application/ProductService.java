@@ -8,5 +8,6 @@ public interface ProductService {
 	List<Product> findAll();
 	Product save(Product product);
 	Product findBySku(Long sku);
+	Product update(Product product);
 	void remove(Long sku);
 }

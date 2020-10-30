@@ -3,6 +3,7 @@ package br.com.blz.testjava.domain.model;
 import java.io.Serializable;
 import java.util.Optional;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import static br.com.blz.testjava.domain.factory.InventoryFactory.zeroQuantityInventory;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -31,12 +33,14 @@ public class Product implements Serializable {
 	@NotBlank(message = "Products-1")
 	private String name;
     
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = false)
     private Inventory inventory;
     
 	public Boolean isMarketable() {
-		return Optional.ofNullable(this.inventory).orElse(new Inventory()).getQuantity() > 0;
+		return Optional.ofNullable(this.inventory)
+				.orElse(zeroQuantityInventory())
+				.getQuantity() > 0;
 	}
 	
 	@JsonIgnore

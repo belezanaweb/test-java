@@ -30,6 +30,11 @@ public class ProductController {
 	public List<Product> findAll(){
 		return productService.findAll();
 	}
+
+	@GetMapping("/{sku}")
+	public Product findBySku(@PathVariable Long sku) {
+		return productService.findBySku(sku);
+	}
 	
 	@PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -41,7 +46,7 @@ public class ProductController {
 	public Product update(@PathVariable Long sku, 
 			@Valid @RequestBody Product product) {
 		product.setSku(sku);
-		return productService.save(product);
+		return productService.update(product);
 	}
 	
 	@DeleteMapping("/{sku}")

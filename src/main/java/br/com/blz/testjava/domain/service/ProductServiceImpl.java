@@ -30,6 +30,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
+	public Product update(Product product) {
+		findBySku(product.getSku());
+		verifyIfProductExists(product);
+		return productRepository.save(product);
+	}
+	
+	@Override
 	public Product findBySku(Long sku) {
 		return productRepository.findBySku(sku).orElseThrow(() -> new ProductNotFoundException());
 	}

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 import br.com.blz.testjava.domain.exception.BusinessException;
+import br.com.blz.testjava.domain.exception.ProductNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -63,6 +64,15 @@ public class ApiExceptionHandler {
 
         final ErrorResponse errorResponse = ErrorResponse.of(status, toApiError(errorCode, locale));
         return ResponseEntity.badRequest().body(errorResponse);
+    }
+    
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleProductNotFoundException(ProductNotFoundException exception, Locale locale) {
+    	final String errorCode = exception.getCode();
+    	final HttpStatus status = exception.getStatus();
+    	
+    	final ErrorResponse errorResponse = ErrorResponse.of(status, toApiError(errorCode, locale));
+    	return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
     public ApiError toApiError(String code, Locale locale, Object... args) {
