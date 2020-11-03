@@ -98,7 +98,7 @@ public class ProductControllerTest {
 	void shouldReturnSuccess_whenCreateProduct() {
 		Product product = new Product();
 		product.setSku(4L);
-		product.setName("Espuma de Barbear Natura");
+		product.setName("Balhm Boticario");
 		product.setInventory(new Inventory());
 		given()
 			.body(product)
