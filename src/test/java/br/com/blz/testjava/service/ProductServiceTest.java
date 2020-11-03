@@ -144,12 +144,12 @@ public class ProductServiceTest {
 		inventoryToUpdate.setWarehouses(warehousesToUpdate);
 		
 		productToUpdate.setSku(3L);
-		productToUpdate.setName("Shampoo Natura");
+		productToUpdate.setName("Shampoo BLZ");
 		productToUpdate.setInventory(inventoryToUpdate );
 		
 		productService.update(productToUpdate);
 		
-		assertThat(productToUpdate.getName(), equalTo("Shampoo Natura"));
+		assertThat(productToUpdate.getName(), equalTo("Shampoo BLZ"));
 	}
 	
 	@Test(expected = ProductNotFoundException.class)
