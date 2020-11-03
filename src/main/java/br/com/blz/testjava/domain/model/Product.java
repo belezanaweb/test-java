@@ -1,5 +1,7 @@
 package br.com.blz.testjava.domain.model;
 
+import static br.com.blz.testjava.domain.factory.InventoryFactory.zeroQuantityInventory;
+
 import java.io.Serializable;
 import java.util.Optional;
 
@@ -11,9 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import static br.com.blz.testjava.domain.factory.InventoryFactory.zeroQuantityInventory;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,9 +30,10 @@ public class Product implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long sku;
     
-	@NotBlank(message = "Products-1")
+	@NotBlank(message = "products-1")
 	private String name;
     
+	@NotNull(message = "products-2")
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = false)
     private Inventory inventory;
@@ -42,14 +43,4 @@ public class Product implements Serializable {
 				.orElse(zeroQuantityInventory())
 				.getQuantity() > 0;
 	}
-	
-	@JsonIgnore
-    public boolean isNew() {
-        return getSku() == null;
-    }
-
-    @JsonIgnore
-    public boolean alreadyExist() {
-        return getSku() != null;
-    }
 }

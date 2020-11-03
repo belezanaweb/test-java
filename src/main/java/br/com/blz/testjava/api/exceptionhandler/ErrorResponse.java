@@ -1,15 +1,19 @@
 package br.com.blz.testjava.api.exceptionhandler;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-
-import static lombok.AccessLevel.PRIVATE;
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
+import static lombok.AccessLevel.PRIVATE;
 
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
 @JsonAutoDetect(fieldVisibility = ANY)
 @RequiredArgsConstructor(access = PRIVATE)
 public class ErrorResponse {

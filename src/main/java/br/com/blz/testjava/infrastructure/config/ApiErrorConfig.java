@@ -11,8 +11,8 @@ public class ApiErrorConfig {
     @Bean
     public MessageSource apiErrorMessageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename("classpath:/api_errors");
-        messageSource.setDefaultEncoding("UTF-8");
+        messageSource.setBasename("classpath:/messages/api_errors");
+        messageSource.setDefaultEncoding("ISO-8859-1");
 
         return messageSource;
     }

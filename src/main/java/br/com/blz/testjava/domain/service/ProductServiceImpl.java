@@ -32,7 +32,6 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Product update(Product product) {
 		findBySku(product.getSku());
-		verifyIfProductExists(product);
 		return productRepository.save(product);
 	}
 	
@@ -45,8 +44,7 @@ public class ProductServiceImpl implements ProductService {
         
 		Optional<Product> productBySku = productRepository.findBySku(product.getSku());
 		
-        if (productBySku.isPresent() && (product.isNew() ||
-        		isUpdatingToADifferentProduct(product, productBySku))) {
+        if (productBySku.isPresent() && (productBySku.get().equals(product))) {
             throw new ProductAlreadyExistException();
         }
     }
@@ -56,11 +54,4 @@ public class ProductServiceImpl implements ProductService {
 		Product product = findBySku(sku);
 		productRepository.delete(product);
 	}
-
-    private boolean isUpdatingToADifferentProduct(Product product, Optional<Product> productBySku) {
-        return product.alreadyExist() && !productBySku.get()
-                .equals(product);
-    }
-
-
 }
