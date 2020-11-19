@@ -1,5 +1,6 @@
 package br.com.blz.testjava.api.resources;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -60,8 +61,18 @@ public class ProductResourceTest {
 
     @Test
     @DisplayName("Should launch validation error when there is not enough data to create the product.")
-    public void createInvalidProductTest() {
-        // cenário
+    public void createInvalidProductTest() throws Exception {
+        String content = new ObjectMapper().writeValueAsString(new ProductDTO());
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+            .post(PRODUCT_API)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+            .content(content);
+
+        mvc.perform(request)
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("errors", hasSize(1)));
     }
 
     @Test

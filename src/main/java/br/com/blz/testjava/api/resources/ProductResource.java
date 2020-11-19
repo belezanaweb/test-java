@@ -1,10 +1,15 @@
 package br.com.blz.testjava.api.resources;
 
 import br.com.blz.testjava.api.dtos.ProductDTO;
+import br.com.blz.testjava.api.exceptions.ApiErrors;
 import br.com.blz.testjava.model.entities.Product;
 import br.com.blz.testjava.services.ProductService;
+import javax.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,10 +30,17 @@ public class ProductResource {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductDTO create(@RequestBody ProductDTO productDTO) {
+    public ProductDTO create(@RequestBody @Valid ProductDTO productDTO) {
         Product product = modelMapper.map(productDTO, Product.class);
         product = productService.save(product);
         return modelMapper.map(product, ProductDTO.class);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ApiErrors handleValidationExceptions(MethodArgumentNotValidException ex) {
+        BindingResult bindingResult = ex.getBindingResult();
+        return new ApiErrors(bindingResult);
     }
 
 }
