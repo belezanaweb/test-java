@@ -2,6 +2,7 @@ package br.com.blz.testjava.api.resources;
 
 import br.com.blz.testjava.api.dtos.ProductDTO;
 import br.com.blz.testjava.api.exceptions.ApiErrors;
+import br.com.blz.testjava.exceptions.BusinessException;
 import br.com.blz.testjava.model.entities.Product;
 import br.com.blz.testjava.services.ProductService;
 import javax.validation.Valid;
@@ -41,6 +42,12 @@ public class ProductResource {
     public ApiErrors handleValidationExceptions(MethodArgumentNotValidException ex) {
         BindingResult bindingResult = ex.getBindingResult();
         return new ApiErrors(bindingResult);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(BusinessException.class)
+    public ApiErrors handleBusinessException(BusinessException ex) {
+        return new ApiErrors(ex);
     }
 
 }

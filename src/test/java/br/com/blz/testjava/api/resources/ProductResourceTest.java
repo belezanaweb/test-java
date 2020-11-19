@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import br.com.blz.testjava.api.dtos.ProductDTO;
+import br.com.blz.testjava.exceptions.BusinessException;
 import br.com.blz.testjava.model.entities.Product;
 import br.com.blz.testjava.services.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -41,7 +42,7 @@ public class ProductResourceTest {
     @Test
     @DisplayName("Should create a product with success.")
     public void createProductTest() throws Exception {
-        ProductDTO productDTO = ProductDTO.builder().name("L'Oréal Professionnel").build();
+        ProductDTO productDTO = createNewProduct();
         Product savedProduct = Product.builder().sku(43264L).name("L'Oréal Professionnel").build();
 
         BDDMockito.given(productService.save(Mockito.any(Product.class))).willReturn(savedProduct);
@@ -77,8 +78,27 @@ public class ProductResourceTest {
 
     @Test
     @DisplayName("Should issue a conflict error if the product already exists.")
-    public void createDuplicateProductTest() {
-        // cenário
+    public void createDuplicateProductTest() throws Exception {
+        ProductDTO productDTO = createNewProduct();
+        String content = new ObjectMapper().writeValueAsString(productDTO);
+        String errorMessage = "SKU already used by other product.";
+        BDDMockito.given(productService.save(Mockito.any(Product.class)))
+            .willThrow(new BusinessException(errorMessage));
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+            .post(PRODUCT_API)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+            .content(content);
+
+        mvc.perform(request)
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("errors", hasSize(1)))
+            .andExpect(jsonPath("errors[0]").value(errorMessage));
+    }
+
+    private ProductDTO createNewProduct() {
+        return ProductDTO.builder().sku(43264L).name("L'Oréal Professionnel").build();
     }
 
 }
