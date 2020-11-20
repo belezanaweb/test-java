@@ -4,11 +4,17 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import br.com.blz.testjava.api.dtos.InventoryDTO;
 import br.com.blz.testjava.api.dtos.ProductDTO;
+import br.com.blz.testjava.api.dtos.WarehouseDTO;
 import br.com.blz.testjava.exceptions.BusinessException;
+import br.com.blz.testjava.model.entities.Inventory;
 import br.com.blz.testjava.model.entities.Product;
+import br.com.blz.testjava.model.entities.Warehouse;
+import br.com.blz.testjava.model.entities.enums.ProductTypeEnum;
 import br.com.blz.testjava.services.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,8 +48,9 @@ public class ProductResourceTest {
     @Test
     @DisplayName("Should create a product with success.")
     public void createProductTest() throws Exception {
-        ProductDTO productDTO = createNewProduct();
-        Product savedProduct = Product.builder().sku(43264L).name("L'Oréal Professionnel").build();
+        ProductDTO productDTO = createNewProductDTO();
+        Product savedProduct = createNewProduct();
+        savedProduct.setSku(45632L);
 
         BDDMockito.given(productService.save(Mockito.any(Product.class))).willReturn(savedProduct);
         String content = new ObjectMapper().writeValueAsString(productDTO);
@@ -56,8 +63,16 @@ public class ProductResourceTest {
 
         mvc.perform(request)
             .andExpect(status().isCreated())
-            .andExpect(jsonPath("sku").value("43264"))
-            .andExpect(jsonPath("name").value(productDTO.getName()));
+            .andExpect(jsonPath("sku").value("45632"))
+            .andExpect(jsonPath("name").value(productDTO.getName()))
+            .andExpect(jsonPath("inventory").isNotEmpty())
+            .andExpect(jsonPath("inventory.warehouses").isNotEmpty())
+            .andExpect(jsonPath("inventory.warehouses[0].locality").value("SP"))
+            .andExpect(jsonPath("inventory.warehouses[0].quantity").value(12))
+            .andExpect(jsonPath("inventory.warehouses[0].type").value("ECOMMERCE"))
+            .andExpect(jsonPath("inventory.warehouses[1].locality").value("MOEMA"))
+            .andExpect(jsonPath("inventory.warehouses[1].quantity").value(3))
+            .andExpect(jsonPath("inventory.warehouses[1].type").value("PHYSICAL_STORE"));
     }
 
     @Test
@@ -79,7 +94,7 @@ public class ProductResourceTest {
     @Test
     @DisplayName("Should issue a conflict error if the product already exists.")
     public void createDuplicateProductTest() throws Exception {
-        ProductDTO productDTO = createNewProduct();
+        ProductDTO productDTO = createNewProductDTO();
         String content = new ObjectMapper().writeValueAsString(productDTO);
         String errorMessage = "SKU already used by other product.";
         BDDMockito.given(productService.save(Mockito.any(Product.class)))
@@ -97,8 +112,32 @@ public class ProductResourceTest {
             .andExpect(jsonPath("errors[0]").value(errorMessage));
     }
 
-    private ProductDTO createNewProduct() {
-        return ProductDTO.builder().sku(43264L).name("L'Oréal Professionnel").build();
+    private ProductDTO createNewProductDTO() {
+        WarehouseDTO warehouseDTO1 = WarehouseDTO.builder().locality("SP").quantity(12)
+            .type(ProductTypeEnum.ECOMMERCE).build();
+
+        WarehouseDTO warehouseDTO2 = WarehouseDTO.builder().locality("MOEMA").quantity(3)
+            .type(ProductTypeEnum.PHYSICAL_STORE).build();
+
+        InventoryDTO inventoryDTO = InventoryDTO.builder()
+            .warehouses(Arrays.asList(warehouseDTO1, warehouseDTO2)).build();
+
+        return ProductDTO.builder().name("L'Oréal Professionnel")
+            .inventory(inventoryDTO).build();
+    }
+
+    private Product createNewProduct() {
+        Warehouse warehouse1 = Warehouse.builder().locality("SP").quantity(12)
+            .type(ProductTypeEnum.ECOMMERCE).build();
+
+        Warehouse warehouse2 = Warehouse.builder().locality("MOEMA").quantity(3)
+            .type(ProductTypeEnum.PHYSICAL_STORE).build();
+
+        Inventory inventory = Inventory.builder()
+            .warehouses(Arrays.asList(warehouse1, warehouse2)).build();
+
+        return Product.builder().name("L'Oréal Professionnel")
+            .inventory(inventory).build();
     }
 
 }

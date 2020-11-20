@@ -17,9 +17,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product save(Product product) {
-        if (productRepository.existsBySku(product.getSku())) {
+        if (productRepository.existsBySku(product.getSku()))
             throw new BusinessException("SKU already used by other product.");
-        }
+
+        product = productRepository.save(product);
+
+        Product finalProduct = product;
+        product.getInventory().getWarehouses().forEach(w ->
+            w.setInventory(finalProduct.getInventory()));
+
         return productRepository.save(product);
     }
 }

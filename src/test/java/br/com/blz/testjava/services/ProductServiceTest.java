@@ -3,9 +3,13 @@ package br.com.blz.testjava.services;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import br.com.blz.testjava.exceptions.BusinessException;
+import br.com.blz.testjava.model.entities.Inventory;
 import br.com.blz.testjava.model.entities.Product;
+import br.com.blz.testjava.model.entities.Warehouse;
+import br.com.blz.testjava.model.entities.enums.ProductTypeEnum;
 import br.com.blz.testjava.model.repository.ProductRepository;
 import br.com.blz.testjava.services.impl.ProductServiceImpl;
+import java.util.Arrays;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -35,8 +39,7 @@ public class ProductServiceTest {
     public void saveProductTest() {
         Product product = createNewProduct();
         Mockito.when(productRepository.existsBySku(Mockito.anyLong())).thenReturn(false);
-        Mockito.when(productRepository.save(product))
-            .thenReturn(Product.builder().sku(1L).name(product.getName()).build());
+        Mockito.when(productRepository.save(product)).thenReturn(product);
 
         Product savedProduct = productService.save(product);
 
@@ -59,6 +62,16 @@ public class ProductServiceTest {
     }
 
     private Product createNewProduct() {
-        return Product.builder().sku(1L).name("L'Oréal Professionnel").build();
+        Warehouse warehouse1 = Warehouse.builder().locality("SP").quantity(12)
+            .type(ProductTypeEnum.ECOMMERCE).build();
+
+        Warehouse warehouse2 = Warehouse.builder().locality("MOEMA").quantity(3)
+            .type(ProductTypeEnum.PHYSICAL_STORE).build();
+
+        Inventory inventory = Inventory.builder()
+            .warehouses(Arrays.asList(warehouse1, warehouse2)).build();
+
+        return Product.builder().sku(1L).name("L'Oréal Professionnel")
+            .inventory(inventory).build();
     }
 }

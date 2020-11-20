@@ -2,8 +2,12 @@ package br.com.blz.testjava.model.repositories;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import br.com.blz.testjava.model.entities.Inventory;
 import br.com.blz.testjava.model.entities.Product;
+import br.com.blz.testjava.model.entities.Warehouse;
+import br.com.blz.testjava.model.entities.enums.ProductTypeEnum;
 import br.com.blz.testjava.model.repository.ProductRepository;
+import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +32,7 @@ public class ProductRepositoryTest {
     @DisplayName("Should return true if already exist a product on database with SKU informed.")
     public void shouldReturnTrueIfSkuExist() {
         Long sku = 1L;
-        Product product = Product.builder().name("L'Oréal Professionnel").build();
+        Product product = createNewProduct();
         entityManager.persist(product);
 
         boolean exists = productRepository.existsBySku(sku);
@@ -41,6 +45,20 @@ public class ProductRepositoryTest {
         Long sku = 1L;
         boolean exists = productRepository.existsBySku(sku);
         assertThat(exists).isFalse();
+    }
+
+    private Product createNewProduct() {
+        Warehouse warehouse1 = Warehouse.builder().locality("SP").quantity(12)
+            .type(ProductTypeEnum.ECOMMERCE).build();
+
+        Warehouse warehouse2 = Warehouse.builder().locality("MOEMA").quantity(3)
+            .type(ProductTypeEnum.PHYSICAL_STORE).build();
+
+        Inventory inventory = Inventory.builder()
+            .warehouses(Arrays.asList(warehouse1, warehouse2)).build();
+
+        return Product.builder().name("L'Oréal Professionnel")
+            .inventory(inventory).build();
     }
 
 }
