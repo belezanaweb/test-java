@@ -4,6 +4,7 @@ import br.com.blz.testjava.exceptions.BusinessException;
 import br.com.blz.testjava.model.entities.Product;
 import br.com.blz.testjava.model.repository.ProductRepository;
 import br.com.blz.testjava.services.ProductService;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,5 +28,10 @@ public class ProductServiceImpl implements ProductService {
             w.setInventory(finalProduct.getInventory()));
 
         return productRepository.save(product);
+    }
+
+    @Override
+    public Optional<Product> getBySku(Long sku) {
+        return Optional.empty();
     }
 }

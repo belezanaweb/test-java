@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,9 +33,15 @@ public class ProductResource {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductDTO create(@RequestBody @Valid ProductDTO productDTO) {
+    public ProductDTO createProduct(@RequestBody @Valid ProductDTO productDTO) {
         Product product = modelMapper.map(productDTO, Product.class);
         product = productService.save(product);
+        return modelMapper.map(product, ProductDTO.class);
+    }
+
+    @GetMapping("{sku}")
+    public ProductDTO getProductBySku(@PathVariable Long sku) {
+        Product product = productService.getBySku(sku).get();
         return modelMapper.map(product, ProductDTO.class);
     }
 

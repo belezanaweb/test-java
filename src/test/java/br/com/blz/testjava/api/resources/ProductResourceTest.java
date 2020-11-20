@@ -15,6 +15,7 @@ import br.com.blz.testjava.model.entities.enums.ProductTypeEnum;
 import br.com.blz.testjava.services.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Arrays;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -110,6 +111,32 @@ public class ProductResourceTest {
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("errors", hasSize(1)))
             .andExpect(jsonPath("errors[0]").value(errorMessage));
+    }
+
+    @Test
+    @DisplayName("Should get a product by SKU")
+    public void getProductBySkuTest() throws Exception {
+        Long sku = 1L;
+        Product product = createNewProduct();
+        product.setSku(sku);
+        BDDMockito.given(productService.getBySku(sku)).willReturn(Optional.of(product));
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+            .get(PRODUCT_API.concat("/" + sku))
+            .accept(MediaType.APPLICATION_JSON);
+
+        mvc.perform(request)
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("sku").value(sku))
+            .andExpect(jsonPath("name").value(product.getName()))
+            .andExpect(jsonPath("inventory").isNotEmpty())
+            .andExpect(jsonPath("inventory.warehouses").isNotEmpty())
+            .andExpect(jsonPath("inventory.warehouses[0].locality").value("SP"))
+            .andExpect(jsonPath("inventory.warehouses[0].quantity").value(12))
+            .andExpect(jsonPath("inventory.warehouses[0].type").value("ECOMMERCE"))
+            .andExpect(jsonPath("inventory.warehouses[1].locality").value("MOEMA"))
+            .andExpect(jsonPath("inventory.warehouses[1].quantity").value(3))
+            .andExpect(jsonPath("inventory.warehouses[1].type").value("PHYSICAL_STORE"));
     }
 
     private ProductDTO createNewProductDTO() {
