@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/products")
@@ -41,8 +42,9 @@ public class ProductResource {
 
     @GetMapping("{sku}")
     public ProductDTO getProductBySku(@PathVariable Long sku) {
-        Product product = productService.getBySku(sku).get();
-        return modelMapper.map(product, ProductDTO.class);
+        return productService.getBySku(sku)
+            .map(product -> modelMapper.map(product, ProductDTO.class))
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

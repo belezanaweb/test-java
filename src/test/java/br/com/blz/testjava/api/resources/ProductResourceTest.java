@@ -139,6 +139,18 @@ public class ProductResourceTest {
             .andExpect(jsonPath("inventory.warehouses[1].type").value("PHYSICAL_STORE"));
     }
 
+    @Test
+    @DisplayName("Should return resource not found when the product doesn't exists")
+    public void productNotFoundTest() throws Exception {
+        BDDMockito.given(productService.getBySku(Mockito.anyLong())).willReturn(Optional.empty());
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+            .get(PRODUCT_API.concat("/" + 1))
+            .accept(MediaType.APPLICATION_JSON);
+
+        mvc.perform(request).andExpect(status().isNotFound());
+    }
+
     private ProductDTO createNewProductDTO() {
         WarehouseDTO warehouseDTO1 = WarehouseDTO.builder().locality("SP").quantity(12)
             .type(ProductTypeEnum.ECOMMERCE).build();
