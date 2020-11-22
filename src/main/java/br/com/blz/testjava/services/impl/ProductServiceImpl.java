@@ -34,4 +34,9 @@ public class ProductServiceImpl implements ProductService {
     public Optional<Product> getBySku(Long sku) {
         return Optional.empty();
     }
+
+    @Override
+    public Product delete(Product product) {
+        return null;
+    }
 }

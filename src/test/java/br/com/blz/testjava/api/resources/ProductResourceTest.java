@@ -1,6 +1,8 @@
 package br.com.blz.testjava.api.resources;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyLong;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -20,7 +22,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.BDDMockito;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -53,7 +54,7 @@ public class ProductResourceTest {
         Product savedProduct = createNewProduct();
         savedProduct.setSku(45632L);
 
-        BDDMockito.given(productService.save(Mockito.any(Product.class))).willReturn(savedProduct);
+        BDDMockito.given(productService.save(any(Product.class))).willReturn(savedProduct);
         String content = new ObjectMapper().writeValueAsString(productDTO);
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
@@ -98,7 +99,7 @@ public class ProductResourceTest {
         ProductDTO productDTO = createNewProductDTO();
         String content = new ObjectMapper().writeValueAsString(productDTO);
         String errorMessage = "SKU already used by other product.";
-        BDDMockito.given(productService.save(Mockito.any(Product.class)))
+        BDDMockito.given(productService.save(any(Product.class)))
             .willThrow(new BusinessException(errorMessage));
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
@@ -142,11 +143,35 @@ public class ProductResourceTest {
     @Test
     @DisplayName("Should return resource not found when the product doesn't exists")
     public void productNotFoundTest() throws Exception {
-        BDDMockito.given(productService.getBySku(Mockito.anyLong())).willReturn(Optional.empty());
+        BDDMockito.given(productService.getBySku(anyLong())).willReturn(Optional.empty());
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
             .get(PRODUCT_API.concat("/" + 1))
             .accept(MediaType.APPLICATION_JSON);
+
+        mvc.perform(request).andExpect(status().isNotFound());
+    }
+
+    @Test
+    @DisplayName("Should delete a product")
+    public void deleteProductTest() throws Exception {
+        BDDMockito.given(productService.getBySku(anyLong()))
+            .willReturn(Optional.of(Product.builder().sku(1L).build()));
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+            .delete(PRODUCT_API.concat("/" + 1));
+
+        mvc.perform(request).andExpect(status().isNoContent());
+    }
+
+    @Test
+    @DisplayName("Should return resource not found when doesn't found the product to delete")
+    public void deleteNonexistentProductTest() throws Exception {
+        BDDMockito.given(productService.getBySku(anyLong()))
+            .willReturn(Optional.empty());
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+            .delete(PRODUCT_API.concat("/" + 1));
 
         mvc.perform(request).andExpect(status().isNotFound());
     }

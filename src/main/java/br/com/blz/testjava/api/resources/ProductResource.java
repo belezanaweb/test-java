@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,6 +46,14 @@ public class ProductResource {
         return productService.getBySku(sku)
             .map(product -> modelMapper.map(product, ProductDTO.class))
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    @DeleteMapping("{sku}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long sku) {
+        Product product = productService.getBySku(sku)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        productService.delete(product);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

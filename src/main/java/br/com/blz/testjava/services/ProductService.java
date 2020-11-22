@@ -8,4 +8,6 @@ public interface ProductService {
     Product save(Product product);
 
     Optional<Product> getBySku(Long sku);
+
+    Product delete(Product product);
 }
