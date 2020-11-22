@@ -54,9 +54,32 @@ public class ProductRepositoryTest {
         Product product = createNewProduct();
         entityManager.persist(product);
 
-        Optional<Product> productFounded = productRepository.findBySku(product.getSku());
+        Optional<Product> productFound = productRepository.findBySku(product.getSku());
 
-        assertThat(productFounded.isPresent()).isTrue();
+        assertThat(productFound.isPresent()).isTrue();
+    }
+
+    @Test
+    @DisplayName("Should save a product")
+    public void saveProductTest() {
+        Product product = createNewProduct();
+
+        Product savedBook = productRepository.save(product);
+
+        assertThat(savedBook.getSku()).isNotNull();
+    }
+
+    @Test
+    @DisplayName("Should delete a product")
+    public void deleteProductTest() {
+        Product product = createNewProduct();
+        entityManager.persist(product);
+        Product productFound = entityManager.find(Product.class, product.getSku());
+
+        productRepository.delete(productFound);
+
+        Product productDeleted = entityManager.find(Product.class, product.getSku());
+        assertThat(productDeleted).isNull();
     }
 
     private Product createNewProduct() {

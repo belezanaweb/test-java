@@ -45,6 +45,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product update(Product product) {
-        return null;
+        if (product == null || product.getSku() == null) {
+            throw new IllegalArgumentException("Product SKU can't be null");
+        }
+        return this.productRepository.save(product);
     }
 }

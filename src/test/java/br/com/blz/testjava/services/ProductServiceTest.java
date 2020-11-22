@@ -121,6 +121,47 @@ public class ProductServiceTest {
         Mockito.verify(productRepository, Mockito.never()).delete(product);
     }
 
+    @Test
+    @DisplayName("Should update a product")
+    public void updateProductTest() {
+        Long sku = 1L;
+
+        // Product to be update
+        Product updatingProduct = Product.builder().sku(sku).build();
+
+        // Product simulation
+        Product productUpdated = createNewProduct();
+        productUpdated.setSku(sku);
+
+        Mockito.when(productRepository.save(updatingProduct)).thenReturn(productUpdated);
+        Product product = productService.update(updatingProduct);
+
+        assertThat(product.getSku()).isEqualTo(productUpdated.getSku());
+        assertThat(product.getName()).isEqualTo(productUpdated.getName());
+        assertThat(product.getInventory()).isNotNull();
+        assertThat(product.getInventory().getWarehouses()).isNotNull();
+
+        List<Warehouse> warehousesFounded = product.getInventory().getWarehouses();
+        List<Warehouse> warehousesMocked = productUpdated.getInventory().getWarehouses();
+
+        for (int i = 0; i < warehousesFounded.size(); i++) {
+            assertThat(warehousesFounded.get(i).getQuantity())
+                .isEqualTo(warehousesMocked.get(i).getQuantity());
+            assertThat(warehousesFounded.get(i).getLocality())
+                .isEqualTo(warehousesMocked.get(i).getLocality());
+            assertThat(warehousesFounded.get(i).getType())
+                .isEqualTo(warehousesMocked.get(i).getType());
+        }
+    }
+
+    @Test
+    @DisplayName("Should throw error to try update a product nonexistent")
+    public void updateInvalidProductTest() {
+        Product product = new Product();
+        assertThrows(IllegalArgumentException.class, () -> productService.update(product));
+        Mockito.verify(productRepository, Mockito.never()).save(product);
+    }
+
     private Product createNewProduct() {
         Warehouse warehouse1 = Warehouse.builder().locality("SP").quantity(12)
             .type(ProductTypeEnum.ECOMMERCE).build();
