@@ -3,8 +3,12 @@ package br.com.blz.testjava.api.resources;
 import br.com.blz.testjava.api.dtos.ProductDTO;
 import br.com.blz.testjava.api.exceptions.ApiErrors;
 import br.com.blz.testjava.exceptions.BusinessException;
+import br.com.blz.testjava.model.entities.Inventory;
 import br.com.blz.testjava.model.entities.Product;
+import br.com.blz.testjava.model.entities.Warehouse;
 import br.com.blz.testjava.services.ProductService;
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -58,16 +62,33 @@ public class ProductResource {
     }
 
     @PutMapping("{sku}")
-    public ProductDTO update(@PathVariable Long sku, ProductDTO productDTO) {
-        return productService.getBySku(sku)
-            .map(product -> {
-                product.setName(productDTO.getName());
-                product.setInventory(product.getInventory());
-                product = productService.update(product);
+    public ProductDTO update(@PathVariable Long sku, @RequestBody ProductDTO productDTO) {
+        Product productToUpdate = modelMapper.map(productDTO, Product.class);
 
-                return modelMapper.map(product, ProductDTO.class);
-            })
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return productService.getBySku(sku).map(product -> {
+            List<Warehouse> warehouses = new ArrayList<>();
+
+            productToUpdate.getInventory().getWarehouses().forEach(w -> {
+                Warehouse warehouse = Warehouse.builder()
+                    .id(w.getId())
+                    .quantity(w.getQuantity())
+                    .locality(w.getLocality())
+                    .type(w.getType())
+                    .build();
+                warehouses.add(warehouse);
+            });
+
+            Inventory inventory = Inventory.builder()
+                .id(productToUpdate.getInventory().getId()).warehouses(warehouses).build();
+
+            warehouses.forEach(w -> w.setInventory(inventory));
+
+            product.setSku(productToUpdate.getSku());
+            product.setName(productToUpdate.getName());
+            product.setInventory(inventory);
+            product = productService.update(product);
+            return modelMapper.map(product, ProductDTO.class);
+        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

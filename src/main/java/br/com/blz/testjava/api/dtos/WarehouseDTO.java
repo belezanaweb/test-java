@@ -14,6 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class WarehouseDTO {
 
+    private Long id;
     private String locality;
     private int quantity;
     private ProductTypeEnum type;

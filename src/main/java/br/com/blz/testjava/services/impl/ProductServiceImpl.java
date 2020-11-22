@@ -48,6 +48,6 @@ public class ProductServiceImpl implements ProductService {
         if (product == null || product.getSku() == null) {
             throw new IllegalArgumentException("Product SKU can't be null");
         }
-        return this.productRepository.save(product);
+        return productRepository.save(product);
     }
 }

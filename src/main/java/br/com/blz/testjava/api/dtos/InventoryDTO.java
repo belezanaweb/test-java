@@ -14,6 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class InventoryDTO {
 
+    private Long id;
     private List<WarehouseDTO> warehouses;
 
 }
