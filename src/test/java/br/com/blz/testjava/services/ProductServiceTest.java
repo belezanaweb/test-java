@@ -10,6 +10,8 @@ import br.com.blz.testjava.model.entities.enums.ProductTypeEnum;
 import br.com.blz.testjava.model.repository.ProductRepository;
 import br.com.blz.testjava.services.impl.ProductServiceImpl;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -59,6 +61,46 @@ public class ProductServiceTest {
             .hasMessage("SKU already used by other product.");
 
         Mockito.verify(productRepository, Mockito.never()).save(product);
+    }
+
+    @Test
+    @DisplayName("Should get a product by sku")
+    public void getProductBySkuTest() {
+        Long sku = 1L;
+        Product product = createNewProduct();
+        product.setSku(sku);
+        Mockito.when(productRepository.findBySku(sku)).thenReturn(Optional.of(product));
+
+        Optional<Product> productFound = productService.getBySku(sku);
+
+        assertThat(productFound.isPresent()).isTrue();
+        assertThat(productFound.get().getSku()).isEqualTo(sku);
+        assertThat(productFound.get().getName()).isEqualTo(product.getName());
+        assertThat(productFound.get().getInventory()).isNotNull();
+        assertThat(productFound.get().getInventory().getWarehouses()).isNotNull();
+
+        List<Warehouse> warehousesFounded = productFound.get().getInventory().getWarehouses();
+        List<Warehouse> warehousesMocked = product.getInventory().getWarehouses();
+
+        for (int i = 0; i < warehousesFounded.size(); i++) {
+            assertThat(warehousesFounded.get(i).getQuantity())
+                .isEqualTo(warehousesMocked.get(i).getQuantity());
+            assertThat(warehousesFounded.get(i).getLocality())
+                .isEqualTo(warehousesMocked.get(i).getLocality());
+            assertThat(warehousesFounded.get(i).getType())
+                .isEqualTo(warehousesMocked.get(i).getType());
+        }
+    }
+
+    @Test
+    @DisplayName("Should return empty if the product with SKU informed doesn't exist on database")
+    public void productNotFoundBySkuTest() {
+        Long sku = 1L;
+        Mockito.when(productRepository.findBySku(sku)).thenReturn(Optional.empty());
+
+        Optional<Product> product = productService.getBySku(sku);
+
+        assertThat(product.isPresent()).isFalse();
     }
 
     private Product createNewProduct() {

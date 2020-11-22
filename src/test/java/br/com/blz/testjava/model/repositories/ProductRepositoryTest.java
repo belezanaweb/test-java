@@ -8,6 +8,7 @@ import br.com.blz.testjava.model.entities.Warehouse;
 import br.com.blz.testjava.model.entities.enums.ProductTypeEnum;
 import br.com.blz.testjava.model.repository.ProductRepository;
 import java.util.Arrays;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,6 +46,17 @@ public class ProductRepositoryTest {
         Long sku = 1L;
         boolean exists = productRepository.existsBySku(sku);
         assertThat(exists).isFalse();
+    }
+
+    @Test
+    @DisplayName("Should get a product by SKU")
+    public void findProductBySkuTest() {
+        Product product = createNewProduct();
+        entityManager.persist(product);
+
+        Optional<Product> productFounded = productRepository.findBySku(product.getSku());
+
+        assertThat(productFounded.isPresent()).isTrue();
     }
 
     private Product createNewProduct() {

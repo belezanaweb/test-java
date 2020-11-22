@@ -32,7 +32,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Optional<Product> getBySku(Long sku) {
-        return Optional.empty();
+        return this.productRepository.findBySku(sku);
     }
 
     @Override
