@@ -18,6 +18,7 @@ import br.com.blz.testjava.services.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Arrays;
 import java.util.Optional;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -172,6 +173,74 @@ public class ProductResourceTest {
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
             .delete(PRODUCT_API.concat("/" + 1));
+
+        mvc.perform(request).andExpect(status().isNotFound());
+    }
+
+    @Test
+    @Disabled
+    @DisplayName("Should update a product")
+    public void updateProductTest() throws Exception {
+        Long sku = 1L;
+        String content = new ObjectMapper().writeValueAsString(createNewProduct());
+
+        // Mock product that exist on database
+        Warehouse warehouse1 = Warehouse.builder()
+            .id(1L).locality("RJ").quantity(14).type(ProductTypeEnum.ECOMMERCE).build();
+
+        Warehouse warehouse2 = Warehouse.builder()
+            .id(2L).locality("MOEMA").quantity(13).type(ProductTypeEnum.PHYSICAL_STORE).build();
+
+        Inventory inventory = Inventory.builder()
+            .id(1L).warehouses(Arrays.asList(warehouse1, warehouse2)).build();
+
+        Product updatingProduct = Product.builder()
+            .sku(sku).name("Creme de barbear").inventory(inventory).build();
+
+        // Product to be update
+        Warehouse warehouse3 = Warehouse.builder()
+            .id(1L).locality("SP").quantity(12).type(ProductTypeEnum.ECOMMERCE).build();
+
+        Warehouse warehouse4 = Warehouse.builder()
+            .id(2L).locality("MOEMA").quantity(3).type(ProductTypeEnum.PHYSICAL_STORE).build();
+
+        Inventory inventory1 = Inventory.builder()
+            .id(1L).warehouses(Arrays.asList(warehouse3, warehouse4)).build();
+
+        Product productUpdated =  Product.builder()
+            .sku(sku).name("L'Oréal Professionnel").inventory(inventory1).build();
+
+        BDDMockito.given(productService.getBySku(sku)).willReturn(Optional.of(updatingProduct));
+        BDDMockito.given(productService.update(productUpdated)).willReturn(productUpdated);
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+            .put(PRODUCT_API.concat("/" + 1))
+            .content(content)
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON);
+
+        mvc.perform(request)
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("sku").value(sku))
+            .andExpect(jsonPath("name").value(createNewProduct().getName()))
+            .andExpect(jsonPath("inventory").isNotEmpty())
+            .andExpect(jsonPath("inventory.warehouses").isNotEmpty())
+            .andExpect(jsonPath("inventory.warehouses[0].locality").value("SP"))
+            .andExpect(jsonPath("inventory.warehouses[0].quantity").value(11))
+            .andExpect(jsonPath("inventory.warehouses[0].type").value("PHYSICAL_STORE"));
+    }
+
+    @Test
+    @DisplayName("Should return 404 to try update a nonexistent product")
+    public void updateNonexistentProductTest() throws Exception {
+        String content = new ObjectMapper().writeValueAsString(createNewProduct());
+        BDDMockito.given(productService.getBySku(anyLong())).willReturn(Optional.empty());
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+            .put(PRODUCT_API.concat("/" + 1))
+            .content(content)
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON);
 
         mvc.perform(request).andExpect(status().isNotFound());
     }

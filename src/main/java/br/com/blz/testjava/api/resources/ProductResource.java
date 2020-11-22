@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -54,6 +55,19 @@ public class ProductResource {
         Product product = productService.getBySku(sku)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         productService.delete(product);
+    }
+
+    @PutMapping("{sku}")
+    public ProductDTO update(@PathVariable Long sku, ProductDTO productDTO) {
+        return productService.getBySku(sku)
+            .map(product -> {
+                product.setName(productDTO.getName());
+                product.setInventory(product.getInventory());
+                product = productService.update(product);
+
+                return modelMapper.map(product, ProductDTO.class);
+            })
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

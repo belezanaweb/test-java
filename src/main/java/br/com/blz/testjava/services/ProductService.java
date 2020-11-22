@@ -9,5 +9,7 @@ public interface ProductService {
 
     Optional<Product> getBySku(Long sku);
 
-    Product delete(Product product);
+    void delete(Product product);
+
+    Product update(Product product);
 }

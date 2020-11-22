@@ -36,7 +36,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product delete(Product product) {
+    public void delete(Product product) {
+    }
+
+    @Override
+    public Product update(Product product) {
         return null;
     }
 }
