@@ -1,6 +1,8 @@
 package br.com.blz.testjava.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import br.com.blz.testjava.exceptions.BusinessException;
 import br.com.blz.testjava.model.entities.Inventory;
@@ -101,6 +103,22 @@ public class ProductServiceTest {
         Optional<Product> product = productService.getBySku(sku);
 
         assertThat(product.isPresent()).isFalse();
+    }
+
+    @Test
+    @DisplayName("Should delete a product")
+    public void deleteProductTest() {
+        Product product = Product.builder().sku(1L).build();
+        assertDoesNotThrow(() -> productService.delete(product));
+        Mockito.verify(productRepository, Mockito.times(1)).delete(product);
+    }
+
+    @Test
+    @DisplayName("Should throw error to try delete a product nonexistent")
+    public void deleteInvalidProductTest() {
+        Product product = new Product();
+        assertThrows(IllegalArgumentException.class, () -> productService.delete(product));
+        Mockito.verify(productRepository, Mockito.never()).delete(product);
     }
 
     private Product createNewProduct() {

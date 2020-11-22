@@ -37,6 +37,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void delete(Product product) {
+        if (product == null || product.getSku() == null) {
+            throw new IllegalArgumentException("Product SKU can't be null");
+        }
+        this.productRepository.delete(product);
     }
 
     @Override
