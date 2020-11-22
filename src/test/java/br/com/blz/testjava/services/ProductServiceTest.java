@@ -73,7 +73,7 @@ public class ProductServiceTest {
         product.setSku(sku);
         Mockito.when(productRepository.findBySku(sku)).thenReturn(Optional.of(product));
 
-        Optional<Product> productFound = productService.getBySku(sku);
+        Optional<Product> productFound = productService.getProductBySku(sku);
 
         assertThat(productFound.isPresent()).isTrue();
         assertThat(productFound.get().getSku()).isEqualTo(sku);
@@ -100,7 +100,7 @@ public class ProductServiceTest {
         Long sku = 1L;
         Mockito.when(productRepository.findBySku(sku)).thenReturn(Optional.empty());
 
-        Optional<Product> product = productService.getBySku(sku);
+        Optional<Product> product = productService.getProductBySku(sku);
 
         assertThat(product.isPresent()).isFalse();
     }
@@ -127,7 +127,8 @@ public class ProductServiceTest {
         Long sku = 1L;
 
         // Product to be update
-        Product updatingProduct = Product.builder().sku(sku).build();
+        Product updatingProduct = createNewProduct();
+        updatingProduct.setSku(sku);
 
         // Product simulation
         Product productUpdated = createNewProduct();
@@ -170,7 +171,8 @@ public class ProductServiceTest {
             .type(ProductTypeEnum.PHYSICAL_STORE).build();
 
         Inventory inventory = Inventory.builder()
-            .warehouses(Arrays.asList(warehouse1, warehouse2)).build();
+            .warehouses(Arrays.asList(warehouse1, warehouse2))
+            .quantity(15).build();
 
         return Product.builder().sku(1L).name("L'Oréal Professionnel")
             .inventory(inventory).build();

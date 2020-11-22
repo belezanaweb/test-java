@@ -121,7 +121,7 @@ public class ProductResourceTest {
         Long sku = 1L;
         Product product = createNewProduct();
         product.setSku(sku);
-        BDDMockito.given(productService.getBySku(sku)).willReturn(Optional.of(product));
+        BDDMockito.given(productService.getProductBySku(sku)).willReturn(Optional.of(product));
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
             .get(PRODUCT_API.concat("/" + sku))
@@ -144,7 +144,7 @@ public class ProductResourceTest {
     @Test
     @DisplayName("Should return resource not found when the product doesn't exists")
     public void productNotFoundTest() throws Exception {
-        BDDMockito.given(productService.getBySku(anyLong())).willReturn(Optional.empty());
+        BDDMockito.given(productService.getProductBySku(anyLong())).willReturn(Optional.empty());
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
             .get(PRODUCT_API.concat("/" + 1))
@@ -156,7 +156,7 @@ public class ProductResourceTest {
     @Test
     @DisplayName("Should delete a product")
     public void deleteProductTest() throws Exception {
-        BDDMockito.given(productService.getBySku(anyLong()))
+        BDDMockito.given(productService.getProductBySku(anyLong()))
             .willReturn(Optional.of(Product.builder().sku(1L).build()));
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
@@ -168,7 +168,7 @@ public class ProductResourceTest {
     @Test
     @DisplayName("Should return resource not found when doesn't found the product to delete")
     public void deleteNonexistentProductTest() throws Exception {
-        BDDMockito.given(productService.getBySku(anyLong()))
+        BDDMockito.given(productService.getProductBySku(anyLong()))
             .willReturn(Optional.empty());
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
@@ -210,7 +210,7 @@ public class ProductResourceTest {
         Product productUpdated =  Product.builder()
             .sku(sku).name("L'Oréal Professionnel").inventory(inventory1).build();
 
-        BDDMockito.given(productService.getBySku(sku)).willReturn(Optional.of(updatingProduct));
+        BDDMockito.given(productService.getProductBySku(sku)).willReturn(Optional.of(updatingProduct));
         BDDMockito.given(productService.update(productUpdated)).willReturn(productUpdated);
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
@@ -234,7 +234,7 @@ public class ProductResourceTest {
     @DisplayName("Should return 404 to try update a nonexistent product")
     public void updateNonexistentProductTest() throws Exception {
         String content = new ObjectMapper().writeValueAsString(createNewProduct());
-        BDDMockito.given(productService.getBySku(anyLong())).willReturn(Optional.empty());
+        BDDMockito.given(productService.getProductBySku(anyLong())).willReturn(Optional.empty());
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
             .put(PRODUCT_API.concat("/" + 1))

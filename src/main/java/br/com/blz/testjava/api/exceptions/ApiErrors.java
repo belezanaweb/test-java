@@ -1,6 +1,7 @@
 package br.com.blz.testjava.api.exceptions;
 
 import br.com.blz.testjava.exceptions.BusinessException;
+import br.com.blz.testjava.exceptions.ProductUnavaliableException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +17,10 @@ public class ApiErrors {
     }
 
     public ApiErrors(BusinessException ex) {
+        this.errors = Arrays.asList(ex.getMessage());
+    }
+
+    public ApiErrors(ProductUnavaliableException ex) {
         this.errors = Arrays.asList(ex.getMessage());
     }
 

@@ -7,7 +7,7 @@ public interface ProductService {
 
     Product save(Product product);
 
-    Optional<Product> getBySku(Long sku);
+    Optional<Product> getProductBySku(Long sku);
 
     void delete(Product product);
 

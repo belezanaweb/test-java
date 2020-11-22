@@ -3,6 +3,7 @@ package br.com.blz.testjava.api.resources;
 import br.com.blz.testjava.api.dtos.ProductDTO;
 import br.com.blz.testjava.api.exceptions.ApiErrors;
 import br.com.blz.testjava.exceptions.BusinessException;
+import br.com.blz.testjava.exceptions.ProductUnavaliableException;
 import br.com.blz.testjava.model.entities.Inventory;
 import br.com.blz.testjava.model.entities.Product;
 import br.com.blz.testjava.model.entities.Warehouse;
@@ -48,7 +49,7 @@ public class ProductResource {
 
     @GetMapping("{sku}")
     public ProductDTO getProductBySku(@PathVariable Long sku) {
-        return productService.getBySku(sku)
+        return productService.getProductBySku(sku)
             .map(product -> modelMapper.map(product, ProductDTO.class))
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
@@ -56,7 +57,7 @@ public class ProductResource {
     @DeleteMapping("{sku}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long sku) {
-        Product product = productService.getBySku(sku)
+        Product product = productService.getProductBySku(sku)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         productService.delete(product);
     }
@@ -65,7 +66,7 @@ public class ProductResource {
     public ProductDTO update(@PathVariable Long sku, @RequestBody ProductDTO productDTO) {
         Product productToUpdate = modelMapper.map(productDTO, Product.class);
 
-        return productService.getBySku(sku).map(product -> {
+        return productService.getProductBySku(sku).map(product -> {
             List<Warehouse> warehouses = new ArrayList<>();
 
             productToUpdate.getInventory().getWarehouses().forEach(w -> {
@@ -101,6 +102,12 @@ public class ProductResource {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BusinessException.class)
     public ApiErrors handleBusinessException(BusinessException ex) {
+        return new ApiErrors(ex);
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(ProductUnavaliableException.class)
+    public ApiErrors handleProductUnavailable(ProductUnavaliableException ex) {
         return new ApiErrors(ex);
     }
 

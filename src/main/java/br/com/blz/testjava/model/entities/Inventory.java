@@ -1,5 +1,6 @@
 package br.com.blz.testjava.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -27,5 +28,9 @@ public class Inventory {
 
     @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
     private List<Warehouse> warehouses;
+
+    @JsonIgnore
+    @Builder.Default
+    private Integer quantity = 0;
 
 }
