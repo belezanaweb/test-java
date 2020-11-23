@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
-@JsonPropertyOrder("sku")
+@JsonPropertyOrder(value = "sku", alphabetic = true)
 @Data
 public class ProductDto implements PersistableDto<Long> {
 

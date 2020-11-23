@@ -42,12 +42,20 @@ public class ProductController extends CrudController<ProductService, Long, Prod
 @Service
 public class ProductService extends CrudServiceImpl<ProductRepository, Product, Long, ProductDto> {
 
-	public ProductService(ProductRepository repository, ModelMapper modelMapper) {
-		super(repository, Product.class, ProductDto.class, modelMapper);
-	}
+    public ProductService(ProductRepository repository, ModelMapper modelMapper) {
+        super(repository, Product.class, ProductDto.class, modelMapper);
+    }
+
+    @Transactional
+    @Override
+    public ProductDto create(@NonNull ProductDto dto) {
+        if (repository.existsById(dto.getId())) {
+            throw new CustomRuntimeException(ValidationMsg.ENTITY_EXISTS, entityName, "SKU", dto.getId().toString());
+        }
+        return super.create(dto);
+    }
 
 }
-
 ```
 
 ## Validations:
@@ -55,15 +63,16 @@ The **javax.validation.constraints** are in the DTOs to be captured in the contr
 It is also possible to customize a group validation:
 * ProductDto:
 ``` java
+@JsonPropertyOrder(value = "sku" ,alphabetic = true)
 @Data
 public class ProductDto implements PersistableDto<Long> {
 
     private static final long serialVersionUID = 1L;
 
-    @JsonView(JsonViews.Create.class)
     @ApiModelProperty(value = "SKU product")
-    @NotNull(groups = ValidationGroups.Create.class)
-    private Long sku;
+    @NotNull(groups = ValidationGroups.Create.class, message = "sku {javax.validation.constraints.NotNull.message}")
+    @JsonProperty("sku")
+    private Long id;
 
     @NotEmpty
     private String name;
@@ -72,12 +81,6 @@ public class ProductDto implements PersistableDto<Long> {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private boolean marketable;
-
-    @JsonIgnore
-    @Override
-    public Long getId() {
-        return sku;
-    }
 
 }
 ```
@@ -111,7 +114,9 @@ All exceptions are caught and handled in **DefaultControllerAdvice** in order to
 ## Run it:
 * Import this project into your IDE as a MAVEN project, preferably intelliJ;
 * After all dependencies are downloaded, run the tests;
-* Finally, run the Application, using the **TestJavaApplication** class, by default it will start on port 8080.
+* Finally, run the Application, using the **TestJavaApplication** class
+* Alternatively run the following mvn command: **mvn spring-boot:run**
+* Both by default it will start on port 8080.
 * Test the endpoints using the Swagger interface at: http://localhost:8080/swagger-ui/
   or use any Client-Rest of your choice, such as: Postman or Insomnia
 
@@ -124,6 +129,6 @@ All exceptions are caught and handled in **DefaultControllerAdvice** in order to
 ## Technologies:
 * JAVA 11
 * SpringBoot 2.4.0
+* MongoDB 4.1 (https://cloud.mongodb.com)
 * ModelMapper (org.modelmapper) 2.3.8
-* H2 1.4.200 (simplification for testing and demonstration)
 * JUnit 5
