@@ -1,78 +1,129 @@
-### Backend Test
+# Beleza na Web - Java Test
+## Description:
+I implemented the classes: **CrudController** and **CrudServiceImpl** with the standard methods of CRUD operations, as shown in the **CrudService** interface below:
+* CrudService:
+ ``` java
+public interface CrudService<I, D> {
 
-[![Build Status](https://travis-ci.com/belezanaweb/test-java.svg?branch=master)](https://travis-ci.com/belezanaweb/test-java)
+	D create(D dto);
 
-[![codecov](https://codecov.io/gh/belezanaweb/test-java/branch/master/graph/badge.svg)](https://codecov.io/gh/belezanaweb/test-java)
+	D update(I id, D dto);
 
-Esta é uma avaliação básica de código.
+	Optional<D> findById(I id);
 
-O objetivo é conhecer um pouco do seu conhecimento/prática de RESTful, Spring e Java.
+	Page<D> findAll(Pageable pageable);
 
-Recomendamos que você não gaste mais do que 4 - 6 horas.
+	boolean deleteById(I id);
 
-Faça um fork deste repositório que contém o bootstrap de uma aplicação SpringBoot 1.5.12. (você pode utilizar spring boot 2+)
-
-Ao finalizar o teste, submeta um pull request para o repositório que nosso time será notificado.
-
-### Tarefas
-
-Com a seguinte representação de produto:
-
-```json
-{
-    "sku": 43264,
-    "name": "L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g",
-    "inventory": {
-        "quantity": 15,
-        "warehouses": [
-            {
-                "locality": "SP",
-                "quantity": 12,
-                "type": "ECOMMERCE"
-            },
-            {
-                "locality": "MOEMA",
-                "quantity": 3,
-                "type": "PHYSICAL_STORE"
-            }
-        ]
-    },
-    "isMarketable": true
 }
 ```
 
-Crie endpoints para as seguintes ações:
+Therefore, to create a new entity it is only necessary to implement a new Repository and the controller and the service extending from the respective abstract classes and all CRUD operations will be automatically available, as in the examples:
+* ProductRepository:
+``` java
+@Repository
+public interface ProductRepository extends JpaRepository<Product, Long> {}
+```
+* ProductController:
+``` java
+@RequestMapping(Constants.API_V_1 + "/product")
+@RestController
+public class ProductController extends CrudController<ProductService, Long, ProductDto> {
 
-- [ ] Criação de produto onde o payload será o json informado acima (exceto as propriedades **isMarketable** e **inventory.quantity**)
+    public ProductController(ProductService service) {
+        super(service);
+    }
 
-- [ ] Edição de produto por **sku**
+}
+```
+* ProductService:
+``` java
+@Slf4j
+@Service
+public class ProductService extends CrudServiceImpl<ProductRepository, Product, Long, ProductDto> {
 
-- [ ] Recuperação de produto por **sku**
+	public ProductService(ProductRepository repository, ModelMapper modelMapper) {
+		super(repository, Product.class, ProductDto.class, modelMapper);
+	}
 
-- [ ] Deleção de produto por **sku**
+}
 
-### Requisitos
+```
 
+## Validations:
+The **javax.validation.constraints** are in the DTOs to be captured in the controller layer, thus avoiding reaching the persistence layer for them to be validated.
+It is also possible to customize a group validation:
+* ProductDto:
+``` java
+@Data
+public class ProductDto implements PersistableDto<Long> {
 
-- [ ] Toda vez que um produto for recuperado por **sku** deverá ser calculado a propriedade: **inventory.quantity**
+    private static final long serialVersionUID = 1L;
 
-        A propriedade inventory.quantity é a soma da quantity dos warehouses
+    @JsonView(JsonViews.Create.class)
+    @ApiModelProperty(value = "SKU product")
+    @NotNull(groups = ValidationGroups.Create.class)
+    private Long sku;
 
-- [ ] Toda vez que um produto for recuperado por **sku** deverá ser calculado a propriedade: **isMarketable**
+    @NotEmpty
+    private String name;
 
-        Um produto é marketable sempre que seu inventory.quantity for maior que 0
+    private InventoryDto inventory;
 
-- [ ] Caso um produto já existente em memória tente ser criado com o mesmo **sku** uma exceção deverá ser lançada
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private boolean marketable;
 
-        Dois produtos são considerados iguais se os seus skus forem iguais
+    @JsonIgnore
+    @Override
+    public Long getId() {
+        return sku;
+    }
 
+}
+```
+* CrudController:
+``` java
+public abstract class CrudController<S extends CrudService<I, D>, I, D> {
 
-- [ ] Ao atualizar um produto, o antigo deve ser sobrescrito com o que esta sendo enviado na requisição
+	protected final S service;
 
-        A requisição deve receber o sku e atualizar com o produto que tbm esta vindo na requisição
+	public CrudController(@NonNull S service) {
+		this.service = service;
+	}
 
-### Dicas
+	@JsonView(JsonViews.Create.class)
+	@PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+	public ResponseEntity<D> create(@Validated({Default.class, ValidationGroups.Create.class}) @RequestBody D dto) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
+	}
 
-- Os produtos podem ficar em memória, não é necessário persistir os dados
-- Sinta-se a vontade para fazer o código em ```groovy``` se preferir, utilizamos bastante aqui
-- Testes são sempre bem-vindos :smiley:
+    @PutMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<D> update(@PathVariable I id, @Validated({Default.class, ValidationGroups.Update.class}) @RequestBody D dto) {
+        return ResponseEntity.ok(service.update(id, dto));
+    }
+
+}
+```
+
+## Exceptions:
+All exceptions are caught and handled in **DefaultControllerAdvice** in order to return a friendly and restfull-compliant response.
+
+## Run it:
+* Import this project into your IDE as a MAVEN project, preferably intelliJ;
+* After all dependencies are downloaded, run the tests;
+* Finally, run the Application, using the **TestJavaApplication** class, by default it will start on port 8080.
+* Test the endpoints using the Swagger interface at: http://localhost:8080/swagger-ui/
+  or use any Client-Rest of your choice, such as: Postman or Insomnia
+
+## Deploy:
+* Heroku:
+  * https://beleza-web-java-test.herokuapp.com/swagger-ui/
+* Artefatos:
+  * https://github.com/marcusvoltolim?tab=packages&repo_name=test-java
+
+## Technologies:
+* JAVA 11
+* SpringBoot 2.4.0
+* ModelMapper (org.modelmapper) 2.3.8
+* H2 1.4.200 (simplification for testing and demonstration)
+* JUnit 5
