@@ -18,5 +18,4 @@ insert_final_newline = true
 trim_trailing_whitespace = false
 
 [*.{html,groovy,java,xml}]
-indent_style = space
 indent_size = 4

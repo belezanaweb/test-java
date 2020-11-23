@@ -1,0 +1,6 @@
+server:
+  port: 8080
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://mvoltolim:jxrvlMjCmfPJkNtw@cluster0.impdn.mongodb.net/beleza-web?retryWrites=true&w=majority
