@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductServiceImpl implements ProductService {
 
+    private static final Integer QTD_PRODUCT_TO_BE_REMOVED = 1;
+
     private ProductRepository productRepository;
 
     public ProductServiceImpl(ProductRepository productRepository) {
@@ -39,14 +41,10 @@ public class ProductServiceImpl implements ProductService {
             if (product.getInventory().getQuantity() == 0)
                 throw new ProductUnavaliableException("The consulted product is sold out");
 
-            int productToBeRemoved = 1;
             for (Warehouse warehouse : product.getInventory().getWarehouses()) {
-                warehouse.setQuantity(warehouse.getQuantity() - productToBeRemoved);
+                warehouse.setQuantity(warehouse.getQuantity() - QTD_PRODUCT_TO_BE_REMOVED);
                 break;
             }
-
-            product.getInventory()
-                .setQuantity(product.getInventory().getQuantity() - productToBeRemoved);
             update(product);
             return this.productRepository.findBySku(sku).get();
         });
