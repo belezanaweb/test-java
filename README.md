@@ -31,7 +31,7 @@ Com a seguinte representação de produto:
                 "type": "ECOMMERCE"
             },
             {
-                "locality": "MOEMA",
+                "locality": "MOEMA",  
                 "quantity": 3,
                 "type": "PHYSICAL_STORE"
             }
