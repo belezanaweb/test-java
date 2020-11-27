@@ -1,9 +1,0 @@
-CREATE SEQUENCE SEQ_ID_DNA_TRACKER;
-
-CREATE TABLE DNA_TRACKER
-(
-    id           INTEGER PRIMARY KEY NOT NULL DEFAULT nextval('SEQ_ID_DNA_TRACKER'),
-    dna          VARCHAR(36),
-    is_simian    BOOLEAN,
-    data_criacao TIMESTAMP                    DEFAULT CURRENT_TIMESTAMP
-);
