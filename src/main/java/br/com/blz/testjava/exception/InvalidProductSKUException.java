@@ -14,7 +14,7 @@ public class InvalidProductSKUException extends Exception implements Serializabl
 
     private static final long serialVersionUID = -3869354463356184732L;
 
-    public static final String MSG = "SKU não pode ser nulo";
+    public static final String MSG = "SKU nao pode ser nulo";
 
     public InvalidProductSKUException() {
         super(MSG);
