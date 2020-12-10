@@ -6,7 +6,6 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -37,7 +36,7 @@ public class Product extends BaseDomain{
     @PostLoad
     @PostUpdate
     @PostPersist
-    private void postLoadFunction(){
+    private void postHandlerQuantityCalculation(){
         int total = this.inventory.getWarehouses().stream().map(Warehouse::getQuantity).reduce(0, Integer::sum);
         this.inventory.setQuantity(total);
         this.setMarketable(total > 0);

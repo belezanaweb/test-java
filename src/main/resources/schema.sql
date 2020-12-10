@@ -1,1 +1,1 @@
-create database if not exists test_java;
+create schema if not exists test_java;
