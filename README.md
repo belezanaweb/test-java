@@ -1,4 +1,28 @@
+### BUILD AND TESTS
+
+    mvn clean install
+
+### START PROJECT
+
+    mvn spring-boot:run
+
+### SWAGGER 
+
+    http://localhost:8080/swagger-ui.html
+
+### ENDPONTS
+
+    POST -> http://localhost:8080/swagger-ui.html#/Products/saveProductUsingPOST
+
+    GET -> http://localhost:8080/swagger-ui.html#/Products/getProductUsingGET
+
+    UPDATE -> http://localhost:8080/swagger-ui.html#/Products/updateProductUsingPUT
+
+    DELETE -> http://localhost:8080/swagger-ui.html#/Products/deleteProductUsingDELETE
+
+
 ### Backend Test
+
 
 [![Build Status](https://travis-ci.com/belezanaweb/test-java.svg?branch=master)](https://travis-ci.com/belezanaweb/test-java)
 
