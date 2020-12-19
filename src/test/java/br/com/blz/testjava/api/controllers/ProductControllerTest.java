@@ -53,41 +53,18 @@ public class ProductControllerTest {
     @Test
     @DisplayName("Deve recuperar um produto.")
     public void findBySkuTest() throws Exception {
-        Long sku = 43264L;
-
-        Product product = Product.builder()
-            .sku(sku)
-            .name("L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g")
-            .build();
-
-        Warehouse w1 = Warehouse.builder()
-            .locality(new Locality().builder().name("SP").build())
-            .quantity(12L)
-            .type(TypeWarehouseEnum.ECOMMERCE)
-            .build();
-
-        Warehouse w2 = Warehouse.builder()
-            .locality(new Locality().builder().name("MOEMA").build())
-            .quantity(3L)
-            .type(TypeWarehouseEnum.ECOMMERCE)
-            .build();
-
-        List<Warehouse> inventory = new ArrayList<>();
-        inventory.add(w1);
-        inventory.add(w2);
-
-        product.setInventory(inventory);
+        Product product = getProduct();
 
         BDDMockito.given(service.findBySku(Mockito.anyLong())).willReturn(product);
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-            .get(PRODUCT_API + sku)
+            .get(PRODUCT_API + product.getSku())
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON);
 
         mvc.perform(request)
             .andExpect(status().isOk())
-            .andExpect(jsonPath("sku").value(sku))
+            .andExpect(jsonPath("sku").value(product.getSku()))
             .andExpect(jsonPath("name").value(product.getName()))
             .andExpect(jsonPath("isMarketable").value(true))
             .andExpect(jsonPath("inventory").isNotEmpty())
@@ -113,54 +90,8 @@ public class ProductControllerTest {
     @Test
     @DisplayName("Deve criar um novo Produto.")
     public void createProductTest() throws Exception {
-        ProductVO vo = ProductVO.builder()
-            .sku(55986L)
-            .name("Floratta Flores Secretas Desodorante Colônia 30ml")
-            .build();
-
-        WarehouseVO wv1 = WarehouseVO.builder()
-            .locality("SP")
-            .quantity(2L)
-            .type(TypeWarehouseEnum.ECOMMERCE)
-            .build();
-
-        WarehouseVO wv2 = WarehouseVO.builder()
-            .locality("MOEMA")
-            .quantity(2L)
-            .type(TypeWarehouseEnum.PHYSICAL_STORE)
-            .build();
-
-        List<WarehouseVO> wharehousesVO = new ArrayList<WarehouseVO>();
-        wharehousesVO.add(wv1);
-        wharehousesVO.add(wv2);
-
-        InventoryVO inventoryVO = new InventoryVO();
-        inventoryVO.setWarehouses(wharehousesVO);
-
-        vo.setInventory(inventoryVO);
-
-        Product product = Product.builder()
-            .sku(55986L)
-            .name("L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g")
-            .build();
-
-        Warehouse wd1 = Warehouse.builder()
-            .locality(Locality.builder().name("SP").build())
-            .quantity(12L)
-            .type(TypeWarehouseEnum.ECOMMERCE)
-            .build();
-
-        Warehouse wd2 = Warehouse.builder()
-            .locality(Locality.builder().name("MOEMA").build())
-            .quantity(3L)
-            .type(TypeWarehouseEnum.ECOMMERCE)
-            .build();
-
-        List<Warehouse> inventory = new ArrayList<>();
-        inventory.add(wd1);
-        inventory.add(wd2);
-
-        product.setInventory(inventory);
+        ProductVO vo = getProuctVO();
+        Product product = getProduct();
 
         BDDMockito.given(service.save(Mockito.any(ProductVO.class))).willReturn(product);
 
@@ -174,40 +105,15 @@ public class ProductControllerTest {
 
         mvc.perform(request)
             .andExpect(status().isCreated())
-            .andExpect(jsonPath("sku").value(55986L))
+            .andExpect(jsonPath("sku").value(product.getSku()))
             .andExpect(jsonPath("name").value(product.getName()))
             .andExpect(jsonPath("inventory").isNotEmpty());
     }
 
     @Test
-    @DisplayName("Deve lançar expcetion para produto com sku uplicado.")
+    @DisplayName("Deve lançar expcetion para produto com sku duplicado.")
     public void createProductDuplicateSkuTest() throws Exception {
-        ProductVO vo = ProductVO.builder()
-            .sku(43264L)
-            .name("Floratta Flores Secretas Desodorante Colônia 30ml")
-            .build();
-
-        WarehouseVO wv1 = WarehouseVO.builder()
-            .locality("SP")
-            .quantity(2L)
-            .type(TypeWarehouseEnum.ECOMMERCE)
-            .build();
-
-        WarehouseVO wv2 = WarehouseVO.builder()
-            .locality("MOEMA")
-            .quantity(2L)
-            .type(TypeWarehouseEnum.PHYSICAL_STORE)
-            .build();
-
-        List<WarehouseVO> wharehousesVO = new ArrayList<WarehouseVO>();
-        wharehousesVO.add(wv1);
-        wharehousesVO.add(wv2);
-
-        InventoryVO inventoryVO = new InventoryVO();
-        inventoryVO.setWarehouses(wharehousesVO);
-
-        vo.setInventory(inventoryVO);
-
+        ProductVO vo = getProuctVO();
         String json = new ObjectMapper().writeValueAsString(vo);
 
         BDDMockito.given(service.save(vo))
@@ -333,31 +239,7 @@ public class ProductControllerTest {
     public void updateProductTest() throws Exception{
         Long sku = 43264L;
 
-        ProductVO vo = ProductVO.builder()
-            .sku(sku)
-            .name("Floratta Flores Secretas Desodorante Colônia 30ml")
-            .build();
-
-        WarehouseVO wv1 = WarehouseVO.builder()
-            .locality("SP")
-            .quantity(2L)
-            .type(TypeWarehouseEnum.ECOMMERCE)
-            .build();
-
-        WarehouseVO wv2 = WarehouseVO.builder()
-            .locality("MOEMA")
-            .quantity(2L)
-            .type(TypeWarehouseEnum.PHYSICAL_STORE)
-            .build();
-
-        List<WarehouseVO> wharehousesVO = new ArrayList<WarehouseVO>();
-        wharehousesVO.add(wv1);
-        wharehousesVO.add(wv2);
-
-        InventoryVO inventoryVO = new InventoryVO();
-        inventoryVO.setWarehouses(wharehousesVO);
-
-        vo.setInventory(inventoryVO);
+        ProductVO vo = getProuctVO();
 
         Product product = Product.builder()
             .sku(55986L)
@@ -366,13 +248,13 @@ public class ProductControllerTest {
 
         Warehouse wd1 = Warehouse.builder()
             .locality(Locality.builder().name("SP").build())
-            .quantity(12L)
+            .quantity(22L)
             .type(TypeWarehouseEnum.ECOMMERCE)
             .build();
 
         Warehouse wd2 = Warehouse.builder()
             .locality(Locality.builder().name("MOEMA").build())
-            .quantity(3L)
+            .quantity(30L)
             .type(TypeWarehouseEnum.ECOMMERCE)
             .build();
 
@@ -397,16 +279,33 @@ public class ProductControllerTest {
             .andExpect(status().isOk())
             .andExpect(jsonPath("sku").value(55986L))
             .andExpect(jsonPath("name").value(product.getName()))
-            .andExpect(jsonPath("inventory").isNotEmpty());
+            .andExpect(jsonPath("inventory").isNotEmpty())
+            .andExpect(jsonPath("inventory.quantity").value(wd1.getQuantity() + wd2.getQuantity()));
     }
 
     @Test
     @DisplayName("Deve lançar erro de validação quando não houver um produto para o sku que deseja atualizar.")
     public void updateProductSkuInvalidTest() throws Exception {
-        Long sku = 0L;
+        String json = new ObjectMapper().writeValueAsString(getProuctVO());
 
+        BDDMockito.given(service.update(Mockito.any(ProductVO.class), Mockito.anyLong()))
+            .willThrow(new EmptyResultDataAccessException("", 0));
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+            .put(PRODUCT_API + 0)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+            .content(json);
+
+        mvc.perform(request)
+            .andExpect(status().isNotFound())
+            .andExpect(jsonPath("title").value("Entidade não encontrada."));
+    }
+
+
+    private ProductVO getProuctVO(){
         ProductVO vo = ProductVO.builder()
-            .sku(sku)
+            .sku(43264L)
             .name("Floratta Flores Secretas Desodorante Colônia 30ml")
             .build();
 
@@ -431,19 +330,35 @@ public class ProductControllerTest {
 
         vo.setInventory(inventoryVO);
 
-        String json = new ObjectMapper().writeValueAsString(vo);
+        return vo;
+    }
 
-        BDDMockito.given(service.update(Mockito.any(ProductVO.class), Mockito.anyLong()))
-            .willThrow(new EmptyResultDataAccessException("", 0));
+    private Product getProduct(){
+        Long sku = 43264L;
 
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-            .put(PRODUCT_API + sku)
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON)
-            .content(json);
+        Product product = Product.builder()
+            .sku(sku)
+            .name("L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g")
+            .build();
 
-        mvc.perform(request)
-            .andExpect(status().isNotFound())
-            .andExpect(jsonPath("title").value("Entidade não encontrada."));
+        Warehouse w1 = Warehouse.builder()
+            .locality(new Locality().builder().name("SP").build())
+            .quantity(12L)
+            .type(TypeWarehouseEnum.ECOMMERCE)
+            .build();
+
+        Warehouse w2 = Warehouse.builder()
+            .locality(new Locality().builder().name("MOEMA").build())
+            .quantity(3L)
+            .type(TypeWarehouseEnum.ECOMMERCE)
+            .build();
+
+        List<Warehouse> inventory = new ArrayList<>();
+        inventory.add(w1);
+        inventory.add(w2);
+
+        product.setInventory(inventory);
+
+        return product;
     }
 }

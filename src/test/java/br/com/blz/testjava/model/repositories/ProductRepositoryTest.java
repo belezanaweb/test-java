@@ -24,8 +24,7 @@ public class ProductRepositoryTest {
     @Test
     @DisplayName("Deve encontrar um produto por SKU")
     public void findBySkuTest() {
-        Long sku = 43264L;
-        Optional<Product> foundProduct = repository.findBySku(sku);
+        Optional<Product> foundProduct = repository.findBySku(43264L);
         assertThat(foundProduct.isPresent()).isTrue();
     }
 }

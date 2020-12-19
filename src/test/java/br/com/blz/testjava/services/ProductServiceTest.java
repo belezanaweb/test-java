@@ -51,49 +51,24 @@ public class ProductServiceTest {
     @Test
     @DisplayName("Deve econtrar um produto por sku")
     public void findBySkuTest() {
-        Long sku = 43264L;
+        Product product = getProduct();
 
-        Product product = Product.builder()
-            .sku(sku)
-            .name("L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g")
-            .build();
+        Mockito.when(repository.findBySku(product.getSku()))
+            .thenReturn(Optional.of(product));
 
-        Warehouse w1 = Warehouse.builder()
-            .id(1L)
-            .locality(Locality.builder().id(1L).name("SP").build())
-            .quantity(12L)
-            .type(TypeWarehouseEnum.ECOMMERCE)
-            .product(product)
-            .build();
+        org.junit.jupiter.api.Assertions
+            .assertDoesNotThrow(() -> service.findBySku(product.getSku()));
 
-        Warehouse w2 = Warehouse.builder()
-            .id(1L)
-            .locality(Locality.builder().id(2L).name("MOEMA").build())
-            .quantity(3L)
-            .type(TypeWarehouseEnum.PHYSICAL_STORE)
-            .product(product)
-            .build();
-
-        List<Warehouse> inventory = new ArrayList<>();
-        inventory.add(w1);
-        inventory.add(w2);
-
-        product.setInventory(inventory);
-
-        Mockito.when(repository.findBySku(sku)).thenReturn(Optional.of(product));
-
-        Product productFinded = service.findBySku(sku);
-
-        assertThat(productFinded.getSku()).isEqualTo(sku);
-        assertThat(productFinded.getName()).isEqualTo(product.getName());
-        assertThat(productFinded.getInventory()).isNotEmpty();
+        Mockito.verify(repository, Mockito.times(1)).findBySku(Mockito.anyLong());
     }
 
     @Test
     @DisplayName("Deve lançar erro de validação quando não houver um produto para o sku.")
     public void findBySkuInvalidTest() {
         Mockito.when(repository.findBySku(Mockito.anyLong())).thenReturn(Optional.empty());
+
         Throwable exception = Assertions.catchThrowable(() -> service.findBySku(1L));
+
         assertThat(exception).isInstanceOf(EmptyResultDataAccessException.class)
             .hasMessage("Produto não encontrado com sku 1");
     }
@@ -101,35 +76,10 @@ public class ProductServiceTest {
     @Test
     @DisplayName("Deve criar um novo Produto.")
     public void createProductTest() throws Exception {
-        Long sku = 55986L;
+        ProductVO vo = getProuctVO();
 
-        ProductVO vo = ProductVO.builder()
-            .sku(sku)
-            .name("Floratta Flores Secretas Desodorante Colônia 30ml")
-            .build();
-
-        WarehouseVO wv1 = WarehouseVO.builder()
-            .locality("SP")
-            .quantity(2L)
-            .type(TypeWarehouseEnum.ECOMMERCE)
-            .build();
-
-        WarehouseVO wv2 = WarehouseVO.builder()
-            .locality("MOEMA")
-            .quantity(2L)
-            .type(TypeWarehouseEnum.PHYSICAL_STORE)
-            .build();
-
-        List<WarehouseVO> wharehousesVO = new ArrayList<WarehouseVO>();
-        wharehousesVO.add(wv1);
-        wharehousesVO.add(wv2);
-
-        InventoryVO inventoryVO = new InventoryVO();
-        inventoryVO.setWarehouses(wharehousesVO);
-
-        vo.setInventory(inventoryVO);
-
-        Mockito.when(repository.save(Mockito.any(Product.class))).thenReturn(Product.builder().sku(sku).build());
+        Mockito.when(repository.save(Mockito.any(Product.class)))
+            .thenReturn(Product.builder().sku(vo.getSku()).build());
 
         Mockito.when(localityRepository.findByName(Mockito.anyString()))
             .thenReturn(Optional.of(Locality.builder().name("SP").id(1L).build()));
@@ -160,7 +110,8 @@ public class ProductServiceTest {
         Mockito.when(repository.findBySku(Mockito.anyLong()))
             .thenReturn(Optional.of(Product.builder().sku(sku).build()));
 
-        org.junit.jupiter.api.Assertions.assertDoesNotThrow(() -> service.delete(sku));
+        org.junit.jupiter.api.Assertions
+            .assertDoesNotThrow(() -> service.delete(sku));
 
         Mockito.verify(repository, Mockito.times(1)).delete(Mockito.any(Product.class));
     }
@@ -168,68 +119,29 @@ public class ProductServiceTest {
     @Test
     @DisplayName("Deve atualizar um produto.")
     public void updateProductTest() {
-        Long sku = 43264L;
-
-        Product product = Product.builder()
-            .sku(sku)
-            .name("Floratta Flores Secretas Desodorante Colônia 30ml")
-            .build();
-
-        Warehouse w1 = Warehouse.builder()
-            .id(1L)
-            .locality(Locality.builder().id(1L).name("SP").build())
-            .quantity(2L)
-            .type(TypeWarehouseEnum.ECOMMERCE)
-            .product(product)
-            .build();
-
-        Warehouse w2 = Warehouse.builder()
-            .id(1L)
-            .locality(Locality.builder().id(2L).name("MOEMA").build())
-            .quantity(2L)
-            .type(TypeWarehouseEnum.PHYSICAL_STORE)
-            .product(product)
-            .build();
-
-        List<Warehouse> inventory = new ArrayList<>();
-        inventory.add(w1);
-        inventory.add(w2);
-
-        product.setInventory(inventory);
-
-        ProductVO vo = ProductVO.builder()
-            .sku(sku)
-            .name("Floratta Flores Secretas Desodorante Colônia 30ml")
-            .build();
-
-        WarehouseVO wv1 = WarehouseVO.builder()
-            .locality("SP")
-            .quantity(12L)
-            .type(TypeWarehouseEnum.ECOMMERCE)
-            .build();
-
-        List<WarehouseVO> wharehousesVO = new ArrayList<>();
-        wharehousesVO.add(wv1);
-
-        InventoryVO inventoryVO = new InventoryVO();
-        inventoryVO.setWarehouses(wharehousesVO);
-
-        vo.setInventory(inventoryVO);
+        Product product = getProduct();
+        ProductVO vo = getProuctVO();
 
         Mockito.when(localityRepository.findByName("SP"))
             .thenReturn(Optional.of(Locality.builder().id(1L).name("SP").build()));
 
-        Mockito.when(warehouseRepository.findByProductSkuAndNameLocality(sku, "SP"))
-            .thenReturn(Optional.of(w1));
+        Mockito.when(localityRepository.findByName("MOEMA"))
+            .thenReturn(Optional.of(Locality.builder().id(2L).name("MOEMA").build()));
 
-        Mockito.when(repository.findBySku(sku))
+        Mockito.when(warehouseRepository.findByProductSkuAndNameLocality(product.getSku(), "SP"))
+            .thenReturn(Optional.of(product.getInventory().get(0)));
+
+        Mockito.when(warehouseRepository.findByProductSkuAndNameLocality(product.getSku(), "MOEMA"))
+            .thenReturn(Optional.of(product.getInventory().get(1)));
+
+        Mockito.when(repository.findBySku(product.getSku()))
             .thenReturn(Optional.of(product));
 
         Mockito.when(repository.save(Mockito.any(Product.class)))
-            .thenReturn(Product.builder().sku(sku).build());
+            .thenReturn(product);
 
         org.junit.jupiter.api.Assertions
-            .assertDoesNotThrow(() -> service.update(vo, sku));
+            .assertDoesNotThrow(() -> service.update(vo, product.getSku()));
 
         Mockito.verify(repository, Mockito.times(1))
             .save(Mockito.any(Product.class));
@@ -244,5 +156,64 @@ public class ProductServiceTest {
 
         assertThat(exception).isInstanceOf(EmptyResultDataAccessException.class)
             .hasMessage("Produto não encontrado com sku 0");
+    }
+
+    private ProductVO getProuctVO(){
+        ProductVO vo = ProductVO.builder()
+            .sku(43264L)
+            .name("Floratta Flores Secretas Desodorante Colônia 30ml")
+            .build();
+
+        WarehouseVO wv1 = WarehouseVO.builder()
+            .locality("SP")
+            .quantity(2L)
+            .type(TypeWarehouseEnum.ECOMMERCE)
+            .build();
+
+        WarehouseVO wv2 = WarehouseVO.builder()
+            .locality("MOEMA")
+            .quantity(2L)
+            .type(TypeWarehouseEnum.PHYSICAL_STORE)
+            .build();
+
+        List<WarehouseVO> wharehousesVO = new ArrayList<WarehouseVO>();
+        wharehousesVO.add(wv1);
+        wharehousesVO.add(wv2);
+
+        InventoryVO inventoryVO = new InventoryVO();
+        inventoryVO.setWarehouses(wharehousesVO);
+
+        vo.setInventory(inventoryVO);
+
+        return vo;
+    }
+
+    private Product getProduct(){
+        Long sku = 43264L;
+
+        Product product = Product.builder()
+            .sku(sku)
+            .name("L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g")
+            .build();
+
+        Warehouse w1 = Warehouse.builder()
+            .locality(new Locality().builder().name("SP").build())
+            .quantity(12L)
+            .type(TypeWarehouseEnum.ECOMMERCE)
+            .build();
+
+        Warehouse w2 = Warehouse.builder()
+            .locality(new Locality().builder().name("MOEMA").build())
+            .quantity(3L)
+            .type(TypeWarehouseEnum.ECOMMERCE)
+            .build();
+
+        List<Warehouse> inventory = new ArrayList<>();
+        inventory.add(w1);
+        inventory.add(w2);
+
+        product.setInventory(inventory);
+
+        return product;
     }
 }
