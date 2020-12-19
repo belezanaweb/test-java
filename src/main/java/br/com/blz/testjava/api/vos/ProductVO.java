@@ -1,5 +1,6 @@
 package br.com.blz.testjava.api.vos;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,9 +16,11 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class ProductVO {
 
+    @ApiModelProperty(example = "43264", required = true)
     @NotNull
     Long sku;
 
+    @ApiModelProperty(example = "Floratta Flores Secretas Desodorante Colônia 30ml", required = true)
     @NotBlank
     String name;
 

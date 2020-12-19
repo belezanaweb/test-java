@@ -30,6 +30,7 @@ public class ProductServiceImpl implements ProductService {
     private static String MSG_NOT_FOUND = "Produto não encontrado com sku %d";
     private static String MSG_LOCALITY_NOT_FOUND = "Localidade não encontrado com nome %s";
     private static String MSG_WAREHOUSE_NOT_FOUND = "Warehouse não encontrado";
+    private static String MSG_PRODUCT_DUPLICATE = "Produto com sku %d ja cadastrado!";
 
     @Override
     public Product findBySku(Long sku) {
@@ -46,7 +47,6 @@ public class ProductServiceImpl implements ProductService {
 
         List<Warehouse> warehouses = new ArrayList<>();
         for (WarehouseVO w : vo.getInventory().getWarehouses()){
-
             Warehouse warehouse = Warehouse.builder()
                 .product(product)
                 .quantity(w.getQuantity())
@@ -63,7 +63,7 @@ public class ProductServiceImpl implements ProductService {
         try{
             return repository.save(product);
         }catch (DataIntegrityViolationException ex){
-            throw new ProductUniqueKeyException(String.format("Produto com sku %d ja cadastrado!", product.getSku()));
+            throw new ProductUniqueKeyException(String.format(MSG_PRODUCT_DUPLICATE, product.getSku()));
         }
     }
 
@@ -82,12 +82,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public Product update(ProductVO vo, Long sku) {
-        Product product = repository.findBySku(sku)
-            .orElseThrow(() -> new EmptyResultDataAccessException(String.format(MSG_NOT_FOUND, sku), 0));
-
+        //Find
+        Product product = findBySku(sku);
         product.setSku(vo.getSku());
         product.setName(vo.getName());
 
+        //Remove Warehouses
         List<Warehouse> wareHouseRemove = new ArrayList<>();
         for(Warehouse pw : product.getInventory()){
             if(vo.getInventory().getWarehouses().stream()
@@ -95,11 +95,9 @@ public class ProductServiceImpl implements ProductService {
                 wareHouseRemove.add(pw);
             }
         }
+        wareHouseRemove.forEach(w -> product.getInventory().remove(w));
 
-        for(Warehouse w : wareHouseRemove){
-            product.getInventory().remove(w);
-        }
-
+        //Update Warehouses
         for (WarehouseVO w : vo.getInventory().getWarehouses()){
             Warehouse wareHouse = warehouseRepository.findByProductSkuAndNameLocality(sku, w.getLocality())
                 .orElse(Warehouse.builder().product(product).build());
@@ -120,10 +118,11 @@ public class ProductServiceImpl implements ProductService {
             }
         }
 
+        //Save All
         try{
             return repository.save(product);
         }catch (DataIntegrityViolationException ex){
-            throw new ProductUniqueKeyException(String.format("Produto com sku %d ja cadastrado!", product.getSku()));
+            throw new ProductUniqueKeyException(String.format(MSG_PRODUCT_DUPLICATE, product.getSku()));
         }
     }
 }
