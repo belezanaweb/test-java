@@ -1,23 +1,31 @@
 package br.com.blz.testjava.model.entity;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Transient;
+import java.io.Serializable;
+import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Transient;
 
 @Data
-@Entity
-public class Product {
+//@Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(of = "sku")
+public class Product implements Serializable {
 
-    @Id
-    @GeneratedValue
-    private Long id;
+//    @Id
+//    private Long id;
+
+    @NotNull
     private Long sku;
+    @NotNull
     private String name;
-    @OneToOne(cascade = CascadeType.ALL)
+    //    @OneToOne(cascade = CascadeType.ALL)
+    @NotNull
     private Inventory inventory;
 
     @Transient
@@ -28,3 +36,4 @@ public class Product {
 
 
 }
+

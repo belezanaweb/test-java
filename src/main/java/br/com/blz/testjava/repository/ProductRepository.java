@@ -1,10 +1,21 @@
 package br.com.blz.testjava.repository;
 
 import br.com.blz.testjava.model.entity.Product;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
+import java.util.List;
 
-public interface ProductRepository extends CrudRepository<Product, Long> {
-    Product findBySku(@Param("sku") Long sku);
+
+public interface ProductRepository {
+
+    List<Product> findAll();
+
+    Product find(Long sku);
+
+    Product delete(Long sku);
+
+    Product save(Product product);
+
+    Product update(Product product);
+
+    void clear();
 
 }

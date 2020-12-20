@@ -9,7 +9,6 @@ public class ProductDto {
 
     @Data
     public static class Warehouse {
-
         private Integer quantity;
         private String locality;
         private Type type;
@@ -17,7 +16,6 @@ public class ProductDto {
 
     @Data
     public static class Inventory {
-
         private Set<Warehouse> warehouses;
     }
 

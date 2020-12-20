@@ -1,27 +1,34 @@
 package br.com.blz.testjava.model.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import java.io.Serializable;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Entity
-public class Warehouse {
+//@Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Warehouse implements Serializable {
 
     public enum Type {
         ECOMMERCE,
         PHYSICAL_STORE;
     }
 
-    @Id
-    @GeneratedValue
-    private Long id;
+//    @Id
+//    private Long id;
+
+    @NotNull
     private Integer quantity;
+    @NotEmpty
     private String locality;
-    @Enumerated(EnumType.STRING)
+//    @Enumerated(EnumType.STRING)
+    @NotNull
     private Type type;
 
 
