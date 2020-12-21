@@ -2,11 +2,14 @@ package br.com.blz.testjava;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 
-@SpringBootApplication(scanBasePackageClasses = TestJavaApplication.class)
+import java.util.Arrays;
+
+@SpringBootApplication
 public class TestJavaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TestJavaApplication.class, args);
+		ApplicationContext ctx = SpringApplication.run(TestJavaApplication.class, args);
 	}
 }
