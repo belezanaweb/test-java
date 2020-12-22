@@ -73,6 +73,7 @@ Crie endpoints para as seguintes ações:
 
 ### Dicas
 
-- Os produtos podem ficar em memória, não é necessário persistir os dados
-- Sinta-se a vontade para fazer o código em ```groovy``` se preferir, utilizamos bastante aqui
+- Os produtos devem ficar em memória, não é necessário persistir os dados. Não utilize `h2`
+- Não é necessário adicionar swagger (não será avaliado)
+- Sinta-se a vontade para fazer o código em ```groovy```, ```kotlin``` ou ```scala``` se preferir, utilizamos bastante aqui
 - Testes são sempre bem-vindos :smiley:
