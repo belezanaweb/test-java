@@ -2,20 +2,18 @@ package br.com.blz.testjava.controller.resources;
 
 import com.google.common.base.Objects;
 
-import java.util.Set;
-
 public class ProductRequest {
     private Long sku;
     private String name;
-    private Set<WarehousesResource> warehousesResponse;
+    private InventoryRequest inventory;
 
     public ProductRequest() {
     }
 
-    public ProductRequest(Long sku, String name, Set<WarehousesResource> warehousesResponse) {
+    public ProductRequest(Long sku, String name, InventoryRequest inventory) {
         this.sku = sku;
         this.name = name;
-        this.warehousesResponse = warehousesResponse;
+        this.inventory = inventory;
     }
 
     public Long getSku() {
@@ -34,12 +32,8 @@ public class ProductRequest {
         this.name = name;
     }
 
-    public Set<WarehousesResource> getWarehousesResponse() {
-        return warehousesResponse;
-    }
-
-    public void setWarehousesResponse(Set<WarehousesResource> warehousesResponse) {
-        this.warehousesResponse = warehousesResponse;
+    public InventoryRequest getInventory() {
+        return inventory;
     }
 
     @Override
@@ -60,7 +54,7 @@ public class ProductRequest {
         return "ProductRequest{" +
             "sku=" + sku +
             ", name='" + name + '\'' +
-            ", warehousesResponse=" + warehousesResponse +
+            ", inventory=" + inventory +
             '}';
     }
 }

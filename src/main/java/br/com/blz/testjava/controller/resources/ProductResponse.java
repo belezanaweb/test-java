@@ -1,12 +1,13 @@
 package br.com.blz.testjava.controller.resources;
 
+import br.com.blz.testjava.persistence.entity.Product;
 import com.google.common.base.Objects;
 
 public class ProductResponse {
 
     private Long sku;
     private String name;
-    private InventoryResponse inventoryResponse;
+    private InventoryResponse inventory;
     private Boolean isMarketable;
 
     public ProductResponse() {
@@ -15,8 +16,15 @@ public class ProductResponse {
     public ProductResponse(Long sku, String name, InventoryResponse inventoryResponse, Boolean isMarketable) {
         this.sku = sku;
         this.name = name;
-        this.inventoryResponse = inventoryResponse;
+        this.inventory = inventoryResponse;
         this.isMarketable = isMarketable;
+    }
+
+    public ProductResponse(Product product) {
+        this.sku = product.getSku();
+        this.name = product.getName();
+        this.inventory = new InventoryResponse(product.getWarehouses());
+        this.isMarketable = inventory.getQuantity() > 0;
     }
 
     public Long getSku() {
@@ -36,11 +44,11 @@ public class ProductResponse {
     }
 
     public InventoryResponse getInventoryResponse() {
-        return inventoryResponse;
+        return inventory;
     }
 
     public void setInventoryResponse(InventoryResponse inventoryResponse) {
-        this.inventoryResponse = inventoryResponse;
+        this.inventory = inventoryResponse;
     }
 
     public Boolean getMarketable() {
@@ -69,7 +77,7 @@ public class ProductResponse {
         return "ProductResponse{" +
             "sku=" + sku +
             ", name='" + name + '\'' +
-            ", inventoryResponse=" + inventoryResponse +
+            ", inventoryResponse=" + inventory +
             ", isMarketable=" + isMarketable +
             '}';
     }

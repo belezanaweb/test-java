@@ -1,12 +1,10 @@
 package br.com.blz.testjava.persistence.repository;
 
-import br.com.blz.testjava.persistence.entity.ProductInventory;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import br.com.blz.testjava.persistence.entity.Product;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-import java.util.List;
+import java.util.Optional;
 
-@Repository
-public interface ProductRepository extends JpaRepository<ProductInventory, Long> {
-    List<ProductInventory> findBySku(Long sku);
+public interface ProductRepository extends MongoRepository<Product, Long> {
+    Optional<Product> findBySku(Long sku);
 }

@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.ResponseEntity.ok;
@@ -25,14 +27,14 @@ public class ProductController {
     }
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> createProduct(@RequestBody ProductRequest request) {
+    public ResponseEntity<Void> createProduct(@RequestBody @Valid ProductRequest request) {
         productService.createProduct(request);
         return new ResponseEntity<>(CREATED);
     }
 
-    @PutMapping(path = "/{sku}", consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProductResponse> updateProduct(@RequestBody ProductRequest request, @PathVariable Long sku) {
-        return ok(productService.updateProduct(request, sku));
+    @PutMapping(consumes = APPLICATION_JSON_VALUE)
+    public ResponseEntity<ProductResponse> updateProduct(@RequestBody @Valid ProductRequest request) {
+        return ok(productService.updateProduct(request));
     }
 
     @DeleteMapping(value = "/{sku}")

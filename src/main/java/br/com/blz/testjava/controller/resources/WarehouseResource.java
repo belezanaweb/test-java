@@ -1,28 +1,34 @@
 package br.com.blz.testjava.controller.resources;
 
-import br.com.blz.testjava.enums.BrazilianStates;
 import br.com.blz.testjava.enums.WarehouseType;
+import br.com.blz.testjava.persistence.entity.Warehouse;
 import com.google.common.base.Objects;
 
-public class WarehousesResource {
-    private BrazilianStates locality;
+public class WarehouseResource {
+    private String locality;
     private Integer quantity;
     private WarehouseType type;
 
-    public WarehousesResource() {
+    public WarehouseResource() {
     }
 
-    public WarehousesResource(BrazilianStates locality, Integer quantity, WarehouseType type) {
+    public WarehouseResource(String locality, Integer quantity, WarehouseType type) {
         this.locality = locality;
         this.quantity = quantity;
         this.type = type;
     }
 
-    public BrazilianStates getLocality() {
+    public WarehouseResource(Warehouse warehouse) {
+        this.locality = warehouse.getLocality();
+        this.quantity = warehouse.getQuantity();
+        this.type = warehouse.getType();
+    }
+
+    public String getLocality() {
         return locality;
     }
 
-    public void setLocality(BrazilianStates locality) {
+    public void setLocality(String locality) {
         this.locality = locality;
     }
 
@@ -46,8 +52,8 @@ public class WarehousesResource {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        WarehousesResource that = (WarehousesResource) o;
-        return locality == that.locality && Objects.equal(quantity, that.quantity) && type == that.type;
+        WarehouseResource that = (WarehouseResource) o;
+        return locality.equals(that.locality) && Objects.equal(quantity, that.quantity) && type == that.type;
     }
 
     @Override
