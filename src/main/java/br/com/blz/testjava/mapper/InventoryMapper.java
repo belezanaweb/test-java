@@ -11,7 +11,11 @@ public class InventoryMapper {
 	
 	public static Inventory toEntity(InventoryDTO inventoryDTO) {
 		
+		
 		Inventory inventory = new Inventory();
+		if(inventoryDTO == null) {
+			return inventory;
+		}
 		inventory.setWhireHouses(WareHousesMapper.toEntities(inventoryDTO.getWarehouses()));
 		
 		return inventory;
@@ -20,6 +24,9 @@ public class InventoryMapper {
 	public static InventoryDTO toDTO(Inventory inventory) {
 		
 		InventoryDTO dto = new InventoryDTO();
+		if(inventory == null) {
+			return dto;
+		}
 		dto.setWarehouses(WareHousesMapper.toDTOS(inventory.getWhireHouses()));
 		dto.setQuantity(inventory.getWhireHouses().stream()
 				.map(w -> w.getQuantity())
