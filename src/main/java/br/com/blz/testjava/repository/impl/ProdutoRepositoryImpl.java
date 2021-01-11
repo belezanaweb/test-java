@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Repository;
 
 import br.com.blz.testjava.model.Produto;
+import br.com.blz.testjava.model.exception.ExistingProductException;
 import br.com.blz.testjava.repository.IProdutoRepository;
 
 @Repository
@@ -16,10 +17,10 @@ public class ProdutoRepositoryImpl implements IProdutoRepository {
 	Set<Produto> produtos = new HashSet<Produto>();
 
 	@Override
-	public Produto save(Produto produto) {
+	public Produto save(Produto produto) throws ExistingProductException {
 
 		if (!produtos.add(produto)) {
-			throw new RuntimeException();
+			throw new ExistingProductException(produto.getSku());
 		}
 
 		return produto;
