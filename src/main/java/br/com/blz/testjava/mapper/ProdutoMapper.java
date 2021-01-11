@@ -1,5 +1,7 @@
 package br.com.blz.testjava.mapper;
 
+import java.math.BigDecimal;
+
 import br.com.blz.testjava.dto.ProdutoDTO;
 import br.com.blz.testjava.dto.ProdutoSalvamentoDTO;
 import br.com.blz.testjava.model.Produto;
@@ -25,6 +27,7 @@ public class ProdutoMapper {
 		dto.setName(produto.getName());
 		dto.setSku(produto.getSku());
 		dto.setInventory(InventoryMapper.toDTO(produto.getInventory()));
+		dto.setIsMarketable(dto.getInventory().getQuantity().compareTo(BigDecimal.ZERO)==1);
 
 		return dto;
 	}
