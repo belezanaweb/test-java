@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.blz.testjava.dto.ProdutoSalvamentoDTO;
+import br.com.blz.testjava.model.exception.ExistingProductException;
+import br.com.blz.testjava.model.exception.ObjectNotFoundException;
 import br.com.blz.testjava.service.ProdutoService;
 
 
@@ -21,14 +23,14 @@ public class ProdutoController {
 	private ProdutoService service;
 
 	@PostMapping
-	public ResponseEntity<?> save(@RequestBody ProdutoSalvamentoDTO produto) {
+	public ResponseEntity<?> save(@RequestBody ProdutoSalvamentoDTO produto) throws ExistingProductException {
 
 		return new ResponseEntity<>(service.save(produto), HttpStatus.CREATED);
 
 	}
 
 	@GetMapping("/{sku}")
-	public ResponseEntity<?> findBySku(@PathVariable Long sku) {
+	public ResponseEntity<?> findBySku(@PathVariable Long sku) throws ObjectNotFoundException {
 
 		return new ResponseEntity<>(service.findBySku(sku), HttpStatus.OK);
 	}
