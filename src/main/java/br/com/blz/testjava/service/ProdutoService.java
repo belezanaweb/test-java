@@ -34,5 +34,12 @@ public class ProdutoService {
 	public void delete(Long sku) {
 		produtoRepository.deleteProduto(sku);
 	}
+	
+	public ProdutoDTO editProduto(ProdutoSalvamentoDTO produtoDTO) {
+		Produto produto = ProdutoMapper.toEntity(produtoDTO);
+		produtoRepository.editProduto(produto);
+
+		return ProdutoMapper.toProdutoDTO(produto);
+	}
 
 }

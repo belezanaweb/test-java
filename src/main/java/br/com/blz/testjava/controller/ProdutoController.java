@@ -43,5 +43,12 @@ public class ProdutoController {
 		service.delete(sku);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
+	
+	@PutMapping
+	public ResponseEntity<?> edit(@RequestBody ProdutoSalvamentoDTO produto) throws ExistingProductException {
+
+		return new ResponseEntity<>(service.editProduto(produto), HttpStatus.OK);
+
+	}
 
 }
