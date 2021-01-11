@@ -13,6 +13,6 @@ public interface IProdutoRepository {
 	Produto save(Produto produto);
 	Optional<Produto> findBySku(Long sku);
 	void deleteProduto(Long sku);
-	Produto editProduto(Long sku, Produto produto);
+	Produto editProduto(Produto produto);
 
 }
