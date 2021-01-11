@@ -1,12 +1,20 @@
-package br.com.blz.testjava.model;
+package br.com.blz.testjava.dto;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class WareHouse {
+import org.springframework.stereotype.Component;
+
+import br.com.blz.testjava.model.WareHouseEnum;
+
+@Component
+public class WareHouseDTO implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	
 	private String locality;
 	private BigDecimal quantity;
-	private WareHouseEnum Type;
+	private WareHouseEnum type;
 	public String getLocality() {
 		return locality;
 	}
@@ -20,10 +28,10 @@ public class WareHouse {
 		this.quantity = quantity;
 	}
 	public WareHouseEnum getType() {
-		return Type;
+		return type;
 	}
 	public void setType(WareHouseEnum type) {
-		Type = type;
+		this.type = type;
 	}
-
+	
 }
