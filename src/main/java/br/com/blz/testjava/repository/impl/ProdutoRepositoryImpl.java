@@ -43,8 +43,18 @@ public class ProdutoRepositoryImpl implements IProdutoRepository {
 	@Override
 	public Produto editProduto(Produto produto) {
 		
+		Produto produtoNovo = produtos.stream().filter(prod -> prod.equals(produto)).map(prod -> produto).collect(Collectors.toList()).get(0);
+		if(produtoNovo !=null) {
+			this.deleteProduto(produtoNovo.getSku());
+			try {
+				this.save(produtoNovo);
+			} catch (ExistingProductException e) {
+				e.printStackTrace();
+			}
+			
+		}
 		
-		return produtos.stream().filter(prod -> prod.equals(produto)).map(prod -> produto).collect(Collectors.toList()).get(0);
+		return produtoNovo;
 	}
 
 }
