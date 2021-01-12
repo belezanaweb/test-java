@@ -5,11 +5,11 @@ import java.util.Vector;
 public class Inventory {
 	private Vector<WareHouse> whireHouses;
 
-	public Vector<WareHouse> getWhireHouses() {
+	public Vector<WareHouse> getWareHouses() {
 		return whireHouses;
 	}
 
-	public void setWhireHouses(Vector<WareHouse> whireHouses) {
+	public void setWareHouses(Vector<WareHouse> whireHouses) {
 		this.whireHouses = whireHouses;
 	}
 

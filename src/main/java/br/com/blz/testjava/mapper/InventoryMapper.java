@@ -16,7 +16,7 @@ public class InventoryMapper {
 		if(inventoryDTO == null) {
 			return inventory;
 		}
-		inventory.setWhireHouses(WareHousesMapper.toEntities(inventoryDTO.getWarehouses()));
+		inventory.setWareHouses(WareHousesMapper.toEntities(inventoryDTO.getWarehouses()));
 		
 		return inventory;
 	}
@@ -27,8 +27,8 @@ public class InventoryMapper {
 		if(inventory == null) {
 			return dto;
 		}
-		dto.setWarehouses(WareHousesMapper.toDTOS(inventory.getWhireHouses()));
-		dto.setQuantity(inventory.getWhireHouses().stream()
+		dto.setWarehouses(WareHousesMapper.toDTOS(inventory.getWareHouses()));
+		dto.setQuantity(inventory.getWareHouses().stream()
 				.map(w -> w.getQuantity())
 				.reduce(BigDecimal.ZERO, BigDecimal::add));
 		
