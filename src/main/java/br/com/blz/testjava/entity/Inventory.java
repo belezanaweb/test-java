@@ -10,9 +10,9 @@ import java.util.List;
 public class Inventory {
 
     private Integer quantity;
-    private List<WareHouse> wareHouses;
+    private List<Warehouse> warehouses;
 
-    public Inventory(List<WareHouse> wareHouses) {
-        this.wareHouses = wareHouses;
+    public Inventory(List<Warehouse> warehouses) {
+        this.warehouses = warehouses;
     }
 }

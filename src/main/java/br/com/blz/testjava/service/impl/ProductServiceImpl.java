@@ -19,14 +19,23 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Set<Product> findAll() {
-        return productRepository.findAll();
+
+        Set<Product> products =  productRepository.findAll();
+
+        products.forEach(product -> {
+                if(product.getInventory().getQuantity() > 0) {
+                    product.setIsMarketable(true);
+                }
+            });
+
+        return products;
     }
 
     @Override
     public void create(ProductRequest productRequest) {
 
         InventoryRequest inventoryRequest = productRequest.getInventory();
-        Inventory inventory = new Inventory(inventoryRequest.getWareHouses());
+        Inventory inventory = new Inventory(inventoryRequest.getWarehouses());
 
         Product product = new Product(
             productRequest.getSku(),

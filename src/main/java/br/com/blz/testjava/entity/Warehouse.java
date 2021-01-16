@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode
-public class WareHouse  {
+public class Warehouse {
 
     private String locality;
     private Integer quantity;
