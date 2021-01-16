@@ -1,6 +1,6 @@
 package br.com.blz.testjava.controller.request;
 
-import br.com.blz.testjava.entity.Warehouse;
+import br.com.blz.testjava.domain.objectvalue.Warehouse;
 import lombok.Data;
 
 import java.util.List;

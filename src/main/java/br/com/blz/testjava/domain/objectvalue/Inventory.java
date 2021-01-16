@@ -1,4 +1,4 @@
-package br.com.blz.testjava.entity;
+package br.com.blz.testjava.domain.objectvalue;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

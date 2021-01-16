@@ -1,9 +1,8 @@
 package br.com.blz.testjava.repository.impl;
 
-import br.com.blz.testjava.entity.Inventory;
-import br.com.blz.testjava.entity.Product;
-import br.com.blz.testjava.entity.Warehouse;
+import br.com.blz.testjava.domain.entity.Product;
 import br.com.blz.testjava.infrastructure.exception.ProductAreadyExistingException;
+import br.com.blz.testjava.infrastructure.exception.ProductNotFoundException;
 import br.com.blz.testjava.repository.ProductRepository;
 import org.springframework.stereotype.Repository;
 
@@ -20,24 +19,51 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
+    public Product findBySku(Long sku) {
+
+        Product product =  resources.get(sku);
+
+        if(Objects.isNull(product)) {
+            throw new ProductNotFoundException(sku);
+        }
+
+        return product;
+    }
+
+    @Override
     public void save(Product product) {
 
-        Inventory inventory = product.getInventory();
-        List<Warehouse> warehouses = inventory.getWarehouses();
+        Long sku = product.getSku();
 
-        inventory.setQuantity(
-            warehouses
-                .stream()
-                .mapToInt(Warehouse::getQuantity)
-                .sum()
-        );
-
-        product.setInventory(inventory);
-
-        if(!Objects.isNull(resources.get(product.getSku()))) {
-            throw new ProductAreadyExistingException(product);
+        if(!Objects.isNull(resources.get(sku))) {
+            throw new ProductAreadyExistingException(sku);
         }
 
         resources.put(product.getSku(), product);
+    }
+
+    @Override
+    public void update(Product product) {
+
+        Long sku = product.getSku();
+        Product productUpdate = resources.get(sku);
+
+        if(Objects.isNull(productUpdate)) {
+            throw new ProductNotFoundException(sku);
+        }
+
+        resources.put(product.getSku(), product);
+    }
+
+    @Override
+    public void delete(Long sku) {
+
+        Product product = resources.get(sku);
+
+        if(Objects.isNull(product)) {
+            throw new ProductNotFoundException(sku);
+        }
+
+        resources.remove(sku);
     }
 }

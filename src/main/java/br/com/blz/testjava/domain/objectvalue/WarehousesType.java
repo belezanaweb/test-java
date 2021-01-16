@@ -1,4 +1,4 @@
-package br.com.blz.testjava.entity;
+package br.com.blz.testjava.domain.objectvalue;
 
 public enum WarehousesType {
 
