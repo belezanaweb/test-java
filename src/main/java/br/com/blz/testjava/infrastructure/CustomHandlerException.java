@@ -1,8 +1,8 @@
 package br.com.blz.testjava.infrastructure;
 
 import br.com.blz.testjava.controller.ProductController;
-import br.com.blz.testjava.infrastructure.exception.ProductAreadyExistingException;
-import br.com.blz.testjava.infrastructure.exception.ProductNotFoundException;
+import br.com.blz.testjava.exception.ProductAreadyExistingException;
+import br.com.blz.testjava.exception.ProductNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

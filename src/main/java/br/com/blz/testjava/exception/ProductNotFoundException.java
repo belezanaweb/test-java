@@ -1,4 +1,4 @@
-package br.com.blz.testjava.infrastructure.exception;
+package br.com.blz.testjava.exception;
 
 public class ProductNotFoundException extends RepositoryException {
 

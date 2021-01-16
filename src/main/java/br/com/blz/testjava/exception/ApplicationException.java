@@ -1,6 +1,4 @@
-package br.com.blz.testjava.infrastructure.exception;
-
-import lombok.ToString;
+package br.com.blz.testjava.exception;
 
 public class ApplicationException extends RuntimeException {
 
