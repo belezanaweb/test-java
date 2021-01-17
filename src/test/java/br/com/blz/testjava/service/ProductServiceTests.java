@@ -55,7 +55,7 @@ public class ProductServiceTests {
         warehouses.add(wareHouseDTO);
         warehouses.add(wareHouseDTO);
 
-        Mockito.when(productDTO.getSku()).thenReturn(5);
+        Mockito.when(productDTO.getSku()).thenReturn(12);
         Mockito.when(productDTO.getInventory()).thenReturn(inventoryDTO);
         Mockito.when(inventoryDTO.getWarehouses()).thenReturn(warehouses);
         Mockito.when(wareHouseDTO.getQuantity()). thenReturn(5);
@@ -71,7 +71,7 @@ public class ProductServiceTests {
         Assertions.assertThrows(ExistentProductException.class, () -> {
             List<WareHouseDTO> warehouses = new ArrayList<>();
             warehouses.add(wareHouseDTO);
-            Mockito.when(productDTO.getSku()).thenReturn(5);
+            Mockito.when(productDTO.getSku()).thenReturn(56);
             Mockito.when(productDTO.getInventory()).thenReturn(inventoryDTO);
             Mockito.when(inventoryDTO.getWarehouses()).thenReturn(warehouses);
 
@@ -84,7 +84,7 @@ public class ProductServiceTests {
     @Test
     public void shouldThrowInexistentProductException() {
         Assertions.assertThrows(InexistentProductException.class, () -> {
-            productService.findProductBySKU(5);
+            productService.findProductBySKU(3261);
         });
     }
 
@@ -112,7 +112,7 @@ public class ProductServiceTests {
         updatedWarehouses.add(wareHouseDTO);
         updatedWarehouses.add(wareHouseDTO);
 
-        Mockito.when(productDTO.getSku()).thenReturn(5);
+        Mockito.when(productDTO.getSku()).thenReturn(9874);
         Mockito.when(productDTO.getName()).thenReturn("CREME").thenReturn("PERFUME");
         Mockito.when(productDTO.getInventory()).thenReturn(inventoryDTO);
         Mockito.when(inventoryDTO.getWarehouses()).thenReturn(warehouses).thenReturn(updatedWarehouses);
@@ -122,13 +122,13 @@ public class ProductServiceTests {
 
         Assertions.assertEquals(product.getInventory().getQuantity(), 15);
         Assertions.assertEquals(product.getName(), "CREME");
-        Assertions.assertEquals(product.getSku(), 5);
+        Assertions.assertEquals(product.getSku(), 9874);
 
-        Product updatedProduct = productService.editProduct(5, productDTO);
+        Product updatedProduct = productService.editProduct(9874, productDTO);
 
         Assertions.assertEquals(updatedProduct.getInventory().getQuantity(), 10);
         Assertions.assertEquals(updatedProduct.getName(), "PERFUME");
-        Assertions.assertEquals(updatedProduct.getSku(), 5);
+        Assertions.assertEquals(updatedProduct.getSku(), 9874);
 
     }
 
