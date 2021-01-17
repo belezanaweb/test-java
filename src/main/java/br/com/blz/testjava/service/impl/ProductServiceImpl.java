@@ -76,13 +76,13 @@ public class ProductServiceImpl implements ProductService {
         productRepository.delete(sku);
     }
 
-    private void defineMarketable(Product product) {
+    protected void defineMarketable(Product product) {
         if(product.getInventory().getQuantity() > 0) {
-            product.setIsMarketable(true);
+            product.setMarketable(true);
         }
     }
 
-    private void calculateQuantity(Product product) {
+    protected void calculateQuantity(Product product) {
 
         Inventory inventory = product.getInventory();
         List<Warehouse> warehouses = inventory.getWarehouses();

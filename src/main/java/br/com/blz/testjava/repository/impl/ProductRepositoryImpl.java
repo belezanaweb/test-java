@@ -1,7 +1,7 @@
 package br.com.blz.testjava.repository.impl;
 
 import br.com.blz.testjava.domain.entity.Product;
-import br.com.blz.testjava.exception.ProductAreadyExistingException;
+import br.com.blz.testjava.exception.ProductAreadyExistException;
 import br.com.blz.testjava.exception.ProductNotFoundException;
 import br.com.blz.testjava.repository.ProductRepository;
 import org.springframework.stereotype.Repository;
@@ -36,7 +36,7 @@ public class ProductRepositoryImpl implements ProductRepository {
         Long sku = product.getSku();
 
         if(!Objects.isNull(resources.get(sku))) {
-            throw new ProductAreadyExistingException(sku);
+            throw new ProductAreadyExistException(sku);
         }
 
         resources.put(product.getSku(), product);
