@@ -1,11 +1,17 @@
 package br.com.blz.testjava.dto;
 
-import br.com.blz.testjava.model.Warehouse;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.springframework.lang.NonNull;
 
 import java.util.List;
 
 @Data
+@ToString
+@NoArgsConstructor
 public class InventoryDTO {
-    private List<Warehouse> warehouses;
+    @NonNull
+    private List<WareHouseDTO> warehouses;
+
 }

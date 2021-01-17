@@ -1,5 +1,6 @@
 package br.com.blz.testjava.dto;
 
+import br.com.blz.testjava.model.enums.WarehouseTypes;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -8,11 +9,11 @@ import org.springframework.lang.NonNull;
 @Data
 @ToString
 @NoArgsConstructor
-public class ProductDTO {
+public class WareHouseDTO {
     @NonNull
-    private Integer sku;
+    private String locality;
     @NonNull
-    private String name;
+    private Integer quantity;
     @NonNull
-    private InventoryDTO inventory;
+    private WarehouseTypes type;
 }

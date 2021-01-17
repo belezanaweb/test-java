@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
 public interface ProductService {
     public Product createProduct(ProductDTO product);
     public Product findProductBySKU(Integer sku);
-    public Product editProduct(ProductDTO product);
-    public Product deleteProductBySku(Integer sku);
+    public Product editProduct(Integer sku, ProductDTO product);
+    public void deleteProductBySku(Integer sku);
 }
