@@ -67,8 +67,19 @@ public class ProductController {
     }
 	
 	@DeleteMapping("/{sku}")
-    public String delete() {
-        return "@DeleteMapping";
+	public ResponseEntity<Object> put(@PathVariable(value = "sku") Long sku) throws ProductException {
+
+        try {
+            productService.delete(sku);
+            ResponseEntity<Object> response = new ResponseEntity<>(sku, HttpStatus.OK);
+            
+            return response;
+        }
+		catch (ProductException e) {
+			
+			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
+		}
+        
     }
 	
 }

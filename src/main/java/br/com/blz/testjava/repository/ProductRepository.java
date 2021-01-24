@@ -46,5 +46,12 @@ public class ProductRepository {
         
         return product;
 	}
+
+    public void delete(Long sku) throws ProductException {
+    	
+        Product productDelete = findBySku(sku);
+	
+	    products.remove(productDelete.getSku());
+    }
     
 }

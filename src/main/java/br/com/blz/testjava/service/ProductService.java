@@ -62,4 +62,13 @@ public class ProductService {
 
         return findBySku(product.getSku());
     }
+
+	public void delete(Long sku) throws ProductException {
+
+		logger.info(String.format("INI :: delete %s", sku));
+
+		productRepository.delete(sku);
+
+		logger.info(String.format("INI :: delete %s", sku));
+	}
 }
