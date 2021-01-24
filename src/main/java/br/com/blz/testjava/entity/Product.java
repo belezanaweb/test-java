@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 public class Product {
 
-    private Integer sku;
+    private Long sku;
     private String name;
     private Inventory inventory;
     private boolean isMarketable;
 
-    public Product(Integer sku, String name, Inventory inventory) {
+    public Product(Long sku, String name, Inventory inventory) {
         this.sku = sku;
         this.name = name;
         this.inventory = inventory;
