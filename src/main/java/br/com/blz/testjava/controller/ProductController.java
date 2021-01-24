@@ -12,20 +12,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.blz.testjava.entity.Product;
+import br.com.blz.testjava.service.ProductService;
 
 @RestController
 @RequestMapping("/product")
 public class ProductController {
 	
+	@Autowired
+	private ProductService productService;
+	
 	@GetMapping("/{sku}")
 	public ResponseEntity<Product> get(@PathVariable(value = "sku") long sku){
 		
-		Product product = new Product(sku, "L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g", "invetory");
-        if(sku == 43264)
+		Product product = productService.findBySku(sku);
+		
+		if(product != null)
             return new ResponseEntity<Product>(product, HttpStatus.OK);
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
+		
     }
 	
 	@PostMapping
