@@ -1,39 +1,22 @@
 package br.com.blz.testjava.entity;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode
 public class Product {
-	private Long sku;
-	private String name;
-	private String inventory;
 
-	public Product(Long sku, String name, String inventory) {
+    private Integer sku;
+    private String name;
+    private Inventory inventory;
+    private boolean isMarketable;
 
-		this.sku = sku;
-		this.name = name;
-		this.inventory = inventory;
-	}
-
-	public Long getSku() {
-		return sku;
-	}
-
-	public void setSku(Long sku) {
-		this.sku = sku;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getInventory() {
-		return inventory;
-	}
-
-	public void setInventory(String inventory) {
-		this.inventory = inventory;
-	}
-	
+    public Product(Integer sku, String name, Inventory inventory) {
+        this.sku = sku;
+        this.name = name;
+        this.inventory = inventory;
+    }
 }
