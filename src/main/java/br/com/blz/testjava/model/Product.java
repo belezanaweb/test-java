@@ -6,7 +6,7 @@ public class Product {
 	private Long sku;
 	private String name;
 	private boolean isMarketable;
-	private Inventory iventory;
+	private Inventory iventory = new Inventory();;
 
 	public Long getSku() {
 		return sku;

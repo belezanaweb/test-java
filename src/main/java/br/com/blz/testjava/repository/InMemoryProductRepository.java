@@ -14,8 +14,8 @@ public class InMemoryProductRepository implements IProductRepository {
 	private final Map<Long, Product> inMemoryDb = new HashMap<>();
 
 	public Product save(final Product product) {
-		inMemoryDb.put(product.getSku(), product);
-		return product;
+		Product db = inMemoryDb.put(product.getSku(), product);
+		return db;
 	}
 	
 	public Optional<Product> findById(final Long sku) {

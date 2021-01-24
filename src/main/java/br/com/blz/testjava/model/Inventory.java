@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Inventory {
 
-	private Long quantity;
+	private Long quantity = 0L;
 
 	private List<WareHouse> warehouses = new ArrayList<WareHouse>();
 
