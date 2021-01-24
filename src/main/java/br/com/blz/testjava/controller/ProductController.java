@@ -24,7 +24,7 @@ public class ProductController {
 	private ProductService productService;
 	
 	@GetMapping("/{sku}")
-	public ResponseEntity<Product> getBySku(@PathVariable(value = "sku") Long sku){
+	public ResponseEntity<Product> getBySku(@PathVariable(value = "sku") Long sku) throws ProductException{
 		
 		Product product = productService.findBySku(sku);
 		

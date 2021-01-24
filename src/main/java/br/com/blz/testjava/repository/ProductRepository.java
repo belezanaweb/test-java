@@ -13,6 +13,17 @@ public class ProductRepository {
 	
 	private static Map<Long, Product> products = new HashMap<>();
 
+    public Product findBySku(Long sku) throws ProductException {
+
+        Product product =  products.get(sku);
+
+        if(Objects.isNull(product)) {
+			throw new ProductException("Produto não econtrado.");
+        }
+
+        return product;
+    }
+
     public void save(Product product) throws ProductException {
 
     	Long sku = product.getSku();
