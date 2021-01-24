@@ -1,0 +1,125 @@
+package br.com.blz.testjava.repository;
+
+import java.util.Optional;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import br.com.blz.testjava.model.Inventory;
+import br.com.blz.testjava.model.Product;
+import br.com.blz.testjava.model.WareHouse;
+import br.com.blz.testjava.service.ProductDuplicateException;
+import br.com.blz.testjava.service.ProductService;
+import br.com.blz.testjava.type.WareHouseType;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class ProductServiceTests {
+
+
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
+	
+	@Mock
+	private IProductRepository productRepository;
+
+	@InjectMocks
+	private ProductService productService;
+
+	@Before
+	public void setUp() {
+
+		Product prodSave = new Product();
+		prodSave.setSku(1333L);
+		prodSave.setName("Produto salvo");
+
+		Product prod1 = new Product();
+		prod1.setSku(1L);
+		prod1.setName("Nome do produto 1");
+
+		Inventory inv1 = new Inventory();
+		WareHouse wr1 = new WareHouse();
+		wr1.setLocality("PR");
+		wr1.setQuantity(1);
+		wr1.setType(WareHouseType.ECOMMERCE);
+
+		WareHouse wr2 = new WareHouse();
+		wr2.setLocality("SP");
+		wr2.setQuantity(3);
+		wr2.setType(WareHouseType.PHYSICAL_STORE);
+		inv1.getWarehouses().add(wr1);
+		inv1.getWarehouses().add(wr2);
+
+		Mockito.when(productRepository.findById(prod1.getSku())).thenReturn(Optional.of(prod1));
+
+		Mockito.when(productRepository.existsById(prod1.getSku())).thenReturn(true);
+
+		Mockito.when(productRepository.save(Mockito.any(Product.class))).thenAnswer(i -> i.getArgument(0));
+		
+		
+	}
+
+	@Test
+	public void createProductDuplicateTest() {
+		
+		
+		Product prodTeste = new Product();
+		prodTeste.setSku(1L);
+		prodTeste.setName("Nome do produto 1");
+
+		Inventory invTeste = new Inventory();
+		WareHouse wrTeste = new WareHouse();
+		wrTeste.setLocality("PR");
+		wrTeste.setQuantity(1);
+		wrTeste.setType(WareHouseType.ECOMMERCE);
+
+		WareHouse wrTeste2 = new WareHouse();
+		wrTeste2.setLocality("SP");
+		wrTeste2.setQuantity(3);
+		wrTeste2.setType(WareHouseType.PHYSICAL_STORE);
+		invTeste.getWarehouses().add(wrTeste);
+		invTeste.getWarehouses().add(wrTeste2);
+
+		thrown.expect(ProductDuplicateException.class);
+		productService.createProduct(prodTeste);
+
+
+	}
+	
+	@Test
+	public void createProductTest() {
+		
+		
+		Product prodTeste = new Product();
+		prodTeste.setSku(2L);
+		prodTeste.setName("Nome do produto 2");
+		
+		Inventory invTeste = new Inventory();
+		WareHouse wrTeste = new WareHouse();
+		wrTeste.setLocality("PR");
+		wrTeste.setQuantity(1);
+		wrTeste.setType(WareHouseType.ECOMMERCE);
+		
+		WareHouse wrTeste2 = new WareHouse();
+		wrTeste2.setLocality("SP");
+		wrTeste2.setQuantity(3);
+		wrTeste2.setType(WareHouseType.PHYSICAL_STORE);
+		invTeste.getWarehouses().add(wrTeste);
+		invTeste.getWarehouses().add(wrTeste2);
+		
+		productService.createProduct(prodTeste);
+		
+		
+	}
+
+
+	
+}
