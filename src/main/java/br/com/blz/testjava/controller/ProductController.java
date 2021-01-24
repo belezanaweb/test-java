@@ -24,28 +24,46 @@ public class ProductController {
 	private ProductService productService;
 	
 	@GetMapping("/{sku}")
-	public ResponseEntity<Product> getBySku(@PathVariable(value = "sku") Long sku) throws ProductException{
+	public ResponseEntity<Object> getBySku(@PathVariable(value = "sku") Long sku) throws ProductException{
 		
-		Product product = productService.findBySku(sku);
-		
-		if(product != null)
-            return new ResponseEntity<Product>(product, HttpStatus.OK);
-        else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		try {
+			return new ResponseEntity<Object>(productService.findBySku(sku), HttpStatus.OK);
+		}
+		catch (ProductException e) {
+			
+			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
+		}
 		
     }
 	
 	@PostMapping
-	public ResponseEntity<Product> post(@RequestBody Product resquestProduct) throws ProductException {
-        Product responseProduct = productService.create(resquestProduct);
-        ResponseEntity<Product> response = new ResponseEntity<>(responseProduct, HttpStatus.CREATED);
-        
-        return response;
+	public ResponseEntity<Object> post(@RequestBody Product resquestProduct) throws ProductException {
+		
+        try {
+        	Product responseProduct = productService.create(resquestProduct);
+            ResponseEntity<Object> response = new ResponseEntity<>(responseProduct, HttpStatus.CREATED);
+            
+            return response;
+        }
+		catch (ProductException e) {
+			
+			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.CONFLICT);
+		}
     }
 	
 	@PutMapping("/{sku}")
-    public String put() {
-        return "@PutMapping";
+	public ResponseEntity<Object> put(@PathVariable(value = "sku") Long sku, @RequestBody Product resquestProduct) throws ProductException {
+
+        try {
+        	Product responseProduct = productService.update(sku, resquestProduct);
+            ResponseEntity<Object> response = new ResponseEntity<>(responseProduct, HttpStatus.OK);
+            
+            return response;
+        }
+		catch (ProductException e) {
+			
+			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
+		}
     }
 	
 	@DeleteMapping("/{sku}")

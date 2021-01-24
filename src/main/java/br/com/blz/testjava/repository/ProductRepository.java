@@ -24,15 +24,27 @@ public class ProductRepository {
         return product;
     }
 
-    public void save(Product product) throws ProductException {
+    public Product save(Product product) throws ProductException {
 
     	Long sku = product.getSku();
 
         if(!Objects.isNull(products.get(sku))) {
 			throw new ProductException("Produto já cadastrado.");
         }
-
+        
         products.put(product.getSku(), product);
+        
+        return product;
     }
+
+	public Product update(Product product) throws ProductException {
+
+        Long sku = product.getSku();
+        Product productUpdate = findBySku(sku);
+
+        products.put(sku, productUpdate);
+        
+        return product;
+	}
     
 }

@@ -2,6 +2,7 @@ package br.com.blz.testjava.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Data
