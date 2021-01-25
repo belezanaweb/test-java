@@ -1,0 +1,73 @@
+{
+	"variables": [],
+	"info": {
+		"name": "test_java",
+		"_postman_id": "2621a1ed-7848-6ba5-316b-00314bf40f6f",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Cadastrar Produto",
+			"request": {
+				"url": "localhost:8080/product",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sku\": 43264,\r\n    \"name\": \"L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g\",\r\n    \"inventory\": {\r\n        \r\n        \"warehouses\": [\r\n            {\r\n                \"locality\": \"SP\",\r\n                \"quantity\": 12,\r\n                \"type\": \"ECOMMERCE\"\r\n            },\r\n            {\r\n                \"locality\": \"MOEMA\",\r\n                \"quantity\": 3,\r\n                \"type\": \"PHYSICAL_STORE\"\r\n            }\r\n        ]\r\n    }\r\n}"
+				},
+				"description": "Cadastrar Produto"
+			},
+			"response": []
+		},
+		{
+			"name": "Recuperar ",
+			"request": {
+				"url": "localhost:8080/product/43260",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar",
+			"request": {
+				"url": "localhost:8080/product/43269",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sku\": 43269,\r\n    \"name\": \"L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g\",\r\n    \"inventory\": {\r\n        \r\n        \"warehouses\": [\r\n            {\r\n                \"locality\": \"SP\",\r\n                \"quantity\": 23,\r\n                \"type\": \"ECOMMERCE\"\r\n            },\r\n            {\r\n                \"locality\": \"MOEMA\",\r\n                \"quantity\": 55,\r\n                \"type\": \"PHYSICAL_STORE\"\r\n            }\r\n        ]\r\n    }\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"url": "localhost:8080/product/43269",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

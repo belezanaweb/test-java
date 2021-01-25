@@ -6,7 +6,7 @@ public class Product {
 	private Long sku;
 	private String name;
 	private boolean isMarketable;
-	private Inventory iventory = new Inventory();;
+	private Inventory inventory = new Inventory();
 
 	public Long getSku() {
 		return sku;
@@ -20,12 +20,12 @@ public class Product {
 		return name;
 	}
 
-	public Inventory getIventory() {
-		return iventory;
+	public Inventory getInventory() {
+		return inventory;
 	}
 
-	public void setIventory(Inventory iventory) {
-		this.iventory = iventory;
+	public void setInventory(Inventory inventory) {
+		this.inventory = inventory;
 	}
 
 	public void setName(String name) {

@@ -1,4 +1,4 @@
-package br.com.blz.testjava.repository;
+package br.com.blz.testjava.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -16,9 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import br.com.blz.testjava.model.Inventory;
 import br.com.blz.testjava.model.Product;
 import br.com.blz.testjava.model.WareHouse;
-import br.com.blz.testjava.service.ProductDuplicateException;
-import br.com.blz.testjava.service.ProductNotFound;
-import br.com.blz.testjava.service.ProductService;
+import br.com.blz.testjava.repository.IProductRepository;
 import br.com.blz.testjava.type.WareHouseType;
 
 @RunWith(SpringRunner.class)
@@ -84,6 +82,7 @@ public class ProductServiceTests {
 		wrTeste2.setType(WareHouseType.PHYSICAL_STORE);
 		invTeste.getWarehouses().add(wrTeste);
 		invTeste.getWarehouses().add(wrTeste2);
+		prodTeste.setInventory(invTeste);
 
 		 productService.create(prodTeste);
 
@@ -110,7 +109,7 @@ public class ProductServiceTests {
 		wrTeste2.setType(WareHouseType.PHYSICAL_STORE);
 		invTeste.getWarehouses().add(wrTeste);
 		invTeste.getWarehouses().add(wrTeste2);
-		prodTeste.setIventory(invTeste);
+		prodTeste.setInventory(invTeste);
 		
 		Product db =productService.create(prodTeste);
 		
@@ -164,7 +163,7 @@ public class ProductServiceTests {
 		wrTeste2.setType(WareHouseType.PHYSICAL_STORE);
 		invTeste.getWarehouses().add(wrTeste);
 		invTeste.getWarehouses().add(wrTeste2);
-		prodTeste.setIventory(invTeste);
+		prodTeste.setInventory(invTeste);
 
 		Product db = productService.update(prodTeste);
 		
@@ -217,7 +216,7 @@ public class ProductServiceTests {
 
 		Inventory invTeste = new Inventory();
 		invTeste.setQuantity( 10L );
-		prodTeste.setIventory(invTeste);
+		prodTeste.setInventory(invTeste);
 		
 		
 		

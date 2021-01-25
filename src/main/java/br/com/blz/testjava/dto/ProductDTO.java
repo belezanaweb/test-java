@@ -1,8 +1,12 @@
 package br.com.blz.testjava.dto;
 
-import br.com.blz.testjava.model.Inventory;
-
 public class ProductDTO {
+
+	private Long sku;
+	private String name;
+	private boolean isMarketable;
+	private InventoryDTO inventory = new InventoryDTO();
+	
 
 	public Long getSku() {
 		return sku;
@@ -28,25 +32,12 @@ public class ProductDTO {
 		this.isMarketable = isMarketable;
 	}
 
-	public Inventory getIventory() {
-		return iventory;
+	public InventoryDTO getInventory() {
+		return inventory;
 	}
 
-	public void setIventory(Inventory iventory) {
-		this.iventory = iventory;
-	}
-
-	private Long sku;
-	private String name;
-	private boolean isMarketable;
-	private Inventory iventory;
-
-	public ProductDTO(Long sku, String name, boolean isMarketable, Inventory iventory) {
-		super();
-		this.sku = sku;
-		this.name = name;
-		this.isMarketable = isMarketable;
-		this.iventory = iventory;
+	public void setInventory(InventoryDTO inventory) {
+		this.inventory = inventory;
 	}
 
 }

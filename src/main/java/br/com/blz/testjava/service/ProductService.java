@@ -40,7 +40,7 @@ public class ProductService {
 	public Product find(Long sku) {
 		Product db = productRepository.findById(sku).orElseThrow(() -> new ProductNotFound(sku));
 		
-		db.getIventory().setQuantity( calcularQuantity( db.getIventory() )  );
+		db.getInventory().setQuantity( calcularQuantity( db.getInventory() )  );
 		db.setMarketable(isMarketable(db));
 		
 		return db;
@@ -61,7 +61,7 @@ public class ProductService {
 	}
 	
 	public boolean isMarketable(  Product pro )  {
-		return  pro.getIventory().getQuantity() > 0L ;
+		return  pro.getInventory().getQuantity() > 0L ;
 	}
 
 	public void delete(Long sku) {
@@ -70,15 +70,16 @@ public class ProductService {
 
 	public Product update(Product product) {
 
+		LOG.info("Atualizando produto");
 		LOG.info("Validação de SKU já existente");
 		Product db = find(product.getSku());
 		
 		db.setName(product.getName());
-		Inventory dbInv =   db.getIventory();
-		dbInv.setWarehouses( product.getIventory().getWarehouses() );
+		Inventory dbInv =   db.getInventory();
+		dbInv.setWarehouses( product.getInventory().getWarehouses() );
 
 		LOG.info("Alterando o Produto");
-		return productRepository.save(product);
+		return productRepository.save(db);
 
 	}
 
