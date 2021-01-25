@@ -35,6 +35,11 @@ public class ProductService {
 		
 		logger.info(String.format("INI :: create %s", resquestProduct));
 
+		Product newProduct = new Product(null, null, null);
+		newProduct.setSku(resquestProduct.getSku());
+		newProduct.setName(resquestProduct.getName());
+		newProduct.setInventory(resquestProduct.getInventory());
+		
         productRepository.save(resquestProduct);
 		
 		logger.info(String.format("FIM :: create %s", resquestProduct));

@@ -17,4 +17,16 @@ public class Inventory {
     public Inventory(List<Warehouse> warehouses) {
         this.warehouses = warehouses;
     }
+    
+    public Integer getQuantity() {
+    	
+    	this.quantity = 0;
+    	
+    	List< Warehouse > list =   this.getWarehouses();
+		for (Warehouse wareHouse : list) {
+			this.quantity += wareHouse.getQuantity();
+		}
+		
+    	return this.quantity;
+   }    
 }
