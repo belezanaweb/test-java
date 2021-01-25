@@ -12,7 +12,7 @@ public class Product {
     private Long sku;
     private String name;
     private Inventory inventory;
-    private boolean isMarketable;
+    private boolean isMarketable = false;
 
     public Product(Long sku, String name, Inventory inventory) {
         this.sku = sku;

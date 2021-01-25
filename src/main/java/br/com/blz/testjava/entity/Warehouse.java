@@ -8,6 +8,6 @@ import lombok.EqualsAndHashCode;
 public class Warehouse {
 
     private String locality;
-    private Integer quantity;
+    private Integer quantity = 0;
     private WarehousesType type;
 }
