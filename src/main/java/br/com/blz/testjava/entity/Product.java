@@ -2,7 +2,6 @@ package br.com.blz.testjava.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -20,4 +19,13 @@ public class Product {
         this.name = name;
         this.inventory = inventory;
     }
+    
+    public boolean getIsMarketable() {
+
+    	this.isMarketable = this.getInventory().getQuantity() > 0L ;
+
+    	return this.isMarketable;
+	}
+
+    
 }
