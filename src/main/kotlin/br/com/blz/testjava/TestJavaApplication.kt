@@ -1,12 +1,11 @@
-package br.com.blz.testjava;
+package br.com.blz.testjava
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.runApplication
 
-@SpringBootApplication(scanBasePackageClasses = TestJavaApplication.class)
-public class TestJavaApplication {
+@SpringBootApplication
+class TestJavaApplication
 
-	public static void main(String[] args) {
-		SpringApplication.run(TestJavaApplication.class, args);
-	}
+fun main(args: Array<String>) {
+  runApplication<TestJavaApplication>(*args)
 }
