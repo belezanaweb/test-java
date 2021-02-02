@@ -33,6 +33,10 @@ class ProductService {
     return productRepository.save(product)
   }
 
+  fun update(product: Product): Product {
+    return productRepository.update(product)
+  }
+
   fun remove(sku: Int) {
     productRepository.remove(sku) ?: throw ProductNotFoundException(sku)
   }

@@ -8,6 +8,7 @@ import br.com.blz.testjava.model.Warehouses
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
+import kotlin.math.roundToInt
 import kotlin.test.assertEquals
 
 internal class ProductServiceTest {
@@ -42,6 +43,23 @@ internal class ProductServiceTest {
     assertThrows<ProductAlreadyExistsException> { service.save(product) }
   }
 
+  @Test
+  fun update() {
+    val product = buildProduct()
+    service.save(product)
+    assertDoesNotThrow {
+      service.update(product)
+    }
+  }
+
+  @Test
+  fun updateFail() {
+    val product = buildProduct()
+    product.sku = Math.random().roundToInt() * 10
+    assertThrows<ProductNotFoundException> {
+      service.update(product)
+    }
+  }
 
   @Test
   fun removeFail() {

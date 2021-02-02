@@ -25,7 +25,7 @@ class ProductController {
   @PutMapping("/{sku}")
   fun update(@PathVariable sku: Int, @RequestBody product: Product): Product {
     product.sku = sku
-    return productService.save(product)
+    return productService.update(product)
   }
 
   @DeleteMapping("/{sku}")
