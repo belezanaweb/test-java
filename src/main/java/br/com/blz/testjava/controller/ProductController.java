@@ -26,7 +26,7 @@ public class ProductController {
 		
 		productService.insert(product);
 		Object body = "Produto criado com sucesso!";
-		return new ResponseEntity<Object>(body, HttpStatus.OK);
+		return new ResponseEntity<Object>(body, HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)

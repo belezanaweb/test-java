@@ -17,7 +17,6 @@ public class ProductService {
 	public void insert(Product product) throws Exception {
 
 		if (!products.contains(product)) {
-			product.setIsMarketable(Boolean.TRUE);
 			products.add(product);
 		} else {
 			throw new BusinessException("Produto já existente com sku informado!");

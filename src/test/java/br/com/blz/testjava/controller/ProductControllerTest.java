@@ -51,7 +51,7 @@ public class ProductControllerTest {
 	                        .contentType(MediaType.APPLICATION_JSON)
 	                        .content(getPayloadRequest()))
 	                .andExpect(content().string("Produto criado com sucesso!"))
-	                .andExpect(status().isOk());
+	                .andExpect(status().isCreated());
 	  }
 	 
 	 @Test
