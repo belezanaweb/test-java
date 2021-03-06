@@ -1,0 +1,20 @@
+{
+    "sku": 12345,
+    "name": "Produto Teste",
+    "inventory": {
+        "quantity": 15,
+        "warehouses": [
+            {
+                "locality": "SP",
+                "type": "ECOMMERCE",
+                "quantity": 12
+            },
+            {
+                "locality": "MOEMA",
+                "type": "PHYSICAL_STORE",
+                "quantity": 3
+            }
+        ]
+    },
+    "isMarketable": true
+}
