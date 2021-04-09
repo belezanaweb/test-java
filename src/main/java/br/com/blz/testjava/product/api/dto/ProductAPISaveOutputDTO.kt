@@ -1,5 +1,5 @@
 package br.com.blz.testjava.product.api.dto
 
-sealed class ProductAPISaveOutputDTO(val success: Boolean)
+sealed class ProductAPISaveOutputDTO(val success: Boolean = false)
 class ProductAPISaveOutputDTOSuccess : ProductAPISaveOutputDTO(true)
-data class ProductAPISaveOutputDTOError(val errors: List<String>) : ProductAPISaveOutputDTO(false)
+data class ProductAPISaveOutputDTOError(val errors: List<String> = listOf()) : ProductAPISaveOutputDTO(false)
