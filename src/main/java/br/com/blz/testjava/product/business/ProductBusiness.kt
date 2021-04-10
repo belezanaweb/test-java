@@ -18,4 +18,6 @@ class ProductBusiness() {
   fun update(product: Product): Product = ProductRepository.get(product.sku)
     ?.let { ProductRepository.save(product) }
     ?: throw ProductNotFoundException(product.sku)
+
+  fun get(sku: Long): Product = ProductRepository.get(sku) ?: throw ProductNotFoundException(sku)
 }

@@ -41,4 +41,16 @@ class ProductAPI(
       ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ProductAPISaveOutputDTOError(listOf(e?.message ?: "Not expected error")))
     }
   }
+
+  @GetMapping("/{sku}")
+  fun get(@PathVariable sku: Long) : ResponseEntity<ProductAPIGetOutputDTO> {
+    return try {
+      val product = productBusiness.get(sku)
+      ResponseEntity.ok(ProductAPIGetOutputDTO(product))
+    } catch (e: ProductNotFoundException) {
+      ResponseEntity.notFound().build()
+    } catch (e: Exception) {
+      ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
+    }
+  }
 }
