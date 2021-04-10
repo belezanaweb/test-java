@@ -1,5 +1,6 @@
 package br.com.blz.testjava.product.business
 
+import br.com.blz.testjava.product.ProductTestTemplates
 import br.com.blz.testjava.product.business.objects.Product
 import br.com.blz.testjava.product.business.objects.ProductInventory
 import br.com.blz.testjava.product.exception.ProductNotFoundException
@@ -13,10 +14,11 @@ import kotlin.test.assertEquals
 
 @RunWith(SpringRunner::class)
 class ProductBusinessTest {
+
+  private val productBusiness = ProductBusiness()
   @Test
   fun `Avoid save duplicaded sku`() {
-    val productBusiness = ProductBusiness()
-    val product = Product(1L, "Teste", ProductInventory(listOf()))
+    val product = ProductTestTemplates.createProduct()
 
     productBusiness.create(product)
     assertThrows<ProductSkuDuplicatedException> { productBusiness.create(product) }
@@ -24,19 +26,18 @@ class ProductBusinessTest {
 
   @Test
   fun `Throw exception updating not existent product`() {
-    val product = Product(2L, "Teste", ProductInventory(listOf()))
+    val product = ProductTestTemplates.createProduct(2L, "Product 2")
 
     assertThrows<ProductNotFoundException> { ProductBusiness().update(product) }
   }
 
   @Test
   fun `Update product name`() {
-    val product = Product(3L, "Teste", ProductInventory(listOf()))
+    ProductBusiness().create(ProductTestTemplates.createProduct(3L, "Product 3"))
+    ProductBusiness().update(ProductTestTemplates.createProduct(3L, "Product 03"))
 
-    ProductBusiness().create(product)
-    ProductBusiness().update(with(product) { Product(sku, "Nome alterado", inventory) })
-    val changedProduct = ProductRepository.get(product.sku)
+    val changedProduct = ProductRepository.get(3L)
 
-    assertEquals("Nome alterado", changedProduct!!.name)
+    assertEquals("Product 03", changedProduct!!.name)
   }
 }

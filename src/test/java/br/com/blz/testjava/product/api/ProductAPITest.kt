@@ -35,36 +35,28 @@ class ProductAPITest {
 
   @Test
   fun `Create a product should returns 201`() {
-    val product = ProductAPISaveInputDTO(1L, "Product 01", ProductInventoryAPISaveInputDTO(listOf()))
-    val request = HttpEntity(product)
-    val response = restTemplate.postForEntity<String>(url, request)
+    val product = ProductTestTemplates.createProductInputDTO()
+    val response = restTemplate.postForEntity<String>(url, HttpEntity(product))
 
     assertEquals(HttpStatus.CREATED, response.statusCode)
   }
 
   @Test
   fun `Create same product twice shout returns an error`() {
-    val product = ProductAPISaveInputDTO(2L, "Product 01", ProductInventoryAPISaveInputDTO(listOf()))
-    val request = HttpEntity(product)
+    val product = createProduct(ProductTestTemplates.createProductInputDTO(2L, "Product 02"))
+    var response = restTemplate.postForEntity<ProductAPISaveOutputErrorDTO>(url, HttpEntity(product))
 
-    var response = restTemplate.postForEntity<ProductAPISaveOutputDTOSuccess>(url, request)
-    var response2 = restTemplate.postForEntity<ProductAPISaveOutputDTOError>(url, request)
-
-    assertEquals(HttpStatus.CREATED, response.statusCode)
-    assertEquals(HttpStatus.BAD_REQUEST, response2.statusCode)
+    assertEquals(HttpStatus.BAD_REQUEST, response.statusCode)
   }
 
   @Test
   fun `Update product shoud returns 200`() {
-    val product = ProductAPISaveInputDTO(3L, "Product 01", ProductInventoryAPISaveInputDTO(listOf()))
-    val request = HttpEntity(product)
-
-    restTemplate.postForEntity<String>(url, request)
-
-    ProductAPISaveInputDTO(product.sku, "Teste", ProductInventoryAPISaveInputDTO(listOf(ProductWarehouseAPISaveInputDTO("PR", 1, WarehouseTypes.ECOMMERCE.toString()))))
-    var response = restTemplate.exchange<ProductAPISaveInputDTO>("$url/${product.sku}", HttpMethod.PUT, request)
+    val product = createProduct(ProductTestTemplates.createProductInputDTO(3L, "Product 03"))
+    val request = HttpEntity(ProductTestTemplates.createProductInputDTO(3L, "Product 003"))
+    var response = restTemplate.exchange<ProductAPISaveOutputSuccessDTO>("$url/${product.sku}", HttpMethod.PUT, request)
 
     assertEquals(HttpStatus.OK, response.statusCode)
+    assertTrue(response.body.success)
   }
 
   @Test
@@ -79,9 +71,9 @@ class ProductAPITest {
     val product = createProduct(ProductTestTemplates.createProductInputDTO(
       4L,
       "Product 4",
-      ProductTestTemplates.createProductInventory(listOf(
-        ProductTestTemplates.createProductWarehouse("SP", 12, WarehouseTypes.ECOMMERCE),
-        ProductTestTemplates.createProductWarehouse("MOEMA", 3, WarehouseTypes.PHYSICAL_STORE)
+      ProductTestTemplates.createProductInputInventory(listOf(
+        ProductTestTemplates.createProductInputWarehouse("SP", 12, WarehouseTypes.ECOMMERCE),
+        ProductTestTemplates.createProductInputWarehouse("MOEMA", 3, WarehouseTypes.PHYSICAL_STORE)
       ))
     ))
 

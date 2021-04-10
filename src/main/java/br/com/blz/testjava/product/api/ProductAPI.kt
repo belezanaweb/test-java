@@ -20,11 +20,11 @@ class ProductAPI(
     return try {
       productBusiness.create(payload.toProduct())
 
-      ResponseEntity.status(HttpStatus.CREATED).body(ProductAPISaveOutputDTOSuccess())
+      ResponseEntity.status(HttpStatus.CREATED).body(ProductAPISaveOutputSuccessDTO())
     } catch (e: ProductBusinessException) {
-      ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ProductAPISaveOutputDTOError(listOf(e.message)))
+      ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ProductAPISaveOutputErrorDTO(listOf(e.message)))
     } catch (e: Exception) {
-      ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ProductAPISaveOutputDTOError(listOf(e?.message ?: "Not expected error")))
+      ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ProductAPISaveOutputErrorDTO(listOf(e?.message ?: "Not expected error")))
     }
   }
 
@@ -32,13 +32,13 @@ class ProductAPI(
   fun update(@RequestBody payload: ProductAPISaveInputDTO, @PathVariable sku: Long) : ResponseEntity<ProductAPISaveOutputDTO> {
     return try {
       productBusiness.update(payload.toProduct())
-      ResponseEntity.ok(ProductAPISaveOutputDTOSuccess())
+      ResponseEntity.ok(ProductAPISaveOutputSuccessDTO())
     } catch (e: ProductNotFoundException) {
       ResponseEntity.notFound().build()
     } catch (e: ProductBusinessException) {
-      ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ProductAPISaveOutputDTOError(listOf(e.message)))
+      ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ProductAPISaveOutputErrorDTO(listOf(e.message)))
     } catch (e: Exception) {
-      ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ProductAPISaveOutputDTOError(listOf(e?.message ?: "Not expected error")))
+      ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ProductAPISaveOutputErrorDTO(listOf(e?.message ?: "Not expected error")))
     }
   }
 
