@@ -11,7 +11,7 @@ data class ProductAPISaveInputDTO(val sku: Long? = null, val name: String? = nul
     sku?.let { it } ?: throw ProductValidationException("sku"),
     name?.let { it } ?: throw  ProductValidationException("name"),
     inventory = ProductInventory(
-      inventory?.warehouses!!.map { ProductWarehouse(it.locality, it.quantity, WarehouseTypes.valueOf(it.type)) }
+      inventory?.warehouses?.map { ProductWarehouse(it.locality, it.quantity, WarehouseTypes.valueOf(it.type)) } ?: listOf()
     )
   )
 }
