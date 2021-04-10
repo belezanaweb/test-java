@@ -21,9 +21,9 @@ class ProductAPI(
   @Autowired val productBusiness: ProductBusiness
 ) {
   @PostMapping
-  fun save(@RequestBody payload: ProductAPISaveInputDTO) : ResponseEntity<ProductAPISaveOutputDTO> {
+  fun create(@RequestBody payload: ProductAPISaveInputDTO) : ResponseEntity<ProductAPISaveOutputDTO> {
     return try {
-      productBusiness.save(payload.toProduct())
+      productBusiness.create(payload.toProduct())
 
       ResponseEntity.status(HttpStatus.CREATED).body(ProductAPISaveOutputDTOSuccess())
     } catch (e: ProductBusinessException) {

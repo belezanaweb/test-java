@@ -16,7 +16,8 @@ class ProductBusinessTest {
     val productBusiness = ProductBusiness()
     val product = Product(1L, "Teste", ProductInventory(listOf()))
 
-    productBusiness.save(product)
-    assertThrows<ProductSkuDuplicatedException> { productBusiness.save(product) }
+    productBusiness.create(product)
+    assertThrows<ProductSkuDuplicatedException> { productBusiness.create(product) }
+  }
   }
 }
