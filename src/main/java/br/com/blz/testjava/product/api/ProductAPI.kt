@@ -53,4 +53,16 @@ class ProductAPI(
       ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
     }
   }
+
+  @DeleteMapping("/{sku}")
+  fun delete(@PathVariable sku: Long) : ResponseEntity<ProductAPIDeleteOutputDTO> {
+    return try {
+      productBusiness.delete(sku)
+      ResponseEntity.ok(ProductAPIDeleteOutputSuccessDTO())
+    } catch (e: ProductNotFoundException) {
+      ResponseEntity.status(HttpStatus.NOT_FOUND).body(ProductAPIDeleteOutputErrorDTO(listOf(e.message!!)))
+    } catch (e: Exception) {
+      ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
+    }
+  }
 }

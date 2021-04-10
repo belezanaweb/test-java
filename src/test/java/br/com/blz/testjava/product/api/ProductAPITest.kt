@@ -84,6 +84,24 @@ class ProductAPITest {
     assertTrue(response.body.isMarketable!!)
   }
 
+  @Test
+  fun `Shoud return 200 on delete product`() {
+    val product = createProduct(ProductTestTemplates.createProductInputDTO(4L, "Product 04"))
+    var response = restTemplate.exchange<ProductAPIDeleteOutputSuccessDTO>("$url/${product.sku}", HttpMethod.DELETE)
+
+    assertEquals(HttpStatus.OK, response.statusCode)
+    assertTrue(response.body.success)
+  }
+
+  @Test
+  fun `Shoud return 404 on delete not existent product`() {
+    var response = restTemplate.exchange<ProductAPIDeleteOutputErrorDTO>("$url/4648", HttpMethod.DELETE)
+
+    assertEquals(HttpStatus.NOT_FOUND, response.statusCode)
+    assertFalse(response.body.success)
+    assertEquals(1, response.body.errors.size)
+  }
+
   private fun createProduct(product: ProductAPISaveInputDTO) : ProductAPISaveInputDTO {
     val request = HttpEntity(product)
     restTemplate.postForEntity<String>(url, request)

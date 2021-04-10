@@ -20,4 +20,8 @@ class ProductBusiness() {
     ?: throw ProductNotFoundException(product.sku)
 
   fun get(sku: Long): Product = ProductRepository.get(sku) ?: throw ProductNotFoundException(sku)
+
+  fun delete(sku: Long) = ProductRepository.get(sku)
+    ?.let { ProductRepository.remove(it) }
+    ?: throw ProductNotFoundException(sku)
 }

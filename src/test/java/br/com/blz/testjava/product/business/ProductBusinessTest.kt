@@ -11,6 +11,8 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.runner.RunWith
 import org.springframework.test.context.junit4.SpringRunner
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 @RunWith(SpringRunner::class)
 class ProductBusinessTest {
@@ -39,5 +41,14 @@ class ProductBusinessTest {
     val changedProduct = ProductRepository.get(3L)
 
     assertEquals("Product 03", changedProduct!!.name)
+  }
+
+  @Test
+  fun `Remove product`() {
+    ProductBusiness().create(ProductTestTemplates.createProduct(4L, "Product 3"))
+    assertNotNull(ProductRepository.get(4L))
+
+    ProductBusiness().delete(4L)
+    assertNull(ProductRepository.get(4L))
   }
 }
