@@ -29,7 +29,7 @@ class ProductAPITest {
 
   @BeforeAll
   fun setup() {
-    url = "http://localhost:$localServerPort/products"
+    url = "http://localhost:$localServerPort"
     restTemplate = TestRestTemplate()
   }
 

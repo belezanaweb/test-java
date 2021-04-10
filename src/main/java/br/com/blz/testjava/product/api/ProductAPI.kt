@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 import java.lang.Exception
 
 @RestController
-@RequestMapping(value = ["/products"])
+@RequestMapping(value = ["/"])
 class ProductAPI(
   @Autowired val productBusiness: ProductBusiness
 ) {
