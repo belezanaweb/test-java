@@ -4,51 +4,18 @@ import br.com.blz.testjava.product.business.objects.Product
 import br.com.blz.testjava.product.business.objects.ProductInventory
 import br.com.blz.testjava.product.business.objects.ProductWarehouse
 import br.com.blz.testjava.product.business.objects.WarehouseTypes
+import br.com.blz.testjava.product.exception.ProductValidationException
 
-class ProductAPISaveInputDTO{
-  var sku: Long = 0
-  lateinit var name: String
-  lateinit var inventory: ProductInventoryAPISaveInputDTO
-
-  constructor()
-
-  constructor(sku: Long, name: String, inventory: ProductInventoryAPISaveInputDTO) {
-    this.sku = sku
-    this.name = name
-    this.inventory = inventory
-  }
+data class ProductAPISaveInputDTO(val sku: Long? = null, val name: String? = null, val inventory: ProductInventoryAPISaveInputDTO? = null) {
   fun toProduct(): Product = Product(
-    sku = sku,
-    name = name,
+    sku?.let { it } ?: throw ProductValidationException("sku"),
+    name?.let { it } ?: throw  ProductValidationException("name"),
     inventory = ProductInventory(
-      warehouses = inventory.warehouses.map { ProductWarehouse(it.locality, it.quantity, WarehouseTypes.valueOf(it.type)) }
+      inventory?.warehouses!!.map { ProductWarehouse(it.locality, it.quantity, WarehouseTypes.valueOf(it.type)) }
     )
   )
 }
 
-class ProductInventoryAPISaveInputDTO {
-  var warehouses: List<ProductWarehouseAPISaveInputDTO> = listOf()
+data class ProductInventoryAPISaveInputDTO(val warehouses: List<ProductWarehouseAPISaveInputDTO> = mutableListOf())
 
-  constructor()
-
-  constructor(warehouses: List<ProductWarehouseAPISaveInputDTO>) {
-    this.warehouses = warehouses
-  }
-
-}
-
-class ProductWarehouseAPISaveInputDTO {
-  lateinit var locality: String
-  var quantity: Int = 0
-  lateinit var type: String
-
-  constructor()
-
-  constructor(locality: String, quantity: Int, type: String) {
-    this.locality = locality
-    this.quantity = quantity
-    this.type = type
-  }
-
-
-}
+data class ProductWarehouseAPISaveInputDTO(val locality: String, val quantity: Int, val type: String)
