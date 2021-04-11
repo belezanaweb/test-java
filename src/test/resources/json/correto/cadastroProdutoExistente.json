@@ -1,0 +1,19 @@
+{
+    "sku": 4,
+    "name": "Wella Professionals Brilliance Protect Serum - Ampola de Tratamento 3x10ml",
+    "inventory": {
+  
+        "warehouses": [
+            {
+                "locality": "SP",
+                "quantity": 12,
+                "type": "ECOMMERCE"
+            },
+            {
+                "locality": "MOEMA",
+                "quantity": 3,
+                "type": "PHYSICAL_STORE"
+            }
+        ]
+    }
+}
