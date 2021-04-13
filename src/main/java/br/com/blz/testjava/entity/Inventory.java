@@ -1,72 +1,40 @@
 package br.com.blz.testjava.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
-import java.io.Serializable;
-import java.util.List;
+import javax.persistence.OneToMany;
 
-@Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
-public class Inventory implements Serializable {
+public class Inventory {
 
-    /**
-	 * 
-	 */
-	
-	
-	@Id @GeneratedValue
-	private Long id;
-    private Long sku;
-    private String name;
-    @Transient
-    private List<Warehouse> warehouses;
-    private boolean marktable;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 
-    public Integer getQuantity() {
-        return this.warehouses.stream()
-                .map(p -> p.getQuantity())
-                .reduce(0, Integer::sum);
-    }
+	@OneToMany(mappedBy = "inventory")
+	private List<InventoryWarehouse> warehouses;
 
-    public boolean isMarktable() {
-        Integer sum = this.warehouses.stream()
-                .map(p -> p.getQuantity())
-                .reduce(0, Integer::sum);
-        if (sum > 0) return true;
-        return marktable;
-    }
-
-	public void setSku(Long sku) {
-		this.sku = sku;
+	public Inventory() {
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public int getId() {
+		return id;
 	}
 
-	public void setWarehouses(List<Warehouse> warehouses) {
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public List<InventoryWarehouse> getWarehouses() {
+		return warehouses;
+	}
+
+	public void setWarehouses(List<InventoryWarehouse> warehouses) {
 		this.warehouses = warehouses;
 	}
 
-	public void setMarktable(boolean marktable) {
-		this.marktable = marktable;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-    
-    
-    
-    
 }

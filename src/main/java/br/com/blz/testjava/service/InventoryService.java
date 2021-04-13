@@ -1,12 +1,13 @@
 package br.com.blz.testjava.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.blz.testjava.entity.Inventory;
 import br.com.blz.testjava.repository.InventoryRepository;
-
-import java.util.List;
+import dto.InventoryDTO;
 
 @Service
 public class InventoryService {
@@ -23,10 +24,6 @@ public class InventoryService {
     }
 
     public Inventory save(Inventory inventory) {
-        return repository.save(inventory);
-    }
-
-    public Inventory alterInventory(Inventory inventory) {
         return repository.save(inventory);
     }
 
