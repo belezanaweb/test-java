@@ -12,7 +12,6 @@ import br.com.blz.testjava.entity.InventoryWarehouse;
 import br.com.blz.testjava.entity.InventoryWarehouseKey;
 import br.com.blz.testjava.entity.Product;
 import br.com.blz.testjava.entity.Warehouse;
-
 import br.com.blz.testjava.repository.InventoryRepository;
 import br.com.blz.testjava.repository.InventoryWarehouseRepository;
 import br.com.blz.testjava.repository.ProductRepository;
