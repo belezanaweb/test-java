@@ -108,8 +108,8 @@ public class ProductService {
 		long inventoryId = findBySku.getInventory().getId();
 
 		inventoryRepository.delete(inventoryId);
-		productRepository.delete(findBySku);
 
+		productRepository.delete(findBySku);
 
 	}
 
