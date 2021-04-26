@@ -1,7 +1,7 @@
 package br.com.blz.testjava.domain.entities
 
 class Product(
-  var sku: Long? = null,
+  var sku: Long,
   var name: String,
   var inventory: Inventory
 ) {

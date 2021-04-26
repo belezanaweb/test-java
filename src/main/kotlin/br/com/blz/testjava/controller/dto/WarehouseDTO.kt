@@ -2,8 +2,10 @@ package br.com.blz.testjava.controller.dto
 
 import br.com.blz.testjava.domain.entities.Warehouse
 import br.com.blz.testjava.domain.entities.WarehouseType
+import javax.validation.constraints.NotEmpty
 
 class WarehouseDTO() {
+  @NotEmpty
   var locality: String = ""
   var quantity: Int = 0
   var type: WarehouseType = WarehouseType.PHYSICAL_STORE

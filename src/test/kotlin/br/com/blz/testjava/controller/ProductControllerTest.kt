@@ -1,8 +1,7 @@
 package br.com.blz.testjava.controller
 
-import br.com.blz.testjava.application.exception.NotFoundException
-import br.com.blz.testjava.application.exception.handling.ControllerExceptionHandler
-import br.com.blz.testjava.application.exception.handling.StandardError
+import br.com.blz.testjava.application.exception.DataConstraintException
+import br.com.blz.testjava.application.exception.handling.FieldError
 import br.com.blz.testjava.controller.dto.ProductDTO
 import br.com.blz.testjava.domain.entities.Inventory
 import br.com.blz.testjava.domain.entities.Product
@@ -20,15 +19,10 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.web.server.LocalServerPort
 import org.springframework.http.MediaType
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup
-import org.springframework.web.method.HandlerMethod
-import org.springframework.web.method.annotation.ExceptionHandlerMethodResolver
-import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver
-import org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod
-import java.lang.reflect.Method
+import org.springframework.web.util.NestedServletException
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -36,9 +30,7 @@ internal class ProductControllerTest {
 
   private val productRepository: ProductRepository = mockk()
 
-  val mockMvc: MockMvc = standaloneSetup(ProductController(ProductService(productRepository)))
-                          .setHandlerExceptionResolvers(createExceptionResolver())
-                          .build()
+  val mockMvc: MockMvc = standaloneSetup(ProductController(ProductService(productRepository))).build()
 
   @LocalServerPort
   private var randomServerPort = 0
@@ -93,12 +85,14 @@ internal class ProductControllerTest {
 
   @Test
   fun `Verify endpoint to create a product`() {
+    val sku: Long = 3333333
     val warehouses = listOf<Warehouse>(Warehouse("PR", 100, WarehouseType.ECOMMERCE))
     val inventory = Inventory(warehouses)
-    val product = Product(null, "Product 3", inventory)
+    val product = Product(sku, "Product 3", inventory)
     val productDTO = ProductDTO(product)
 
-    every { productRepository.save(any()) } returns product.apply { sku = 333333 }
+    every { productRepository.find(sku) } returns null
+    every { productRepository.save(any()) } returns product
 
     val klaxon = Klaxon()
     val httpResponse = mockMvc.perform(post("http://localhost:$randomServerPort/products")
@@ -110,6 +104,30 @@ internal class ProductControllerTest {
   }
 
   @Test
+  fun `Must reject an update that a product with an empty name`() {
+    val sku: Long = 3333333
+    val warehouses = listOf<Warehouse>(Warehouse("PR", 100, WarehouseType.ECOMMERCE))
+    val inventory = Inventory(warehouses)
+    val product = Product(sku, "", inventory)
+    val productDTO = ProductDTO(product)
+
+    every { productRepository.find(sku) } returns null
+    every { productRepository.save(any()) } returns product
+
+    try {
+      val klaxon = Klaxon()
+      val httpResponse = mockMvc.perform(post("http://localhost:$randomServerPort/products")
+        .content(klaxon.toJsonString(productDTO))
+        .contentType(MediaType.APPLICATION_JSON))
+        .andReturn()
+    } catch (e: NestedServletException) {
+      val cause = e.cause as DataConstraintException
+      assertEquals(listOf(FieldError("productDTO", "productDTO.name", "NotEmpty")), cause.errors)
+    }
+
+  }
+
+  @Test
   fun `Verify endpoint to update a product`() {
     val sku: Long = 333333
     val warehouses = listOf<Warehouse>(Warehouse("PR", 100, WarehouseType.ECOMMERCE))
@@ -117,10 +135,11 @@ internal class ProductControllerTest {
     val product = Product(sku, "Product 3", inventory)
     val productDTO = ProductDTO(product).apply { name = "Product 33" }
 
+    every { productRepository.find(sku) } returns product
     every { productRepository.update(any()) } returns productDTO.toEntity()
 
     val klaxon = Klaxon()
-    val httpResponse = mockMvc.perform(put("http://localhost:$randomServerPort/products")
+    val httpResponse = mockMvc.perform(put("http://localhost:$randomServerPort/products/$sku")
       .content(klaxon.toJsonString(productDTO))
       .contentType(MediaType.APPLICATION_JSON))
       .andReturn()
@@ -129,30 +148,27 @@ internal class ProductControllerTest {
   }
 
   @Test
-  fun `Verify endpoint to update a product with an invalid sku`() {
+  fun `Verify endpoint to update a product with a new sku`() {
     val sku: Long = 333333
     val warehouses = listOf<Warehouse>(Warehouse("PR", 100, WarehouseType.ECOMMERCE))
     val inventory = Inventory(warehouses)
     val product = Product(sku, "Product 3", inventory)
     val productDTO = ProductDTO(product).apply { name = "Product 33" }
 
-    every { productRepository.update(any()) } throws NotFoundException("Product not found with sku $sku")
+    every { productRepository.find(sku) } returns null
+    every { productRepository.save(any()) } returns productDTO.toEntity()
 
     val klaxon = Klaxon()
-    val httpResponse = mockMvc.perform(put("http://localhost:$randomServerPort/products")
+    val httpResponse = mockMvc.perform(put("http://localhost:$randomServerPort/products/$sku")
       .content(klaxon.toJsonString(productDTO))
       .contentType(MediaType.APPLICATION_JSON))
       .andReturn()
 
-    val response = httpResponse.response
-    val error = Klaxon().parse<StandardError>(response.contentAsString)
-
-    assertEquals("Product not found with sku $sku", error?.message)
-    assertEquals(500, response.status)
+    assertEquals(201, httpResponse.response.status)
   }
 
   @Test
-  fun `Verify endpoints to create and delete a product`() {
+  fun `Verify endpoints to delete a product`() {
     val sku: Long = 4444444
     val warehouses = listOf<Warehouse>(Warehouse("PR", 100, WarehouseType.ECOMMERCE))
     val inventory = Inventory(warehouses)
@@ -180,24 +196,6 @@ internal class ProductControllerTest {
       .andReturn()
 
     assertEquals(404, httpResponse.response.status)
-  }
-
-  private fun createExceptionResolver(): ExceptionHandlerExceptionResolver {
-    val exceptionResolver: ExceptionHandlerExceptionResolver = object : ExceptionHandlerExceptionResolver() {
-      override fun getExceptionHandlerMethod(
-        handlerMethod: HandlerMethod?, exception: Exception
-      ): ServletInvocableHandlerMethod {
-        val method = ExceptionHandlerMethodResolver(
-          ControllerExceptionHandler::class.java
-        ).resolveMethod(exception)
-        return ServletInvocableHandlerMethod(
-          ControllerExceptionHandler(), method as Method
-        )
-      }
-    }
-    exceptionResolver.messageConverters.add(MappingJackson2HttpMessageConverter())
-    exceptionResolver.afterPropertiesSet()
-    return exceptionResolver
   }
 
 }

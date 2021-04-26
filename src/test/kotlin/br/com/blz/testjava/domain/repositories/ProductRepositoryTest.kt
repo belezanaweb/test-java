@@ -17,9 +17,9 @@ internal class ProductRepositoryTest {
     val productsCount = productRepository.findAll().size
     val warehouse = Warehouse("PR", 100, WarehouseType.ECOMMERCE)
     val inventory = Inventory(mutableListOf(warehouse))
-    productRepository.save(Product(name = "Product 1", inventory = inventory))
-    productRepository.save(Product(name = "Product 2", inventory = inventory))
-    productRepository.save(Product(name = "Product 3", inventory = inventory))
+    productRepository.save(Product(111111, "Product 1", inventory))
+    productRepository.save(Product(222222, "Product 2", inventory))
+    productRepository.save(Product(333333,"Product 3", inventory))
 
     assertEquals(productsCount + 3, productRepository.findAll().size)
   }
@@ -29,9 +29,9 @@ internal class ProductRepositoryTest {
     val productRepository: ProductRepository = ProductRepository()
     val warehouse = Warehouse("PR", 100, WarehouseType.ECOMMERCE)
     val inventory = Inventory(mutableListOf(warehouse))
-    val product = productRepository.save(Product(name = "Product 4", inventory = inventory))
+    val product = productRepository.save(Product(111111, "Product 4", inventory))
 
-    assertNotNull(productRepository.find(product.sku!!))
+    assertNotNull(productRepository.find(product.sku))
   }
 
   @Test
@@ -42,10 +42,10 @@ internal class ProductRepositoryTest {
   }
 
   @Test
-  fun `Must insert a product and return one with and sku`() {
+  fun `Must insert a product`() {
     val productRepository: ProductRepository = ProductRepository()
     val inventory = Inventory(mutableListOf(Warehouse("PR", 100, WarehouseType.ECOMMERCE)))
-    val product = Product(name = "Product 5", inventory = inventory)
+    val product = Product(4444444, "Product 5", inventory)
     val saveProduct = productRepository.save(product)
 
     assertNotNull(saveProduct.sku)
@@ -53,24 +53,26 @@ internal class ProductRepositoryTest {
 
   @Test
   fun `Must update the name of a product`() {
+    val sku: Long = 111111
     val productRepository: ProductRepository = ProductRepository()
     val inventory = Inventory(mutableListOf(Warehouse("PR", 100, WarehouseType.ECOMMERCE)))
-    val product = productRepository.save(Product(name = "Product 6", inventory = inventory))
+    val product = productRepository.save(Product(sku = sku, name = "Product 6", inventory = inventory))
 
     product.name += "_"
     productRepository.update(product)
 
-    val updateProduct = productRepository.find(product.sku!!)
+    val updateProduct = productRepository.find(product.sku)
     assertEquals(product.name, updateProduct?.name)
   }
 
 
   @Test
-  fun `Must update the warehouses of an inventory`() {
+  fun `Must update the warehouses of an inventory an existent product`() {
+    val sku: Long = 1111111
     val productRepository: ProductRepository = ProductRepository()
     val warehouse = Warehouse("PR", 100, WarehouseType.ECOMMERCE)
     val inventory = Inventory(mutableListOf(warehouse))
-    val product = productRepository.save(Product(name = "Product 7", inventory = inventory))
+    val product = productRepository.save(Product(sku, "Product 7", inventory))
 
     val newInventory = Inventory(
       mutableListOf(
@@ -81,7 +83,7 @@ internal class ProductRepositoryTest {
     product.inventory = newInventory
     productRepository.update(product)
 
-    val updateProduct = productRepository.find(product.sku!!)!!
+    val updateProduct = productRepository.find(product.sku)!!
 
     assertEquals(product.inventory.warehouses, updateProduct.inventory.warehouses)
   }
@@ -91,21 +93,11 @@ internal class ProductRepositoryTest {
     val productRepository: ProductRepository = ProductRepository()
     val warehouse = Warehouse("PR", 100, WarehouseType.ECOMMERCE)
     val inventory = Inventory(mutableListOf(warehouse))
-    val product = productRepository.save(Product(name = "Product 8", inventory = inventory))
+    val product = productRepository.save(Product(111111, "Product 8", inventory))
 
-    assertNotNull(productRepository.find(product.sku!!))
+    assertNotNull(productRepository.find(product.sku))
     productRepository.delete(product)
-    assertNull(productRepository.find(product.sku!!))
-  }
-
-  @Test
-  fun `Must throw an exception when try to update a product with an invalid sku`() {
-    val productRepository: ProductRepository = ProductRepository()
-    val warehouse = Warehouse("PR", 100, WarehouseType.ECOMMERCE)
-    val inventory = Inventory(mutableListOf(warehouse))
-    val product = Product(sku = 112233, name = "Product 9", inventory = inventory)
-
-    assertThrows(NotFoundException::class.java, Executable { productRepository.update(product) })
+    assertNull(productRepository.find(product.sku))
   }
 
   @Test

@@ -15,7 +15,6 @@ class ProductRepository {
   }
 
   fun save(product: Product): Product {
-    product.sku = System.currentTimeMillis()
     products.add(
       cloneProduct(product)
     )
@@ -29,6 +28,7 @@ class ProductRepository {
     savedProduct.apply {
       this.inventory = cloneInventory(product.inventory)
       this.name = product.name
+      this.sku = product.sku
     }
 
     return product
@@ -38,7 +38,7 @@ class ProductRepository {
     val savedProduct = products.find { _product: Product -> _product.sku == product.sku }
       ?: throw NotFoundException("Product not found with sku ${product.sku}")
 
-    return products.remove(savedProduct)
+    return products.removeIf { it.sku == product.sku }
   }
 
   fun find(sku: Long): Product? {
