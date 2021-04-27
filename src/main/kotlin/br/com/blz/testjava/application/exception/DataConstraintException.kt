@@ -7,10 +7,12 @@ class DataConstraintException(message: String) : RuntimeException(message) {
 
   val errors = mutableListOf<FieldError>()
 
-  constructor(br: BindingResult): this("Data constraint") {
+  constructor(br: BindingResult): this("Data constraint exception") {
     for (error in br.allErrors) {
-      val field = error.codes!![0].replace(error.code + ".", "")
-      errors.add(FieldError(error.objectName, field, error.code!!))
+      val field = error.codes?.firstOrNull()?.replace(error.code + ".", "")
+      if (field != null) {
+        errors.add(FieldError(error.objectName, field, error.code!!))
+      }
     }
   }
 }
