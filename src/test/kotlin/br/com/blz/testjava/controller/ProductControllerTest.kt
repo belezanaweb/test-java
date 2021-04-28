@@ -1,7 +1,8 @@
 package br.com.blz.testjava.controller
 
-import br.com.blz.testjava.application.exception.DataConstraintException
+import br.com.blz.testjava.application.exception.handling.ControllerExceptionHandler
 import br.com.blz.testjava.application.exception.handling.FieldError
+import br.com.blz.testjava.application.exception.handling.StandardError
 import br.com.blz.testjava.controller.dto.ProductDTO
 import br.com.blz.testjava.domain.entities.Inventory
 import br.com.blz.testjava.domain.entities.Product
@@ -22,7 +23,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup
-import org.springframework.web.util.NestedServletException
+import javax.validation.Validator
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -30,10 +31,14 @@ internal class ProductControllerTest {
 
   private val productRepository: ProductRepository = mockk()
 
-  val mockMvc: MockMvc = standaloneSetup(ProductController(ProductService(productRepository))).build()
+  val mockMvc: MockMvc = standaloneSetup(ProductController(ProductService(productRepository)))
+                          .setControllerAdvice(ControllerExceptionHandler())
+                          .build()
 
   @LocalServerPort
   private var randomServerPort = 0
+
+  val v: Validator? = null
 
   @BeforeEach
   fun init() {
@@ -114,18 +119,16 @@ internal class ProductControllerTest {
     every { productRepository.find(sku) } returns null
     every { productRepository.save(any()) } returns product
 
-    try {
-      val klaxon = Klaxon()
-      val httpResponse = mockMvc.perform(post("http://localhost:$randomServerPort/products")
+    val klaxon = Klaxon()
+    val httpResponse = mockMvc.perform(post("http://localhost:$randomServerPort/products")
         .content(klaxon.toJsonString(productDTO))
         .contentType(MediaType.APPLICATION_JSON))
         .andReturn()
-    } catch (e: NestedServletException) {
-      val cause = e.cause as DataConstraintException
-      assertEquals(listOf(FieldError("productDTO", "productDTO.name", "NotEmpty")), cause.errors)
-    }
 
-  }
+    val standardError = klaxon.parse<StandardError>(httpResponse.response.contentAsString)
+    assertEquals(listOf(FieldError("productDTO", "productDTO.name", "NotEmpty")), standardError?.errors)
+
+}
 
   @Test
   fun `Verify endpoint to update a product`() {
