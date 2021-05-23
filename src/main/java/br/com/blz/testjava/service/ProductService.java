@@ -24,6 +24,9 @@ public class ProductService {
             throw new ResourceAlreadyExistException(String.format("Product with id %s already exists.", product.getSku()));
         }
 
+        product.setMarketable(false);
+        product.getInventory().setQuantity(0L);
+
         return productRepository.save(product);
     }
 
