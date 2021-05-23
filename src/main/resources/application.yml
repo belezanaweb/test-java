@@ -1,0 +1,3 @@
+springdoc:
+  cache:
+    disabled: true
