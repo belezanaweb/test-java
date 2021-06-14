@@ -1,30 +1,31 @@
 package br.com.blz.testjava.model;
 
-import java.util.UUID;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Product {
 
-	private UUID id;
+	private Long sku;
 	private String name;
 	private Inventory inventory;
 	private Boolean isMarketable;
 
 	public Product() {
+		
 	}
 
-	public Product(UUID id, String name, Inventory inventory) {
-		super();
-		this.id = id;
+	public Product(Long sku, String name, Inventory inventory) {
+		this.sku = sku;
 		this.name = name;
 		this.inventory = inventory;
 	}
 
-	public UUID getId() {
-		return id;
+	public Long getSku() {
+		return sku;
 	}
 
-	public void setId(UUID id) {
-		this.id = id;
+	public void setSku(Long sku) {
+		this.sku = sku;
 	}
 
 	public String getName() {
@@ -44,16 +45,33 @@ public class Product {
 	}
 
 	public Boolean getIsMarketable() {
-		return isMarketable;
+		return inventory.getQuantity() > 0 ? Boolean.TRUE : Boolean.FALSE;
 	}
-
+	
 	public void setIsMarketable(Boolean isMarketable) {
 		this.isMarketable = isMarketable;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Product other = (Product) obj;
+		if (sku == null) {
+			if (other.sku != null)
+				return false;
+		} else if (!sku.equals(other.sku))
+			return false;
+		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Product [id=" + this.id + ", name=" + this.name + ", inventory=" + this.inventory.toString()
+		return "Product [id=" + this.sku + ", name=" + this.name + ", inventory=" + this.inventory.toString()
 				+ ", isMarketable=" + this.isMarketable + "]";
 	}
 

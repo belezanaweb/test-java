@@ -2,6 +2,9 @@ package br.com.blz.testjava.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Inventory {
 	private Integer quantity;
 	private List<Warehouse> warehouses;
@@ -15,7 +18,7 @@ public class Inventory {
 	}
 
 	public Integer getQuantity() {
-		return quantity;
+		return warehouses.stream().mapToInt(warehouse -> warehouse.getQuantity()).sum();
 	}
 
 	public void setQuantity(Integer quantity) {

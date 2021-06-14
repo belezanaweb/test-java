@@ -1,7 +1,10 @@
 package br.com.blz.testjava.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import br.com.blz.testjava.enums.WarehouseTypeEnum;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Warehouse {
 	private String locality;
 	private Integer quantity;
