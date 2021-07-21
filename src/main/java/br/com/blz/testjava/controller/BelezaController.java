@@ -2,8 +2,6 @@ package br.com.blz.testjava.controller;
 
 import java.util.HashMap;
 
-import javax.validation.Valid;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -78,7 +76,7 @@ public class BelezaController {
 		if (prod != null) {
 
 			produtos.remove(sku);
-			return ResponseEntity.status(HttpStatus.OK).body(prod);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		} else {
 			Mensagem msg = new Mensagem(COD_001, NOT_FOUND);
 			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(msg);

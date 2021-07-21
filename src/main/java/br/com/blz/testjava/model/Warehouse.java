@@ -1,22 +1,14 @@
 package br.com.blz.testjava.model;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
 public class Warehouse {
-	@NotNull
-	@NotEmpty
+	
 	private String locality;
-	@NotNull
-	@NotEmpty
 	private long quantity;
-	@NotNull
-	@NotEmpty
 	private String type;
 
-	public Warehouse(@NotNull @NotEmpty String locality,
-			@NotNull @NotEmpty long quantity,
-			@NotNull @NotEmpty String type) {
+	public Warehouse(String locality,
+			long quantity,
+			String type) {
 		this.locality = locality;
 		this.quantity = quantity;
 		this.type = type;
