@@ -23,9 +23,9 @@ class ProductRepo(
     return products[index]
   }
 
-  fun updateProduct(product: ProductRequest, sku: Long): ProductRequest {
+  fun updateProduct(product: ProductRequest): ProductRequest {
     try {
-        val index = getIndex(sku)
+        val index = getIndex(product.sku)
         products[index] = product
         return product
     } catch (ex: Exception) {

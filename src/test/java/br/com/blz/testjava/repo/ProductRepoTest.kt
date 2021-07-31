@@ -56,7 +56,7 @@ class ProductRepoTest {
   fun `when update product armazened should return product updated`() {
     productRepo.insertProduct(createProductRequest(1, "Malbec Gold Desodorante Colônia 100ml"))
     val product = createProductRequest(1, "Florata 75ml")
-    val productUpdated = productRepo.updateProduct(product, 1)
+    val productUpdated = productRepo.updateProduct(product)
     assertAll({
       assertEquals(1L, productUpdated.sku)
       assertEquals("Florata 75ml", productUpdated.name)
@@ -70,7 +70,7 @@ class ProductRepoTest {
   fun `when to update product not armazened should throw exception`() {
     val product = createProductRequest(1, "Florata 75ml")
     assertThrows<Exception>{
-      productRepo.updateProduct(product, 12)
+      productRepo.updateProduct(product)
     }
   }
 

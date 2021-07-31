@@ -17,8 +17,8 @@ class ProductService(
     return productResquestToResponseConverter.build(sku)
   }
 
-  fun updateProduct(product: ProductRequest, sku: Long): ProductResponse {
-    return productResquestToResponseConverter.build(productRepo.updateProduct(product, sku))
+  fun updateProduct(product: ProductRequest): ProductResponse {
+    return productResquestToResponseConverter.build(productRepo.updateProduct(product))
   }
 
   fun deleteProduct(sku: Long): Long {

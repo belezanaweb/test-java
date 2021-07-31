@@ -22,14 +22,13 @@ class ProductController(
     }
   }
 
-  @PutMapping("/{sku}")
-  fun updateSku(@RequestBody productRequest: ProductRequest,
-                @PathVariable("sku") sku: Long): ResponseEntity<Any> {
+  @PutMapping("/")
+  fun updateSku(@RequestBody productRequest: ProductRequest): ResponseEntity<Any> {
     return try {
-      val skuResponse = productService.updateProduct(productRequest, sku)
+      val skuResponse = productService.updateProduct(productRequest)
       ResponseEntity(skuResponse, HttpStatus.CREATED)
     } catch (ex: Exception) {
-      ResponseEntity("Não foi possível encontrar um Produto com o sku $sku", HttpStatus.NOT_FOUND)
+      ResponseEntity("Não foi possível encontrar um Produto com o sku ${productRequest.sku}", HttpStatus.NOT_FOUND)
     }
   }
 

@@ -43,16 +43,16 @@ class ProductControllerTest {
   fun `when create product should return status code 201`() {
     val product = createProductResponse(1, "Florata 75ml")
     val productRequest = createProductRequest(1, "Florata 75ml")
-    whenever(productService.updateProduct(any(), any())) doReturn product
-    val response = productController.updateSku(productRequest, 1)
+    whenever(productService.updateProduct(any())) doReturn product
+    val response = productController.updateSku(productRequest)
     assertEquals(HttpStatus.CREATED, response.statusCode)
   }
 
   @Test
   fun `when error occurs during product update should return status code 404`() {
     val productRequest = createProductRequest(1, "Florata 75ml")
-    whenever(productService.updateProduct(any(), any())).doAnswer {throw Exception("erro")}
-    val response = productController.updateSku(productRequest, 1)
+    whenever(productService.updateProduct(any())).doAnswer {throw Exception("erro")}
+    val response = productController.updateSku(productRequest)
     assertEquals(HttpStatus.NOT_FOUND, response.statusCode)
   }
 
