@@ -1,0 +1,129 @@
+{
+	"info": {
+		"_postman_id": "e5b6c6c3-75ee-46c1-9e75-2b494c88eac6",
+		"name": "BELEZA NA WEB - TEST",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sku\": 43264,\r\n    \"name\": \"L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g\",\r\n    \"inventory\": {\r\n        \"warehouses\": [\r\n            {\r\n                \"locality\": \"SP\",\r\n                \"quantity\": 12,\r\n                \"type\": \"ECOMMERCE\"\r\n            },\r\n            {\r\n                \"locality\": \"MOEMA\",\r\n                \"quantity\": 3,\r\n                \"type\": \"PHYSICAL_STORE\"\r\n            }\r\n        ]\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:12378/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "12378",
+					"path": [
+						"products"
+					]
+				},
+				"description": "Create product based on json payload"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:12378/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "12378",
+					"path": [
+						"products"
+					]
+				},
+				"description": "Get All Products"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Product By SKU",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:12378/products/43264",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "12378",
+					"path": [
+						"products",
+						"43264"
+					]
+				},
+				"description": "Get All Products"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Product By SKU",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:12378/products/43264",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "12378",
+					"path": [
+						"products",
+						"43264"
+					]
+				},
+				"description": "Get All Products"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Product",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sku\": 4326444,\r\n    \"name\": \"teetwerewrwe\",\r\n    \"inventory\": {\r\n        \"warehouses\": [\r\n            {\r\n                \"locality\": \"SP\",\r\n                \"quantity\": 12,\r\n                \"type\": \"ECOMMERCE\"\r\n            },\r\n            {\r\n                \"locality\": \"MOEMA\",\r\n                \"quantity\": 3,\r\n                \"type\": \"PHYSICAL_STORE\"\r\n            }\r\n        ]\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:12378/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "12378",
+					"path": [
+						"products"
+					]
+				},
+				"description": "Get All Products"
+			},
+			"response": []
+		}
+	]
+}
