@@ -1,0 +1,48 @@
+Rodolfo Baggio
+Solutions Architecture & Delivery | Business Consultancy | IT Strategy | Leadership | Tech Lead
+
+baggio.rodolfo@gmail.com
+https://www.linkedin.com/in/rodolfobaggio/
+https://github.com/baggiorodx
+https://www.instagram.com/baggiorodx/
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+Bom, o codigo produzido foi um bom desafio, fazia 8 anos que eu não codificava algo 'do zero', algumas coisas foram novidades. 
+Decidi brincar um pouco com algumas coisas, existem alguns comentários e algumas coisas incabadas, mas o requisitos foram cumpridos. 
+
+Alguns pontos a ressaltar... 
+1) Usar o Visual Studio Code, decidir para entender como funciona, sempre usei o Eclipe e NetBeans, e as vezes usava o JDeveloper
+2) Spring boot do 'zero', o setup na empresa atual é feito pelos desenvolvedores, sempre que preciso 'ajudá-los' é mais no aspecto da arquitetura
+   e também do ponto de vista de requirementos e regras de negócio. 
+3) Também decidi usar o Postman para alguns testes, sempre precisar criar ainda os testes pelo JUnit
+4) Usar github dentro do Visual Studio também foi uma boa brincadeira. 
+5) Não tenho atuado muito como developer... 
+6) Tenho 12 anos de experiência em varejo e supply chain em geral... considerem bem essa experiência. 
+
+Obrigado pela oportunidade... 
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+https://github.com/belezanaweb/test-java
+https://github.com/baggiorodx/test-java
+
+[Done] Crie endpoints para as seguintes ações:
+[Done]  - Criação de produto onde o payload será o json informado acima (exceto as propriedades isMarketable e inventory.quantity)
+[Done]  - Edição de produto por sku
+[Done]  - Recuperação de produto por sku
+[Done]  - Deleção de produto por sku
+
+[Done] Requisitos
+[Done]  - Toda vez que um produto for recuperado por sku deverá ser calculado a propriedade: inventory.quantity
+[Done]  - A propriedade inventory.quantity é a soma da quantity dos warehouses; Toda vez que um produto for recuperado por sku deverá ser calculado a propriedade: isMarketable
+[Done]  - Um produto é marketable sempre que seu inventory.quantity for maior que 0; Caso um produto já existente em memória tente ser criado com o mesmo sku uma exceção deverá ser lançada
+[Done]  - Dois produtos são considerados iguais se os seus skus forem iguais;  Ao atualizar um produto, o antigo deve ser sobrescrito com o que esta sendo enviado na requisição
+[Done]  - A requisição deve receber o sku e atualizar com o produto que tbm esta vindo na requisição
+
+[Almost Done] Dicas
+[Done]  - Os produtos devem ficar em memória, não é necessário persistir os dados. Não utilize h2
+[Done]  - Não é necessário adicionar swagger (não será avaliado)
+[Too much for me now :) Gimme 2 days and see the results...] 
+        - Sinta-se a vontade para fazer o código em groovy, kotlin ou scala se preferir, utilizamos bastante aqui
+[Doing] - Testes são sempre bem-vindos 😃
+
