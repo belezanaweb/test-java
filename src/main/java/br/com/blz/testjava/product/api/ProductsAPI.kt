@@ -1,6 +1,7 @@
 package br.com.blz.testjava.product.api
 
 import br.com.blz.testjava.product.dto.ProductRequestDTO
+import br.com.blz.testjava.product.dto.ProductResponseDTO
 import br.com.blz.testjava.product.service.ProductService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -8,6 +9,7 @@ import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
+import java.util.*
 
 @Controller
 @RequestMapping("/products", produces = [MediaType.APPLICATION_JSON_VALUE])
@@ -23,5 +25,11 @@ class ProductsAPI (@Autowired private val productService: ProductService) {
   fun create(@PathVariable("sku") sku: Long, @RequestBody product: ProductRequestDTO): ResponseEntity<String> {
     productService.update(sku, product)
     return ResponseEntity.status(HttpStatus.ACCEPTED).build()
+  }
+
+  @GetMapping("/{sku}")
+  @ResponseBody
+  fun create(@PathVariable("sku") sku: Long): ProductResponseDTO {
+    return productService.getBySku(sku)
   }
 }

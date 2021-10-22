@@ -2,17 +2,17 @@ package br.com.blz.testjava.product.dto
 
 import br.com.blz.testjava.types.WarehouseType
 
-data class ProductRequestDTO(
+data class ProductResponseDTO(
   val sku: Long,
   val name: String,
-  val inventory: ProductInventoryRequestDTO
+  val inventory: ProductInventoryResponseDTO
 )
 
-data class ProductInventoryRequestDTO(
-  val warehouses: List<WareHouseRequestDTO>
+data class ProductInventoryResponseDTO(
+  val warehouses: List<WareHouseResponseDTO>
 )
 
-data class WareHouseRequestDTO(
+data class WareHouseResponseDTO(
   val locality: String,
   val quantity: Int,
   val type: WarehouseType

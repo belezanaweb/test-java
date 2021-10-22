@@ -1,7 +1,9 @@
 package br.com.blz.testjava.product.service
 
+import br.com.blz.testjava.product.converters.toDTO
 import br.com.blz.testjava.product.converters.toEntity
 import br.com.blz.testjava.product.dto.ProductRequestDTO
+import br.com.blz.testjava.product.dto.ProductResponseDTO
 import br.com.blz.testjava.product.exceptions.ProductExistentException
 import br.com.blz.testjava.product.exceptions.ProductNotFoundException
 import br.com.blz.testjava.product.repository.ProductRepository
@@ -32,9 +34,21 @@ class ProductService(@Autowired private val productRepository: ProductRepository
       throw ProductNotFoundException("Produto $sku não encontrado no cadastro")
   }
 
+  /**
+   * Retorna um produto atráves da SKU
+   */
+  fun getBySku(sku: Long): ProductResponseDTO {
+    val existent = productRepository.findBySku(sku)
+    if (existent.isPresent)
+      return existent.get().toDTO()
+    throw ProductNotFoundException("Produto $sku não encontrado no cadastro")
+  }
+
   private fun validateExistent(sku: Long) {
     if (productRepository.findBySku(sku).isPresent) {
       throw ProductExistentException("Já existe um produto cadastrado com essa SKU: $sku")
     }
   }
+
+
 }
