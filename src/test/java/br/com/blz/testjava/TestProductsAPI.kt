@@ -104,6 +104,12 @@ class TestProductsAPI() {
     productService.deleteProduct(sku = 108883L)
   }
 
+  @Test(expected = ProductNotFoundException::class)
+  fun `verifica se recupera um produto Inexistente`() {
+    val skuInexistente = 10666L
+    productService.getBySku(skuInexistente)
+  }
+
   private fun createProdutoPadraoComEstoque() = ProductRequestDTO(
     sku = 123,
     name = "Produto de teste",
