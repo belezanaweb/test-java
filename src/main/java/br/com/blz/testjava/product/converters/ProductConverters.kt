@@ -8,7 +8,7 @@ import br.com.blz.testjava.product.model.WareHouse
 fun ProductRequestDTO.toEntity() = Product(
   sku = this.sku,
   name = this.name,
-  inventory = inventory.toEntity()
+  inventory = inventory.toEntity(),
 )
 
 fun ProductInventoryRequestDTO.toEntity() = ProductInventory(
@@ -25,15 +25,35 @@ fun WareHouseRequestDTO.toEntity() = WareHouse(
 fun Product.toDTO() = ProductResponseDTO(
   sku = this.sku,
   name = this.name,
-  inventory = inventory.toDTO()
+  inventory = inventory.toDTO(),
+  isMarketable = defineIsMarketable(this)
 )
 
-fun ProductInventory.toDTO() = ProductInventoryResponseDTO(
-  warehouses = this.warehouses.map { it.toEntity() }
-)
+fun ProductInventory.toDTO(): ProductInventoryResponseDTO {
+  val (warehouses, total) = convertWarehouses(this.warehouses)
+  return ProductInventoryResponseDTO(
+    warehouses = warehouses,
+    quantity = total
+  )
+}
+
+fun convertWarehouses(warehouses: List<WareHouse>):Pair<List<WareHouseResponseDTO>, Int> {
+    var total = 0
+    val result = mutableListOf<WareHouseResponseDTO>()
+    warehouses.forEach {
+      total += it.quantity
+      result.add(it.toEntity())
+    }
+  return Pair(result, total)
+}
 
 fun WareHouse.toEntity() = WareHouseResponseDTO(
   locality = this.locality,
   quantity = this.quantity,
   type = this.type
 )
+
+
+fun defineIsMarketable(product:Product): Boolean {
+    return product.inventory.warehouses.any { it.quantity > 0 }
+}

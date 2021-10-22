@@ -5,10 +5,12 @@ import br.com.blz.testjava.types.WarehouseType
 data class ProductResponseDTO(
   val sku: Long,
   val name: String,
-  val inventory: ProductInventoryResponseDTO
+  val inventory: ProductInventoryResponseDTO,
+  val isMarketable: Boolean
 )
 
 data class ProductInventoryResponseDTO(
+  val quantity: Int,
   val warehouses: List<WareHouseResponseDTO>
 )
 
