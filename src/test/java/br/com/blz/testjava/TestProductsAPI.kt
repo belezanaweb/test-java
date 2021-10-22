@@ -101,7 +101,7 @@ class TestProductsAPI() {
     productService.create(product)
 
     val skuInexistente = 108883L
-    productService.deleteProduct(sku = 108883L)
+    productService.deleteProduct(sku = skuInexistente)
   }
 
   @Test(expected = ProductNotFoundException::class)
