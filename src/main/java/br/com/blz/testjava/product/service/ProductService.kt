@@ -31,17 +31,34 @@ class ProductService(@Autowired private val productRepository: ProductRepository
     if (existent.isPresent)
       productRepository.save(product.toEntity())
     else
-      throw ProductNotFoundException("Produto $sku não encontrado no cadastro")
+      throw productNotFound(sku)
   }
 
   /**
-   * Retorna um produto atráves da SKU
+   * Retorna um produto atráves da SKU,
+   * caso não encontre retorna uma exception
    */
   fun getBySku(sku: Long): ProductResponseDTO {
     val existent = productRepository.findBySku(sku)
     if (existent.isPresent)
       return existent.get().toDTO()
-    throw ProductNotFoundException("Produto $sku não encontrado no cadastro")
+    throw productNotFound(sku)
+  }
+
+  /**
+   * Recupera um produto por sku e exclui,
+   * Caso não encontre retorna uma exception
+   */
+  fun deleteProduct(sku: Long) {
+    val existent = productRepository.findBySku(sku)
+    if (existent.isPresent) {
+      productRepository.deleteBySku(sku)
+    } else
+      throw productNotFound(sku)
+  }
+
+  private fun productNotFound(sku: Long): ProductNotFoundException{
+    return ProductNotFoundException("Produto $sku não encontrado no cadastro")
   }
 
   private fun validateExistent(sku: Long) {
@@ -49,6 +66,5 @@ class ProductService(@Autowired private val productRepository: ProductRepository
       throw ProductExistentException("Já existe um produto cadastrado com essa SKU: $sku")
     }
   }
-
 
 }

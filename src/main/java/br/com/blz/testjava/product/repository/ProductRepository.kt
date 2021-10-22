@@ -19,4 +19,8 @@ class ProductRepository {
     mapProducts[product.sku] = product
   }
 
+  fun deleteBySku(sku: Long) {
+    mapProducts.remove(sku)
+  }
+
 }

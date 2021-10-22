@@ -22,14 +22,21 @@ class ProductsAPI (@Autowired private val productService: ProductService) {
   }
 
   @PutMapping("/{sku}")
-  fun create(@PathVariable("sku") sku: Long, @RequestBody product: ProductRequestDTO): ResponseEntity<String> {
+  fun update(@PathVariable("sku") sku: Long, @RequestBody product: ProductRequestDTO): ResponseEntity<String> {
     productService.update(sku, product)
     return ResponseEntity.status(HttpStatus.ACCEPTED).build()
   }
 
   @GetMapping("/{sku}")
   @ResponseBody
-  fun create(@PathVariable("sku") sku: Long): ProductResponseDTO {
+  fun get(@PathVariable("sku") sku: Long): ProductResponseDTO {
     return productService.getBySku(sku)
+  }
+
+  @DeleteMapping("/{sku}")
+  @ResponseBody
+  fun delete(@PathVariable("sku") sku: Long): ResponseEntity<String> {
+    productService.deleteProduct(sku)
+    return ResponseEntity.noContent().build()
   }
 }
