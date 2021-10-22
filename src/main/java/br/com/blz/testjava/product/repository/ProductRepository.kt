@@ -15,7 +15,7 @@ class ProductRepository {
     return Optional.ofNullable(mapProducts[sku])
   }
 
-  fun create(product: Product) {
+  fun save(product: Product) {
     mapProducts[product.sku] = product
   }
 
