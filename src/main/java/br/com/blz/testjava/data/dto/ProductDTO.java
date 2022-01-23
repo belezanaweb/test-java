@@ -4,10 +4,10 @@ package br.com.blz.testjava.data.dto;
 
 
 public class ProductDTO {
-	String sku;
-	String name;
-	InventoryDTO inventory;
-	Boolean isMarketable;
+	private String sku;
+	private String name;
+	private InventoryDTO inventory;
+	private Boolean isMarketable;
 	
 	public ProductDTO() {
 		super();

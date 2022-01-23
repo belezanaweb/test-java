@@ -3,8 +3,8 @@ package br.com.blz.testjava.data.dto;
 import java.util.List;
 
 public class InventoryDTO {
-	List<WarehouseDTO> warehouses;
-	int quantity;
+	private List<WarehouseDTO> warehouses;
+	private  int quantity;
 
 	public InventoryDTO() {
 		super();		
@@ -24,7 +24,7 @@ public class InventoryDTO {
 		this.quantity = quantity;
 	}
 
-	public List<WarehouseDTO> getWharehouses() {
+	public List<WarehouseDTO> getWarehouses() {
 		return warehouses;
 	}
 

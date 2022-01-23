@@ -2,9 +2,9 @@ package br.com.blz.testjava.data.dto;
 
 
 public class WarehouseDTO {
-	String locality;
-	int quantity;
-	String type;
+	private String locality;
+	private int quantity;
+	private String type;
 	
 	public WarehouseDTO(String locality, int quantity, String type) {
 		super();

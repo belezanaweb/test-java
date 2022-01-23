@@ -3,8 +3,8 @@ package br.com.blz.testjava.domain.entities;
 import java.util.List;
 
 public class Inventory {
-	int quantity;
-	List<Warehouse> warehouses;
+	private int quantity;
+	private List<Warehouse> warehouses;
 	
 	public Inventory() {
 		super();
@@ -21,12 +21,12 @@ public class Inventory {
 		return this.quantity;
 	}
 
-	public List<Warehouse> getWharehouses() {
+	public List<Warehouse> getWarehouses() {
 		return this.warehouses;
 	}
 	
-	public void setWharehouses(List<Warehouse> wharehouses) {
-		this.warehouses = wharehouses;
+	public void setWarehouses(List<Warehouse> warehouses) {
+		this.warehouses = warehouses;
 		this._calculateQuantity();
 	}
 	
@@ -34,7 +34,7 @@ public class Inventory {
 	private void _calculateQuantity() {
 		this.quantity = 0;
 		for (Warehouse warehouse : this.warehouses) {
-			this.quantity += warehouse.quantity;
+			this.quantity += warehouse.getQuantity();
 		}
 	}
 	

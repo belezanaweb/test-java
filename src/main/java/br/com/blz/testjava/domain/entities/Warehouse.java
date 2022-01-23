@@ -1,9 +1,9 @@
 package br.com.blz.testjava.domain.entities;
 
 public class Warehouse {
-	String locality;
-	int quantity;
-	String type;
+	private String locality;
+	private int quantity;
+	private String type;
 	
 	public Warehouse(String locality, int quantity, String type) {
 		super();

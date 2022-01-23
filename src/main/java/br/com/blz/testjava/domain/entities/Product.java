@@ -1,10 +1,10 @@
 package br.com.blz.testjava.domain.entities;
 
 public class Product {
-	String sku;
-	String name;
-	Inventory inventory;
-	Boolean isMarketable;
+	private String sku;
+	private String name;
+	private Inventory inventory;
+	private Boolean isMarketable;
 	
 	public Product() {
 		
@@ -42,7 +42,7 @@ public class Product {
 	}
 	
 	public void setIsMarketable() {
-		this.isMarketable = (this.inventory.quantity > 0);
+		this.isMarketable = (this.inventory.getQuantity() > 0);
 	}
 	
 	
