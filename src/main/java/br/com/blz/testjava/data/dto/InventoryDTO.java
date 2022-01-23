@@ -2,14 +2,14 @@ package br.com.blz.testjava.data.dto;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class InventoryDTO {
 	List<WarehouseDTO> warehouses;
 	int quantity;
-	
-	
+
+	public InventoryDTO() {
+		super();		
+	}
+
 	public InventoryDTO(List<WarehouseDTO> warehouses, int quantity) {
 		super();
 		this.warehouses = warehouses;
@@ -24,16 +24,6 @@ public class InventoryDTO {
 		this.quantity = quantity;
 	}
 
-	public InventoryDTO(List<WarehouseDTO> warehouses) {
-		super();
-		this.warehouses = warehouses;
-	}
-	
-	public InventoryDTO() {
-		super();
-		
-	}
-
 	public List<WarehouseDTO> getWharehouses() {
 		return warehouses;
 	}
@@ -44,11 +34,11 @@ public class InventoryDTO {
 	
 	@Override
 	public String toString() {
-		String whs = "";
+		String warehouseString = "";
 		for (WarehouseDTO warehouseDTO : warehouses) {
-			whs += warehouseDTO.toString() + "\n";
+			warehouseString += warehouseDTO.toString() + "\n";
 		}
-		return whs;
+		return warehouseString;
 		
 	}
 }

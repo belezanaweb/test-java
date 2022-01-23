@@ -1,8 +1,5 @@
 package br.com.blz.testjava.data.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-@JsonIgnoreProperties(ignoreUnknown = true)
 
 public class WarehouseDTO {
 	String locality;
@@ -16,6 +13,9 @@ public class WarehouseDTO {
 		this.type = type;
 	}
 	
+	public WarehouseDTO() {
+		super();
+	}
 	
 	public String getLocality() {
 		return locality;

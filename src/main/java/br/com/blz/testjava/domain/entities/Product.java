@@ -6,12 +6,16 @@ public class Product {
 	Inventory inventory;
 	Boolean isMarketable;
 	
+	public Product() {
+		
+	}
+	
 	public Product(String sku, String name, Inventory inventory) {
 		super();
 		this.sku = sku;
 		this.name = name;
 		this.inventory = inventory;
-		this.isMarketable = (this.inventory.quantity > 0);
+		this.setIsMarketable();
 	}
 	
 	public String getSku() {
@@ -32,8 +36,15 @@ public class Product {
 	public void setInventory(Inventory inventory) {
 		this.inventory = inventory;
 	}
+	
 	public Boolean getIsMarketable() {
 		return isMarketable;
 	}
+	
+	public void setIsMarketable() {
+		this.isMarketable = (this.inventory.quantity > 0);
+	}
+	
+	
 
 }

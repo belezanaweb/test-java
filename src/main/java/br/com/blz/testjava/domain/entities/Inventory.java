@@ -4,36 +4,42 @@ import java.util.List;
 
 public class Inventory {
 	int quantity;
-	List<Warehouse> wharehouses;
+	List<Warehouse> warehouses;
 	
-	public int getQuantity() {
-		return quantity;
+	public Inventory() {
+		super();
 	}
 	
-	public Inventory(int quantity, List<Warehouse> wharehouses) {
+	public Inventory(int quantity, List<Warehouse> warehouses) {
 		super();
 		
-		this.wharehouses = wharehouses;
-		this.quantity = (this.wharehouses.size() > 0) ? 0 : this._calculateQuantity();
+		this.warehouses = warehouses;
+		this._calculateQuantity();
+	}
+	
+	public int getQuantity() {
+		return this.quantity;
 	}
 
 	public List<Warehouse> getWharehouses() {
-		return wharehouses;
+		return this.warehouses;
 	}
 	
 	public void setWharehouses(List<Warehouse> wharehouses) {
-		this.wharehouses = wharehouses;
+		this.warehouses = wharehouses;
+		this._calculateQuantity();
 	}
 	
 	
-	private int _calculateQuantity() {
-		int quantity = 0;
-		for (Warehouse warehouse : this.wharehouses) {
+	private void _calculateQuantity() {
+		this.quantity = 0;
+		for (Warehouse warehouse : this.warehouses) {
 			this.quantity += warehouse.quantity;
 		}
-		
-		return quantity;
 	}
 	
+	public void updateQuantity() {
+		this._calculateQuantity();
+	}
 	
 }

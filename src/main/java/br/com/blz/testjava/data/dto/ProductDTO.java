@@ -1,19 +1,24 @@
 package br.com.blz.testjava.data.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+
+
 public class ProductDTO {
 	String sku;
 	String name;
 	InventoryDTO inventory;
 	Boolean isMarketable;
 	
-	public ProductDTO(String sku, String name, InventoryDTO inventory) {
+	public ProductDTO() {
+		super();
+	}
+	
+	public ProductDTO(String sku, String name, InventoryDTO inventory, Boolean isMarketable) {
 		super();
 		this.sku = sku;
 		this.name = name;
 		this.inventory = inventory;
+		this.isMarketable = isMarketable;
 	}
 	public String getSku() {
 		return sku;
@@ -24,6 +29,14 @@ public class ProductDTO {
 	public String getName() {
 		return name;
 	}
+	public Boolean getIsMarketable() {
+		return isMarketable;
+	}
+
+	public void setIsMarketable(Boolean isMarketable) {
+		this.isMarketable = isMarketable;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
