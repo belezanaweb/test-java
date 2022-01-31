@@ -1,0 +1,258 @@
+{
+	"info": {
+		"_postman_id": "f470ef0d-0001-4f05-ad97-121f1d81e4fc",
+		"name": "PRODUCT API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "List Products",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "productApiSK",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "productApiUser",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9070/api/v1/product",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9070",
+					"path": [
+						"api",
+						"v1",
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"sku\": 43264,\r\n        \"name\": \"L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g\",\r\n        \"inventory\": {            \r\n            \"warehouses\": [\r\n                {\r\n                    \"locality\": \"SP\",\r\n                    \"quantity\": 12,\r\n                    \"type\": \"ECOMMERCE\"\r\n                },\r\n                {\r\n                    \"locality\": \"MOEMA\",\r\n                    \"quantity\": 3,\r\n                    \"type\": \"PHYSICAL_STORE\"\r\n                }\r\n            ]\r\n        }\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9070/api/v1/product",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9070",
+					"path": [
+						"api",
+						"v1",
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Product 2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n        \"sku\": 34533,\r\n        \"name\": \"Creme de Pentear Dr.Botica Poção Tira Nó 150g\",\r\n        \"inventory\": {            \r\n            \"warehouses\": [\r\n                {\r\n                    \"locality\": \"RJ\",\r\n                    \"quantity\": 22,\r\n                    \"type\": \"ECOMMERCE\"\r\n                },\r\n                {\r\n                    \"locality\": \"CURITIBA\",\r\n                    \"quantity\": 43,\r\n                    \"type\": \"PHYSICAL_STORE\"\r\n                },\r\n                {\r\n                    \"locality\": \"SJP\",\r\n                    \"quantity\": 32,\r\n                    \"type\": \"PHYSICAL_STORE\"\r\n                }\r\n            ]\r\n        }\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9070/api/v1/product",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9070",
+					"path": [
+						"api",
+						"v1",
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Product 3",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sku\": 87654,\r\n    \"name\": \"Cherry Blast Desodorante Colônia\",\r\n    \"inventory\": {        \r\n        \"warehouses\": [\r\n            {\r\n                \"locality\": \"SP\",\r\n                \"quantity\": 132,\r\n                \"type\": \"ECOMMERCE\"\r\n            },\r\n            {\r\n                \"locality\": \"TAUBATE\",\r\n                \"quantity\": 41,\r\n                \"type\": \"PHYSICAL_STORE\"\r\n            },\r\n            {\r\n                \"locality\": \"CURITIBA\",\r\n                \"quantity\": 341,\r\n                \"type\": \"ECOMMERCE\"\r\n            }\r\n        ]\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9070/api/v1/product",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9070",
+					"path": [
+						"api",
+						"v1",
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Product 4",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sku\": 67543,\r\n    \"name\": \"bareMinerals Complexion Rescue Tinted Hydrating Gel Cream SPF30 70ml\",\r\n    \"inventory\": {        \r\n        \"warehouses\": [\r\n            {\r\n                \"locality\": \"SP\",\r\n                \"quantity\": 0,\r\n                \"type\": \"ECOMMERCE\"\r\n            },\r\n            {\r\n                \"locality\": \"CURITIBA\",\r\n                \"quantity\": 0,\r\n                \"type\": \"ECOMMERCE\"\r\n            }\r\n        ]\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9070/api/v1/product",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9070",
+					"path": [
+						"api",
+						"v1",
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Product By SKU",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9070/api/v1/product/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9070",
+					"path": [
+						"api",
+						"v1",
+						"product",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "67543"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Product",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"sku\": 34533,\r\n        \"name\": \"Creme de Pentear Dr.Botica Poção Tira Nó 150g\",\r\n        \"inventory\": {            \r\n            \"warehouses\": [\r\n                {\r\n                    \"locality\": \"RJ\",\r\n                    \"quantity\": 11,\r\n                    \"type\": \"ECOMMERCE\"\r\n                },\r\n                {\r\n                    \"locality\": \"CURITIBA\",\r\n                    \"quantity\": 63,\r\n                    \"type\": \"PHYSICAL_STORE\"\r\n                },\r\n                {\r\n                    \"locality\": \"SJP\",\r\n                    \"quantity\": 12,\r\n                    \"type\": \"PHYSICAL_STORE\"\r\n                }\r\n            ]\r\n        }\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9070/api/v1/product/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9070",
+					"path": [
+						"api",
+						"v1",
+						"product",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "34533"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Product",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9070/api/v1/product/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9070",
+					"path": [
+						"api",
+						"v1",
+						"product",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

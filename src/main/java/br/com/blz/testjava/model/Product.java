@@ -15,6 +15,28 @@ public class Product {
 	private Inventory inventory;
 	
 	private Boolean isMarketable;
+	
+	
+	
+
+	public Product(@NotNull(message = "Product's sku can't be null") Long sku,
+			@NotEmpty(message = "Product's name can't be empty") String name,
+			@NotNull(message = "Product's inventory can't be null") Inventory inventory, Boolean isMarketable) {
+		super();
+		this.sku = sku;
+		this.name = name;
+		this.inventory = inventory;
+		this.isMarketable = isMarketable;
+	}
+	
+	
+
+	public Product() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
 
 	public Long getSku() {
 		return sku;

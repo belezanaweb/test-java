@@ -13,6 +13,13 @@ public class Inventory {
 	
 	
 
+	public Inventory(Long quantity,
+			@NotEmpty(message = "Inventory's warehouses can't be empty") List<Warehouse> warehouses) {
+		super();
+		this.quantity = quantity;
+		this.warehouses = warehouses;
+	}
+
 	public Inventory(@NotEmpty(message = "Inventory's warehouses can't be empty") List<Warehouse> warehouses) {
 		super();
 		this.warehouses = warehouses;

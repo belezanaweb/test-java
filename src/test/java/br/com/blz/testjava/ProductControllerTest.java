@@ -7,8 +7,10 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -16,6 +18,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
+
+import com.google.gson.Gson;
 
 import br.com.blz.testjava.model.Inventory;
 import br.com.blz.testjava.model.Product;
@@ -27,6 +31,12 @@ public class ProductControllerTest {
 	
 	@Autowired
 	private TestRestTemplate restTemplate;
+	
+	@Value("${app.basic.user}")
+	private String user;
+
+	@Value("${app.basic.secretKey}")
+	private String secretKey;
 	
 	
 	@LocalServerPort
@@ -47,7 +57,7 @@ public class ProductControllerTest {
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
 
-		ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "/product",
+		ResponseEntity<String> response = restTemplate.withBasicAuth(user, secretKey).exchange(getRootUrl() + "/product",
 				HttpMethod.GET, entity, String.class);
 		
 		assertNotNull(response.getBody());
@@ -64,10 +74,10 @@ public class ProductControllerTest {
 		
 
 		HttpHeaders headers = new HttpHeaders();
-		//headers.setBasicAuth(user, secretKey);
+		headers.setBasicAuth(user, secretKey);
 		HttpEntity<Product> entity = new HttpEntity<>(product, headers);
 		
-		ResponseEntity<Product> postResponse = restTemplate.postForEntity(getRootUrl() + "/product", entity,  Product.class);
+		ResponseEntity<Product> postResponse = restTemplate.withBasicAuth(user, secretKey).postForEntity(getRootUrl() + "/product", entity,  Product.class);
 		assertNotNull(postResponse);
 		assertNotNull(postResponse.getBody());
 	}
@@ -75,39 +85,53 @@ public class ProductControllerTest {
 	
 	@Test
 	public void testGetProductBySKU() {
-		Product product = restTemplate.getForObject(getRootUrl() + "/product/43264", Product.class);
+		
+		testCreateProduct();		
+		
+		Product product = restTemplate.withBasicAuth(user, secretKey).getForObject(getRootUrl() + "/product/" + 43264l, Product.class);
+		
 		assertNotNull(product);
+		assertEquals(product.getName(), "L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g");
 	}
 
 	@Test
 	public void testUpdateProduct() {
-		Product product = new Product();
-		product.setSku(43264l);
-		product.setName("L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g");
+		
+		testCreateProduct();
+		
+		Product product = restTemplate.withBasicAuth(user, secretKey).getForObject(getRootUrl() + "/product/" + 43264l, Product.class);
+		
+			
+		assertEquals(product.getInventory().getQuantity(), 15l);
+		
+		
 		product.setInventory(new Inventory(Arrays.asList(new Warehouse("SP", 12l, "ECOMMERCE"),new Warehouse("MOEMA", 3l, "PHYSICAL_STORE"),new Warehouse("RJ", 11L, "ECOMMERCE"))));
 		
+			
+		restTemplate.withBasicAuth(user, secretKey).put (getRootUrl() + "/product/" + 43264l, product);		
 
-				
-		restTemplate.put(getRootUrl() + "/product/" + 43264l, product);		
-
-		Product updatedProduct = restTemplate.getForObject(getRootUrl() + "/product/" + 43264l, Product.class);
+		Product updatedProduct = restTemplate.withBasicAuth(user, secretKey).getForObject(getRootUrl() + "/product/" + 43264l, Product.class);
 		assertNotNull(updatedProduct);
 		assertEquals(updatedProduct.getInventory().getQuantity(), 26l);
 	}
 
 	@Test
 	public void testDeleteProduct() {
+		
+		testCreateProduct();
 	
-		Product product = restTemplate.getForObject(getRootUrl() + "/product/" + 43264l, Product.class);
+		Product product = restTemplate.withBasicAuth(user, secretKey).getForObject(getRootUrl() + "/product/" + 43264l, Product.class);
 		assertNotNull(product);
 
-		restTemplate.delete(getRootUrl() + "/product/" + 43264l);
+		restTemplate.withBasicAuth(user, secretKey).delete(getRootUrl() + "/product/" + 43264l);
 
 		try {
-			product = restTemplate.getForObject(getRootUrl() + "/products/" + 43264l, Product.class);
+			product = restTemplate.withBasicAuth(user, secretKey).getForObject(getRootUrl() + "/products/" + 43264l, Product.class);
 		} catch (final HttpClientErrorException e) {
 			assertEquals(e.getStatusCode(), HttpStatus.NOT_FOUND);
 		}
 	}
+	
+
 
 }
