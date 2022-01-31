@@ -1,6 +1,7 @@
 ## Obs:
 - Deployed em: https://test-java2.herokuapp.com
 - Usar a coleção postman para teste, se necessário
+- Com Basic Auth
 
 ### Backend Test
 
