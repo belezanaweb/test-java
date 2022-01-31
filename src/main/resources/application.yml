@@ -1,0 +1,6 @@
+app:
+ basic:
+  user: productApiUser
+  secretKey: productApiSK
+server:
+  port: 9070
