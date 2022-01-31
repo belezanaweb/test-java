@@ -1,3 +1,7 @@
+## Obs:
+- Deployed em: https://test-java2.herokuapp.com
+- Usar a coleção postman para teste, se necessário
+
 ### Backend Test
 
 [![Build Status](https://travis-ci.com/belezanaweb/test-java.svg?branch=master)](https://travis-ci.com/belezanaweb/test-java)
