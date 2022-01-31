@@ -26,12 +26,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:9070/api/v1/product",
-					"protocol": "http",
+					"raw": "https://test-java2.herokuapp.com/api/v1/product",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"test-java2",
+						"herokuapp",
+						"com"
 					],
-					"port": "9070",
 					"path": [
 						"api",
 						"v1",
@@ -44,6 +45,21 @@
 		{
 			"name": "Add Product",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "productApiSK",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "productApiUser",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -56,12 +72,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:9070/api/v1/product",
-					"protocol": "http",
+					"raw": "https://test-java2.herokuapp.com/api/v1/product",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"test-java2",
+						"herokuapp",
+						"com"
 					],
-					"port": "9070",
 					"path": [
 						"api",
 						"v1",
@@ -86,12 +103,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:9070/api/v1/product",
-					"protocol": "http",
+					"raw": "https://test-java2.herokuapp.com/api/v1/product",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"test-java2",
+						"herokuapp",
+						"com"
 					],
-					"port": "9070",
 					"path": [
 						"api",
 						"v1",
@@ -116,12 +134,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:9070/api/v1/product",
-					"protocol": "http",
+					"raw": "https://test-java2.herokuapp.com/api/v1/product",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"test-java2",
+						"herokuapp",
+						"com"
 					],
-					"port": "9070",
 					"path": [
 						"api",
 						"v1",
@@ -146,12 +165,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:9070/api/v1/product",
-					"protocol": "http",
+					"raw": "https://test-java2.herokuapp.com/api/v1/product",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"test-java2",
+						"herokuapp",
+						"com"
 					],
-					"port": "9070",
 					"path": [
 						"api",
 						"v1",
@@ -167,12 +187,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:9070/api/v1/product/:id",
-					"protocol": "http",
+					"raw": "https://test-java2.herokuapp.com/api/v1/product/:id",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"test-java2",
+						"herokuapp",
+						"com"
 					],
-					"port": "9070",
 					"path": [
 						"api",
 						"v1",
@@ -204,12 +225,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:9070/api/v1/product/:id",
-					"protocol": "http",
+					"raw": "https://test-java2.herokuapp.com/api/v1/product/:id",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"test-java2",
+						"herokuapp",
+						"com"
 					],
-					"port": "9070",
 					"path": [
 						"api",
 						"v1",
@@ -232,12 +254,13 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:9070/api/v1/product/:id",
-					"protocol": "http",
+					"raw": "https://test-java2.herokuapp.com/api/v1/product/:id",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"test-java2",
+						"herokuapp",
+						"com"
 					],
-					"port": "9070",
 					"path": [
 						"api",
 						"v1",
@@ -247,7 +270,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": ""
+							"value": "67543"
 						}
 					]
 				}
