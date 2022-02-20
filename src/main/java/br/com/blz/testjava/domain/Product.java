@@ -43,7 +43,7 @@ public class Product {
                 warehouse.setId(generateId());
 
                 return warehouse;
-            }).collect(Collectors.toUnmodifiableList());
+            }).collect(Collectors.toList());
 
         Inventory inventory = new Inventory();
         inventory.setId(generateId());
@@ -63,7 +63,7 @@ public class Product {
                 warehouse.setQuantity(warehouse.getQuantity());
                 warehouse.setType(PointOfServiceTypeResponse.valueOf(w.getType().name()));
                 return warehouse;
-            }).collect(Collectors.toUnmodifiableList());
+            }).collect(Collectors.toList());
 
         InventoryResponse inventoryResponse = new InventoryResponse();
         inventoryResponse.setQuantity(warehouseResponse.size());

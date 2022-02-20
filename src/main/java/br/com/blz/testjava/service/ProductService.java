@@ -41,7 +41,7 @@ public class ProductService {
                 warehouse.setType(PointOfServiceType.ECOMMERCE);
                 warehouse.setLocality(w.getLocality());
                 return warehouse;
-            }).collect(Collectors.toUnmodifiableList());
+            }).collect(Collectors.toList());
 
         final Inventory inventory = new Inventory();
         inventory.setWarehouses(warehouseList);

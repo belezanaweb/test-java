@@ -19,7 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.List;
+import java.util.Arrays;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -136,7 +136,7 @@ public class ProductControllerTest {
 
         InventoryDTO inventoryDTO = InventoryDTO
             .builder()
-            .warehouses(List.of(warehouseDTO))
+            .warehouses(Arrays.asList(warehouseDTO))
             .build();
 
         return ProductDTO.builder()
@@ -156,7 +156,7 @@ public class ProductControllerTest {
 
         InventoryDTO inventoryDTO = InventoryDTO
             .builder()
-            .warehouses(List.of(warehouseDTO))
+            .warehouses(Arrays.asList(warehouseDTO))
             .build();
 
         return ProductDTO.builder()
