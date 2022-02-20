@@ -39,7 +39,7 @@ public class Product {
                 Warehouse warehouse = new Warehouse();
                 warehouse.setLocality(w.getLocality());
                 warehouse.setQuantity(w.getQuantity());
-                warehouse.setType(PointOfServiceType.ECOMMERCE);
+                warehouse.setType(PointOfServiceType.valueOf(w.getType().name()));
                 warehouse.setId(generateId());
 
                 return warehouse;
@@ -61,7 +61,7 @@ public class Product {
                 WarehouseResponse warehouse = new WarehouseResponse();
                 warehouse.setLocality(w.getLocality());
                 warehouse.setQuantity(warehouse.getQuantity());
-                warehouse.setType(PointOfServiceTypeResponse.ECOMMERCE);
+                warehouse.setType(PointOfServiceTypeResponse.valueOf(w.getType().name()));
                 return warehouse;
             }).collect(Collectors.toUnmodifiableList());
 

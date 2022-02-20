@@ -13,7 +13,6 @@ public class MemoryUtils {
 
     private static Map<String, Product> productMap = new HashMap<>();
 
-
     public static void persistProduct(Product product) {
 
         if (productMap.containsKey(product.getSku()))
