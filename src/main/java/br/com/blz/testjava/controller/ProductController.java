@@ -3,6 +3,7 @@ package br.com.blz.testjava.controller;
 import br.com.blz.testjava.dto.in.ProductDTOIn;
 import br.com.blz.testjava.dto.out.ProductDTOOut;
 import br.com.blz.testjava.exceptions.ProductFoundException;
+import br.com.blz.testjava.exceptions.ProductNotFoundException;
 import br.com.blz.testjava.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,7 @@ public class ProductController {
     }
 
     @GetMapping(path = "/{sku}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ProductDTOOut get(@PathVariable int sku) {
+    public ProductDTOOut get(@PathVariable int sku) throws ProductNotFoundException {
         return this.productService.get(sku);
     }
 
