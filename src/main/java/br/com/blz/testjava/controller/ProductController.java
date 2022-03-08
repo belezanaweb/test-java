@@ -47,5 +47,4 @@ public class ProductController {
         return this.productService.update(sku, productDTOIn);
     }
 
-
 }

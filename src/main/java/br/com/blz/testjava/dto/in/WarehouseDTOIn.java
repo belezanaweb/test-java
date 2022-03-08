@@ -6,6 +6,18 @@ public class WarehouseDTOIn {
     private int quantity;
     private String type;
 
+    public void setLocality(String locality) {
+        this.locality = locality;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getLocality() {
         return locality;
     }
@@ -17,4 +29,12 @@ public class WarehouseDTOIn {
     public String getType() {
         return type;
     }
+
+    public WarehouseDTOIn(String locality, int quantity, String type) {
+        this.locality = locality;
+        this.quantity = quantity;
+        this.type = type;
+    }
+
+
 }

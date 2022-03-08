@@ -11,6 +11,8 @@ public class Product {
     private String name;
     private Inventory inventory;
 
+    public Product(){}
+
     public Product (ProductDTOIn productDTOIn){
         this.setSku(productDTOIn.getSku());
         this.setName(productDTOIn.getName());
