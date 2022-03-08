@@ -101,6 +101,4 @@ class ProductServiceTest {
         assertThrows(ProductNotFoundException.class, () -> this.productService.update(this.dummyProductDTOIn.getSku(),
             this.dummyProductDTOIn));
     }
-
-
 }

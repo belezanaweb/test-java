@@ -13,6 +13,12 @@ public class Product {
 
     public Product(){}
 
+    public Product(int sku, String name, Inventory inventory) {
+        this.sku = sku;
+        this.name = name;
+        this.inventory = inventory;
+    }
+
     public Product (ProductDTOIn productDTOIn){
         this.setSku(productDTOIn.getSku());
         this.setName(productDTOIn.getName());

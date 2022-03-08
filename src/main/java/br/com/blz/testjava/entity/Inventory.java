@@ -10,9 +10,10 @@ public class Inventory {
 
     List<Warehouse> warehouses = new ArrayList<>();
 
+    public Inventory(){}
+
     public Inventory(InventoryDTOIn inventoryDTOIn) {
         this.setWarehouses(inventoryDTOIn.getWarehouses());
-
     }
 
     private void setWarehouses(List<WarehouseDTOIn> warehousesDTOIn) {

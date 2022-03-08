@@ -14,6 +14,12 @@ public class Warehouse {
         setType(warehouseDTOIn.getType());
     }
 
+    public Warehouse(String locality, int quantity, String type) {
+        this.locality = locality;
+        this.quantity = quantity;
+        this.type = type;
+    }
+
     private void setLocality(String locality) {
         this.locality = locality;
     }
