@@ -43,7 +43,7 @@ public class ProductController {
     }
 
     @PutMapping(path = "/{sku}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ProductDTOOut update(@PathVariable int sku, @RequestBody ProductDTOIn productDTOIn) {
+    public ProductDTOOut update(@PathVariable int sku, @RequestBody ProductDTOIn productDTOIn) throws ProductNotFoundException {
         return this.productService.update(sku, productDTOIn);
     }
 

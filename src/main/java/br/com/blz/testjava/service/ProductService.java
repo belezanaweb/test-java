@@ -37,7 +37,10 @@ public class ProductService {
         this.productRepository.delete(sku);
     }
 
-    public ProductDTOOut update(int sku, ProductDTOIn productDTOIn) {
+    public ProductDTOOut update(int sku, ProductDTOIn productDTOIn) throws ProductNotFoundException {
+        Product product = this.productRepository.get(sku);
+        if (Objects.isNull(product)) throw new ProductNotFoundException(sku);
+
         productDTOIn.setSku(sku);
         Product edited = this.productRepository.edit(new Product(productDTOIn));
         return new ProductDTOOut(edited);

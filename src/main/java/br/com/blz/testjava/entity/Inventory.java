@@ -3,14 +3,15 @@ package br.com.blz.testjava.entity;
 import br.com.blz.testjava.dto.in.InventoryDTOIn;
 import br.com.blz.testjava.dto.in.WarehouseDTOIn;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Inventory {
 
-    List<Warehouse> warehouses;
+    List<Warehouse> warehouses = new ArrayList<>();
 
     public Inventory(InventoryDTOIn inventoryDTOIn) {
-        this.setWarehouses(inventoryDTOIn.getWarehousesDTOIn());
+        this.setWarehouses(inventoryDTOIn.getWarehouses());
 
     }
 

@@ -4,9 +4,9 @@ import java.util.List;
 
 public class InventoryDTOIn {
 
-    List<WarehouseDTOIn> warehousesDTOIn;
+    List<WarehouseDTOIn> warehouses;
 
-    public List<WarehouseDTOIn> getWarehousesDTOIn() {
-        return warehousesDTOIn;
+    public List<WarehouseDTOIn> getWarehouses() {
+        return warehouses;
     }
 }

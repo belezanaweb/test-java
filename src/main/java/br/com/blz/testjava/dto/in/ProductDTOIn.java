@@ -4,7 +4,7 @@ public class ProductDTOIn {
 
     private int sku;
     private String name;
-    private InventoryDTOIn inventoryDTOIn;
+    private InventoryDTOIn inventory;
 
     public int getSku() {
         return sku;
@@ -19,6 +19,10 @@ public class ProductDTOIn {
     }
 
     public InventoryDTOIn getInventoryDTOIn() {
-        return inventoryDTOIn;
+        return inventory;
+    }
+
+    public InventoryDTOIn getInventory() {
+        return inventory;
     }
 }

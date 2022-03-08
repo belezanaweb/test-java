@@ -6,14 +6,18 @@ import br.com.blz.testjava.entity.Product;
 public class ProductDTOOut {
     private int sku;
     private String name;
-    private InventoryDTOOut inventoryDTOOut;
+    private InventoryDTOOut inventory;
     private boolean isMarketable = false;
 
     public ProductDTOOut(Product product) {
         this.setSku(product.getSku());
         this.setName(product.getName());
-        this.setInventoryDTOOut(product.getInventory());
+        this.setInventory(product.getInventory());
         this.setMarketable();
+    }
+
+    public InventoryDTOOut getInventory() {
+        return inventory;
     }
 
     public int getSku() {
@@ -36,11 +40,11 @@ public class ProductDTOOut {
         this.name = name;
     }
 
-    private void setInventoryDTOOut(Inventory inventory) {
-        this.inventoryDTOOut = new InventoryDTOOut(inventory);
+    private void setInventory(Inventory inventory) {
+        this.inventory = new InventoryDTOOut(inventory);
     }
 
     public void setMarketable() {
-        if (this.inventoryDTOOut.getQuantity() > 0) this.isMarketable = true;
+        if (this.inventory.getQuantity() > 0) this.isMarketable = true;
     }
 }
