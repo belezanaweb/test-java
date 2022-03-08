@@ -1,4 +1,4 @@
-package br.com.blz.testjava;
+package br.com.blz.testjava.dto.in;
 
 public class ProductDTOIn {
 
@@ -8,6 +8,10 @@ public class ProductDTOIn {
 
     public int getSku() {
         return sku;
+    }
+
+    public void setSku(int sku) {
+        this.sku = sku;
     }
 
     public String getName() {
