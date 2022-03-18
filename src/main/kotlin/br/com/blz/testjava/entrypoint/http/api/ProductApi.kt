@@ -5,7 +5,6 @@ import br.com.blz.testjava.application.model.ProductModel
 import br.com.blz.testjava.application.presenter.ProductPresenter
 import br.com.blz.testjava.application.service.ProductService
 import br.com.blz.testjava.application.view.ProductView
-import br.com.blz.testjava.domain.entity.Product
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -43,8 +42,10 @@ class ProductApi @Autowired constructor(
     }
 
     @GetMapping("/products")
-    fun getAll(): MutableList<Product> {
-        return service.getAll()
+    fun getAll(): ResponseEntity<List<ProductView>> {
+        val products = service.getAll()
+        val productsView = products.map { presenter.present(it) }
+        return ResponseEntity<List<ProductView>>(productsView, HttpStatus.OK)
     }
 
 }
