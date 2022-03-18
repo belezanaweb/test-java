@@ -11,14 +11,14 @@ class WarehousePresenterTest {
     @Test
     fun `It should create a Warehouse View from a Warehouse Model`() {
         val model = WarehouseModel(
-            locality = Locality.AC,
+            locality = "Acre",
             quantity = 21,
             type = WarehouseType.ECOMMERCE
         )
         val presenter = WarehousePresenter()
         val view = presenter.present(model)
 
-        assertEquals(view.locality.name, "AC")
+        assertEquals(view.locality, "Acre")
         assertEquals(view.quantity, 21)
         assertEquals(view.type.name, "ECOMMERCE")
     }

@@ -1,7 +1,8 @@
 package br.com.blz.testjava.application.model
 
 data class ProductModel(
-    val sku: String,
+    val sku: Int,
     val name: String,
-    val inventory: InventoryModel
+    val inventory: InventoryModel,
+    val isMarketable: Boolean
 )

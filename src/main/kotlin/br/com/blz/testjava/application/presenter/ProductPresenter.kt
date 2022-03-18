@@ -11,7 +11,8 @@ class ProductPresenter @Autowired constructor(
   override fun present(entity: ProductModel) = ProductView(
       sku = entity.sku,
       name = entity.name,
-      inventory = presenter.present(entity.inventory)
+      inventory = presenter.present(entity.inventory),
+      isMarketable = entity.isMarketable
   )
 
 }

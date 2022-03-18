@@ -10,8 +10,7 @@ class InventoryPresenter @Autowired constructor(
 
   override fun present(entity: InventoryModel) = InventoryView(
       quantity = entity.quantity,
-      warehouses = presenter.present(entity.warehouses),
-      isMarketable = entity.isMarketable
+      warehouses = presenter.present(entity.warehouses)
   )
 
 }
