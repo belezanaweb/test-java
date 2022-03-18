@@ -22,4 +22,8 @@ class ProductService @Autowired constructor(
         return repository.get(sku)
     }
 
+    fun update(sku: Int, model: Product): Product {
+        return repository.update(sku, model)
+    }
+
 }

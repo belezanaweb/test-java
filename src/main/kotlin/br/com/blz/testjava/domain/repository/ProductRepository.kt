@@ -26,4 +26,10 @@ object ProductRepository {
         return product
     }
 
+    fun update(sku: Int, model: Product): Product {
+        val product = this.get(sku)
+        products.remove(product)
+        return this.save(model)
+    }
+
 }

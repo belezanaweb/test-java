@@ -24,15 +24,21 @@ class ProductApi @Autowired constructor(
         return ResponseEntity<ProductView>(presenter.present(domain), HttpStatus.OK)
     }
 
-    @GetMapping("/products")
-    fun getAll(): MutableList<Product> {
-        return service.getAll()
-    }
-
     @GetMapping("/products/{sku}")
     fun get(@PathVariable sku: Int): ResponseEntity<ProductView> {
         val domain = service.get(sku)
         return ResponseEntity<ProductView>(presenter.present(domain), HttpStatus.OK)
+    }
+
+    @PutMapping("/products/{sku}")
+    fun update(@PathVariable sku: Int, @RequestBody model: ProductModel): ResponseEntity<ProductView> {
+        val domain = service.update(sku, factory.create(model))
+        return ResponseEntity<ProductView>(presenter.present(domain), HttpStatus.OK)
+    }
+
+    @GetMapping("/products")
+    fun getAll(): MutableList<Product> {
+        return service.getAll()
     }
 
 }
