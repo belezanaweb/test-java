@@ -1,4 +1,4 @@
-package br.com.blz.testjava.domain.enums
+package br.com.blz.testjava.domain.entity.enums
 
 enum class Locality(val label: String) {
     AC(label = "Acre"),

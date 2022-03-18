@@ -1,16 +1,18 @@
 package br.com.blz.testjava.application.presenter
 
-import br.com.blz.testjava.application.model.InventoryModel
 import br.com.blz.testjava.application.view.InventoryView
+import br.com.blz.testjava.domain.entity.Inventory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Component
 
+@Component
 class InventoryPresenter @Autowired constructor(
     val presenter: WarehousePresenter
-): AbstractPresenter<InventoryModel, InventoryView>() {
+): AbstractPresenter<Inventory, InventoryView>() {
 
-  override fun present(entity: InventoryModel) = InventoryView(
-      quantity = entity.quantity,
-      warehouses = presenter.present(entity.warehouses)
+  override fun present(entity: Inventory) = InventoryView(
+      quantity = 1,
+      warehouses = entity.warehouses.map { presenter.present(it) }
   )
 
 }

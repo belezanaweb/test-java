@@ -1,8 +1,7 @@
 package br.com.blz.testjava.application.presenter
 
 import br.com.blz.testjava.application.model.WarehouseModel
-import br.com.blz.testjava.domain.enums.Locality
-import br.com.blz.testjava.domain.enums.WarehouseType
+import br.com.blz.testjava.domain.entity.enums.WarehouseType
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
