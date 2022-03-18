@@ -28,8 +28,14 @@ object ProductRepository {
 
     fun update(sku: Int, model: Product): Product {
         val product = this.get(sku)
-        products.remove(product)
+        this.delete(product.sku)
         return this.save(model)
+    }
+
+    fun delete(sku: Int): Product {
+        val product = this.get(sku)
+        products.remove(product)
+        return product
     }
 
 }

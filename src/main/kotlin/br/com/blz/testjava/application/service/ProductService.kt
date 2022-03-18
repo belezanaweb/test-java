@@ -26,4 +26,8 @@ class ProductService @Autowired constructor(
         return repository.update(sku, model)
     }
 
+    fun delete(sku: Int): Product {
+        return repository.delete(sku)
+    }
+
 }

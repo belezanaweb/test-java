@@ -21,7 +21,7 @@ class ProductApi @Autowired constructor(
     @PostMapping("/products")
     fun crete(@RequestBody model: ProductModel): ResponseEntity<ProductView> {
         val domain = service.save(factory.create(model))
-        return ResponseEntity<ProductView>(presenter.present(domain), HttpStatus.OK)
+        return ResponseEntity<ProductView>(presenter.present(domain), HttpStatus.CREATED)
     }
 
     @GetMapping("/products/{sku}")
@@ -33,6 +33,12 @@ class ProductApi @Autowired constructor(
     @PutMapping("/products/{sku}")
     fun update(@PathVariable sku: Int, @RequestBody model: ProductModel): ResponseEntity<ProductView> {
         val domain = service.update(sku, factory.create(model))
+        return ResponseEntity<ProductView>(presenter.present(domain), HttpStatus.OK)
+    }
+
+    @DeleteMapping("/products/{sku}")
+    fun delete(@PathVariable sku: Int): ResponseEntity<ProductView> {
+        val domain = service.delete(sku)
         return ResponseEntity<ProductView>(presenter.present(domain), HttpStatus.OK)
     }
 
