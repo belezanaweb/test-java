@@ -11,7 +11,7 @@ class InventoryPresenter @Autowired constructor(
 ): AbstractPresenter<Inventory, InventoryView>() {
 
   override fun present(entity: Inventory) = InventoryView(
-      quantity = 1,
+      quantity = entity.quantity,
       warehouses = entity.warehouses.map { presenter.present(it) }
   )
 

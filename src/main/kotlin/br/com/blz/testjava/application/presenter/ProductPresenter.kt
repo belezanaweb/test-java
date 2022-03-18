@@ -14,7 +14,7 @@ class ProductPresenter @Autowired constructor(
       sku = entity.sku,
       name = entity.name,
       inventory = presenter.present(entity.inventory),
-      isMarketable = true
+      isMarketable = entity.isMarketable
   )
 
 }

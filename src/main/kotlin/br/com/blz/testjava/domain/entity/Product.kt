@@ -4,8 +4,10 @@ data class Product(
     val sku: Int,
     val name: String,
     val inventory: Inventory,
-    private var _isMarketable: Boolean? = false
 ) {
+
+    var isMarketable: Boolean = false
+      get() = inventory.quantity > 0
 
     fun equals(other: Product): Boolean {
         return this.sku == other.sku

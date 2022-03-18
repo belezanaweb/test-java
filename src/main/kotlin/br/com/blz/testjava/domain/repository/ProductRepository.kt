@@ -2,6 +2,7 @@ package br.com.blz.testjava.domain.repository
 
 import br.com.blz.testjava.domain.entity.Product
 import br.com.blz.testjava.domain.exception.ProductAlreadyExistsException
+import br.com.blz.testjava.domain.exception.ProductNoFoundException
 import org.springframework.stereotype.Component
 
 @Component
@@ -17,6 +18,12 @@ object ProductRepository {
 
     fun getAll(): MutableList<Product> {
         return products
+    }
+
+    fun get(sku: Int): Product {
+        val product = products.firstOrNull { it.sku == sku }
+        product ?: throw ProductNoFoundException(sku)
+        return product
     }
 
 }

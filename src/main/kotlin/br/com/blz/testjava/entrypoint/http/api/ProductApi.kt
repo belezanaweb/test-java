@@ -7,10 +7,9 @@ import br.com.blz.testjava.application.service.ProductService
 import br.com.blz.testjava.application.view.ProductView
 import br.com.blz.testjava.domain.entity.Product
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 
 @RestController
 class ProductApi @Autowired constructor(
@@ -20,14 +19,20 @@ class ProductApi @Autowired constructor(
 ) {
 
     @PostMapping("/products")
-    fun crete(@RequestBody model: ProductModel): ProductView {
+    fun crete(@RequestBody model: ProductModel): ResponseEntity<ProductView> {
         val domain = service.save(factory.create(model))
-        return presenter.present(domain)
+        return ResponseEntity<ProductView>(presenter.present(domain), HttpStatus.OK)
     }
 
     @GetMapping("/products")
     fun getAll(): MutableList<Product> {
         return service.getAll()
+    }
+
+    @GetMapping("/products/{sku}")
+    fun get(@PathVariable sku: Int): ResponseEntity<ProductView> {
+        val domain = service.get(sku)
+        return ResponseEntity<ProductView>(presenter.present(domain), HttpStatus.OK)
     }
 
 }

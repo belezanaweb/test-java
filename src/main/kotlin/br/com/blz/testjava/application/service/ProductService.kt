@@ -18,4 +18,8 @@ class ProductService @Autowired constructor(
         return repository.getAll()
     }
 
+    fun get(sku: Int): Product {
+        return repository.get(sku)
+    }
+
 }
