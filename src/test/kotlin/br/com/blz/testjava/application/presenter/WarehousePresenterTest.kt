@@ -1,6 +1,6 @@
 package br.com.blz.testjava.application.presenter
 
-import br.com.blz.testjava.application.model.WarehouseModel
+import br.com.blz.testjava.domain.entity.Warehouse
 import br.com.blz.testjava.domain.entity.enums.WarehouseType
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test
 class WarehousePresenterTest {
 
     @Test
-    fun `It should create a Warehouse View from a Warehouse Model`() {
-        val model = WarehouseModel(
+    fun `It should create a Warehouse View from a Warehouse`() {
+        val model = Warehouse(
             locality = "Acre",
             quantity = 21,
             type = WarehouseType.ECOMMERCE
