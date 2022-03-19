@@ -33,6 +33,7 @@ class ProductServiceTest {
 
         assertEquals(saved.sku, 1231)
         assertEquals(service.getAll().size, 1)
+        ProductRepository.products = mutableListOf()
     }
 
     @Test
@@ -44,6 +45,7 @@ class ProductServiceTest {
 
         assertEquals(saved.sku, 1231)
         assertEquals(saved.name, "Test")
+        ProductRepository.products = mutableListOf()
     }
 
     @Test
@@ -70,6 +72,7 @@ class ProductServiceTest {
         assertEquals(saved.sku, 1231)
         assertEquals(saved.name, "changed")
         assertEquals(service.getAll().size, 1)
+        ProductRepository.products = mutableListOf()
     }
 
     @Test
@@ -83,6 +86,7 @@ class ProductServiceTest {
         service.delete(product.sku)
 
         assertEquals(service.getAll().size, 0)
+        ProductRepository.products = mutableListOf()
     }
 
     @Test
@@ -95,6 +99,7 @@ class ProductServiceTest {
             service.save(product)
         }
         assertEquals(service.getAll().size, 1)
+        ProductRepository.products = mutableListOf()
     }
 
     @Test
@@ -104,6 +109,7 @@ class ProductServiceTest {
         assertThrows<ProductNoFoundException> {
             service.get(1234)
         }
+        ProductRepository.products = mutableListOf()
     }
 
 }

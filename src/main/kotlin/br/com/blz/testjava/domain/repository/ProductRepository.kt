@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 @Component
 object ProductRepository {
 
-    private var products = mutableListOf<Product>()
+    var products = mutableListOf<Product>()
 
     fun save(product: Product ): Product {
         products.forEach { run { if (it.equals(product)) throw ProductAlreadyExistsException(product.sku) } }
