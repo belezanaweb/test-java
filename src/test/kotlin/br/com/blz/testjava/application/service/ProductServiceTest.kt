@@ -4,9 +4,12 @@ import br.com.blz.testjava.domain.entity.Inventory
 import br.com.blz.testjava.domain.entity.Product
 import br.com.blz.testjava.domain.entity.Warehouse
 import br.com.blz.testjava.domain.entity.enums.WarehouseType
+import br.com.blz.testjava.domain.exception.ProductAlreadyExistsException
+import br.com.blz.testjava.domain.exception.ProductNoFoundException
 import br.com.blz.testjava.domain.repository.ProductRepository
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class ProductServiceTest {
 
@@ -80,6 +83,27 @@ class ProductServiceTest {
         service.delete(product.sku)
 
         assertEquals(service.getAll().size, 0)
+    }
+
+    @Test
+    fun `It should throw a ProductAlreadyExistsException when try to save a Product that was already saved`() {
+        val product = createProduct()
+        val service = ProductService(ProductRepository)
+        service.save(product)
+
+        assertThrows<ProductAlreadyExistsException> {
+            service.save(product)
+        }
+        assertEquals(service.getAll().size, 1)
+    }
+
+    @Test
+    fun `It should throw a ProductNoFoundException when try to get a Product that does not exists`() {
+        val service = ProductService(ProductRepository)
+
+        assertThrows<ProductNoFoundException> {
+            service.get(1234)
+        }
     }
 
 }
