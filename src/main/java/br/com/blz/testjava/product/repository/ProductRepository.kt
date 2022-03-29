@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
-private class ProductRepository : IProductRepository {
+class ProductRepository : IProductRepository {
 
-  private val memoryDataBase: HashMap<Long, Product> = hashMapOf()
+  var memoryDataBase: HashMap<Long, Product> = hashMapOf()
 
   override fun save(product: Product): Product {
     memoryDataBase[product.sku] = product

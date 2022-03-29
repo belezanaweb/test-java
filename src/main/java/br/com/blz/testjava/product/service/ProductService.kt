@@ -9,7 +9,7 @@ import br.com.blz.testjava.product.repository.IProductRepository
 import org.springframework.stereotype.Service
 
 @Service
-private class ProductService(val productRepository: IProductRepository) : IProductService {
+class ProductService(private val productRepository: IProductRepository) : IProductService {
 
   override fun create(productInDTO: ProductInDTO): ProductOutDTO {
     if (productRepository.existsBySku(productInDTO.sku)) {

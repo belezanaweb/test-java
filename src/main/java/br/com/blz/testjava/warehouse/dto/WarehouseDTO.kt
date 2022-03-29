@@ -2,8 +2,8 @@ package br.com.blz.testjava.warehouse.dto
 
 import br.com.blz.testjava.warehouse.model.WarehouseTypeEnum
 
-class WarehouseDTO(
+data class WarehouseDTO(
   val locality: String,
-  val quantity: Long,
+  val quantity: Int,
   val type: WarehouseTypeEnum
 )
