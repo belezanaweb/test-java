@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod.*
 import org.springframework.web.server.ResponseStatusException
 
 @RestController
-class ProductController {
-
-  private val dao = ProductDao() // TODO como injetar aqui sem config?
+class ProductController(val dao: ProductDao = ProductDao()) {
 
   @GetMapping("/")
   fun home(): ResponseEntity<Void> {
@@ -32,7 +30,7 @@ class ProductController {
   }
 
   @RequestMapping(value = ["/products/{sku}"], method = [GET], produces = ["application/json; charset=utf-8"])
-  fun get(@PathVariable(value = "sku") sku: Int): ResponseEntity<ProductResponse> {
+  fun retrieve(@PathVariable(value = "sku") sku: Int): ResponseEntity<ProductResponse> {
     fun from(p: Product): ProductResponse {
       val onHands = p.inventory.warehouses.map { it.quantity }.sum()
       val inventory = InventoryResponse(onHands, p.inventory.warehouses)

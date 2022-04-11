@@ -1,10 +1,8 @@
 package br.com.blz.testjava
 
 import br.com.blz.testjava.model.Product
-import org.springframework.stereotype.Component
 import java.util.*
 
-@Component
 class ProductDao {
 
   private val storage = HashMap<Int, Product>()
