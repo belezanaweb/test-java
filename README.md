@@ -41,6 +41,7 @@ Com a seguinte representação de produto:
 }
 ```
 
+
 Crie endpoints para as seguintes ações:
 
 - [ ] Criação de produto onde o payload será o json informado acima (exceto as propriedades **isMarketable** e **inventory.quantity**)
