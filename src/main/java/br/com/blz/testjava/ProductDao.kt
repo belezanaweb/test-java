@@ -1,11 +1,11 @@
 package br.com.blz.testjava
 
 import br.com.blz.testjava.model.Product
-import java.util.*
+import java.util.concurrent.ConcurrentHashMap
 
 class ProductDao {
 
-  private val storage = HashMap<Int, Product>()
+  private val storage = ConcurrentHashMap<Int, Product>()
 
   fun create(product: Product) {
     storage.putIfAbsent(product.sku, product)
