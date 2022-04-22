@@ -12,7 +12,7 @@ import java.nio.charset.Charset
 @Service
 class ProductImplRepository : ProductRepository {
 
-  @Value("\${local.database.filename}")
+  @Value("\${spring.local.database.filename}")
   val localStorage: String = ""
 
   private val mapper = jacksonObjectMapper()

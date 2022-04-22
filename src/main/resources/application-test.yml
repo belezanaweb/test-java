@@ -1,0 +1,6 @@
+spring:
+  profiles:
+    active: test
+  local:
+    database:
+      filename: products-test.json
