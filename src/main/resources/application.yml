@@ -1,0 +1,17 @@
+spring:
+  profiles:
+    active: dev
+
+local:
+  database:
+    filename: products-dev.json
+
+---
+
+spring:
+  profiles:
+    active: test
+
+local:
+  database:
+    filename: products-test.json
