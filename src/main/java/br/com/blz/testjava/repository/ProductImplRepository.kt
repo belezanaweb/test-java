@@ -23,22 +23,24 @@ class ProductImplRepository : ProductRepository {
           val localFile = ClassPathResource(localStorage)
           val json = localFile.file.readText(Charset.forName("UTF-8"))
 
-          val products: MutableSet<Product?> = if(json.isNotBlank()) {
+          val products: MutableList<Product?> = if(json.isNotBlank()) {
             mapper.readValue(json)
           } else {
-            mutableSetOf()
+            mutableListOf()
           }
 
-          products.removeIf { product -> product?.sku == entity.sku}
+          val index: Int = products.map { it?.sku }.indexOf(entity.sku)
 
-          products.add(entity)
+          if(index != -1)
+            products[index] = entity
+          else
+            products.add(entity)
 
           localFile.file.writeText(mapper.writeValueAsString(products))
 
           return findBySku(entity.sku)
         } catch (ex: Exception) {
-          println( "error on save: ${ex.message}")
-          return null
+          throw Exception("Internal server error")
         }
   }
 

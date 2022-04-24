@@ -50,6 +50,18 @@ class ErrorHandleController {
     return ResponseEntity(error, HttpStatus.NOT_FOUND)
   }
 
+  @ExceptionHandler(Exception::class)
+  fun handleException(ex: Exception): ResponseEntity<ErrorResponse> {
+
+    val error = ErrorResponse(
+      message = ex.message,
+      httpCode = HttpStatus.INTERNAL_SERVER_ERROR.value(),
+      null
+    )
+
+    return ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR)
+  }
+
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ExceptionHandler(HttpMessageNotReadableException::class)
   fun handleBodyExceptions(
