@@ -1,5 +1,5 @@
 app:
-  version: @project.version@
+  version: teste
 
 spring:
   application:
@@ -7,5 +7,4 @@ spring:
 
   redis:
     host: localhost
-    port: 16379
-    timeout: 5000
+    port: 6389

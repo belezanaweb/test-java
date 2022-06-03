@@ -1,79 +1,36 @@
-### Backend Test
+# Test-Java
 
-[![Build Status](https://travis-ci.com/belezanaweb/test-java.svg?branch=master)](https://travis-ci.com/belezanaweb/test-java)
+Microsservico desenvolvido para teste da skill Java no Grupo Boticario.
 
-[![codecov](https://codecov.io/gh/belezanaweb/test-java/branch/master/graph/badge.svg)](https://codecov.io/gh/belezanaweb/test-java)
+## Dependências
+- Redis
 
-Esta é uma avaliação básica de código.
+## Ambiente local
+Para subir o ambiente local você precisa das dependências acima configuradas. Para facilitar temos um docker-compose na raiz do projeto no qual sobe toda a stack.
 
-O objetivo é conhecer um pouco do seu conhecimento/prática de RESTful, Spring e Java.
-
-Recomendamos que você não gaste mais do que 4 - 6 horas.
-
-Faça um fork deste repositório que contém o bootstrap de uma aplicação SpringBoot 1.5.12. (você pode utilizar spring boot 2+)
-
-Ao finalizar o teste, submeta um pull request para o repositório que nosso time será notificado.
-
-### Tarefas
-
-Com a seguinte representação de produto:
-
-```json
-{
-    "sku": 43264,
-    "name": "L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g",
-    "inventory": {
-        "quantity": 15,
-        "warehouses": [
-            {
-                "locality": "SP",
-                "quantity": 12,
-                "type": "ECOMMERCE"
-            },
-            {
-                "locality": "MOEMA",
-                "quantity": 3,
-                "type": "PHYSICAL_STORE"
-            }
-        ]
-    },
-    "isMarketable": true
-}
+Se você estiver com o Docker atualizado, o mesmo prove um compose interno. Execute o comando na pasta raiz do projeto:
+```shell
+$ docker compose up -d
 ```
 
-Crie endpoints para as seguintes ações:
+Caso contrário efetue a instalação do [docker-compose](https://docs.docker.com/compose/install/), e execute o comando abaixo na pasta raiz do projeto:
+```shell
+$ docker-compose up -d
+```
 
-- [ ] Criação de produto onde o payload será o json informado acima (exceto as propriedades **isMarketable** e **inventory.quantity**)
+Com a stack no ar, os acessos são:
 
-- [ ] Edição de produto por **sku**
+- Redis
+  - host: localhost
+  - port: 16379
+  - password: 123456
+  
+- RedisInsight (Ferramenta para facilitar o acesso ao Redis e execução de comandos)
+  - host: [localhost](http://localhost:18001/)
+  - port: 18001
 
-- [ ] Recuperação de produto por **sku**
+### Conexão RedisInsight
 
-- [ ] Deleção de produto por **sku**
-
-### Requisitos
-
-
-- [ ] Toda vez que um produto for recuperado por **sku** deverá ser calculado a propriedade: **inventory.quantity**
-
-        A propriedade inventory.quantity é a soma da quantity dos warehouses
-
-- [ ] Toda vez que um produto for recuperado por **sku** deverá ser calculado a propriedade: **isMarketable**
-
-        Um produto é marketable sempre que seu inventory.quantity for maior que 0
-
-- [ ] Caso um produto já existente em memória tente ser criado com o mesmo **sku** uma exceção deverá ser lançada
-
-        Dois produtos são considerados iguais se os seus skus forem iguais
-
-
-- [ ] Ao atualizar um produto, o antigo deve ser sobrescrito com o que esta sendo enviado na requisição
-
-        A requisição deve receber o sku e atualizar com o produto que tbm esta vindo na requisição
-
-### Dicas
-
-- Os produtos devem ficar em memória, não é necessário persistir os dados. Não utilize `h2`
-- Não é necessário adicionar swagger (não será avaliado)
-- Sinta-se a vontade para fazer o código em ```groovy```, ```kotlin``` ou ```scala``` se preferir, utilizamos bastante aqui
-- Testes são sempre bem-vindos :smiley:
+Para conectar no redis utilizar os seguintes dados
+- Host: redis-server
+- Port: 6379
