@@ -14,6 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
@@ -51,22 +53,22 @@ class ProductControllerIntegrationTest {
     @BeforeEach
     void setup() throws Exception {
         sku = "4567";
+        List<WarehouseDTO> warehouseDtos = new ArrayList<>();
+        warehouseDtos.add(WarehouseDTO.builder()
+            .locality("SP")
+            .quantity(12)
+            .type(WarehouseType.ECOMMERCE)
+            .build());
+        warehouseDtos.add(WarehouseDTO.builder()
+            .locality("MOEMA")
+            .quantity(3)
+            .type(WarehouseType.PHYSICAL_STORE)
+            .build());
         createProduct = CreateProductRequestDTO.builder()
             .sku(Integer.valueOf(sku))
             .name("L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g")
             .inventory(InventoryRequestDTO.builder()
-                .warehouses(List.of(
-                    WarehouseDTO.builder()
-                        .locality("SP")
-                        .quantity(12)
-                        .type(WarehouseType.ECOMMERCE)
-                        .build(),
-                    WarehouseDTO.builder()
-                        .locality("MOEMA")
-                        .quantity(3)
-                        .type(WarehouseType.PHYSICAL_STORE)
-                        .build()
-                )).build()).build();
+                .warehouses(warehouseDtos).build()).build();
 
         mockMvc.perform(delete(BASE_URL + "/"+ sku)
                 .contentType(MediaType.APPLICATION_JSON))
