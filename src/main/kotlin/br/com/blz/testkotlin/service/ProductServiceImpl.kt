@@ -9,7 +9,7 @@ class ProductServiceImpl(val productRepository: ProductRepository) : ProductServ
 
   override fun saveProduct(product: ProductEntity): ProductEntity? {
     productRepository.save(product)
-    return productRepository.findBySku(product.sku)
+    return getProductBySku(product.sku)
   }
 
   override fun editProduct(product: ProductEntity): ProductEntity? {
@@ -21,15 +21,15 @@ class ProductServiceImpl(val productRepository: ProductRepository) : ProductServ
     var product = productRepository.findBySku(sku)
     if (product != null) {
       val sum =
-        product.inventory.warehouses.map { warehouse -> warehouse.quantity }.reduce { sum, quantity -> sum + quantity }
-      product.inventory.quantity = sum
+        product.inventory.warehouses.map { warehouse -> warehouse.quantity }.reduceOrNull { sum, quantity -> sum + quantity }
+      product.inventory.quantity = sum ?: 0
       product.isMarketable = product.inventory.quantity > 0
     }
     return product
   }
 
-  override fun deleteProductBySku(sku: Long) {
-    productRepository.delete(sku)
+  override fun deleteProductBySku(sku: Long): Boolean {
+    return productRepository.delete(sku)
   }
 
   override fun getAllProducts(): MutableList<ProductEntity>? {

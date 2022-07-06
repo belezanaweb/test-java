@@ -55,7 +55,7 @@ class ProductController(
   fun deleteProduct(
     @PathVariable("sku")
     sku: Long
-  ) {
-    return productService.deleteProductBySku(sku)
+  ): ResponseEntity<Any> {
+    return ResponseEntity(productService.deleteProductBySku(sku), HttpStatus.OK)
   }
 }

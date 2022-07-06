@@ -6,6 +6,6 @@ interface ProductService {
   fun saveProduct(product: ProductEntity): ProductEntity?
   fun editProduct(product: ProductEntity): ProductEntity?
   fun getProductBySku(sku: Long): ProductEntity?
-  fun deleteProductBySku(sku: Long)
+  fun deleteProductBySku(sku: Long): Boolean
   fun getAllProducts(): MutableList<ProductEntity>?
 }

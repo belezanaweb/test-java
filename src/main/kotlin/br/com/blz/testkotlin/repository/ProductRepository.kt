@@ -1,13 +1,35 @@
 package br.com.blz.testkotlin.repository
 
 import br.com.blz.testkotlin.entity.ProductEntity
+import org.springframework.stereotype.Repository
 
-interface ProductRepository {
+@Repository
+class ProductRepository {
 
-  fun save(productEntity: ProductEntity): Boolean
-  fun findBySku(sku: Long): ProductEntity?
-  fun delete(sku: Long): Boolean
-  fun getAll(): MutableList<ProductEntity>?
-  fun update(productEntity: ProductEntity)
+  var products = mutableListOf<ProductEntity>()
+
+  fun save(productEntity: ProductEntity): Boolean {
+    return products.add(productEntity)
+  }
+
+  fun findBySku(sku: Long): ProductEntity? {
+    return products.find { it.sku == sku }
+  }
+
+
+  fun delete(sku: Long): Boolean {
+    return products.removeIf { it.sku == sku }
+  }
+
+  fun getAll(): MutableList<ProductEntity>? {
+    return products
+  }
+
+  fun update(productEntity: ProductEntity) {
+    findBySku(productEntity.sku)?.apply {
+      this.name = productEntity.name
+      this.inventory.warehouses = productEntity.inventory.warehouses
+    }
+  }
 
 }
