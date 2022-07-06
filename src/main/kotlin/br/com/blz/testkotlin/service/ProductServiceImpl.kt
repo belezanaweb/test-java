@@ -35,5 +35,4 @@ class ProductServiceImpl(val productRepository: ProductRepository) : ProductServ
   override fun getAllProducts(): MutableList<ProductEntity>? {
     return productRepository.getAll()
   }
-
 }

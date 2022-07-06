@@ -16,7 +16,6 @@ class ProductRepository {
     return products.find { it.sku == sku }
   }
 
-
   fun delete(sku: Long): Boolean {
     return products.removeIf { it.sku == sku }
   }
@@ -31,5 +30,4 @@ class ProductRepository {
       this.inventory.warehouses = productEntity.inventory.warehouses
     }
   }
-
 }

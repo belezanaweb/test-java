@@ -20,9 +20,9 @@ class ProductController(
 ) {
 
   @PostMapping
-  fun createProduct(@RequestBody productEntity: ProductEntity): ResponseEntity<ProductEntity>{
+  fun createProduct(@RequestBody productEntity: ProductEntity): ResponseEntity<ProductEntity> {
     if (productService.getProductBySku(productEntity.sku) != null) {
-      return ResponseEntity(productEntity,HttpStatus.CONFLICT)
+      return ResponseEntity(productEntity, HttpStatus.CONFLICT)
     }
     var product = productService.saveProduct(productEntity)
     return ResponseEntity<ProductEntity>(product, HttpStatus.CREATED)
@@ -32,12 +32,12 @@ class ProductController(
   fun getProduct(
     @PathVariable("sku")
     sku: Long
-  ): ResponseEntity<ProductEntity>{
+  ): ResponseEntity<ProductEntity> {
     return ResponseEntity(productService.getProductBySku(sku), HttpStatus.OK)
   }
 
   @GetMapping("/all")
-  fun getAllProducts(): ResponseEntity<MutableList<ProductEntity>>{
+  fun getAllProducts(): ResponseEntity<MutableList<ProductEntity>> {
     return ResponseEntity(productService.getAllProducts(), HttpStatus.OK)
   }
 
@@ -47,8 +47,8 @@ class ProductController(
     sku: Long,
     @RequestBody
     productDto: ProductEntity
-  ): ResponseEntity<ProductEntity>{
-    return ResponseEntity( productService.editProduct(productDto), HttpStatus.OK)
+  ): ResponseEntity<ProductEntity> {
+    return ResponseEntity(productService.editProduct(productDto), HttpStatus.OK)
   }
 
   @DeleteMapping("/{sku}")

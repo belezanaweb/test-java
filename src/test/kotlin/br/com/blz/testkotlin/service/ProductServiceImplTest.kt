@@ -15,9 +15,8 @@ import org.springframework.boot.test.context.SpringBootTest
 @SpringBootTest
 internal class ProductServiceImplTest {
 
-
   @Autowired
-   var productRepository: ProductRepository = ProductRepository()
+  var productRepository: ProductRepository = ProductRepository()
   @Autowired
   private var productServiceImpl = ProductServiceImpl(productRepository)
 
@@ -26,10 +25,12 @@ internal class ProductServiceImplTest {
     name = "L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g",
     inventory = InventoryEntity(
       quantity = 0,
-      warehouses = listOf(WarehouseEntity(locality = "SP", quantity = 12, type = TypeEnum.ECOMMERCE),
-      WarehouseEntity(locality = "MOEMA", quantity = 13, type = TypeEnum.PHYSICAL_STORE)
-    )),
-  isMarketable = true
+      warehouses = listOf(
+        WarehouseEntity(locality = "SP", quantity = 12, type = TypeEnum.ECOMMERCE),
+        WarehouseEntity(locality = "MOEMA", quantity = 13, type = TypeEnum.PHYSICAL_STORE)
+      )
+    ),
+    isMarketable = true
   )
 
   private var productEdit = ProductEntity(
@@ -37,9 +38,11 @@ internal class ProductServiceImplTest {
     name = "L'Oréal Professionnel Expert Absolut Repair Cortex Lipidium - Máscara de Reconstrução 500g",
     inventory = InventoryEntity(
       quantity = 4,
-      warehouses = listOf(WarehouseEntity(locality = "SP", quantity = 1, type = TypeEnum.ECOMMERCE),
+      warehouses = listOf(
+        WarehouseEntity(locality = "SP", quantity = 1, type = TypeEnum.ECOMMERCE),
         WarehouseEntity(locality = "MOEMA", quantity = 3, type = TypeEnum.PHYSICAL_STORE)
-      )),
+      )
+    ),
     isMarketable = true
   )
 
@@ -48,7 +51,6 @@ internal class ProductServiceImplTest {
   fun getAllProductsListEmpty() {
     assertTrue(getAllProducts()?.size == 0)
   }
-
 
   @Test
   @Order(2)
@@ -88,29 +90,23 @@ internal class ProductServiceImplTest {
     assertTrue(deleteProductBySku())
   }
 
-
   fun getAllProducts(): MutableList<ProductEntity>? {
     return productServiceImpl.getAllProducts()
   }
 
-
-  fun saveProduct(): ProductEntity?  {
+  fun saveProduct(): ProductEntity? {
     return productServiceImpl.saveProduct(product)
   }
-
 
   fun getProductBySku(): ProductEntity? {
     return productServiceImpl.getProductBySku(product.sku)
   }
 
-
   fun editProduct(): ProductEntity? {
     return productServiceImpl.editProduct(productEdit)
   }
 
-
   fun deleteProductBySku(): Boolean {
     return productServiceImpl.deleteProductBySku(product.sku)
   }
-
 }
