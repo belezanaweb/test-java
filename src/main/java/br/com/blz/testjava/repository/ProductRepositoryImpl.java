@@ -13,12 +13,17 @@ public class ProductRepositoryImpl implements IProductRepository {
     private Map<Integer, Product> products = new ConcurrentHashMap<>();
 
     @Override
-    public void save(final Product product) {
+    public void insert(final Product product) {
         if(products.containsKey(product.getSku())){
             throw new ProductAlreadyExistException("Produto já cadastrado");
         }
 
        products.put(product.getSku(), product);
+    }
+
+    @Override
+    public void update(final Product product) {
+        products.put(product.getSku(), product);
     }
 
     @Override

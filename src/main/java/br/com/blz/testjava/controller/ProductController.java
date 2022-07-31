@@ -17,29 +17,25 @@ public class ProductController {
     @Autowired
     public ProductController(ProductService productService) {
         this.productService = productService;
-
     }
 
     @GetMapping(value="/{sku}")
     public Product getProduct(@PathVariable("sku") Integer sku){
-
-        return new Product();
+        return this.productService.findBySku(sku);
     }
 
     @DeleteMapping(value="/{sku}")
     public void deleteProduct(@PathVariable("sku") Integer sku) {
-
+        this.productService.deleteProduct(sku);
     }
 
     @PostMapping
     public void createProduct(@RequestBody Product product) {
-
-        productService.saveProduct(product);
-
+        productService.insertProduct(product);
     }
 
     @PutMapping(value="{sku}/")
-    public void createProduct(@PathVariable("sku") Integer sku, @RequestBody Product product) {
-
+    public void editProduct(@PathVariable("sku") Integer sku, @RequestBody Product product) {
+        productService.updateProduct(product);
     }
 }

@@ -4,7 +4,9 @@ import br.com.blz.testjava.model.Product;
 
 public interface IProductRepository {
 
-    void save(final Product product);
+    void insert(final Product product);
+
+    void update(final Product product);
 
     void delete(final Integer sku);
 

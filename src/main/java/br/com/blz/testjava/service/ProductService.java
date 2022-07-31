@@ -13,15 +13,26 @@ public class ProductService {
         this.repository = repository;
     }
 
-    public void saveProduct(final Product product) {
-        repository.save(product);
+    public void updateProduct(final Product product) {
+        repository.update(product);
+    }
+
+    public void insertProduct(final Product product) {
+        repository.insert(product);
     }
 
     public void deleteProduct(final Integer sku) {
         repository.delete(sku);
     }
 
-    public void findBySku(final Integer sku) {
-        repository.findBySku(sku);
+    public Product findBySku(final Integer sku) {
+       Product product = repository.findBySku(sku);
+       product.getInventory().setQuantity(product.getInventory().getWarehouses().stream()
+                                                                               .filter(w-> w.getQuantity()!=null)
+                                                                               .mapToInt(w -> w.getQuantity())
+                                                                               .sum());
+       product.setIsMarketable(product.getInventory().getQuantity() > 0);
+
+       return product;
     }
 }

@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-
 public class Inventory {
     private Integer quantity;
     private List<Warehouse> warehouses;
