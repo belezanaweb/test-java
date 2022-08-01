@@ -101,12 +101,11 @@ public class ProductControllerTest {
     @Test
     public void testUpdateProduct() throws Exception{
             JSONObject json = new JSONObject("{\"sku\":1,\"name\":\"perfume 1 ALTERADO\",\"isMarketable\":true,\"inventory\":{\"quantity\":11,\"warehouses\":[{\"localilty\":\"Rio de Janeiro\",\"quantity\":3,\"type\":\"ECOMMERCE\"},{\"localilty\":\"São Paulo\",\"quantity\":8,\"type\":\"PHYSICAL_STORE\"}]}}");
-            mockMvc.perform(put("/products/1/").contentType("application/json; charset=utf8").content(json.toString())).andExpect(status().isOk());
+            mockMvc.perform(put("/products/1").contentType("application/json; charset=utf8").content(json.toString())).andExpect(status().isOk());
     }
 
     @Test
     public void testDeleteProduct() throws Exception {
             mockMvc.perform(delete("/products/1")).andExpect(status().isOk());
     }
-
 }

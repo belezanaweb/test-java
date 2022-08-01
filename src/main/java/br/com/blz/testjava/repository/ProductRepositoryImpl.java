@@ -1,6 +1,7 @@
 package br.com.blz.testjava.repository;
 
 import br.com.blz.testjava.exception.ProductAlreadyExistException;
+import br.com.blz.testjava.exception.ProductNotFoundException;
 import br.com.blz.testjava.model.Product;
 import org.springframework.stereotype.Repository;
 
@@ -32,6 +33,10 @@ public class ProductRepositoryImpl implements IProductRepository {
 
     @Override
     public Product findBySku(final Integer sku){
+
+        if(!products.containsKey(sku)) {
+            throw new ProductNotFoundException("Produto com sku: " + sku + " não encontrado");
+        }
         return products.get(sku);
     }
 }

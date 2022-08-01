@@ -2,9 +2,10 @@ package br.com.blz.testjava.controller;
 
 import br.com.blz.testjava.model.Product;
 import br.com.blz.testjava.service.ProductService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("products")
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
 
     private ProductService productService;
-
 
     @Autowired
     public ProductController(ProductService productService) {
@@ -30,11 +30,11 @@ public class ProductController {
     }
 
     @PostMapping
-    public void createProduct(final @RequestBody Product product) {
+    public void createProduct(final @Valid @RequestBody Product product) {
         productService.insertProduct(product);
     }
 
-    @PutMapping(value="{sku}/")
+    @PutMapping(value="/{sku}")
     public void editProduct(final @PathVariable("sku") Integer sku, final @RequestBody Product product) {
         productService.updateProduct(product);
     }
