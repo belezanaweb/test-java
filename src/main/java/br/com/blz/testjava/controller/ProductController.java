@@ -20,22 +20,22 @@ public class ProductController {
     }
 
     @GetMapping(value="/{sku}")
-    public Product getProduct(@PathVariable("sku") Integer sku){
+    public Product getProduct(final @PathVariable("sku") Integer sku){
         return this.productService.findBySku(sku);
     }
 
     @DeleteMapping(value="/{sku}")
-    public void deleteProduct(@PathVariable("sku") Integer sku) {
+    public void deleteProduct(final @PathVariable("sku") Integer sku) {
         this.productService.deleteProduct(sku);
     }
 
     @PostMapping
-    public void createProduct(@RequestBody Product product) {
+    public void createProduct(final @RequestBody Product product) {
         productService.insertProduct(product);
     }
 
     @PutMapping(value="{sku}/")
-    public void editProduct(@PathVariable("sku") Integer sku, @RequestBody Product product) {
+    public void editProduct(final @PathVariable("sku") Integer sku, final @RequestBody Product product) {
         productService.updateProduct(product);
     }
 }

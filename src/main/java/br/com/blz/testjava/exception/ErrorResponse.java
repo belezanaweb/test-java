@@ -1,4 +1,4 @@
-package br.com.blz.testjava.Exception;
+package br.com.blz.testjava.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

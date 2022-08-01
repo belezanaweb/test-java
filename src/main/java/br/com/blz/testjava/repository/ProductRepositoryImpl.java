@@ -1,12 +1,11 @@
 package br.com.blz.testjava.repository;
 
-import br.com.blz.testjava.Exception.ProductAlreadyExistException;
+import br.com.blz.testjava.exception.ProductAlreadyExistException;
 import br.com.blz.testjava.model.Product;
 import org.springframework.stereotype.Repository;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
 @Repository
 public class ProductRepositoryImpl implements IProductRepository {
 
@@ -15,7 +14,7 @@ public class ProductRepositoryImpl implements IProductRepository {
     @Override
     public void insert(final Product product) {
         if(products.containsKey(product.getSku())){
-            throw new ProductAlreadyExistException("Produto já cadastrado");
+            throw new ProductAlreadyExistException("Produto já cadastrado. Sku: "+ product.getSku());
         }
 
        products.put(product.getSku(), product);

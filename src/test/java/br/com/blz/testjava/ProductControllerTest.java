@@ -5,7 +5,6 @@ import br.com.blz.testjava.model.Inventory;
 import br.com.blz.testjava.model.Product;
 import br.com.blz.testjava.model.Warehouse;
 import lombok.extern.log4j.Log4j2;
-import org.assertj.core.api.Assertions;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -17,10 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -39,7 +35,7 @@ public class ProductControllerTest {
 
     @BeforeAll
     public void setup() {
-        System.out.printf("Populating database...");
+        log.info("Populating database...");
         Product product1 = new Product();
         product1.setSku(1);
         product1.setName("perfume 1");
@@ -62,7 +58,6 @@ public class ProductControllerTest {
 
         productController.createProduct(product1);
 
-        System.out.printf("Created records for the test");
         Product product2 = new Product();
         product2.setSku(2);
         product2.setName("perfume 1");
@@ -71,7 +66,7 @@ public class ProductControllerTest {
         Warehouse warehouse21 = new Warehouse();
         Warehouse warehouse22 = new Warehouse();
 
-        warehouse21.setLocalilty("Curituba");
+        warehouse21.setLocalilty("Curitiba");
         warehouse21.setType(Warehouse.Type.ECOMMERCE);
         warehouse21.setQuantity(6);
 
@@ -87,64 +82,31 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void contextLoads() {
-        Assertions.assertThat(productController).isNotNull();
+    public void testGetProductByIdWithInventoryQuantityAndIsMarketableAttributes()  throws Exception {
+            mockMvc.perform(get("/products/2")).andExpect(status().isOk()).andExpect(content().json("{\"sku\":2,\"name\":\"perfume 1\",\"isMarketable\":true,\"inventory\":{\"quantity\":8,\"warehouses\":[{\"localilty\":\"Curitiba\",\"quantity\":6,\"type\":\"ECOMMERCE\"},{\"localilty\":\"Leicester\",\"quantity\":2,\"type\":\"PHYSICAL_STORE\"}]}}"));
     }
 
     @Test
-    public void testGetProductById() {
-
-        try {
-            mockMvc.perform(get("/products/2")).andExpect(status().isOk()).andExpect(content().json("{\"sku\":2,\"name\":\"perfume 1\",\"isMarketable\":true,\"inventory\":{\"quantity\":8,\"warehouses\":[{\"localilty\":\"Curituba\",\"quantity\":6,\"type\":\"ECOMMERCE\"},{\"localilty\":\"Leicester\",\"quantity\":2,\"type\":\"PHYSICAL_STORE\"}]}}"));
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
-    }
-
-    @Test
-    public void testCreateProduct() {
-
-        try {
-
+    public void testCreateProduct() throws Exception {
             JSONObject json = new JSONObject("{\"sku\":6,\"name\":\"perfume 6\",\"isMarketable\":true,\"inventory\":{\"quantity\":11,\"warehouses\":[{\"localilty\":\"Rio de Janeiro\",\"quantity\":3,\"type\":\"ECOMMERCE\"},{\"localilty\":\"São Paulo\",\"quantity\":8,\"type\":\"PHYSICAL_STORE\"}]}}");
             mockMvc.perform(post("/products").contentType("application/json; charset=utf8").content(json.toString())).andExpect(status().isOk());
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
     }
 
     @Test
-    public void testCreateProductAlreadyRegistered() {
-
-        try {
-
+    public void testCreateProductAlreadyRegistered() throws Exception{
             JSONObject json = new JSONObject("{\"sku\":6,\"name\":\"perfume 1\",\"isMarketable\":true,\"inventory\":{\"quantity\":11,\"warehouses\":[{\"localilty\":\"Rio de Janeiro\",\"quantity\":3,\"type\":\"ECOMMERCE\"},{\"localilty\":\"São Paulo\",\"quantity\":8,\"type\":\"PHYSICAL_STORE\"}]}}");
             mockMvc.perform(post("/products").contentType("application/json; charset=utf8").content(json.toString())).andExpect(status().is(409));
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
     }
 
-
     @Test
-    public void testUpdateProduct() {
-
-        try {
-
+    public void testUpdateProduct() throws Exception{
             JSONObject json = new JSONObject("{\"sku\":1,\"name\":\"perfume 1 ALTERADO\",\"isMarketable\":true,\"inventory\":{\"quantity\":11,\"warehouses\":[{\"localilty\":\"Rio de Janeiro\",\"quantity\":3,\"type\":\"ECOMMERCE\"},{\"localilty\":\"São Paulo\",\"quantity\":8,\"type\":\"PHYSICAL_STORE\"}]}}");
             mockMvc.perform(put("/products/1/").contentType("application/json; charset=utf8").content(json.toString())).andExpect(status().isOk());
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
     }
 
     @Test
-    public void testDeleteProduct() {
-
-        try {
+    public void testDeleteProduct() throws Exception {
             mockMvc.perform(delete("/products/1")).andExpect(status().isOk());
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
     }
+
 }
