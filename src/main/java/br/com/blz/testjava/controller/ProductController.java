@@ -3,6 +3,7 @@ package br.com.blz.testjava.controller;
 import br.com.blz.testjava.model.Product;
 import br.com.blz.testjava.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -29,6 +30,7 @@ public class ProductController {
         this.productService.deleteProduct(sku);
     }
 
+    @Validated
     @PostMapping
     public void createProduct(final @Valid @RequestBody Product product) {
         productService.insertProduct(product);

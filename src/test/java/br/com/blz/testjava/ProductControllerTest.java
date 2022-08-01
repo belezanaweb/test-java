@@ -44,11 +44,11 @@ public class ProductControllerTest {
         Warehouse warehouse1 = new Warehouse();
         Warehouse warehouse2 = new Warehouse();
 
-        warehouse1.setLocalilty("Rio de Janeiro");
+        warehouse1.setLocality("Rio de Janeiro");
         warehouse1.setType(Warehouse.Type.ECOMMERCE);
         warehouse1.setQuantity(3);
 
-        warehouse2.setLocalilty("São Paulo");
+        warehouse2.setLocality("São Paulo");
         warehouse2.setType(Warehouse.Type.PHYSICAL_STORE);
         warehouse2.setQuantity(8);
 
@@ -63,14 +63,15 @@ public class ProductControllerTest {
         product2.setName("perfume 1");
 
         Inventory inventory2 = new Inventory();
+        inventory2.setQuantity(99999);
         Warehouse warehouse21 = new Warehouse();
         Warehouse warehouse22 = new Warehouse();
 
-        warehouse21.setLocalilty("Curitiba");
+        warehouse21.setLocality("Curitiba");
         warehouse21.setType(Warehouse.Type.ECOMMERCE);
         warehouse21.setQuantity(6);
 
-        warehouse22.setLocalilty("Leicester");
+        warehouse22.setLocality("Leicester");
         warehouse22.setType(Warehouse.Type.PHYSICAL_STORE);
         warehouse22.setQuantity(2);
 
@@ -82,25 +83,36 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void testGetProductByIdWithInventoryQuantityAndIsMarketableAttributes()  throws Exception {
-            mockMvc.perform(get("/products/2")).andExpect(status().isOk()).andExpect(content().json("{\"sku\":2,\"name\":\"perfume 1\",\"isMarketable\":true,\"inventory\":{\"quantity\":8,\"warehouses\":[{\"localilty\":\"Curitiba\",\"quantity\":6,\"type\":\"ECOMMERCE\"},{\"localilty\":\"Leicester\",\"quantity\":2,\"type\":\"PHYSICAL_STORE\"}]}}"));
+    public void testCreateProductWithBadJson() throws Exception {
+        JSONObject json = new JSONObject("{\"sk-XXX-u\":6,\"name\":\"perfume 6\",\"isMarketable\":true,\"inventory\":{\"quantity\":11,\"warehouses\":[{\"locality\":\"Rio de Janeiro\",\"quantity\":3,\"type\":\"ECOMMERCE\"},{\"locality\":\"São Paulo\",\"quantity\":8,\"type\":\"PHYSICAL_STORE\"}]}}");
+        mockMvc.perform(post("/products").contentType("application/json; charset=utf8").content(json.toString())).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testGetNonexistentProduct()  throws Exception {
+        mockMvc.perform(get("/products/44")).andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    public void testGetProductBySkuWithCalculatedInventoryQuantityAndIsMarketableAttributes()  throws Exception {
+            mockMvc.perform(get("/products/2")).andExpect(status().isOk()).andExpect(content().json("{\"sku\":2,\"name\":\"perfume 1\",\"isMarketable\":true,\"inventory\":{\"quantity\":8,\"warehouses\":[{\"locality\":\"Curitiba\",\"quantity\":6,\"type\":\"ECOMMERCE\"},{\"locality\":\"Leicester\",\"quantity\":2,\"type\":\"PHYSICAL_STORE\"}]}}"));
     }
 
     @Test
     public void testCreateProduct() throws Exception {
-            JSONObject json = new JSONObject("{\"sku\":6,\"name\":\"perfume 6\",\"isMarketable\":true,\"inventory\":{\"quantity\":11,\"warehouses\":[{\"localilty\":\"Rio de Janeiro\",\"quantity\":3,\"type\":\"ECOMMERCE\"},{\"localilty\":\"São Paulo\",\"quantity\":8,\"type\":\"PHYSICAL_STORE\"}]}}");
+            JSONObject json = new JSONObject("{\"sku\":6,\"name\":\"perfume 6\",\"isMarketable\":true,\"inventory\":{\"quantity\":11,\"warehouses\":[{\"locality\":\"Rio de Janeiro\",\"quantity\":3,\"type\":\"ECOMMERCE\"},{\"locality\":\"São Paulo\",\"quantity\":8,\"type\":\"PHYSICAL_STORE\"}]}}");
             mockMvc.perform(post("/products").contentType("application/json; charset=utf8").content(json.toString())).andExpect(status().isOk());
     }
 
     @Test
     public void testCreateProductAlreadyRegistered() throws Exception{
-            JSONObject json = new JSONObject("{\"sku\":6,\"name\":\"perfume 1\",\"isMarketable\":true,\"inventory\":{\"quantity\":11,\"warehouses\":[{\"localilty\":\"Rio de Janeiro\",\"quantity\":3,\"type\":\"ECOMMERCE\"},{\"localilty\":\"São Paulo\",\"quantity\":8,\"type\":\"PHYSICAL_STORE\"}]}}");
+            JSONObject json = new JSONObject("{\"sku\":6,\"name\":\"perfume 1\",\"isMarketable\":true,\"inventory\":{\"quantity\":11,\"warehouses\":[{\"localilty\":\"Rio de Janeiro\",\"quantity\":3,\"type\":\"ECOMMERCE\"},{\"locality\":\"São Paulo\",\"quantity\":8,\"type\":\"PHYSICAL_STORE\"}]}}");
             mockMvc.perform(post("/products").contentType("application/json; charset=utf8").content(json.toString())).andExpect(status().is(409));
     }
 
     @Test
     public void testUpdateProduct() throws Exception{
-            JSONObject json = new JSONObject("{\"sku\":1,\"name\":\"perfume 1 ALTERADO\",\"isMarketable\":true,\"inventory\":{\"quantity\":11,\"warehouses\":[{\"localilty\":\"Rio de Janeiro\",\"quantity\":3,\"type\":\"ECOMMERCE\"},{\"localilty\":\"São Paulo\",\"quantity\":8,\"type\":\"PHYSICAL_STORE\"}]}}");
+            JSONObject json = new JSONObject("{\"sku\":1,\"name\":\"perfume 1 ALTERADO\",\"isMarketable\":true,\"inventory\":{\"quantity\":11,\"warehouses\":[{\"localilty\":\"Rio de Janeiro\",\"quantity\":3,\"type\":\"ECOMMERCE\"},{\"locality\":\"São Paulo\",\"quantity\":8,\"type\":\"PHYSICAL_STORE\"}]}}");
             mockMvc.perform(put("/products/1").contentType("application/json; charset=utf8").content(json.toString())).andExpect(status().isOk());
     }
 

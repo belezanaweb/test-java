@@ -3,6 +3,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -13,7 +15,12 @@ public class Warehouse {
         PHYSICAL_STORE
     }
 
-    private String localilty;
+    @NotNull
+    private String locality;
+
+    @NotNull
     private Integer quantity;
+
+    @NotNull
     private Type type;
 }
