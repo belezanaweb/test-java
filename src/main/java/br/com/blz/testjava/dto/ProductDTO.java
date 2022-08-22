@@ -1,6 +1,7 @@
 package br.com.blz.testjava.dto;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,6 +15,7 @@ import lombok.Data;
 public class ProductDTO {
 	
 	@NotNull(message = "SKU coud not be null")
+	@Min(value = 1)
 	private Long sku;
 	
 	@NotNull(message = "Name coud not be null")
