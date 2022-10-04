@@ -2,11 +2,11 @@ name: Fortify
 
 on:
   push:
-    branches: [master]
+    branches: [ master ]
 
 jobs:
   fortify:
-    runs-on: [self-hosted, devsecops]
+    runs-on: [ self-hosted, devsecops ]
     name: Fortify
     steps:
       - name: Checkout
