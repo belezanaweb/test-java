@@ -4,14 +4,15 @@ import br.com.blz.testjava.model.Product
 
 
 object ProductCacheContext {
-  private val productCacheMap = ThreadLocal<HashMap<Long, Product>>()
+
+  private val productCacheMap = hashMapOf<Long, Product>()
 
 
   fun getProduct(sku: Long): Product? {
-    return productCacheMap.get()[sku]
+    return productCacheMap[sku]
   }
 
   fun create(product: Product) {
-    productCacheMap.get()[product.sku] = product
+    productCacheMap[product.sku] = product
   }
 }

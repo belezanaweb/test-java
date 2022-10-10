@@ -1,8 +1,6 @@
 package br.com.blz.testjava.controller
 
 import br.com.blz.testjava.TestJavaApplication
-import br.com.blz.testjava.model.Product
-import io.mockk.mockk
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest

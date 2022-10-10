@@ -12,9 +12,11 @@ internal class ProductRepositoryImp : ProductRepository {
   }
 
   override fun create(product: Product): Product {
-    if (ProductCacheContext.getProduct(product.sku) != null) {
+    if (notExtists(product)) {
       ProductCacheContext.create(product)
     } else throw ProductAlreadyExistsException("Product with SKU ${product.sku} already exists")
     return product
   }
+
+  private fun notExtists(product: Product) = ProductCacheContext.getProduct(product.sku) == null
 }
