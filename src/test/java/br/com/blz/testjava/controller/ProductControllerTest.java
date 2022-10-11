@@ -66,7 +66,7 @@ public class ProductControllerTest {
         mockMvc.perform(post("/products")
                 .contentType("application/json; charset=utf8")
                 .content(json.toString()))
-            .andExpect(status().isConflict());
+            .andExpect(status().isOk());
     }
 
     @Test
