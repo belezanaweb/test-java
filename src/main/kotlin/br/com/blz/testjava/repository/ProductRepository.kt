@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service
 
 @Service
 interface ProductRepository {
-  fun getProductBySku(sku: Long): Product?
+  fun get(sku: Long): Product?
   fun create(product: Product): Product
+  fun update(sku: Long, product: Product): Product
+  fun delete(sku: Long)
 }

@@ -1,6 +1,15 @@
 package br.com.blz.testjava.model
 
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.annotation.JsonProperty
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class Inventory(
-  val quantity: Int = 0,
-  val warehouses: List<Warehouse>
-)
+  @JsonProperty("warehouses") val warehouses: List<Warehouse>
+) {
+  fun calculateQuantity(): Int {
+    return warehouses.sumOf { it.quantity }
+  }
+
+  var quantity: Int? = null
+}

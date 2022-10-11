@@ -1,22 +1,25 @@
 package br.com.blz.testjava.repository
 
 import br.com.blz.testjava.cache.ProductCacheContext
-import br.com.blz.testjava.exception.ProductAlreadyExistsException
 import br.com.blz.testjava.model.Product
 import org.springframework.stereotype.Repository
 
 @Repository
 internal class ProductRepositoryImp : ProductRepository {
-  override fun getProductBySku(sku: Long): Product? {
-    return ProductCacheContext.getProduct(sku)
+  override fun get(sku: Long): Product? {
+    return ProductCacheContext.get(sku)
   }
 
   override fun create(product: Product): Product {
-    if (notExtists(product)) {
-      ProductCacheContext.create(product)
-    } else throw ProductAlreadyExistsException("Product with SKU ${product.sku} already exists")
-    return product
+    return ProductCacheContext.save(product)
   }
 
-  private fun notExtists(product: Product) = ProductCacheContext.getProduct(product.sku) == null
+  override fun update(sku: Long, product: Product): Product {
+    val optionalProduct = get(sku)
+    optionalProduct?.let { return ProductCacheContext.update(sku, product) } ?: return ProductCacheContext.save(product)
+  }
+
+  override fun delete(sku: Long) {
+    ProductCacheContext.delete(sku)
+  }
 }

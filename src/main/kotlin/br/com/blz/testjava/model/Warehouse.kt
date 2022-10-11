@@ -1,7 +1,9 @@
 package br.com.blz.testjava.model
 
+import com.fasterxml.jackson.annotation.JsonProperty
+
 data class Warehouse(
-  val locality: String = "",
-  val quantity: Int = 0,
-  val type: String = "",
+  @JsonProperty("locality") val locality: String = "",
+  @JsonProperty("quantity") val quantity: Int = 0,
+  @JsonProperty("type") val type: String = ""
 )
