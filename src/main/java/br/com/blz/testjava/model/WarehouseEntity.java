@@ -5,13 +5,13 @@ import javax.validation.constraints.NotNull;
 
 public class WarehouseEntity {
 
-    @NotBlank(message = "This field is required")
+    @NotBlank
     private String locality;
 
-    @NotNull(message = "This field is required")
+    @NotNull
     private Integer quantity;
 
-    @NotBlank(message = "This field is required")
+    @NotBlank
     private String type;
 
     public String getLocality() {

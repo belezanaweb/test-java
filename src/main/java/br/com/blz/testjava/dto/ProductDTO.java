@@ -60,7 +60,7 @@ public class ProductDTO {
         productEntity.setName(productDTO.getName());
         productEntity.setInventory(new InventoryEntity());
         productEntity.getInventory().setWarehouses(productDTO.getInventory().getWarehouses().stream()
-            .map(it-> {
+            .map(it -> {
                 WarehouseEntity warehouseEntity = new WarehouseEntity();
                 warehouseEntity.setLocality(it.getLocality());
                 warehouseEntity.setQuantity(it.getQuantity());

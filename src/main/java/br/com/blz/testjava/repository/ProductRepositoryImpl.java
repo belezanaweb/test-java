@@ -7,13 +7,13 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
-public class ProductRepositoryImpl implements ProductRepository{
+public class ProductRepositoryImpl implements ProductRepository {
 
-    private final Map<Integer,ProductEntity> products = new ConcurrentHashMap<>();
+    private final Map<Integer, ProductEntity> products = new ConcurrentHashMap<>();
 
     @Override
     public void createProduct(ProductEntity productEntity) {
-        products.put(productEntity.getSku(),productEntity);
+        products.put(productEntity.getSku(), productEntity);
     }
 
     @Override
@@ -22,12 +22,12 @@ public class ProductRepositoryImpl implements ProductRepository{
     }
 
     @Override
-    public void deleteProduct(final Integer sku){
+    public void deleteProduct(final Integer sku) {
         products.remove(sku);
     }
 
     @Override
-    public ProductEntity findProductBySku(final Integer sku){
+    public ProductEntity findProductBySku(final Integer sku) {
         return products.get(sku);
     }
 }

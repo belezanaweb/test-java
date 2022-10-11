@@ -19,12 +19,6 @@ public class ProductEntity {
     @NotNull
     private InventoryEntity inventory;
 
-//    public ProductEntity(Integer sku, String name, InventoryEntity inventory) {
-//        this.sku = sku;
-//        this.name = name;
-//        this.inventory = inventory;
-//    }
-
     public Integer getSku() {
         return sku;
     }
@@ -55,7 +49,7 @@ public class ProductEntity {
         productDTO.setName(productEntity.getName());
         productDTO.setInventory(new InventoryDTO());
         productDTO.getInventory().setWarehouses(productEntity.getInventory().getWarehouses().stream()
-            .map(it-> {
+            .map(it -> {
                 WarehouseDTO warehouseDTO = new WarehouseDTO();
                 warehouseDTO.setLocality(it.getLocality());
                 warehouseDTO.setQuantity(it.getQuantity());
@@ -64,7 +58,7 @@ public class ProductEntity {
 
             }).collect(Collectors.toList()));
         productDTO.getInventory().setQuantity(productEntity.getInventory().getWarehouses().stream()
-            .filter(it-> it.getQuantity()!=null)
+            .filter(it -> it.getQuantity() != null)
             .mapToInt(WarehouseEntity::getQuantity)
             .sum());
         productDTO.setIsMarketable(productDTO.getInventory().getQuantity() > 0);

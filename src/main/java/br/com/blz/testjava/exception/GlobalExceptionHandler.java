@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
 
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public  @ResponseBody ErrorResponse handleException(MethodArgumentNotValidException e) {
-        return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Existem dados inválidos no request: " + e.getMessage());
+    public @ResponseBody ErrorResponse handleException(MethodArgumentNotValidException e) {
+        return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Invalid Request: " + e.getMessage());
     }
 }
