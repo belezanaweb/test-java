@@ -44,7 +44,7 @@ public class ProductDto implements Serializable {
 		this.inventory = inventory;
 	}
 
-	@JsonProperty("isMarketable")
+    @JsonProperty("isMarketable")
 	public boolean isMarketable() {
 		InventoryDto inventoryDto = getInventory();
 		if (inventoryDto == null) {

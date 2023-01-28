@@ -1,13 +1,12 @@
 package br.com.blz.testjava.repository.dao;
 
+import br.com.blz.testjava.repository.entity.Product;
+import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import org.springframework.stereotype.Repository;
-
-import br.com.blz.testjava.repository.entity.Product;
 
 @Repository
 public class ProductMemoryDao implements ProductRepository {
