@@ -10,6 +10,7 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
+import org.mockito.Mockito
 import org.mockito.Mockito.doReturn
 import org.mockito.junit.jupiter.MockitoExtension
 
@@ -28,6 +29,8 @@ class DeleteProductUseCaseTest {
     assertDoesNotThrow {
       deleteProductUseCase.execute(product.sku.toString())
     }
+    Mockito.verify(productRepository, Mockito.times(1)).deleteById(product.sku)
+    Mockito.verify(warehouseRepository, Mockito.times(1)).deleteBySku(product.sku)
   }
 
   @Test
@@ -36,6 +39,8 @@ class DeleteProductUseCaseTest {
     assertThrows<NotFoundException> {
       deleteProductUseCase.execute(product.sku.toString())
     }
+    Mockito.verify(productRepository, Mockito.times(0)).deleteById(product.sku)
+    Mockito.verify(warehouseRepository, Mockito.times(0)).deleteBySku(product.sku)
   }
 
 }

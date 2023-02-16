@@ -10,7 +10,7 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.Mockito.doReturn
+import org.mockito.Mockito.*
 import org.mockito.junit.jupiter.MockitoExtension
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -57,6 +57,7 @@ class CreateProductUseCaseTest {
 
     assertFalse { response.isMarketable }
     assertEquals(0, response.inventory.quantity)
+    verify(productRepository, times(1)).save(product)
   }
 
   @Test
@@ -67,6 +68,6 @@ class CreateProductUseCaseTest {
     assertThrows<AlreadyExistsException> {
       createProductUseCase.execute(CreateProduct(product.sku, product.name, listOf()))
     }
+    verify(productRepository, times(0)).save(product)
   }
-
 }

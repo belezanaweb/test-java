@@ -10,6 +10,7 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
+import org.mockito.Mockito
 import org.mockito.Mockito.doReturn
 import org.mockito.junit.jupiter.MockitoExtension
 import kotlin.test.assertEquals
@@ -40,6 +41,7 @@ class UpdateProductUseCaseTest {
 
     assertTrue { response.isMarketable }
     assertEquals(10, response.inventory.quantity)
+    Mockito.verify(warehouseRepository, Mockito.times(1)).deleteBySku(product.sku)
   }
 
   @Test
@@ -74,6 +76,7 @@ class UpdateProductUseCaseTest {
         ))
       )
     }
+    Mockito.verify(warehouseRepository, Mockito.times(0)).deleteBySku(product.sku)
   }
 
 }
