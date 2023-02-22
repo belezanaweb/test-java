@@ -1,4 +1,4 @@
-package com.boticario.testkotlin.application.repository
+package com.boticario.testkotlin.domain.repository
 
 import com.boticario.testkotlin.domain.entity.Product
 

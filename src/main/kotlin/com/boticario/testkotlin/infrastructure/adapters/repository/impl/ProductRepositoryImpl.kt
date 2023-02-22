@@ -1,6 +1,6 @@
 package com.boticario.testkotlin.infrastructure.adapters.repository.impl
 
-import com.boticario.testkotlin.application.repository.ProductRepository
+import com.boticario.testkotlin.domain.repository.ProductRepository
 import com.boticario.testkotlin.domain.entity.Product
 import com.boticario.testkotlin.infrastructure.adapters.repository.ProductJpaRepository
 import com.boticario.testkotlin.infrastructure.persistence.entity.ProductEntity

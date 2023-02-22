@@ -1,7 +1,6 @@
 package com.boticario.testkotlin.infrastructure.adapters.repository.impl
 
 import com.boticario.testkotlin.factory.ProductFactory.createProduct
-import com.boticario.testkotlin.factory.ProductFactory.updateProduct
 import com.boticario.testkotlin.infrastructure.adapters.repository.ProductJpaRepository
 import com.boticario.testkotlin.infrastructure.persistence.entity.ProductEntity
 import io.mockk.every

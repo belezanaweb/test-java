@@ -1,8 +1,10 @@
 package com.boticario.testkotlin.application.service.impl
 
-import com.boticario.testkotlin.application.repository.ProductRepository
+import com.boticario.testkotlin.domain.repository.ProductRepository
 
 import com.boticario.testkotlin.application.request.WarehouseRequest
+import com.boticario.testkotlin.application.response.InventoryResponse
+import com.boticario.testkotlin.application.response.ProductResponse
 import com.boticario.testkotlin.domain.enum.WarehouseType
 import com.boticario.testkotlin.factory.ProductFactory.createProduct
 import com.boticario.testkotlin.factory.ProductFactory.createProductRequest
@@ -43,7 +45,7 @@ internal class ProductServiceImplTest {
             productRepository.save(createProduct)
         }
 
-        assert(result == createProduct)
+        assert(result == ProductResponse.fromDomain(createProduct))
     }
 
     @Test
@@ -71,7 +73,7 @@ internal class ProductServiceImplTest {
         }
 
         assert(result.name == updateProduct.name)
-        assert(result.inventory == createProduct.inventory)
+        assert(result.inventory == InventoryResponse.fromDomain(createProduct.inventory))
     }
 
     @Test
@@ -95,7 +97,7 @@ internal class ProductServiceImplTest {
         }
 
         assert(result.name == updateProduct.name)
-        assert(result.inventory == updateAllFields.inventory)
+        assert(result.inventory == InventoryResponse.fromDomain(updateAllFields.inventory))
     }
 
     @Test
@@ -123,7 +125,7 @@ internal class ProductServiceImplTest {
         val result = productService.getProductFromStock(createProduct.sku)
 
         verify { productRepository.findOne(createProduct.sku) }
-        assert(result == createProduct)
+        assert(result == ProductResponse.fromDomain(createProduct))
     }
 
     @Test

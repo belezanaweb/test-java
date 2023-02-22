@@ -1,4 +1,4 @@
-package com.boticario.testkotlin.application.repository
+package com.boticario.testkotlin.domain.repository
 
 interface WarehouseRepository {
     fun save()
