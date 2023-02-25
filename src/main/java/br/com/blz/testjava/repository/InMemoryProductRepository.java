@@ -1,13 +1,13 @@
 package br.com.blz.testjava.repository;
 
+import br.com.blz.testjava.exceptions.DuplicatedProductException;
 import br.com.blz.testjava.model.Product;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class InMemoryProductRepository {
+public class InMemoryProductRepository implements Repository {
 
     private List<Product> products;
 
@@ -16,9 +16,11 @@ public class InMemoryProductRepository {
     }
 
     public Product save(Product product) {
-        if(!this.exists(product)) {
-            this.products.add(product);
+        if(this.exists(product)) {
+            throw new DuplicatedProductException("Duplicated SKU");
         }
+
+        this.products.add(product);
 
         return product;
     }
@@ -30,12 +32,9 @@ public class InMemoryProductRepository {
             .findFirst();
     }
 
-    public void deleteBySku(Long sku){
+    public void deleteBySku(Long sku) {
         Optional<Product> product = this.findBySku(sku);
-
-        if(product.isPresent()) {
-            this.products.remove(product.get());
-        }
+        product.ifPresent(value -> this.products.remove(value));
     }
 
     public Product update(Product productToUpdate) {

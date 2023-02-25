@@ -1,5 +1,6 @@
 package br.com.blz.testjava.repository;
 
+import br.com.blz.testjava.exceptions.DuplicatedProductException;
 import br.com.blz.testjava.model.Inventory;
 import br.com.blz.testjava.model.Product;
 import br.com.blz.testjava.model.Warehouse;
@@ -35,7 +36,7 @@ public class InMemoryProductRepositoryTest {
     }
 
     @Test
-    public void shouldNotSaveDuplicatedProducts() {
+    public void shouldThrowDuplicatedProductExceptionWhenSaveDuplicatedProducts() {
         InMemoryProductRepository repository = initRepositoryMock();
 
         Long spWarehouseQuantity = 12L;
@@ -45,9 +46,12 @@ public class InMemoryProductRepositoryTest {
         Product product = createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
 
         repository.save(product);
-        repository.save(product);
 
-        assertEquals(1, repository.count());
+        Exception exception = assertThrows(DuplicatedProductException.class, () -> {
+            repository.save(product);
+        });
+
+        assertEquals("Duplicated SKU", exception.getMessage());
     }
 
     @Test
