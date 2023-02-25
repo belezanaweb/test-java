@@ -5,7 +5,10 @@ public class Warehouse {
     private Long quantity;
     private WarehouseType type;
 
-    public Warehouse() {
+    public Warehouse(String locality, Long quantity, WarehouseType type) {
+        this.locality = locality;
+        this.quantity = quantity;
+        this.type = type;
     }
 
     public String getLocality() {

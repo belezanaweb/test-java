@@ -9,16 +9,14 @@ public class Product {
     private Boolean isMarketable;
     private Inventory inventory;
 
-    public Product() {
-
+    public Product(Long sku, String name, Inventory inventory) {
+        this.sku = sku;
+        this.name = name;
+        this.inventory = inventory;
     }
 
     public Long getSku() {
         return sku;
-    }
-
-    public void setSku(Long sku) {
-        this.sku = sku;
     }
 
     public String getName() {
@@ -31,10 +29,6 @@ public class Product {
 
     public Boolean getMarketable() {
         return isMarketable;
-    }
-
-    public void setMarketable(Boolean marketable) {
-        isMarketable = marketable;
     }
 
     public Inventory getInventory() {
@@ -57,4 +51,5 @@ public class Product {
     public int hashCode() {
         return Objects.hash(sku);
     }
+
 }

@@ -6,15 +6,15 @@ public class Inventory {
     private Long quantity;
     private List<Warehouse> warehouses;
 
-    public Inventory() {
+    public Inventory(List<Warehouse> warehouses) {
+        this.warehouses = warehouses;
     }
 
     public Long getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Long quantity) {
-        this.quantity = quantity;
+        return this.warehouses
+            .stream()
+            .map(w -> w.getQuantity())
+            .reduce(0L, (num1, num2) -> (num1 + num2));
     }
 
     public List<Warehouse> getWarehouses() {
