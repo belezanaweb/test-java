@@ -67,6 +67,28 @@ public class ProductControllerTest {
     }
 
     @Test
+    public void findBySku() throws Exception {
+        Long spWarehouseQuantity = 12L;
+        Long moemaWarehouseQuantity = 3L;
+        Long sku = ProductMock.getRandomSku();
+
+        Product product = ProductMock.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
+
+        mockMvc
+            .perform(
+                post(RESOURCE_PATH)
+                    .contentType("application/json")
+                    .content(convertProductMockToString(product)))
+            .andExpect(status().isCreated());
+
+        String searchUrl = RESOURCE_PATH + "/" + sku;
+
+        mockMvc
+            .perform(get(searchUrl))
+            .andExpect(status().isOk());
+    }
+
+    @Test
     public void shouldReturnBadRequestExceptionWhenTryCreateAPProductWhiteoutMandatoryAttributes() throws Exception {
         Long spWarehouseQuantity = 12L;
         Long moemaWarehouseQuantity = 3L;
@@ -84,7 +106,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void shouldReturnFalseWhenGivenSkuIsNotFound() throws Exception {
+    public void shouldReturnResourceNotFoundWhenGivenSkuIsNotFound() throws Exception {
         String searchUrl = RESOURCE_PATH + "/0";
 
         mockMvc
@@ -112,7 +134,6 @@ public class ProductControllerTest {
         Optional<Product> persisted = productService.findBySku(sku);
 
         // asserting initial product state
-        assertEquals(1, productService.count());
         assertTrue(persisted.isPresent());
         assertEquals(sku, persisted.get().getSku());
         assertEquals(totalProductQuantity, persisted.get().getInventory().getQuantity());
@@ -156,11 +177,46 @@ public class ProductControllerTest {
         Optional<Product> persistedAfterUpdate = productService.findBySku(sku);
 
         // asserting updated product
-        assertEquals(1, productService.count());
         assertTrue(persistedAfterUpdate.isPresent());
         assertEquals(sku, persistedAfterUpdate.get().getSku());
         assertEquals("Updated Product Name", persistedAfterUpdate.get().getName());
         assertEquals(updatedTotalProductQuantity, persistedAfterUpdate.get().getInventory().getQuantity());
+    }
+
+    @Test
+    public void shouldReturnResourceNotFoundWhenTryUpdateProductWithNonExistingSku() throws Exception {
+        Long spWarehouseQuantity = 12L;
+        Long moemaWarehouseQuantity = 3L;
+        Long totalProductQuantity = spWarehouseQuantity + moemaWarehouseQuantity;
+
+        Long sku = ProductMock.getRandomSku();
+
+        Product product = ProductMock.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
+
+        mockMvc
+            .perform(
+                post(RESOURCE_PATH)
+                    .contentType("application/json")
+                    .content(convertProductMockToString(product)))
+            .andExpect(status().isCreated());
+
+        Optional<Product> persisted = productService.findBySku(sku);
+
+        // asserting initial product state
+        assertTrue(persisted.isPresent());
+        assertEquals(sku, persisted.get().getSku());
+        assertEquals(totalProductQuantity, persisted.get().getInventory().getQuantity());
+
+        // updating product
+        Product productToUpdate = new Product(0L, product.getName(), product.getInventory());
+        String putUrl = RESOURCE_PATH + "/" + productToUpdate.getSku();
+
+        mockMvc
+            .perform(
+                put(putUrl)
+                    .contentType("application/json")
+                    .content(convertProductMockToString(productToUpdate)))
+            .andExpect(status().isNotFound());
     }
 
     @Test
