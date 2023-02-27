@@ -44,9 +44,8 @@ public class InMemoryProductRepositoryTest {
 
         Long spWarehouseQuantity = 0L;
         Long moemaWarehouseQuantity = 0L;
+        Long totalProductQuantity = 0L;
         Long sku = ProductMock.getRandomSku();
-
-        Long totalProductQuantity = spWarehouseQuantity + moemaWarehouseQuantity;
 
         Product product = ProductMock.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
 
@@ -71,9 +70,7 @@ public class InMemoryProductRepositoryTest {
 
         repository.save(product);
 
-        Exception exception = assertThrows(DuplicatedProductException.class, () -> {
-            repository.save(product);
-        });
+        Exception exception = assertThrows(DuplicatedProductException.class, () -> repository.save(product));
 
         assertEquals("Duplicated SKU", exception.getMessage());
     }
@@ -85,8 +82,6 @@ public class InMemoryProductRepositoryTest {
         Long spWarehouseQuantity = 12L;
         Long moemaWarehouseQuantity = 3L;
         Long sku = ProductMock.getRandomSku();
-
-        Long totalProductQuantity = spWarehouseQuantity + moemaWarehouseQuantity;
 
         Product product = ProductMock.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
 
@@ -179,6 +174,7 @@ public class InMemoryProductRepositoryTest {
 
         // asserting updated product
         assertEquals(1, repository.count());
+        assertTrue(persistedAfterUpdate.isPresent());
         assertEquals(sku, persistedAfterUpdate.get().getSku());
         assertEquals("Updated Product Name", persistedAfterUpdate.get().getName());
         assertEquals(updatedTotalProductQuantity, persistedAfterUpdate.get().getInventory().getQuantity());
