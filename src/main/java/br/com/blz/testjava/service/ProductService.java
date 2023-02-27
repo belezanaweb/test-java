@@ -1,11 +1,8 @@
 package br.com.blz.testjava.service;
 
-import br.com.blz.testjava.exceptions.DuplicatedProductException;
 import br.com.blz.testjava.model.Product;
 import br.com.blz.testjava.repository.Repository;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 import java.util.Optional;
 
 @Service
