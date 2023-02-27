@@ -7,7 +7,7 @@ import br.com.blz.testjava.model.Warehouse;
 import br.com.blz.testjava.model.WarehouseType;
 import br.com.blz.testjava.repository.Repository;
 import br.com.blz.testjava.service.ProductService;
-import br.com.blz.testjava.share.ProductMock;
+import br.com.blz.testjava.share.ProductMockHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -36,11 +36,11 @@ public class ProductServiceTest {
     public void saveProduct() {
         Long spWarehouseQuantity = 12L;
         Long moemaWarehouseQuantity = 3L;
-        Long sku = ProductMock.getRandomSku();
+        Long sku = ProductMockHelper.getRandomSku();
 
         Long totalProductQuantity = spWarehouseQuantity + moemaWarehouseQuantity;
 
-        Product product = ProductMock.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
+        Product product = ProductMockHelper.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
 
         Mockito.when(repository.exists(product)).thenReturn(false);
         Mockito.when(repository.findBySku(sku)).thenReturn(Optional.of(product));
@@ -59,11 +59,11 @@ public class ProductServiceTest {
     public void deleteProduct() {
         Long spWarehouseQuantity = 12L;
         Long moemaWarehouseQuantity = 3L;
-        Long sku = ProductMock.getRandomSku();
+        Long sku = ProductMockHelper.getRandomSku();
 
         Long totalProductQuantity = spWarehouseQuantity + moemaWarehouseQuantity;
 
-        Product product = ProductMock.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
+        Product product = ProductMockHelper.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
 
         Mockito.when(repository.exists(product)).thenReturn(false);
         Mockito.when(repository.findBySku(sku)).thenReturn(Optional.of(product));
@@ -92,9 +92,9 @@ public class ProductServiceTest {
     public void shouldReturnFalseWhenGivenSkuIsNotFound() {
         Long spWarehouseQuantity = 12L;
         Long moemaWarehouseQuantity = 3L;
-        Long sku = ProductMock.getRandomSku();
+        Long sku = ProductMockHelper.getRandomSku();
 
-        Product product = ProductMock.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
+        Product product = ProductMockHelper.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
 
         Mockito.when(repository.exists(product)).thenReturn(false);
         Mockito.when(repository.findBySku(sku)).thenReturn(Optional.of(product));
@@ -110,11 +110,11 @@ public class ProductServiceTest {
     public void updateProduct() {
         Long spWarehouseQuantity = 12L;
         Long moemaWarehouseQuantity = 3L;
-        Long sku = ProductMock.getRandomSku();
+        Long sku = ProductMockHelper.getRandomSku();
 
         Long totalProductQuantity = spWarehouseQuantity + moemaWarehouseQuantity;
 
-        Product product = ProductMock.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
+        Product product = ProductMockHelper.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
 
         Mockito.when(repository.exists(product)).thenReturn(false);
         Mockito.when(repository.findBySku(sku)).thenReturn(Optional.of(product));

@@ -6,7 +6,7 @@ import br.com.blz.testjava.model.Product;
 import br.com.blz.testjava.model.Warehouse;
 import br.com.blz.testjava.model.WarehouseType;
 import br.com.blz.testjava.repository.InMemoryProductRepository;
-import br.com.blz.testjava.share.ProductMock;
+import br.com.blz.testjava.share.ProductMockHelper;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -23,11 +23,11 @@ public class InMemoryProductRepositoryTest {
 
         Long spWarehouseQuantity = 12L;
         Long moemaWarehouseQuantity = 3L;
-        Long sku = ProductMock.getRandomSku();
+        Long sku = ProductMockHelper.getRandomSku();
 
         Long totalProductQuantity = spWarehouseQuantity + moemaWarehouseQuantity;
 
-        Product product = ProductMock.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
+        Product product = ProductMockHelper.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
 
         repository.save(product);
         Optional<Product> persisted = repository.findBySku(sku);
@@ -45,9 +45,9 @@ public class InMemoryProductRepositoryTest {
         Long spWarehouseQuantity = 0L;
         Long moemaWarehouseQuantity = 0L;
         Long totalProductQuantity = 0L;
-        Long sku = ProductMock.getRandomSku();
+        Long sku = ProductMockHelper.getRandomSku();
 
-        Product product = ProductMock.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
+        Product product = ProductMockHelper.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
 
         repository.save(product);
         Optional<Product> persisted = repository.findBySku(sku);
@@ -64,9 +64,9 @@ public class InMemoryProductRepositoryTest {
 
         Long spWarehouseQuantity = 12L;
         Long moemaWarehouseQuantity = 3L;
-        Long sku = ProductMock.getRandomSku();
+        Long sku = ProductMockHelper.getRandomSku();
 
-        Product product = ProductMock.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
+        Product product = ProductMockHelper.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
 
         repository.save(product);
 
@@ -81,9 +81,9 @@ public class InMemoryProductRepositoryTest {
 
         Long spWarehouseQuantity = 12L;
         Long moemaWarehouseQuantity = 3L;
-        Long sku = ProductMock.getRandomSku();
+        Long sku = ProductMockHelper.getRandomSku();
 
-        Product product = ProductMock.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
+        Product product = ProductMockHelper.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
 
         repository.save(product);
         Optional<Product> persisted = repository.findBySku(sku);
@@ -105,9 +105,9 @@ public class InMemoryProductRepositoryTest {
 
         Long spWarehouseQuantity = 12L;
         Long moemaWarehouseQuantity = 3L;
-        Long sku = ProductMock.getRandomSku();
+        Long sku = ProductMockHelper.getRandomSku();
 
-        Product product = ProductMock.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
+        Product product = ProductMockHelper.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
 
         repository.save(product);
         Optional<Product> persisted = repository.findBySku(0L);
@@ -119,13 +119,13 @@ public class InMemoryProductRepositoryTest {
     @Test
     public void updateProduct() {
         InMemoryProductRepository repository = initRepositoryMock();
-        Long sku = ProductMock.getRandomSku();
+        Long sku = ProductMockHelper.getRandomSku();
 
         Long initialSpWarehouseQuantity = 12L;
         Long initialMoemaWarehouseQuantity = 3L;
         Long totalProductQuantity = initialSpWarehouseQuantity + initialMoemaWarehouseQuantity;
 
-        Product product = ProductMock.createProductMock(
+        Product product = ProductMockHelper.createProductMock(
             initialSpWarehouseQuantity,
             initialMoemaWarehouseQuantity,
             sku

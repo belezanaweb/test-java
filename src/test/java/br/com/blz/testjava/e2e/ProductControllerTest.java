@@ -10,7 +10,7 @@ import br.com.blz.testjava.model.Product;
 import br.com.blz.testjava.model.Warehouse;
 import br.com.blz.testjava.model.WarehouseType;
 import br.com.blz.testjava.service.ProductService;
-import br.com.blz.testjava.share.ProductMock;
+import br.com.blz.testjava.share.ProductMockHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -54,9 +54,9 @@ public class ProductControllerTest {
     public void save() throws Exception {
         Long spWarehouseQuantity = 12L;
         Long moemaWarehouseQuantity = 3L;
-        Long sku = ProductMock.getRandomSku();
+        Long sku = ProductMockHelper.getRandomSku();
 
-        Product product = ProductMock.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
+        Product product = ProductMockHelper.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
 
         mockMvc
             .perform(
@@ -70,9 +70,9 @@ public class ProductControllerTest {
     public void findBySku() throws Exception {
         Long spWarehouseQuantity = 12L;
         Long moemaWarehouseQuantity = 3L;
-        Long sku = ProductMock.getRandomSku();
+        Long sku = ProductMockHelper.getRandomSku();
 
-        Product product = ProductMock.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
+        Product product = ProductMockHelper.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
 
         mockMvc
             .perform(
@@ -92,9 +92,9 @@ public class ProductControllerTest {
     public void shouldReturnBadRequestExceptionWhenTryCreateAPProductWhiteoutMandatoryAttributes() throws Exception {
         Long spWarehouseQuantity = 12L;
         Long moemaWarehouseQuantity = 3L;
-        Long sku = ProductMock.getRandomSku();
+        Long sku = ProductMockHelper.getRandomSku();
 
-        Product product = ProductMock.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
+        Product product = ProductMockHelper.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
         product.setName(null);
 
         mockMvc
@@ -120,9 +120,9 @@ public class ProductControllerTest {
         Long moemaWarehouseQuantity = 3L;
         Long totalProductQuantity = spWarehouseQuantity + moemaWarehouseQuantity;
 
-        Long sku = ProductMock.getRandomSku();
+        Long sku = ProductMockHelper.getRandomSku();
 
-        Product product = ProductMock.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
+        Product product = ProductMockHelper.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
 
         mockMvc
             .perform(
@@ -189,9 +189,9 @@ public class ProductControllerTest {
         Long moemaWarehouseQuantity = 3L;
         Long totalProductQuantity = spWarehouseQuantity + moemaWarehouseQuantity;
 
-        Long sku = ProductMock.getRandomSku();
+        Long sku = ProductMockHelper.getRandomSku();
 
-        Product product = ProductMock.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
+        Product product = ProductMockHelper.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
 
         mockMvc
             .perform(
@@ -223,9 +223,9 @@ public class ProductControllerTest {
     public void deleteProduct() throws Exception {
         Long spWarehouseQuantity = 12L;
         Long moemaWarehouseQuantity = 3L;
-        Long sku = ProductMock.getRandomSku();
+        Long sku = ProductMockHelper.getRandomSku();
 
-        Product product = ProductMock.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
+        Product product = ProductMockHelper.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
 
         mockMvc
             .perform(

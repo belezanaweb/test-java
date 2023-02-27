@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class ProductMock {
+public class ProductMockHelper {
 
     public static Product createProductMock(Long spWarehouseQuantity, Long moemaWarehouseQuantity, Long sku) {
         Warehouse spWarehouse = new Warehouse("SP", spWarehouseQuantity, WarehouseType.ECOMMERCE);
