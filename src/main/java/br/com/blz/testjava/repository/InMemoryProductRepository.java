@@ -52,10 +52,6 @@ public class InMemoryProductRepository implements Repository {
             .anyMatch(p -> p.getSku().equals(product.getSku()));
     }
 
-    public List<Product> findAll() {
-        return this.products.stream().collect(Collectors.toList());
-    }
-
     public int count() {
         return this.products.size();
     }

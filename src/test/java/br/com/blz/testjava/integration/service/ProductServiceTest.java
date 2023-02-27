@@ -36,7 +36,7 @@ public class ProductServiceTest {
     public void saveProduct() {
         Long spWarehouseQuantity = 12L;
         Long moemaWarehouseQuantity = 3L;
-        Long sku = 43264L;
+        Long sku = ProductMock.getRandomSku();
 
         Long totalProductQuantity = spWarehouseQuantity + moemaWarehouseQuantity;
 
@@ -59,7 +59,7 @@ public class ProductServiceTest {
     public void deleteProduct() {
         Long spWarehouseQuantity = 12L;
         Long moemaWarehouseQuantity = 3L;
-        Long sku = 43264L;
+        Long sku = ProductMock.getRandomSku();
 
         Long totalProductQuantity = spWarehouseQuantity + moemaWarehouseQuantity;
 
@@ -92,7 +92,7 @@ public class ProductServiceTest {
     public void shouldReturnFalseWhenGivenSkuIsNotFound() {
         Long spWarehouseQuantity = 12L;
         Long moemaWarehouseQuantity = 3L;
-        Long sku = 43264L;
+        Long sku = ProductMock.getRandomSku();
 
         Product product = ProductMock.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
 
@@ -110,7 +110,7 @@ public class ProductServiceTest {
     public void updateProduct() {
         Long spWarehouseQuantity = 12L;
         Long moemaWarehouseQuantity = 3L;
-        Long sku = 43264L;
+        Long sku = ProductMock.getRandomSku();
 
         Long totalProductQuantity = spWarehouseQuantity + moemaWarehouseQuantity;
 

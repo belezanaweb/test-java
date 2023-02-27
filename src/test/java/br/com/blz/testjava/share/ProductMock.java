@@ -7,6 +7,7 @@ import br.com.blz.testjava.model.WarehouseType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ProductMock {
 
@@ -21,6 +22,10 @@ public class ProductMock {
         Inventory inventory = new Inventory(warehouses);
 
         return new Product(sku, "Product", inventory);
+    }
+
+    public static Long getRandomSku() {
+        return new Random().nextLong();
     }
 
 }

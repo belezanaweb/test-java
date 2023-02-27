@@ -33,10 +33,6 @@ public class ProductService {
         return this.repository.update(productToUpdate);
     }
 
-    public List<Product> findAll() {
-        return this.repository.findAll();
-    }
-
     public int count() {
         return this.repository.count();
     }

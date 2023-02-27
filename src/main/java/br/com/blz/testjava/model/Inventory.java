@@ -1,10 +1,17 @@
 package br.com.blz.testjava.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class Inventory {
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long quantity;
     private List<Warehouse> warehouses;
+
+    public Inventory() {
+    }
 
     public Inventory(List<Warehouse> warehouses) {
         this.warehouses = warehouses;

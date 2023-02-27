@@ -17,8 +17,6 @@ public interface Repository {
 
     public Boolean exists(Product product);
 
-    public List<Product> findAll();
-
     public int count();
 
 }

@@ -23,7 +23,7 @@ public class InMemoryProductRepositoryTest {
 
         Long spWarehouseQuantity = 12L;
         Long moemaWarehouseQuantity = 3L;
-        Long sku = 43264L;
+        Long sku = ProductMock.getRandomSku();
 
         Long totalProductQuantity = spWarehouseQuantity + moemaWarehouseQuantity;
 
@@ -35,6 +35,28 @@ public class InMemoryProductRepositoryTest {
         assertEquals(1, repository.count());
         assertTrue(persisted.isPresent());
         assertEquals(totalProductQuantity, persisted.get().getInventory().getQuantity());
+        assertTrue(persisted.get().getIsMarketable());
+    }
+
+    @Test
+    public void assertThatProductsWithInventoryQuantityEqualsZeroAreNotMarketable() {
+        InMemoryProductRepository repository = initRepositoryMock();
+
+        Long spWarehouseQuantity = 0L;
+        Long moemaWarehouseQuantity = 0L;
+        Long sku = ProductMock.getRandomSku();
+
+        Long totalProductQuantity = spWarehouseQuantity + moemaWarehouseQuantity;
+
+        Product product = ProductMock.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
+
+        repository.save(product);
+        Optional<Product> persisted = repository.findBySku(sku);
+
+        assertEquals(1, repository.count());
+        assertTrue(persisted.isPresent());
+        assertEquals(totalProductQuantity, persisted.get().getInventory().getQuantity());
+        assertFalse(persisted.get().getIsMarketable());
     }
 
     @Test
@@ -43,7 +65,7 @@ public class InMemoryProductRepositoryTest {
 
         Long spWarehouseQuantity = 12L;
         Long moemaWarehouseQuantity = 3L;
-        Long sku = 43264L;
+        Long sku = ProductMock.getRandomSku();
 
         Product product = ProductMock.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
 
@@ -62,7 +84,7 @@ public class InMemoryProductRepositoryTest {
 
         Long spWarehouseQuantity = 12L;
         Long moemaWarehouseQuantity = 3L;
-        Long sku = 43264L;
+        Long sku = ProductMock.getRandomSku();
 
         Long totalProductQuantity = spWarehouseQuantity + moemaWarehouseQuantity;
 
@@ -88,7 +110,7 @@ public class InMemoryProductRepositoryTest {
 
         Long spWarehouseQuantity = 12L;
         Long moemaWarehouseQuantity = 3L;
-        Long sku = 43264L;
+        Long sku = ProductMock.getRandomSku();
 
         Product product = ProductMock.createProductMock(spWarehouseQuantity, moemaWarehouseQuantity, sku);
 
@@ -102,7 +124,7 @@ public class InMemoryProductRepositoryTest {
     @Test
     public void updateProduct() {
         InMemoryProductRepository repository = initRepositoryMock();
-        Long sku = 43264L;
+        Long sku = ProductMock.getRandomSku();
 
         Long initialSpWarehouseQuantity = 12L;
         Long initialMoemaWarehouseQuantity = 3L;

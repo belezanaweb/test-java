@@ -1,11 +1,21 @@
 package br.com.blz.testjava.model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class Product {
+
+    @NotNull(message = "The sku property is mandatory")
     private Long sku;
+
+    @NotEmpty(message = "The name property is mandatory")
     private String name;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Boolean isMarketable;
     private Inventory inventory;
 
@@ -27,8 +37,8 @@ public class Product {
         this.name = name;
     }
 
-    public Boolean getMarketable() {
-        return isMarketable;
+    public Boolean getIsMarketable() {
+        return this.inventory.getQuantity() > 0;
     }
 
     public Inventory getInventory() {
