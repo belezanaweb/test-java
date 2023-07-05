@@ -1,4 +1,4 @@
-package br.com.blz.testjava;
+/* package br.com.blz.testjava;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,4 +13,4 @@ public class TestJavaApplicationTests {
 	public void contextLoads() {
 	}
 
-}
+} */

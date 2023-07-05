@@ -212,3 +212,5 @@ buildNumber.properties
 
 
 # End of https://www.gitignore.io/api/java,maven,macos,linux,intellij+all,eclipse
+.vscode/launch.json
+.vscode/settings.json
